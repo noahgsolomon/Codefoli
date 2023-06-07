@@ -13,6 +13,19 @@
     transition: transform 0.3s;
 }
 
+.form-field {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.active {
+    background-color: #0059ff;
+}
+
 .login-header {
     font-size: 2em;
     color: #333;
@@ -33,7 +46,9 @@
     border-radius: 5px;
     color: #fff;
     cursor: pointer;
+    background-color: #cccccc;
 }
+
 .login-button:hover {
     opacity: 0.9;
 }
@@ -53,5 +68,18 @@
 }
 
 .login-link:hover {
+    text-decoration: underline;
+}
+
+
+.back-button {
+    background: none;
+    border: none;
+    color: #0059ff;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.back-button:hover {
     text-decoration: underline;
 }
