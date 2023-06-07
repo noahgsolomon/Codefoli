@@ -1,0 +1,51 @@
+.header-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: transparent;
+    border-bottom: 2px solid #333;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    width: 100%;
+}
+
+.logo {
+    user-select: none;
+    cursor: pointer;
+    font-size: 2em;
+    font-weight: bold;
+    transition: transform 0.3s;
+}
+
+.logo:hover {
+    color: #333;
+}
+
+.join-button {
+    background-color: #333;
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.join-button:hover {
+    background-color: #777;
+    transform: translateY(-2px);
+}
+
+.join-button:active {
+    transform: translateY(1px);
+}

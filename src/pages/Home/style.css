@@ -1,0 +1,75 @@
+.home-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    color: #333;
+    border-radius: 5px;
+    background: #fff;
+}
+
+h2 {
+    margin-bottom: 20px;
+    margin-top: 40px;
+    font-size: 2em;
+}
+
+
+h3 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+h3:hover {
+    color: #2b91af;
+}
+
+p {
+    line-height: 1.6;
+    font-size: 1em;
+}
+
+ul li {
+    font-size: 1em;
+    transition: transform 0.3s;
+}
+
+ul li:hover {
+    transform: translateX(10px);
+}
+
+.icon {
+    user-select: none;
+    transition: transform 0.3s;
+}
+
+.icon:hover {
+    transform: translateY(-5px);
+}
+
+blockquote {
+    color: #333333;
+    border-left: 4px solid #666666;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+cite {
+    display: block;
+    text-align: right;
+    color: #666666;
+    font-size: 0.8em;
+}
+
+.intro-section,
+.testimonial-section,
+.feature-section {
+    margin-bottom: 40px;
+}
+
+.ide-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 1em;
+}
+
