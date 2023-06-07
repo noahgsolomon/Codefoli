@@ -7,6 +7,19 @@ const Login: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const clientId = "5d729095e6b70e4508e7";
+    const redirectUri = "http://localhost:8080/login/oauth2/code/github";
+    const scope = "read:user%20user:email";
+
+    function generateRandomString() {
+        return crypto.randomUUID()
+            .replace(/\+/g, '-')
+            .replace(/\//g, '_')
+            .replace(/=+$/, '');
+    }
+
+    const state = generateRandomString();
+
     return (
         <div className="login-card">
             <h2 className="login-header">Codefolio</h2>
@@ -37,7 +50,9 @@ const Login: React.FC = () => {
                 </>
             ) : (
                 <>
-                    <button className="login-button github">Continue with GitHub</button>
+                    <button className="login-button github" onClick={() => {
+                        window.location.href = `https://github.com/login/oauth/authorize?response_type=code&client_id=${clientId}&scope=${scope}&state=${state}&redirect_uri=${redirectUri}`;
+                    }}>Continue with GitHub</button>
                     <button
                         className="login-button email"
                         onClick={() => setShowFields(true)}
