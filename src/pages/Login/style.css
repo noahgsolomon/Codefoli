@@ -1,0 +1,57 @@
+.login-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    max-width: 90%;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background-color: #fff;
+    transition: transform 0.3s;
+}
+
+.login-header {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 50px;
+}
+
+.login-text {
+    color: #666;
+    margin: 20px 0;
+}
+
+.login-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin: 20px 0;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+.login-button:hover {
+    opacity: 0.9;
+}
+
+.github {
+    background-color: #333;
+}
+
+.email {
+    background-color: #0059ff;
+}
+
+.login-link {
+    color: #0059ff;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
