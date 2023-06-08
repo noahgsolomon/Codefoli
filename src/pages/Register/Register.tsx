@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import './style.css';
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const Register: React.FC = () => {
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (localStorage.getItem('loggedIn') === 'true') {
+            navigate('/dashboard');
+        }
+    }, [navigate]);
 
     return (
         <div className="login-card">

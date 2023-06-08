@@ -5,6 +5,7 @@ import './App.css';
 import Header from "./common/Components/Header/Header.tsx";
 import Login from "./pages/Login/Login.tsx";
 import Register from "./pages/Register/Register.tsx";
+import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 const App: React.FC = () => {
 
   return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </BrowserRouter>
   )

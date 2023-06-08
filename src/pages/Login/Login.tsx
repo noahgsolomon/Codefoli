@@ -1,24 +1,20 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import './style.css';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const Login: React.FC = () => {
     const [showFields, setShowFields] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const clientId = "5d729095e6b70e4508e7";
-    const redirectUri = "http://localhost:8080/login/oauth2/code/github";
-    const scope = "read:user%20user:email";
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (localStorage.getItem('loggedIn') === 'true') {
+            navigate('/dashboard');
+        }
+    }, [navigate]);
 
-    function generateRandomString() {
-        return crypto.randomUUID()
-            .replace(/\+/g, '-')
-            .replace(/\//g, '_')
-            .replace(/=+$/, '');
-    }
-
-    const state = generateRandomString();
+    const redirectUri = "http://localhost:5173/dashboard";
 
     return (
         <div className="login-card">
@@ -51,7 +47,7 @@ const Login: React.FC = () => {
             ) : (
                 <>
                     <button className="login-button github" onClick={() => {
-                        window.location.href = `https://github.com/login/oauth/authorize?response_type=code&client_id=${clientId}&scope=${scope}&state=${state}&redirect_uri=${redirectUri}`;
+                        window.location.href = `http://localhost:8080/oauth/authorize/github?redirect_uri=${redirectUri}`;
                     }}>Continue with GitHub</button>
                     <button
                         className="login-button email"

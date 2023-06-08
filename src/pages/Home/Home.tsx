@@ -1,9 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useSpring, animated } from 'react-spring';
 import { FiArrowUpRight, FiUsers, FiCode, FiRefreshCw } from 'react-icons/fi';
 import './style.css';
+import {useNavigate} from "react-router-dom";
 
 const Home: React.FC = () => {
+
+    const navigate = useNavigate();
+    
+    useEffect(() => {
+        if (localStorage.getItem('loggedIn') === 'true') {
+            navigate('/dashboard');
+        }
+    }, [navigate]);
+
     const fadeIn = useSpring({
         from: { opacity: 0 },
         to: { opacity: 1 },
