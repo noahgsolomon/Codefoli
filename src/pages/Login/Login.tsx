@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './style.css';
 import {Link, useNavigate} from "react-router-dom";
+import {login} from "../../util/api/userapi.tsx";
 
 const Login: React.FC = () => {
     const [showFields, setShowFields] = useState(false);
@@ -13,6 +14,14 @@ const Login: React.FC = () => {
             navigate('/dashboard');
         }
     }, [navigate]);
+
+    const handleLogin = async () => {
+        const loginRequest = await login(email, password);
+        if (loginRequest) {
+            localStorage.setItem('loggedIn', 'true');
+            navigate('/dashboard');
+        }
+    }
 
     const redirectUri = "http://localhost:5173/dashboard";
 
@@ -42,7 +51,7 @@ const Login: React.FC = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <button className={`login-button ${email.length > 3 && password.length > 3 ? 'active' : ''}`}>Log In</button>
+                    <button className={`login-button ${email.length > 3 && password.length > 3 ? 'active' : ''}`} onClick={handleLogin}>Log In</button>
                 </>
             ) : (
                 <>
