@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './style.css';
 import {Link, useNavigate} from "react-router-dom";
-import {login} from "../../util/api/userapi.tsx";
+import {login} from "../../util/api/authenticateapi.tsx";
 
 const Login: React.FC = () => {
     const [showFields, setShowFields] = useState(false);
@@ -9,6 +9,7 @@ const Login: React.FC = () => {
     const [password, setPassword] = useState('');
 
     const navigate = useNavigate();
+
     useEffect(() => {
         if (localStorage.getItem('loggedIn') === 'true') {
             navigate('/dashboard');
