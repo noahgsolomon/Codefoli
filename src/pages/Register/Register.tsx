@@ -2,16 +2,21 @@ import React, {useEffect, useState} from "react";
 import './style.css';
 import {Link, useNavigate} from "react-router-dom";
 import {register} from "../../util/api/authenticateapi.tsx";
+import Loader from "../../common/Components/Loader/Loader.tsx";
 
 const Register: React.FC = () => {
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(true)
 
     const navigate = useNavigate();
     useEffect(() => {
         if (localStorage.getItem('loggedIn') === 'true') {
             navigate('/dashboard');
+        }
+        else {
+            setLoading(false);
         }
     }, [navigate]);
 
@@ -23,6 +28,12 @@ const Register: React.FC = () => {
                 localStorage.setItem('loggedIn', 'true');
                 navigate('/dashboard');
             }
+    }
+
+    if (loading){
+        return (
+            <Loader />
+        )
     }
 
     return (

@@ -1,8 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSpring, animated, useInView} from 'react-spring';
 import './style.css';
 import {useNavigate} from "react-router-dom";
 import { FiCode, FiRefreshCw, FiLayout } from 'react-icons/fi';
+import Loader from "../../common/Components/Loader/Loader.tsx";
 
 const Home: React.FC = () => {
 
@@ -15,13 +16,23 @@ const Home: React.FC = () => {
     const fadeInTestimonial = useSpring({ opacity: inViewTestimonial ? 1 : 0, transform: inViewTestimonial ? 'translateY(0)' : 'translateY(20px)' });
 
     const [refFeature, inViewFeature] = useInView({});
+    const [loading, setLoading] = useState(true);
     const fadeInFeature = useSpring({ opacity: inViewFeature ? 1 : 0, transform: inViewFeature ? 'translateY(0)' : 'translateY(20px)' });
 
     useEffect(() => {
         if (localStorage.getItem('loggedIn') === 'true') {
             navigate('/dashboard');
         }
+        else{
+            setLoading(false);
+        }
     }, [navigate]);
+
+    if (loading){
+        return (
+            <Loader />
+        )
+    }
 
     return (
         <div className="home-container">

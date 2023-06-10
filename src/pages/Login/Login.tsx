@@ -2,17 +2,22 @@ import React, {useEffect, useState} from 'react';
 import './style.css';
 import {Link, useNavigate} from "react-router-dom";
 import {login} from "../../util/api/authenticateapi.tsx";
+import Loader from "../../common/Components/Loader/Loader.tsx";
 
 const Login: React.FC = () => {
     const [showFields, setShowFields] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(true)
 
     const navigate = useNavigate();
 
     useEffect(() => {
         if (localStorage.getItem('loggedIn') === 'true') {
             navigate('/dashboard');
+        }
+        else {
+            setLoading(false);
         }
     }, [navigate]);
 
@@ -25,6 +30,12 @@ const Login: React.FC = () => {
     }
 
     const redirectUri = "http://localhost:5173/dashboard";
+
+    if (loading){
+        return (
+            <Loader />
+        )
+    }
 
     return (
         <div className="login-card">
