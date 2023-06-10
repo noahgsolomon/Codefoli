@@ -28,7 +28,7 @@ const Login: React.FC = () => {
 
     return (
         <div className="login-card">
-            <h2 className="login-header">Codefolio</h2>
+            <h2 className="login-header"><span>Codefolio</span></h2>
             <p className="login-text">Log in to your account</p>
             {showFields ? (
                 <>
@@ -56,15 +56,17 @@ const Login: React.FC = () => {
                 </>
             ) : (
                 <>
-                    <button className="login-button github" onClick={() => {
-                        window.location.href = `http://localhost:8080/oauth/authorize/github?redirect_uri=${redirectUri}`;
-                    }}>Continue with GitHub</button>
-                    <button
-                        className="login-button email"
-                        onClick={() => setShowFields(true)}
-                    >
-                        Continue with Email and Password
-                    </button>
+                    <div className={'button-container'}>
+                        <button className="login-button github" onClick={() => {
+                            window.location.href = `http://localhost:8080/oauth/authorize/github?redirect_uri=${redirectUri}`;
+                        }}>Continue with GitHub<img className={'github-icon'} src={'src/assets/github-logo.png'} alt={'github icon'}/></button>
+                        <button
+                            className="login-button email"
+                            onClick={() => setShowFields(true)}
+                        >
+                            Continue with Email and Password
+                        </button>
+                    </div>
                     <Link to={'/register'}>
                         <p className="login-link">Create your account</p>
                     </Link>

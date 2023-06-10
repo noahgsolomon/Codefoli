@@ -7,19 +7,26 @@
     max-width: 80%;
     padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid #0b0b0b;
+    box-shadow: 3px 3px #0b0b0b;
     text-align: center;
-    background-color: #fff;
-    transition: transform 0.3s;
+    background-color: #f9f9f9;
+    transition: 0.3s ease;
+}
+
+.login-card:hover{
+    box-shadow: 5px 5px #0b0b0b;
 }
 
 .form-field {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 1em;
+    background-color: #fff;
+    transition: box-shadow 0.3s ease-in-out;
 }
 
 .active {
@@ -28,9 +35,15 @@
 
 .login-header {
     font-size: 2em;
-    color: #333;
     margin-bottom: 50px;
 }
+
+.login-header span{
+    padding: 0 0.2em;
+    background-color: #1C92FF;
+    color: #fff;
+}
+
 
 .login-text {
     color: #666;
@@ -38,33 +51,53 @@
 }
 
 .login-button {
-    display: block;
-    width: 100%;
-    padding: 15px;
-    margin: 20px 0;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
-    background-color: #cccccc;
+    width: 100%;
+    margin-bottom: 10px;
+    color: #fff;
+    text-align: center;
+    border-radius: 16px;
+    padding: 26px 38px;
+    font-size: 18px;
+    border: none;
+    font-weight: 700;
+    line-height: 1.111em;
+    text-decoration: none;
+    transition: 0.3s ease;
 }
+
 
 .login-button:hover {
     opacity: 0.9;
 }
 
 .github {
-    background-color: #333;
+    background-color: #0b0b0b;
+}
+
+.github:hover {
+    transform: translateY(-5px);
 }
 
 .email {
-    background-color: #0059ff;
+    border: 2px solid #0b0b0b;
+    background-color: #f9f9f9;
+    color: #393939;
+}
+
+.email:hover{
+
+    transform: translateY(-5px);
 }
 
 .login-link {
     color: #0059ff;
     cursor: pointer;
     margin-top: 20px;
+    font-size: 0.8em;
 }
 
 .login-link:hover {
@@ -73,13 +106,34 @@
 
 
 .back-button {
-    background: none;
-    border: none;
     color: #0059ff;
+    background: none;
+    border: 2px solid #0059ff;
+    border-radius: 16px;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.111em;
     cursor: pointer;
-    margin-bottom: 20px;
+    transition: border-color .3s, background-color .3s, transform .3s, color .3s;
 }
 
 .back-button:hover {
     text-decoration: underline;
+}
+
+.button-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.github-icon{
+    border-radius: 15px;
+    padding: 2px;
+    background-color: white;
+    margin-left: 10px;
+    width: 30px;
+    height: auto;
 }
