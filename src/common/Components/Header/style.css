@@ -4,27 +4,29 @@
     align-items: center;
     padding: 20px;
     background-color: transparent;
-    border-bottom: 2px solid #333;
 }
 
 .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1100px;
+    max-width: 800px;
     width: 100%;
+    background-color: #fff;
+    border: 2px solid #0b0b0b;
+    border-radius: 18px;
+    box-shadow: 7px 7px #0b0b0b;
+    padding: 0 14px;
 }
 
 .logo {
     user-select: none;
     cursor: pointer;
-    font-size: 2em;
-    font-weight: bold;
-    transition: transform 0.3s;
+    font-size: 1.6em;
+    transition: 0.3s ease;
 }
-
 .logo:hover {
-    color: #333;
+    color: #1C92FF;
 }
 
 .join-button {
@@ -39,13 +41,10 @@
     transition-duration: 0.4s;
     cursor: pointer;
     border-radius: 20px;
+    font-family: 'Onest-Regular', sans-serif;
 }
 
-.join-button:hover {
-    background-color: #777;
-    transform: translateY(-2px);
-}
-
-.join-button:active {
-    transform: translateY(1px);
+.join-button:hover{
+    transform: translateY(-5px);
+    background-color: #1C92FF;
 }
