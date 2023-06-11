@@ -1,0 +1,47 @@
+name: Frontend PR Build
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: PR Build
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      # Use Node 18.x
+      - name: Use Node 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache-dependency-path: frontend/package-lock.json
+          cache: "npm"
+
+      # Install Packages
+      - name: Install Packages
+        working-directory: frontend
+        run: npm install
+
+      # Run Lint
+      - name: Run Lint
+        working-directory: frontend
+        run: npm run lint
+
+      # Build App
+      - name: Build App
+        working-directory: frontend
+        run: npm run build
+
+      # Upload Artifact
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifact-frontend
+          path: frontend/dist
