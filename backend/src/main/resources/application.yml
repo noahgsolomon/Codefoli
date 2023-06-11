@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/codefolio
+    username: postgres
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            scope:
+              - read:user
+              - user:email
+              - repo
+            client-id: 5d729095e6b70e4508e7
+            client-secret: 9d9383c5242aaa3ac0a03a39b1454a84f7b040c0
+            redirect-uri: http://localhost:8080/login/oauth2/code/github
+  main:
+    web-application-type: servlet
+
+logging:
+  level:
+    org:
+        springframework:
+            security: DEBUG
