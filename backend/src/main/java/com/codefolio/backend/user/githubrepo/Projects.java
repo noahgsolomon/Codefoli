@@ -16,15 +16,16 @@ public class Projects {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Users users;
+
     private String name;
     private String language;
     private String description;
     private String updatedAt;
     private String owner;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private Users users;
 
     public Projects(Users users, String name, String language, String description, String updatedAt, String owner) {
         this.users = users;
