@@ -23,7 +23,6 @@ public class Users {
     private String location;
     private String about;
 
-
     public Users(String name, String email, String password) {
         this.name = name;
         this.email = email;

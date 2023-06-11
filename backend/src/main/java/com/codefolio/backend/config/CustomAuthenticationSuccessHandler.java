@@ -5,7 +5,7 @@ import com.codefolio.backend.user.session.UserSession;
 import com.codefolio.backend.user.session.UserSessionRepository;
 import com.codefolio.backend.user.Users;
 import com.codefolio.backend.user.githubrepo.GithubRepo;
-import com.codefolio.backend.user.githubrepo.ProjectRepository;
+import com.codefolio.backend.user.githubrepo.ProjectsRepository;
 import com.codefolio.backend.user.githubrepo.Projects;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -42,7 +42,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     private final UserSessionRepository userSessionRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final OAuth2AuthorizedClientService authorizedClientService;
-    private final ProjectRepository projectRepository;
+    private final ProjectsRepository projectsRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -90,7 +90,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                     System.out.println("Last updated: " + repo.getUpdatedAt());
                     System.out.println("Description: " + repo.getDescription());
                     Projects project = new Projects(user, repo.getName(), repo.getLanguage(), repo.getDescription(), repo.getUpdatedAt(), repo.getOwner().getLogin());
-                    projectRepository.save(project);
+                    projectsRepository.save(project);
                 }
 
             } catch (IOException | InterruptedException e) {
