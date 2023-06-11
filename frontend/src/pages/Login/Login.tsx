@@ -51,7 +51,6 @@ const Login: React.FC = () => {
 
           <input
             type="email"
-            className="form-field"
             className="w-full p-3 my-3 border border-gray-300 rounded-md bg-white transition-shadow"
             placeholder="Email"
             value={email}
