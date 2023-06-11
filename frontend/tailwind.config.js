@@ -1,0 +1,33 @@
+import aspectRatio from "@tailwindcss/aspect-ratio";
+
+import forms from "@tailwindcss/forms";
+
+import typography from "@tailwindcss/typography";
+
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    extend: {
+      boxShadow: {
+        custom: '7px 7px #0b0b0b',
+      },
+      fontFamily: {
+        custom: ['Onest-Regular', 'sans-serif'],
+      },
+      animation: {
+        'spin-slow': 'spin 2s linear infinite',
+      },
+    },
+  },
+  variants: {
+    extend: {
+      animation: ['motion-safe'],
+    },
+  },
+  plugins: [
+    aspectRatio,
+    forms,
+    typography,
+  ],
+};
