@@ -1,7 +1,5 @@
-package com.codefolio.backend.config;
+package com.codefolio.backend.user.session;
 
-import com.codefolio.backend.user.UserSession;
-import com.codefolio.backend.user.UserSessionRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;

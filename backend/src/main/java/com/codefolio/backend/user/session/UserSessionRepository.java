@@ -1,4 +1,4 @@
-package com.codefolio.backend.user;
+package com.codefolio.backend.user.session;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

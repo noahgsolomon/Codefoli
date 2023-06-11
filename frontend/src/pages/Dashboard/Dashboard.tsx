@@ -23,7 +23,7 @@ const Dashboard: React.FC = () => {
             }
         }
         fetchUser();
-    })
+    });
 
     return (
         <>

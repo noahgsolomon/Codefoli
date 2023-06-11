@@ -1,17 +1,18 @@
 package com.codefolio.backend.config;
 
 import com.codefolio.backend.user.UserRepository;
-import com.codefolio.backend.user.UserSession;
-import com.codefolio.backend.user.UserSessionRepository;
+import com.codefolio.backend.user.session.UserSession;
+import com.codefolio.backend.user.session.UserSessionRepository;
 import com.codefolio.backend.user.Users;
-import com.codefolio.backend.user.repository.GithubRepo;
+import com.codefolio.backend.user.githubrepo.GithubRepo;
+import com.codefolio.backend.user.githubrepo.ProjectRepository;
+import com.codefolio.backend.user.githubrepo.Projects;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,40 +42,40 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     private final UserSessionRepository userSessionRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final OAuth2AuthorizedClientService authorizedClientService;
+    private final ProjectRepository projectRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
-        String email;
-        String name;
-        String username;
-        String company;
-        String location;
 
-        if (authentication instanceof OAuth2AuthenticationToken oauthToken) {
+        if (!(authentication instanceof OAuth2AuthenticationToken oauthToken)) {
+            throw new IllegalArgumentException("Unexpected type of authentication: " + authentication);
+        }
+        String email = ((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("email");
+        String name = ((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("name");
+        String bio = ((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("bio");
+        String location = ((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("location");
+        String company = ((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("company");
+
+        Users user;
+        if (userRepository.findByEmail(email).isPresent()){
+            user = userRepository.findByEmail(email).get();
+        }else {
+            String username = ((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("login");
             OAuth2AuthorizedClient oAuthClient = authorizedClientService.loadAuthorizedClient(
                     oauthToken.getAuthorizedClientRegistrationId(),
                     oauthToken.getName());
 
             String accessToken = oAuthClient.getAccessToken().getTokenValue();
-            email = ((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("email");
-            name = ((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("name");
-            username = ((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("login");
-            company = ((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("company");
-            location = ((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("location");
-
-            System.out.println(email);
-            System.out.println(name);
-            System.out.println(username);
-            System.out.println(company);
-            System.out.println(location);
-
+            String randomPassword = UUID.randomUUID().toString();
+            user = new Users(name, email, passwordEncoder.encode(randomPassword), company, location, bio);
+            userRepository.save(user);
             try {
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest repoRequest = HttpRequest.newBuilder()
-                    .uri(URI.create("https://api.github.com/users/" + username + "/repos"))
-                    .header("Authorization", "token " + accessToken)
-                    .build();
+                HttpClient client = HttpClient.newHttpClient();
+                HttpRequest repoRequest = HttpRequest.newBuilder()
+                        .uri(URI.create("https://api.github.com/users/" + username + "/repos"))
+                        .header("Authorization", "token " + accessToken)
+                        .build();
 
 
                 HttpResponse<String> repoResponse = client.send(repoRequest, HttpResponse.BodyHandlers.ofString());
@@ -88,32 +89,14 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                     System.out.println("Language: " + repo.getLanguage());
                     System.out.println("Last updated: " + repo.getUpdatedAt());
                     System.out.println("Description: " + repo.getDescription());
+                    Projects project = new Projects(user, repo.getName(), repo.getLanguage(), repo.getDescription(), repo.getUpdatedAt(), repo.getOwner().getLogin());
+                    projectRepository.save(project);
                 }
 
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
             }
-
-
-        } else if (authentication instanceof UsernamePasswordAuthenticationToken) {
-            email = authentication.getName();
-            name = "";
-        } else {
-            throw new IllegalArgumentException("Unexpected type of authentication: " + authentication);
-        }
-
-        System.out.println("User authenticated with email: " + email);
-        Users user;
-        if (userRepository.findByEmail(email).isPresent()){
-            user = userRepository.findByEmail(email).get();
-        }else if (authentication instanceof OAuth2AuthenticationToken){
-            String randomPassword = UUID.randomUUID().toString();
-            user = new Users(name, email, passwordEncoder.encode(randomPassword));
-            userRepository.save(user);
-        }
-        else {
-            throw new IllegalArgumentException("User not found");
         }
 
         String sessionId = RequestContextHolder.currentRequestAttributes().getSessionId();
@@ -130,8 +113,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
         System.out.println("User session saved: " + userSession.getId());
 
-        if (authentication instanceof OAuth2AuthenticationToken){
-            response.sendRedirect("http://localhost:5173/dashboard");
-        }
+        response.sendRedirect("http://localhost:5173/dashboard");
     }
 }

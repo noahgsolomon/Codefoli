@@ -1,5 +1,6 @@
-package com.codefolio.backend.user;
+package com.codefolio.backend.user.session;
 
+import com.codefolio.backend.user.Users;
 import jakarta.persistence.*;
 import lombok.*;
 

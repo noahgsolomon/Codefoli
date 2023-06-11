@@ -1,4 +1,4 @@
-package com.codefolio.backend.user.repository;
+package com.codefolio.backend.user.githubrepo;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.*;

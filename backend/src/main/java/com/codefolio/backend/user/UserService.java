@@ -1,5 +1,6 @@
 package com.codefolio.backend.user;
 
+import com.codefolio.backend.user.session.UserSessionRepository;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

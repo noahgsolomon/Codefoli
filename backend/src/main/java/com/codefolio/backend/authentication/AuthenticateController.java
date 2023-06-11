@@ -1,7 +1,7 @@
 package com.codefolio.backend.authentication;
 import com.codefolio.backend.user.UserRepository;
-import com.codefolio.backend.user.UserSession;
-import com.codefolio.backend.user.UserSessionRepository;
+import com.codefolio.backend.user.session.UserSession;
+import com.codefolio.backend.user.session.UserSessionRepository;
 import com.codefolio.backend.user.Users;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
