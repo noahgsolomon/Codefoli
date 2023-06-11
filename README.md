@@ -1,4 +1,4 @@
-# Codefolio Frontend
+# Codefolio
 
 ## Overview
 
