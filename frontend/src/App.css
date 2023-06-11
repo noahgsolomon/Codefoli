@@ -9,15 +9,16 @@
 }
 
 * {
-    color: #393939;
-    font-family: 'Onest-Regular', sans-serif;
+    @apply
+    text-gray-800;
 }
 
 body{
-    background-color: #FAF9F6;
-    color: #393939;
-    font-family: Onest, sans-serif;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 1.667em;
+    @apply
+    bg-gray-50
+    text-gray-800
+    font-sans
+    text-lg
+    font-medium
+    leading-loose;
 }

@@ -12,7 +12,7 @@ const Dashboard: React.FC = () => {
     useEffect(() => {
         const fetchUser = async () => {
             const user = await userDetails();
-            setLoading(false)
+            setLoading(false);
             if (user) {
                 localStorage.setItem('loggedIn', 'true');
                 console.log(user);
