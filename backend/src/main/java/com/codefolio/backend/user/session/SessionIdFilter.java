@@ -42,9 +42,21 @@ public class SessionIdFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } else {
                 SecurityContextHolder.clearContext();
+                Cookie deleteCookie = new Cookie("SESSION_ID", null);
+                deleteCookie.setPath("/");
+                deleteCookie.setMaxAge(0);
+                response.addCookie(deleteCookie);
+
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Session");
             }
         } else {
             SecurityContextHolder.clearContext();
+            Cookie deleteCookie = new Cookie("SESSION_ID", null);
+                deleteCookie.setPath("/");
+                deleteCookie.setMaxAge(0);
+                response.addCookie(deleteCookie);
+
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Session");
         }
 
         filterChain.doFilter(request, response);

@@ -2,7 +2,6 @@ package com.codefolio.backend.config;
 
 import com.codefolio.backend.user.session.UserSessionRepository;
 import com.codefolio.backend.user.session.SessionIdFilter;
-import com.codefolio.backend.user.session.SessionValidationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,11 +36,6 @@ public class SecurityConfiguration {
     @Bean
     public SessionIdFilter sessionIdFilter() {
         return new SessionIdFilter(userSessionRepository);
-    }
-
-    @Bean
-    public SessionValidationFilter sessionValidationFilter(){
-        return new SessionValidationFilter(userSessionRepository);
     }
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
