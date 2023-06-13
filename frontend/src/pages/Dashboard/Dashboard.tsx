@@ -14,6 +14,9 @@ const Dashboard: React.FC = () => {
             const user = await userDetails();
             setLoading(false);
             if (user) {
+                if (user.role === 'NEWBIE') {
+                    navigate('/setup');
+                }
                 localStorage.setItem('loggedIn', 'true');
                 console.log(user);
             }

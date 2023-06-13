@@ -177,5 +177,6 @@ public enum SkillsType {
     ANSIBLE,
     TERRAFORM,
     HADOOP,
-    SPARK
+    SPARK,
+    FIGMA
 }

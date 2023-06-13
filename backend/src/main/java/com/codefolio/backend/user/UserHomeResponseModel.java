@@ -12,6 +12,7 @@ public record UserHomeResponseModel(
         String about,
         SkillsType[] skills,
         Projects[] projects,
-        Work[] work
+        Work[] work,
+        String role
 ) {
 }
