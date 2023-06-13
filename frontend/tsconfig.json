@@ -9,6 +9,7 @@
       "Components/*": ["common/Components/*"],
       "api/*": ["util/api/*"],
       "assets/*": ["assets/*"],
+      "Type/*": ["common/Type/*"],
     },
 
     /* Bundler mode */

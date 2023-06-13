@@ -56,11 +56,12 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         String bio = ((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("bio");
         String location = ((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("location");
         String company = ((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("company");
-
+        boolean newUser = false;
         Users user;
         if (userRepository.findByEmail(email).isPresent()){
             user = userRepository.findByEmail(email).get();
         }else {
+            newUser = true;
             String username = ((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("login");
             OAuth2AuthorizedClient oAuthClient = authorizedClientService.loadAuthorizedClient(
                     oauthToken.getAuthorizedClientRegistrationId(),
@@ -113,6 +114,12 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
         System.out.println("User session saved: " + userSession.getId());
 
-        response.sendRedirect("http://localhost:5173/dashboard");
+        if (newUser){
+            response.sendRedirect("http://localhost:5173/setup");
+        }
+        else{
+            response.sendRedirect("http://localhost:5173/dashboard");
+        }
+
     }
 }

@@ -23,10 +23,14 @@ public class Users {
     private String location;
     private String about;
 
+    @Enumerated(EnumType.STRING)
+    private RoleType role;
+
     public Users(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.role = RoleType.NEWBIE;
     }
 
     public Users(String name, String email, String password, String company, String location, String about){
@@ -36,5 +40,6 @@ public class Users {
         this.company = company;
         this.location = location;
         this.about = about;
+        this.role = RoleType.NEWBIE;
     }
 }

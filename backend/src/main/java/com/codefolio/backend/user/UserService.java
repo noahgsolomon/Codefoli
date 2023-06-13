@@ -2,7 +2,6 @@ package com.codefolio.backend.user;
 
 import com.codefolio.backend.user.githubrepo.ProjectsRepository;
 import com.codefolio.backend.user.githubrepo.Projects;
-import com.codefolio.backend.user.session.UserSessionRepository;
 import com.codefolio.backend.user.skills.Skills;
 import com.codefolio.backend.user.skills.SkillsRepository;
 import com.codefolio.backend.user.skills.SkillsType;
@@ -22,7 +21,6 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final UserSessionRepository userSessionRepository;
     private final WorkRepository workRepository;
     private final ProjectsRepository projectsRepository;
     private final SkillsRepository skillsRepository;
@@ -52,9 +50,52 @@ public class UserService {
                 user.getAbout(),
                 userSkillsTypes,
                 userProjects.toArray(new Projects[0]),
-                userWorks.toArray(new Work[0])
+                userWorks.toArray(new Work[0]),
+                user.getRole().toString()
         );
 
         return ResponseEntity.ok(userHomeResponseModel);
+    }
+
+    public ResponseEntity<?> setup(UserProfileRequestModel userProfile, Principal principal) {
+        if (!(principal instanceof Authentication)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
+        }
+        Object principalUser = ((Authentication) principal).getPrincipal();
+        if (!(principalUser instanceof Users user)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
+        }
+
+        user.setName(userProfile.name());
+        user.setEmail(userProfile.email());
+        user.setCompany(userProfile.company());
+        user.setLocation(userProfile.location());
+        userRepository.save(user);
+
+        userProfile.skills().forEach(skill -> {
+            Skills newSkill = new Skills(SkillsType.valueOf(skill), user);
+            skillsRepository.save(newSkill);
+        });
+
+        userProfile.work().forEach(work -> {
+            Work newWork = new Work(user, work.getCompany(), work.getPosition(), work.getStartDate(), work.getEndDate(), work.getDescription());
+            workRepository.save(newWork);
+        });
+
+        List<Projects> userProjects = projectsRepository.findAllByUsers(user);
+        for (Projects userProject : userProjects) {
+            projectsRepository.deleteById(userProject.getId());
+        }
+
+        userProfile.projects().forEach(project -> {
+            Projects newProject = new Projects(user, project.getName(), project.getLanguage(), project.getDescription(), project.getUpdatedAt(), user.getName());
+            projectsRepository.save(newProject);
+        });
+
+        user.setRole(RoleType.USER);
+        userRepository.save(user);
+
+        return ResponseEntity.ok("Profile setup successfully!");
+
     }
 }
