@@ -10,6 +10,7 @@ const Register: React.FC = () => {
     const [loading, setLoading] = useState(true)
 
     const navigate = useNavigate();
+
     useEffect(() => {
         if (localStorage.getItem('loggedIn') === 'true') {
             navigate('/dashboard');
@@ -25,7 +26,8 @@ const Register: React.FC = () => {
         const registerRequest = await register(fullName, email, password);
         if (registerRequest) {
             localStorage.setItem('loggedIn', 'true');
-            navigate('/dashboard');
+            localStorage.setItem('role', 'NEWBIE');
+            navigate('/setup');
         }
     }
 

@@ -22,6 +22,7 @@ const Dashboard: React.FC = () => {
             }
             else {
                 localStorage.removeItem('loggedIn');
+                localStorage.removeItem('role');
                 navigate('/login');
             }
         }

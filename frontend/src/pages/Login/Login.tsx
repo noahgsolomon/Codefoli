@@ -14,7 +14,8 @@ const Login: React.FC = () => {
   useEffect(() => {
     if (localStorage.getItem("loggedIn") === "true") {
       navigate("/dashboard");
-    } else {
+    }
+    else {
       setLoading(false);
     }
   }, [navigate]);

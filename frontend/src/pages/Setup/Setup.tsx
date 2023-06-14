@@ -26,6 +26,10 @@ const Setup: React.FC = () => {
     const [matchingSkills, setMatchingSkills] = useState<string[]>([...allSkills]);
     const navigate = useNavigate();
 
+    if (!localStorage.getItem('NEWBIE')){
+        localStorage.setItem('role', 'NEWBIE');
+    }
+
     useEffect(() => {
         const fetchData = async ()=> {
             const response = await userDetails();
@@ -67,6 +71,7 @@ const Setup: React.FC = () => {
     const submitSetup = async () => {
         const postData = await setupAccount(name, email, company, location, selectedSkills, work, projects);
         if (postData){
+            localStorage.setItem('role', 'USER');
             navigate('/dashboard');
         }
         else {

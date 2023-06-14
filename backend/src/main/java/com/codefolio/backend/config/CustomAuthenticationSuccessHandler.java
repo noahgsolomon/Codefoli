@@ -29,10 +29,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 @AllArgsConstructor
@@ -56,10 +53,15 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         String bio = ((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("bio");
         String location = ((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("location");
         String company = ((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("company");
+        String id = Objects.requireNonNull(((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("id")).toString();
+
         boolean newUser = false;
         Users user;
-        if (userRepository.findByEmail(email).isPresent()){
-            user = userRepository.findByEmail(email).get();
+        if (userRepository.findByGitHubId(id).isPresent()){
+            user = userRepository.findByGitHubId(id).get();
+            if (user.getRole().toString().equals("NEWBIE")){
+                newUser = true;
+            }
         }else {
             newUser = true;
             String username = ((OAuth2AuthenticationToken) authentication).getPrincipal().getAttribute("login");
@@ -70,6 +72,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             String accessToken = oAuthClient.getAccessToken().getTokenValue();
             String randomPassword = UUID.randomUUID().toString();
             user = new Users(name, email, passwordEncoder.encode(randomPassword), company, location, bio);
+            user.setGitHubId(id);
             userRepository.save(user);
             try {
                 HttpClient client = HttpClient.newHttpClient();

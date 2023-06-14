@@ -32,6 +32,7 @@ public class SessionIdFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         Cookie sessionCookie = (WebUtils.getCookie(request, "SESSION_ID"));
+        System.out.println(sessionCookie);
         if (sessionCookie != null) {
             String cookie = sessionCookie.getValue();
             System.out.println(cookie);
@@ -52,11 +53,11 @@ public class SessionIdFilter extends OncePerRequestFilter {
         } else {
             SecurityContextHolder.clearContext();
             Cookie deleteCookie = new Cookie("SESSION_ID", null);
-                deleteCookie.setPath("/");
-                deleteCookie.setMaxAge(0);
-                response.addCookie(deleteCookie);
+            deleteCookie.setPath("/");
+            deleteCookie.setMaxAge(0);
+            response.addCookie(deleteCookie);
 
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Session");
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Session");
         }
 
         filterChain.doFilter(request, response);
