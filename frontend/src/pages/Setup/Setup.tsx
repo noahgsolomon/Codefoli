@@ -18,13 +18,41 @@ const Setup: React.FC = () => {
     const [addWork, setAddWork] = useState({company: '', position: '', startDate: '', endDate: '', description: ''});
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
-    const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+    const [selectedSkills, setSelectedSkills] = useState<{skill: string, color: string}[]>([]);
     const [addingJob, setAddingJob] = useState(false);
     const [addingProject, setAddingProject] = useState(false);
     const [addProject, setAddProject] = useState({name: '', description: '', language: '', updatedAt: ''});
     const allSkills = Skills;
     const [matchingSkills, setMatchingSkills] = useState<string[]>([...allSkills]);
     const navigate = useNavigate();
+
+    const skillColors = [
+        "bg-red-500",
+        "bg-orange-500",
+        "bg-yellow-500",
+        "bg-green-500",
+        "bg-blue-500",
+        "bg-indigo-500",
+        "bg-purple-500",
+        "bg-pink-500",
+        "bg-teal-500",
+        "bg-cyan-500",
+        "bg-amber-500",
+        "bg-emerald-500",
+        "bg-fuchsia-500",
+        "bg-lime-500",
+        "bg-sky-500",
+        "bg-rose-500",
+        "bg-amber-500",
+        "bg-emerald-500",
+        "bg-lime-500",
+        "bg-sky-500",
+        "bg-rose-500",
+        "bg-amber-500",
+        "bg-emerald-500",
+        "bg-lime-500",
+        "bg-sky-500",
+    ];
 
     if (!localStorage.getItem('NEWBIE')){
         localStorage.setItem('role', 'NEWBIE');
@@ -69,7 +97,7 @@ const Setup: React.FC = () => {
     }, [search, allSkills]);
 
     const submitSetup = async () => {
-        const postData = await setupAccount(name, email, company, location, selectedSkills, work, projects);
+        const postData = await setupAccount(name, email, company, location, selectedSkills.map(skill => skill.skill), work, projects);
         if (postData){
             localStorage.setItem('role', 'USER');
             navigate('/dashboard');
@@ -98,19 +126,24 @@ const Setup: React.FC = () => {
     }
 
     const addSkill = (skill: Skills) => {
-        if (!selectedSkills.includes(skill)) {
-            setSelectedSkills([...selectedSkills, skill]);
+        const skillExists = selectedSkills.some((selectedSkill) => Object.is(selectedSkill.skill, skill));
+        if (!skillExists) {
+            setSelectedSkills([...selectedSkills, {
+                skill: skill,
+                color: skillColors[Math.floor(Math.random() * skillColors.length)]
+            }]);
         }
     }
 
     const removeSkill = (skillToRemove: string) => {
-        setSelectedSkills(selectedSkills.filter(skill => skill !== skillToRemove));
+        setSelectedSkills(selectedSkills.filter(skill => skill.skill !== skillToRemove));
     };
 
     return (
-        <div className="flex justify-center items-center my-20">
+        <div className="flex justify-center items-center flex-col my-5">
+            <div className="mb-10 text-4xl font-bold">Let's set up your <span className="text-white bg-red-500 px-1 py-1">Page</span>!</div>
             {page === 0 && (
-                <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-8/12" onSubmit={(e) => e.preventDefault()}>
+                <form className="bg-white shadow-custom hover:shadow-customHover hover:-translate-y-0.5 transition-all rounded px-8 pt-6 pb-8 border-2 border-black mb-4 w-8/12" onSubmit={(e) => e.preventDefault()}>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
                             Name
@@ -152,29 +185,36 @@ const Setup: React.FC = () => {
                         <div className="relative">
                             <input
                                 className="w-full p-3 my-3 border border-gray-300 rounded-md bg-white transition-shadow"
-                                id="skills" type="text" value={search} onChange={(e) => setSearch(e.target.value)} />
-                            {search && <div className="overflow-x-hidden absolute left-0 mt-2 w-full bg-white border border-gray-200 z-10 max-h-60 overflow-y-auto">
+                                id="skills" type="text" value={search} onChange={(e) => setSearch(e.target.value)} onBlur={() => setMatchingSkills([])}/>
+                            {(search && matchingSkills.length > 0) && <div className="overflow-x-hidden absolute w-full left-0 mt-2 bg-white border border-gray-200 z-10 max-h-60 overflow-y-auto rounded pb-72 pt-5">
                                 {matchingSkills.map(skill => (
-                                    <div key={skill} className="cursor-pointer hover:bg-blue-100 p-2" onClick={() => {
-                                        if (Skills.includes(skill as Skills)) {
-                                            addSkill(skill as Skills);
-                                            setSearch('');
-                                        }
-                                    }}>
-                                        {skill}
+                                    <div
+                                        key={skill}
+                                        className="m-1 bg-black p-2 inline-block rounded-full cursor-pointer transition-all hover:opacity-90 hover:-translate-y-0.5 border-b border-gray-300"
+                                        onClick={() => {
+                                            if (Skills.includes(skill as Skills)) {
+                                                addSkill(skill as Skills);
+                                                setSearch('');
+                                            }
+                                        }}
+                                    >
+                                        <span className="px-2 text-white">{skill}</span>
                                     </div>
                                 ))}
                             </div>}
                         </div>
                         {selectedSkills.map(skill => (
-                            <div key={skill} className="my-2 bg-gray-200 p-2 rounded flex justify-between">                                <span>{skill}</span>
-                                <button onClick={() => removeSkill(skill)}>Remove</button>
+                            <div key={skill.skill} className={"m-1 bg-gray-200 p-2 inline-block rounded-full cursor-pointer transition-all hover:opacity-90 hover:-translate-y-0.5 " + skill.color} onClick={() => removeSkill(skill.skill)}>
+                                <span className="px-2 text-white">{skill.skill}</span>
                             </div>
                         ))}
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="flex justify-end">
                         <button onClick={incrementPage}
-                                className="flex items-center justify-center cursor-pointer w-full mb-3 rounded-2xl px-9 py-6 text-lg transition-all hover:opacity-90 border-2 border-black text-black hover:-translate-y-1"
+                                className=
+                                    {"flex items-center justify-center text-base cursor-pointer rounded-2xl px-8 py-3 mt-3 transition-all font-bold " +
+                                    (name && email && company && location && selectedSkills.length !== 0 ? "cursor-pointer text-black " +
+                                        " hover:-translate-y-0.5 hover:bg-blue-500 active:translate-y-0.5 text-white bg-black" : "cursor-default text-gray-500 bg-gray-200")}
                                 disabled={!name || !email || !company || !location || selectedSkills.length === 0}
                         >
                             Next

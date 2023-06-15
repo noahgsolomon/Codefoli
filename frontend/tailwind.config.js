@@ -10,7 +10,8 @@ export default {
   theme: {
     extend: {
       boxShadow: {
-        custom: '7px 7px #0b0b0b',
+        custom: '4px 4px #0b0b0b',
+        customHover: '7px 7px #0b0b0b',
       },
       fontFamily: {
         custom: ['Onest-Regular', 'sans-serif'],
