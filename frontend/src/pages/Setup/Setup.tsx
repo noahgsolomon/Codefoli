@@ -96,6 +96,10 @@ const Setup: React.FC = () => {
         setMatchingSkills(newMatchingSkills);
     }, [search, allSkills]);
 
+    useEffect(() => {
+        console.log(selectedSkills)
+    }, [selectedSkills])
+
     const submitSetup = async () => {
         const postData = await setupAccount(name, email, company, location, selectedSkills.map(skill => skill.skill), work, projects);
         if (postData){
@@ -126,8 +130,10 @@ const Setup: React.FC = () => {
     }
 
     const addSkill = (skill: Skills) => {
+        console.log(skill)
         const skillExists = selectedSkills.some((selectedSkill) => Object.is(selectedSkill.skill, skill));
         if (!skillExists) {
+            console.log('hi')
             setSelectedSkills([...selectedSkills, {
                 skill: skill,
                 color: skillColors[Math.floor(Math.random() * skillColors.length)]
@@ -185,7 +191,7 @@ const Setup: React.FC = () => {
                         <div className="relative">
                             <input
                                 className="w-full p-3 my-3 border border-gray-300 rounded-md bg-white transition-shadow"
-                                id="skills" type="text" value={search} onChange={(e) => setSearch(e.target.value)} onBlur={() => setMatchingSkills([])}/>
+                                id="skills" type="text" value={search} onChange={(e) => setSearch(e.target.value)}/>
                             {(search && matchingSkills.length > 0) && <div className="overflow-x-hidden absolute w-full left-0 mt-2 bg-white border border-gray-200 z-10 max-h-60 overflow-y-auto rounded pb-72 pt-5">
                                 {matchingSkills.map(skill => (
                                     <div
@@ -213,8 +219,8 @@ const Setup: React.FC = () => {
                         <button onClick={incrementPage}
                                 className=
                                     {"flex items-center justify-center text-base cursor-pointer rounded-2xl px-8 py-3 mt-3 transition-all font-bold " +
-                                    (name && email && company && location && selectedSkills.length !== 0 ? "cursor-pointer text-black " +
-                                        " hover:-translate-y-0.5 hover:bg-blue-500 active:translate-y-0.5 text-white bg-black" : "cursor-default text-gray-500 bg-gray-200")}
+                                    (name && email && company && location && selectedSkills.length !== 0 ?
+                                        "cursor-pointer text-black hover:-translate-y-0.5 hover:bg-blue-500 active:translate-y-0.5 text-white bg-black" : "cursor-default text-gray-500 bg-gray-200")}
                                 disabled={!name || !email || !company || !location || selectedSkills.length === 0}
                         >
                             Next
@@ -223,7 +229,7 @@ const Setup: React.FC = () => {
                 </form>
             )}
             {page === 1 && (
-                <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-8/12" onSubmit={(e) => e.preventDefault()}>
+                <form className="bg-white shadow-custom hover:shadow-customHover hover:-translate-y-0.5 transition-all rounded px-8 pt-6 pb-8 border-2 border-black mb-4 w-8/12" onSubmit={(e) => e.preventDefault()}>
                     <div>
                         {work.map((job, index) => (
                             <div key={index} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -293,8 +299,12 @@ const Setup: React.FC = () => {
                         </div>
                     )}
                     {work.length < 1 && (
-                        <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                            <h3 className="font-bold mb-2">No jobs listed</h3>
+                        <div className="bg-white shadow-custom hover:-translate-y-0.5 transition-all border-2 border-black rounded px-8 pt-6 pb-8 mb-4">
+                            <div className="flex flex-row justify-between">
+                                <h3 className="font-bold mb-2 bg-blue-500 text-white px-2 py-1">No jobs listed</h3>
+                                <button className="border-2 border-black text-sm px-4 rounded-full transition-all hover:-translate-y-0.5 hover:opacity-90 hover:bg-black hover:text-white ">Edit</button>
+                            </div>
+
                             <p>add jobs below</p>
                             <p></p>
                             <p></p>
@@ -303,23 +313,25 @@ const Setup: React.FC = () => {
                     <div className="mb-32"></div>
                     <div className="flex justify-center mb-4">
                         <button
-                            className={"flex items-center justify-center cursor-pointer px-6 mb-3 rounded-2xl py-1 text-lg transition-all hover:opacity-90 border-2 border-black text-black hover:-translate-y-1" + `${addingJob ? 'hidden' : ''}`}
+                            className={"flex bg-black text-white px-5 transition-all hover:-translate-y-0.5 hover:bg-green-500 rounded-full" + `${addingJob ? 'hidden' : ''}`}
                             onClick={() => setAddingJob(true)}
                         >
-                            Add job
+                            +
                         </button>
                     </div>
                     <div className="flex justify-between">
                         <button
                             onClick={decrementPage}
-                            className="flex items-center justify-center cursor-pointer w-full mb-3 rounded-2xl py-1 text-lg transition-all hover:opacity-90 border-2 border-black text-black hover:-translate-y-1"
+                            className=""
                         >
                             Back
                         </button>
                         <button
                             onClick={incrementPage}
-                            className="flex items-center justify-center cursor-pointer w-full mb-3 rounded-2xl py-1 text-lg transition-all hover:opacity-90 border-2 border-black text-black hover:-translate-y-1"
-                            disabled={work.length < 1}
+                            className={"flex items-center justify-center text-base cursor-pointer rounded-2xl px-8 py-3 mt-3 transition-all font-bold " + (work.length > 0 ?
+                            "cursor-pointer text-black hover:-translate-y-0.5 hover:bg-blue-500 active:translate-y-0.5 text-white bg-black" : "cursor-default text-gray-500 bg-gray-200")}
+
+                        disabled={work.length < 1}
                         >
                             Next
                         </button>
