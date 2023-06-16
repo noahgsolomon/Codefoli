@@ -149,7 +149,7 @@ const Setup: React.FC = () => {
         <div className="flex justify-center items-center flex-col my-5">
             <div className="mb-10 text-4xl font-bold">Let's set up your <span className="text-white bg-red-500 px-1 py-1">Page</span>!</div>
             {page === 0 && (
-                <form className="bg-white shadow-custom hover:shadow-customHover hover:-translate-y-0.5 transition-all rounded px-8 pt-6 pb-8 border-2 border-black mb-4 w-8/12" onSubmit={(e) => e.preventDefault()}>
+                <form className="bg-white shadow-custom transition-all rounded px-8 pt-6 pb-8 border-2 border-black mb-4 w-8/12" onSubmit={(e) => e.preventDefault()}>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
                             Name
@@ -229,52 +229,78 @@ const Setup: React.FC = () => {
                 </form>
             )}
             {page === 1 && (
-                <form className="bg-white shadow-custom hover:shadow-customHover hover:-translate-y-0.5 transition-all rounded px-8 pt-6 pb-8 border-2 border-black mb-4 w-8/12" onSubmit={(e) => e.preventDefault()}>
+                <form className="bg-white shadow-custom transition-all rounded px-8 pt-6 pb-8 border-2 border-black mb-4 w-8/12" onSubmit={(e) => e.preventDefault()}>
                     <div>
                         {work.map((job, index) => (
-                            <div key={index} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                                <h3 className="font-bold mb-2">{job.company}</h3>
-                                <p>{job.position}</p>
-                                <p>{job.startDate} - {job.endDate}</p>
-                                <p>{job.description}</p>
+                            <div key={index} className="bg-white shadow-custom hover:-translate-y-0.5 transition-all border-2 border-black rounded px-8 pt-6 pb-8 mb-4">
+                                <div className="flex flex-row justify-between">
+                                    <h3 className="font-bold mb-2 bg-blue-500 text-white px-2 py-1">{job.company}</h3>
+                                    <button className="border-2 border-black text-sm px-4 rounded-full transition-all hover:-translate-y-0.5 hover:opacity-90 hover:bg-black hover:text-white ">Edit</button>
+                                </div>
+
+                                <p className="font-bold underline">{job.position}</p>
+                                <p>{job.startDate}-{job.endDate}</p>
+                                <p className="font italic mt-5">{job.description}</p>
                             </div>
                         ))}
                     </div>
                     {addingJob && (
-                        <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                            <input
-                                type="text"
-                                placeholder="Company"
-                                className="w-full p-3 mb-4 border border-gray-300 rounded-md bg-white transition-shadow"
-                                onChange={(e) => setAddWork({ ...addWork, company: e.target.value })}
-                            />
-                            <input
-                                type="text"
-                                placeholder="Position"
-                                className="w-full p-3 mb-4 border border-gray-300 rounded-md bg-white transition-shadow"
-                                onChange={(e) => setAddWork({ ...addWork, position: e.target.value })}
-                            />
-                            <input
-                                type="text"
-                                placeholder="Start Date"
-                                className="w-full p-3 mb-4 border border-gray-300 rounded-md bg-white transition-shadow"
-                                onChange={(e) => setAddWork({ ...addWork, startDate: e.target.value })}
-                            />
-                            <input
-                                type="text"
-                                placeholder="End Date"
-                                className="w-full p-3 mb-4 border border-gray-300 rounded-md bg-white transition-shadow"
-                                onChange={(e) => setAddWork({ ...addWork, endDate: e.target.value })}
-                            />
-                            <input
-                                type="text"
-                                placeholder="Description"
-                                className="w-full p-3 mb-4 border border-gray-300 rounded-md bg-white transition-shadow"
-                                onChange={(e) => setAddWork({ ...addWork, description: e.target.value })}
-                            />
+                        <div className="bg-white transition-all border-2 shadow-custom hover:shadow-customHover border-black rounded px-8 pt-6 pb-8 mb-4">
+                            <div className="relative">
+                                <label htmlFor="company" className="text-base font-bold">Company</label>
+                                <input
+                                    type="text"
+                                    id="company"
+                                    placeholder="// Facebook"
+                                    className="w-full p-3 mb-4 mt-2 placeholder-black border-2 border-black rounded-xl shadow-custom hover:shadow-customHover bg-white transition-shadow ring-transparent focus:border-black focus:ring-0"
+                                    onChange={(e) => setAddWork({ ...addWork, company: e.target.value })}
+                                />
+                            </div>
+
+                            <div className="relative">
+                                <label htmlFor="position" className="text-base font-bold">Position</label>
+                                <input
+                                    type="text"
+                                    id="position"
+                                    placeholder="// the mf CEO"
+                                    className="w-full p-3 mb-4 mt-2 placeholder-black border-2 border-black rounded-xl shadow-custom hover:shadow-customHover bg-white transition-shadow ring-transparent focus:border-black focus:ring-0"
+                                    onChange={(e) => setAddWork({ ...addWork, position: e.target.value })}
+                                />
+                            </div>
+                            <div className="relative">
+                                <label htmlFor="start-date" className="text-base font-bold">Start Date</label>
+                                <input
+                                    type="text"
+                                    id="start-date"
+                                    placeholder="// 106 B.C."
+                                    className="w-full p-3 mb-4 mt-2 placeholder-black border-2 border-black rounded-xl shadow-custom hover:shadow-customHover bg-white transition-shadow ring-transparent focus:border-black focus:ring-0"
+                                    onChange={(e) => setAddWork({ ...addWork, startDate: e.target.value })}
+                                />
+                            </div>
+
+                            <div className="relative">
+                                <label htmlFor="end-date" className="text-base font-bold">End Date</label>
+                                <input
+                                    type="text"
+                                    id="start-date"
+                                    placeholder="// 44 B.C."
+                                    className="w-full p-3 mb-4 mt-2 placeholder-black border-2 border-black rounded-xl shadow-custom hover:shadow-customHover bg-white transition-shadow ring-transparent focus:border-black focus:ring-0"
+                                    onChange={(e) => setAddWork({ ...addWork, endDate: e.target.value })}
+                                />
+                            </div>
+
+                            <div className="relative">
+                                <label htmlFor="description" className="text-base font-bold">Description</label>
+                                <textarea
+                                    id="description"
+                                    placeholder="Please write a short description of your job."
+                                    className="w-full p-3 mb-4 mt-2 placeholder-black border-2 border-black rounded-xl shadow-custom hover:shadow-customHover bg-white transition-shadow ring-transparent focus:border-black focus:ring-0 max-h-52"
+                                    onChange={(e) => setAddWork({ ...addWork, description: e.target.value })}
+                                />
+                            </div>
                             <div className="flex justify-between">
                                 <button
-                                    className="flex items-center justify-center cursor-pointer w-full mb-3 rounded-2xl py-1 text-lg transition-all hover:opacity-90 border-2 border-black text-black hover:-translate-y-1"
+                                    className="transition-all hover:text-red-500 underline"
                                     onClick={() => {
                                         setAddingJob(false);
                                         setAddWork({company: '', position: '', startDate: '', endDate: '', description: ''});
@@ -283,16 +309,16 @@ const Setup: React.FC = () => {
                                     Cancel
                                 </button>
                                 <button
-                                    className="flex items-center justify-center cursor-pointer w-full mb-3 rounded-2xl py-1 text-lg transition-all hover:opacity-90 border-2 border-black text-black hover:-translate-y-1"
+                                    className={"flex items-center justify-center text-base cursor-pointer rounded-2xl px-8 py-3 mt-3 transition-all font-bold " + ((addWork.company && addWork.position && addWork.startDate && addWork.endDate && addWork.description) ?
+                                        "cursor-pointer text-black hover:-translate-y-0.5 hover:bg-green-500 active:translate-y-0.5 text-white bg-black" : "cursor-default text-gray-500 bg-gray-200")}
                                     onClick={() => {
-                                        if (addWork.company == '' || addWork.position == '' || addWork.startDate == '' || addWork.endDate == '' || addWork.description == '') {
-                                            return;
-                                        }
                                         setWork([...work, addWork]);
                                         setAddingJob(false);
                                         setAddWork({company: '', position: '', startDate: '', endDate: '', description: ''});
 
-                                    }}>
+                                    }}
+                                disabled={!addWork.company || !addWork.position || !addWork.startDate || !addWork.endDate || !addWork.description}
+                                >
                                     Add
                                 </button>
                             </div>
@@ -313,7 +339,7 @@ const Setup: React.FC = () => {
                     <div className="mb-32"></div>
                     <div className="flex justify-center mb-4">
                         <button
-                            className={"flex bg-black text-white px-5 transition-all hover:-translate-y-0.5 hover:bg-green-500 rounded-full" + `${addingJob ? 'hidden' : ''}`}
+                            className={"flex bg-black text-white px-5 transition-all hover:-translate-y-0.5 hover:bg-green-500 rounded-full " + `${addingJob ? 'hidden' : ''}`}
                             onClick={() => setAddingJob(true)}
                         >
                             +
@@ -322,7 +348,7 @@ const Setup: React.FC = () => {
                     <div className="flex justify-between">
                         <button
                             onClick={decrementPage}
-                            className=""
+                            className="underline hover:text-blue-500 transition-all"
                         >
                             Back
                         </button>
