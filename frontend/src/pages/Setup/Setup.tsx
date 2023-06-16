@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import { setupAccount, userDetails } from "api/userapi.tsx";
 import { Skills } from "Type/Skills.tsx";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,9 @@ const Setup: React.FC = () => {
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
   const [location, setLocation] = useState("");
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<
+    { project: Project; color: string }[]
+  >([]);
   const [work, setWork] = useState<{ work: Work; color: string }[]>([]);
   const [addWork, setAddWork] = useState({
     company: "",
@@ -44,37 +46,9 @@ const Setup: React.FC = () => {
   const [locationError, setLocationError] = useState(false);
   const [skillsError, setSkillsError] = useState(false);
 
-
   const navigate = useNavigate();
 
-  const skillColors = [
-    "bg-red-500",
-    "bg-orange-500",
-    "bg-yellow-500",
-    "bg-green-500",
-    "bg-blue-500",
-    "bg-indigo-500",
-    "bg-purple-500",
-    "bg-pink-500",
-    "bg-teal-500",
-    "bg-cyan-500",
-    "bg-amber-500",
-    "bg-emerald-500",
-    "bg-fuchsia-500",
-    "bg-lime-500",
-    "bg-sky-500",
-    "bg-rose-500",
-    "bg-amber-500",
-    "bg-emerald-500",
-    "bg-lime-500",
-    "bg-sky-500",
-    "bg-rose-500",
-    "bg-amber-500",
-    "bg-emerald-500",
-    "bg-lime-500",
-    "bg-sky-500",
-  ];
-  const jobColors = [
+  const colors = useMemo(() => [
     "bg-yellow-500",
     "bg-green-500",
     "bg-blue-500",
@@ -83,18 +57,17 @@ const Setup: React.FC = () => {
     "bg-pink-500",
     "bg-teal-500",
     "bg-red-500",
-  ];
+  ], []);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await userDetails();
       if (response) {
         if (response.role === "USER") {
-          localStorage.setItem('role', 'USER');
-           navigate('/dashboard');
-        }
-        else if (response.role === "NEWBIE") {
-          localStorage.setItem('role', 'NEWBIE');
+          localStorage.setItem("role", "USER");
+          navigate("/dashboard");
+        } else if (response.role === "NEWBIE") {
+          localStorage.setItem("role", "NEWBIE");
         }
         setName(response.name);
         setCompany(response.company || "");
@@ -103,22 +76,25 @@ const Setup: React.FC = () => {
         response.projects
           ? setProjects(
               response.projects.map((project: Project) => ({
-                name: project.name,
-                description: project.description || "",
-                language: project.language,
-                updatedAt: project.updatedAt,
+                project: {
+                  name: project.name,
+                  description: project.description || "",
+                  language: project.language,
+                  updatedAt: project.updatedAt,
+                },
+                color: colors[Math.floor(Math.random() * colors.length)],
               }))
             )
           : setProjects([]);
         setLoading(false);
       } else {
-        localStorage.removeItem('role');
+        localStorage.removeItem("role");
         navigate("/register");
       }
     };
 
     fetchData();
-  }, [navigate]);
+  }, [navigate, colors]);
 
   useEffect(() => {
     const searchUpper = search.toUpperCase();
@@ -128,10 +104,6 @@ const Setup: React.FC = () => {
     setMatchingSkills(newMatchingSkills);
   }, [search, allSkills]);
 
-  useEffect(() => {
-    console.log(selectedSkills);
-  }, [selectedSkills]);
-
   const submitSetup = async () => {
     const postData = await setupAccount(
       name,
@@ -140,7 +112,7 @@ const Setup: React.FC = () => {
       location,
       selectedSkills.map((skill) => skill.skill),
       work.map((item) => item.work),
-      projects
+      projects.map((item) => item.project)
     );
     if (postData) {
       localStorage.setItem("role", "USER");
@@ -175,7 +147,7 @@ const Setup: React.FC = () => {
         ...selectedSkills,
         {
           skill: skill,
-          color: skillColors[Math.floor(Math.random() * skillColors.length)],
+          color: colors[Math.floor(Math.random() * colors.length)],
         },
       ]);
       setSkillsError(false);
@@ -191,6 +163,12 @@ const Setup: React.FC = () => {
   function removeJob(indexToRemove: number) {
     setWork((prevWork) =>
       prevWork.filter((_, index) => index !== indexToRemove)
+    );
+  }
+
+  function removeProject(indexToRemove: number) {
+    setProjects((prevProjects) =>
+      prevProjects.filter((_, index) => index !== indexToRemove)
     );
   }
 
@@ -212,24 +190,26 @@ const Setup: React.FC = () => {
             </label>
             <div className="relative">
               <input
-                  type="text"
-                  id="name"
-                  value={name}
-                  placeholder="// John Doe"
-                  className={`pl-10 mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${nameError ? "border-red-500" : ""}`}
-                  onChange={(e) => {
-                    setName(e.target.value)
-                    if (e.target.value) {
-                      setNameError(false);
-                    }
-                  }}
+                type="text"
+                id="name"
+                value={name}
+                placeholder="// John Doe"
+                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${
+                  nameError ? "border-red-500" : ""
+                }`}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  if (e.target.value) {
+                    setNameError(false);
+                  }
+                }}
               />
               <img
-                  width="24"
-                  height="24"
-                  src="https://img.icons8.com/cotton/24/person-male--v2.png"
-                  alt="user-male-circle"
-                  className="absolute left-2 top-9 transform -translate-y-1/2"
+                width="24"
+                height="24"
+                src="https://img.icons8.com/cotton/24/person-male--v2.png"
+                alt="user-male-circle"
+                className="absolute left-2 top-9 -translate-y-1/2 transform"
               />
             </div>
           </div>
@@ -239,24 +219,26 @@ const Setup: React.FC = () => {
             </label>
             <div className="relative">
               <input
-                  type="text"
-                  id="email"
-                  value={email}
-                  placeholder="// example@gmail.com"
-                  className={`pl-10 mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${emailError ? "border-red-500" : ""}`}
-                  onChange={(e) => {
-                    setEmail(e.target.value)
-                    if (e.target.value) {
-                      setEmailError(false);
-                    }
-                  }}
+                type="text"
+                id="email"
+                value={email}
+                placeholder="// example@gmail.com"
+                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${
+                  emailError ? "border-red-500" : ""
+                }`}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (e.target.value) {
+                    setEmailError(false);
+                  }
+                }}
               />
               <img
-                  width="24"
-                  height="24"
-                  src="https://img.icons8.com/cotton/24/new-post.png"
-                  alt="email"
-                  className="absolute left-2 top-9 transform -translate-y-1/2"
+                width="24"
+                height="24"
+                src="https://img.icons8.com/cotton/24/new-post.png"
+                alt="email"
+                className="absolute left-2 top-9 -translate-y-1/2 transform"
               />
             </div>
           </div>
@@ -266,24 +248,26 @@ const Setup: React.FC = () => {
             </label>
             <div className="relative">
               <input
-                  type="text"
-                  id="company"
-                  value={company}
-                  placeholder="// Monsters Inc."
-                  className={`pl-10 mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${companyError ? "border-red-500" : ""}`}
-                  onChange={(e) => {
-                    setCompany(e.target.value)
-                    if (e.target.value) {
-                      setCompanyError(false);
-                    }
-                  }}
+                type="text"
+                id="company"
+                value={company}
+                placeholder="// Monsters Inc."
+                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${
+                  companyError ? "border-red-500" : ""
+                }`}
+                onChange={(e) => {
+                  setCompany(e.target.value);
+                  if (e.target.value) {
+                    setCompanyError(false);
+                  }
+                }}
               />
               <img
-                  width="24"
-                  height="24"
-                  src="https://img.icons8.com/cotton/24/box--v2.png"
-                  alt="company"
-                  className="absolute left-2 top-9 transform -translate-y-1/2"
+                width="24"
+                height="24"
+                src="https://img.icons8.com/cotton/24/box--v2.png"
+                alt="company"
+                className="absolute left-2 top-9 -translate-y-1/2 transform"
               />
             </div>
           </div>
@@ -293,24 +277,26 @@ const Setup: React.FC = () => {
             </label>
             <div className="relative">
               <input
-                  type="text"
-                  id="location"
-                  value={location}
-                  placeholder="// Hong Kong, China"
-                  className={`pl-10 mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${locationError ? "border-red-500" : ""}`}
-                  onChange={(e) => {
-                    setLocation(e.target.value);
-                    if (e.target.value) {
-                      setLocationError(false);
-                    }
-                  }}
+                type="text"
+                id="location"
+                value={location}
+                placeholder="// Hong Kong, China"
+                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${
+                  locationError ? "border-red-500" : ""
+                }`}
+                onChange={(e) => {
+                  setLocation(e.target.value);
+                  if (e.target.value) {
+                    setLocationError(false);
+                  }
+                }}
               />
               <img
-                  width="24"
-                  height="24"
-                  src="https://img.icons8.com/cotton/24/airplane-take-off--v1.png"
-                  alt="location"
-                  className="absolute left-2 top-9 transform -translate-y-1/2"
+                width="24"
+                height="24"
+                src="https://img.icons8.com/cotton/24/airplane-take-off--v1.png"
+                alt="location"
+                className="absolute left-2 top-9 -translate-y-1/2 transform"
               />
             </div>
           </div>
@@ -321,17 +307,20 @@ const Setup: React.FC = () => {
             <div className="relative">
               <div className="relative">
                 <input
-                    type="text"
-                    id="skills"
-                    className={`pl-10 mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${skillsError ? "border-red-500" : ""}`}
-                    onChange={(e) => setSearch(e.target.value)}
+                  type="text"
+                  id="skills"
+                  value={search}
+                  className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${
+                    skillsError ? "border-red-500" : ""
+                  }`}
+                  onChange={(e) => setSearch(e.target.value)}
                 />
                 <img
-                    width="24"
-                    height="24"
-                    src="https://img.icons8.com/cotton/24/trophy--v1.png"
-                    alt="skills"
-                    className="absolute left-2 top-9 transform -translate-y-1/2"
+                  width="24"
+                  height="24"
+                  src="https://img.icons8.com/cotton/24/trophy--v1.png"
+                  alt="skills"
+                  className="absolute left-2 top-9 -translate-y-1/2 transform"
                 />
               </div>
               {search && matchingSkills.length > 0 && (
@@ -369,7 +358,13 @@ const Setup: React.FC = () => {
           <div className="flex justify-end">
             <button
               onClick={() => {
-                if (!name || !email || !company || !location || selectedSkills.length === 0) {
+                if (
+                  !name ||
+                  !email ||
+                  !company ||
+                  !location ||
+                  selectedSkills.length === 0
+                ) {
                   setNameError(!name);
                   setEmailError(!email);
                   setCompanyError(!company);
@@ -387,7 +382,7 @@ const Setup: React.FC = () => {
                 company &&
                 location &&
                 selectedSkills.length !== 0
-                  ? "cursor-pointer text-white bg-black hover:-translate-y-0.5 hover:bg-blue-500 active:translate-y-0.5"
+                  ? "cursor-pointer bg-black text-white hover:-translate-y-0.5 hover:bg-blue-500 active:translate-y-0.5"
                   : "cursor-default bg-gray-200 text-gray-500")
               }
             >
@@ -416,6 +411,17 @@ const Setup: React.FC = () => {
                   </h3>
                   <div className="flex items-center">
                     <button
+                      className="mr-2 rounded-full border-2 border-black px-4 py-2 text-sm transition-all hover:-translate-y-0.5 hover:bg-black hover:text-white hover:opacity-90"
+                      onClick={() => {
+                        setAddWork(job.work);
+                        setAddingJob(true);
+                        removeJob(index);
+                        window.scrollTo(0, document.body.scrollHeight);
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
                       className="rounded-full bg-red-500 px-4 py-2 text-sm text-white transition-all hover:-translate-y-0.5 hover:opacity-90"
                       onClick={() => removeJob(index)}
                     >
@@ -442,6 +448,7 @@ const Setup: React.FC = () => {
                   type="text"
                   id="company"
                   placeholder="// Facebook"
+                  value={addWork.company}
                   className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
                   onChange={(e) =>
                     setAddWork({ ...addWork, company: e.target.value })
@@ -457,6 +464,7 @@ const Setup: React.FC = () => {
                   type="text"
                   id="position"
                   placeholder="// the mf CEO"
+                  value={addWork.position}
                   className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
                   onChange={(e) =>
                     setAddWork({ ...addWork, position: e.target.value })
@@ -471,6 +479,7 @@ const Setup: React.FC = () => {
                   type="text"
                   id="start-date"
                   placeholder="// 106 B.C."
+                  value={addWork.startDate}
                   className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
                   onChange={(e) =>
                     setAddWork({ ...addWork, startDate: e.target.value })
@@ -486,6 +495,7 @@ const Setup: React.FC = () => {
                   type="text"
                   id="start-date"
                   placeholder="// 44 B.C."
+                  value={addWork.endDate}
                   className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
                   onChange={(e) =>
                     setAddWork({ ...addWork, endDate: e.target.value })
@@ -500,6 +510,7 @@ const Setup: React.FC = () => {
                 <textarea
                   id="description"
                   placeholder="Please write a short description of your job."
+                  value={addWork.description}
                   className="mb-4 mt-2 max-h-52 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
                   onChange={(e) =>
                     setAddWork({ ...addWork, description: e.target.value })
@@ -530,7 +541,7 @@ const Setup: React.FC = () => {
                     addWork.startDate &&
                     addWork.endDate &&
                     addWork.description
-                      ? "cursor-pointer bg-black text-black text-white hover:-translate-y-0.5 hover:bg-green-500 active:translate-y-0.5"
+                      ? "cursor-pointer bg-black text-white hover:-translate-y-0.5 hover:bg-green-500 active:translate-y-0.5"
                       : "cursor-default bg-gray-200 text-gray-500")
                   }
                   onClick={() => {
@@ -539,9 +550,7 @@ const Setup: React.FC = () => {
                       {
                         work: addWork,
                         color:
-                          jobColors[
-                            Math.floor(Math.random() * jobColors.length)
-                          ],
+                          colors[Math.floor(Math.random() * colors.length)],
                       },
                     ]);
                     setAddingJob(false);
@@ -601,7 +610,7 @@ const Setup: React.FC = () => {
               className={
                 "mt-3 flex cursor-pointer items-center justify-center rounded-2xl px-8 py-3 text-base font-bold transition-all " +
                 (work.length > 0
-                  ? "cursor-pointer bg-black text-black text-white hover:-translate-y-0.5 hover:bg-blue-500 active:translate-y-0.5"
+                  ? "cursor-pointer bg-black text-white hover:-translate-y-0.5 hover:bg-blue-500 active:translate-y-0.5"
                   : "cursor-default bg-gray-200 text-gray-500")
               }
               disabled={work.length < 1}
@@ -621,86 +630,165 @@ const Setup: React.FC = () => {
             {projects.map((project, index) => (
               <div
                 key={index}
-                className="mb-4 rounded bg-white px-8 pb-8 pt-6 shadow-md"
+                className="mb-4 rounded border-2 border-black bg-white px-4 pb-8 pt-6 shadow-custom transition-all hover:-translate-y-0.5"
               >
-                <h3 className="mb-2 font-bold">{project.name}</h3>
-                <p>{project.description}</p>
-                <p>Language: {project.language}</p>
-                <p>Last updated: {project.updatedAt}</p>
+                <div className="flex flex-row justify-between">
+                  <h3
+                    className={`mb-2 px-2 py-1 font-bold text-white ${project.color}`}
+                  >
+                    {project.project.name}
+                  </h3>
+                  <div className="flex items-center">
+                    <button
+                      className="mr-2 rounded-full border-2 border-black px-4 py-2 text-sm transition-all hover:-translate-y-0.5 hover:bg-black hover:text-white hover:opacity-90"
+                      onClick={() => {
+                        setAddProject(project.project);
+                        setAddingProject(true);
+                        removeProject(index);
+                        window.scrollTo(0, document.body.scrollHeight);
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="rounded-full bg-red-500 px-4 py-2 text-sm text-white transition-all hover:-translate-y-0.5 hover:opacity-90"
+                      onClick={() => removeProject(index)}
+                    >
+                      &times;
+                    </button>
+                  </div>
+                </div>
+                <p className="font-bold underline">
+                  Language: {project.project.language}
+                </p>
+                <p>
+                  {new Date(project.project.updatedAt).toLocaleString("en-US", {
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </p>
+                <p className="font mt-5 italic">
+                  {project.project.description}
+                </p>
               </div>
             ))}
             {addingProject && (
-              <div className="mb-4 rounded bg-white px-8 pb-8 pt-6 shadow-md">
-                <input
-                  type="text"
-                  placeholder="Project name"
-                  className="mb-4 w-full rounded-md border border-gray-300 bg-white p-3 transition-shadow"
-                  onChange={(e) =>
-                    setAddProject({ ...addProject, name: e.target.value })
-                  }
-                />
-                <input
-                  type="text"
-                  placeholder="Description"
-                  className="mb-4 w-full rounded-md border border-gray-300 bg-white p-3 transition-shadow"
-                  onChange={(e) =>
-                    setAddProject({
-                      ...addProject,
-                      description: e.target.value,
-                    })
-                  }
-                />
-                <input
-                  type="text"
-                  placeholder="language"
-                  className="mb-4 w-full rounded-md border border-gray-300 bg-white p-3 transition-shadow"
-                  onChange={(e) =>
-                    setAddProject({ ...addProject, language: e.target.value })
-                  }
-                />
-                <input
-                  type="text"
-                  placeholder="year of project"
-                  className="mb-4 w-full rounded-md border border-gray-300 bg-white p-3 transition-shadow"
-                  onChange={(e) =>
-                    setAddProject({ ...addProject, updatedAt: e.target.value })
-                  }
-                />
+              <div className="mb-4 rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all hover:shadow-customHover">
+                <div className="relative">
+                  <label htmlFor="name" className="text-base font-bold">
+                    Project name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    placeholder="// Mojo Compiler"
+                    value={addProject.name}
+                    className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
+                    onChange={(e) =>
+                      setAddProject({ ...addProject, name: e.target.value })
+                    }
+                  />
+                </div>
+
+                <div className="relative">
+                  <label htmlFor="language" className="text-base font-bold">
+                    Language
+                  </label>
+                  <input
+                    type="text"
+                    id="language"
+                    placeholder="// Mojo"
+                    value={addProject.language}
+                    className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
+                    onChange={(e) =>
+                      setAddProject({ ...addProject, language: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="relative">
+                  <label htmlFor="date" className="text-base font-bold">
+                    Date
+                  </label>
+                  <input
+                    type="text"
+                    id="date"
+                    placeholder="// 100 A.D."
+                    value={addProject.updatedAt}
+                    className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
+                    onChange={(e) =>
+                      setAddProject({
+                        ...addProject,
+                        updatedAt: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+
+                <div className="relative">
+                  <label htmlFor="description" className="text-base font-bold">
+                    Description
+                  </label>
+                  <textarea
+                    id="description"
+                    placeholder="Please write a short description of your project."
+                    value={addProject.description}
+                    className="mb-4 mt-2 max-h-52 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
+                    onChange={(e) =>
+                      setAddProject({
+                        ...addProject,
+                        description: e.target.value,
+                      })
+                    }
+                  />
+                </div>
                 <div className="flex justify-between">
                   <button
-                    className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl border-2 border-black py-1 text-lg text-black transition-all hover:-translate-y-1 hover:opacity-90"
+                    className="underline transition-all hover:text-red-500"
                     onClick={() => {
                       setAddingProject(false);
                       setAddProject({
                         name: "",
-                        description: "",
                         language: "",
                         updatedAt: "",
+                        description: "",
                       });
                     }}
                   >
                     Cancel
                   </button>
                   <button
-                    className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl border-2 border-black py-1 text-lg text-black transition-all hover:-translate-y-1 hover:opacity-90"
+                    className={
+                      "mt-3 flex cursor-pointer items-center justify-center rounded-2xl px-8 py-3 text-base font-bold transition-all " +
+                      (addProject.name &&
+                      addProject.language &&
+                      addProject.updatedAt &&
+                      addProject.description
+                        ? "cursor-pointer bg-black text-white hover:-translate-y-0.5 hover:bg-green-500 active:translate-y-0.5"
+                        : "cursor-default bg-gray-200 text-gray-500")
+                    }
                     onClick={() => {
-                      if (
-                        addProject.name == "" ||
-                        addProject.description == "" ||
-                        addProject.language == "" ||
-                        addProject.updatedAt == ""
-                      ) {
-                        return;
-                      }
-                      setProjects([...projects, addProject]);
+                      setProjects([
+                        ...projects,
+                        {
+                          project: addProject,
+                          color:
+                            colors[Math.floor(Math.random() * colors.length)],
+                        },
+                      ]);
                       setAddingProject(false);
                       setAddProject({
                         name: "",
-                        description: "",
                         language: "",
                         updatedAt: "",
+                        description: "",
                       });
                     }}
+                    disabled={
+                      !addProject.name ||
+                      !addProject.language ||
+                      !addProject.updatedAt ||
+                      !addProject.description
+                    }
                   >
                     Add
                   </button>
@@ -710,12 +798,12 @@ const Setup: React.FC = () => {
             {projects.length < 1 && (
               <div className="mb-4 rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all hover:-translate-y-0.5">
                 <div className="flex flex-row justify-between">
-                  <h3 className="mb-2 bg-blue-500 px-2 py-1 font-bold text-white">
-                    No jobs listed
+                  <h3 className="mb-2 bg-red-500 px-2 py-1 font-bold text-white">
+                    No projects listed
                   </h3>
                 </div>
 
-                <p className="font mt-5 italic">Add jobs below</p>
+                <p className="font mt-5 italic">Add projects below</p>
               </div>
             )}
             <div className="mb-4 flex justify-center">
@@ -741,7 +829,7 @@ const Setup: React.FC = () => {
                 className={
                   "mt-3 flex cursor-pointer items-center justify-center rounded-2xl px-8 py-3 text-base font-bold transition-all " +
                   (projects.length > 0
-                    ? "cursor-pointer bg-black text-black text-white hover:-translate-y-0.5 hover:bg-blue-500 active:translate-y-0.5"
+                    ? "cursor-pointer bg-black text-white hover:-translate-y-0.5 hover:bg-blue-500 active:translate-y-0.5"
                     : "cursor-default bg-gray-200 text-gray-500")
                 }
                 disabled={projects.length < 1}
