@@ -22,10 +22,16 @@ const Home: React.FC = () => {
     const fadeInFeature = useSpring({ opacity: inViewFeature ? 1 : 0, transform: inViewFeature ? 'translateY(0)' : 'translateY(20px)' });
 
     useEffect(() => {
-        if (localStorage.getItem('loggedIn') === 'true') {
+        if (localStorage.getItem('role') === 'NEWBIE') {
+            navigate('/setup');
+        }
+        else if (localStorage.getItem('role') === 'USER') {
             navigate('/dashboard');
         }
-        setLoading(false);
+        else{
+            setLoading(false);
+        }
+
     }, [navigate]);
 
     if (loading){

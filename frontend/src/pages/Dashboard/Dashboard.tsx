@@ -15,10 +15,9 @@ const Dashboard: React.FC = () => {
         if (user.role === "NEWBIE") {
           navigate("/setup");
         }
-        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("role", "USER");
         console.log(user);
       } else {
-        localStorage.removeItem("loggedIn");
         localStorage.removeItem("role");
         navigate("/login");
       }

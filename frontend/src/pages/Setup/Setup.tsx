@@ -38,6 +38,13 @@ const Setup: React.FC = () => {
   const [matchingSkills, setMatchingSkills] = useState<string[]>([
     ...allSkills,
   ]);
+  const [nameError, setNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [companyError, setCompanyError] = useState(false);
+  const [locationError, setLocationError] = useState(false);
+  const [skillsError, setSkillsError] = useState(false);
+
+
   const navigate = useNavigate();
 
   const skillColors = [
@@ -78,16 +85,16 @@ const Setup: React.FC = () => {
     "bg-red-500",
   ];
 
-  if (!localStorage.getItem("NEWBIE")) {
-    localStorage.setItem("role", "NEWBIE");
-  }
-
   useEffect(() => {
     const fetchData = async () => {
       const response = await userDetails();
       if (response) {
-        if (response.role !== "NEWBIE") {
-          // navigate('/dashboard');
+        if (response.role === "USER") {
+          localStorage.setItem('role', 'USER');
+           navigate('/dashboard');
+        }
+        else if (response.role === "NEWBIE") {
+          localStorage.setItem('role', 'NEWBIE');
         }
         setName(response.name);
         setCompany(response.company || "");
@@ -105,6 +112,7 @@ const Setup: React.FC = () => {
           : setProjects([]);
         setLoading(false);
       } else {
+        localStorage.removeItem('role');
         navigate("/register");
       }
     };
@@ -163,7 +171,6 @@ const Setup: React.FC = () => {
       Object.is(selectedSkill.skill, skill)
     );
     if (!skillExists) {
-      console.log("hi");
       setSelectedSkills([
         ...selectedSkills,
         {
@@ -171,6 +178,7 @@ const Setup: React.FC = () => {
           color: skillColors[Math.floor(Math.random() * skillColors.length)],
         },
       ]);
+      setSkillsError(false);
     }
   };
 
@@ -194,6 +202,7 @@ const Setup: React.FC = () => {
       </div>
       {page === 0 && (
         <form
+          noValidate={true}
           className="mb-4 mt-5 w-8/12 max-w-2xl rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all"
           onSubmit={(e) => e.preventDefault()}
         >
@@ -201,66 +210,130 @@ const Setup: React.FC = () => {
             <label htmlFor="name" className="text-base font-bold">
               Name
             </label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              placeholder="..."
-              className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
-              onChange={(e) => setName(e.target.value)}
-            />
+            <div className="relative">
+              <input
+                  type="text"
+                  id="name"
+                  value={name}
+                  placeholder="// John Doe"
+                  className={`pl-10 mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${nameError ? "border-red-500" : ""}`}
+                  onChange={(e) => {
+                    setName(e.target.value)
+                    if (e.target.value) {
+                      setNameError(false);
+                    }
+                  }}
+              />
+              <img
+                  width="24"
+                  height="24"
+                  src="https://img.icons8.com/cotton/24/person-male--v2.png"
+                  alt="user-male-circle"
+                  className="absolute left-2 top-9 transform -translate-y-1/2"
+              />
+            </div>
           </div>
           <div className="relative">
             <label htmlFor="email" className="text-base font-bold">
               Email
             </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              placeholder="..."
-              className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <div className="relative">
+              <input
+                  type="text"
+                  id="email"
+                  value={email}
+                  placeholder="// example@gmail.com"
+                  className={`pl-10 mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${emailError ? "border-red-500" : ""}`}
+                  onChange={(e) => {
+                    setEmail(e.target.value)
+                    if (e.target.value) {
+                      setEmailError(false);
+                    }
+                  }}
+              />
+              <img
+                  width="24"
+                  height="24"
+                  src="https://img.icons8.com/cotton/24/new-post.png"
+                  alt="email"
+                  className="absolute left-2 top-9 transform -translate-y-1/2"
+              />
+            </div>
           </div>
           <div className="relative">
             <label htmlFor="company" className="text-base font-bold">
               Company
             </label>
-            <input
-              type="text"
-              id="company"
-              value={company}
-              placeholder="..."
-              className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
-              onChange={(e) => setCompany(e.target.value)}
-            />
+            <div className="relative">
+              <input
+                  type="text"
+                  id="company"
+                  value={company}
+                  placeholder="// Monsters Inc."
+                  className={`pl-10 mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${companyError ? "border-red-500" : ""}`}
+                  onChange={(e) => {
+                    setCompany(e.target.value)
+                    if (e.target.value) {
+                      setCompanyError(false);
+                    }
+                  }}
+              />
+              <img
+                  width="24"
+                  height="24"
+                  src="https://img.icons8.com/cotton/24/box--v2.png"
+                  alt="company"
+                  className="absolute left-2 top-9 transform -translate-y-1/2"
+              />
+            </div>
           </div>
           <div className="relative">
             <label htmlFor="location" className="text-base font-bold">
               Location
             </label>
-            <input
-              type="text"
-              id="location"
-              value={location}
-              placeholder="..."
-              className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
-              onChange={(e) => setLocation(e.target.value)}
-            />
+            <div className="relative">
+              <input
+                  type="text"
+                  id="location"
+                  value={location}
+                  placeholder="// Hong Kong, China"
+                  className={`pl-10 mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${locationError ? "border-red-500" : ""}`}
+                  onChange={(e) => {
+                    setLocation(e.target.value);
+                    if (e.target.value) {
+                      setLocationError(false);
+                    }
+                  }}
+              />
+              <img
+                  width="24"
+                  height="24"
+                  src="https://img.icons8.com/cotton/24/airplane-take-off--v1.png"
+                  alt="location"
+                  className="absolute left-2 top-9 transform -translate-y-1/2"
+              />
+            </div>
           </div>
           <div className="relative">
             <label htmlFor="skills" className="text-base font-bold">
               Skills
             </label>
             <div className="relative">
-              <input
-                type="text"
-                id="skills"
-                value={search}
-                className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
-                onChange={(e) => setSearch(e.target.value)}
-              />
+              <div className="relative">
+                <input
+                    type="text"
+                    id="skills"
+                    className={`pl-10 mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${skillsError ? "border-red-500" : ""}`}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
+                <img
+                    width="24"
+                    height="24"
+                    src="https://img.icons8.com/cotton/24/trophy--v1.png"
+                    alt="skills"
+                    className="absolute left-2 top-9 transform -translate-y-1/2"
+                />
+              </div>
               {search && matchingSkills.length > 0 && (
                 <div className="absolute left-0 z-10 mt-2 max-h-60 w-full overflow-y-auto overflow-x-hidden rounded border border-gray-200 bg-white pb-72 pt-5">
                   {matchingSkills.map((skill) => (
@@ -295,7 +368,18 @@ const Setup: React.FC = () => {
           </div>
           <div className="flex justify-end">
             <button
-              onClick={incrementPage}
+              onClick={() => {
+                if (!name || !email || !company || !location || selectedSkills.length === 0) {
+                  setNameError(!name);
+                  setEmailError(!email);
+                  setCompanyError(!company);
+                  setLocationError(!location);
+                  setSkillsError(selectedSkills.length === 0);
+                  return;
+                }
+
+                incrementPage();
+              }}
               className={
                 "mt-3 flex cursor-pointer items-center justify-center rounded-2xl px-8 py-3 text-base font-bold transition-all " +
                 (name &&
@@ -303,15 +387,8 @@ const Setup: React.FC = () => {
                 company &&
                 location &&
                 selectedSkills.length !== 0
-                  ? "cursor-pointer bg-black text-black text-white hover:-translate-y-0.5 hover:bg-blue-500 active:translate-y-0.5"
+                  ? "cursor-pointer text-white bg-black hover:-translate-y-0.5 hover:bg-blue-500 active:translate-y-0.5"
                   : "cursor-default bg-gray-200 text-gray-500")
-              }
-              disabled={
-                !name ||
-                !email ||
-                !company ||
-                !location ||
-                selectedSkills.length === 0
               }
             >
               Next
@@ -321,6 +398,7 @@ const Setup: React.FC = () => {
       )}
       {page === 1 && (
         <form
+          noValidate={true}
           className="mb-4 mt-5 w-8/12 max-w-2xl rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all"
           onSubmit={(e) => e.preventDefault()}
         >
@@ -535,6 +613,7 @@ const Setup: React.FC = () => {
       )}
       {page === 2 && (
         <form
+          noValidate={true}
           className="mb-4 mt-5 w-8/12 max-w-2xl rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all"
           onSubmit={(e) => e.preventDefault()}
         >

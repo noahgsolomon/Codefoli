@@ -12,9 +12,12 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem("loggedIn") === "true") {
-      navigate("/dashboard");
-    } else {
+      if (localStorage.getItem('role') === 'NEWBIE') {
+          navigate('/setup');
+      }
+      else if (localStorage.getItem('role') === 'USER') {
+          navigate('/dashboard');
+      } else {
       setLoading(false);
     }
   }, [navigate]);
@@ -24,7 +27,6 @@ const Register: React.FC = () => {
   const handleRegister = async () => {
     const registerRequest = await register(fullName, email, password);
     if (registerRequest) {
-      localStorage.setItem("loggedIn", "true");
       localStorage.setItem("role", "NEWBIE");
       navigate("/setup");
     }
