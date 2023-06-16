@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { setupAccount, userDetails } from "api/userapi.tsx";
 import { Skills } from "Type/Skills.tsx";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,20 @@ const Setup: React.FC = () => {
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
   const [location, setLocation] = useState("");
+  const [about, setAbout] = useState("");
+  const [startDateError, setStartDateError] = useState(false);
+  const [endDateError, setEndDateError] = useState(false);
+  const [descriptionError, setDescriptionError] = useState(false);
+  const [positionError, setPositionError] = useState(false);
+  const [noJobError, setNoJobError] = useState(false);
+  const [noProjectNameError, setNoProjectNameError] = useState(false);
+  const [noProjectLanguageError, setNoProjectLanguageError] = useState(false);
+  const [noProjectDateError, setNoProjectDateError] = useState(false);
+  const [noProjectDescriptionError, setNoProjectDescriptionError] =
+    useState(false);
+  const [noProjectError, setNoProjectError] = useState(false);
+
+  const [profession, setProfession] = useState("");
   const [projects, setProjects] = useState<
     { project: Project; color: string }[]
   >([]);
@@ -42,22 +56,27 @@ const Setup: React.FC = () => {
   ]);
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
+  const [professionError, setProfessionError] = useState(false);
   const [companyError, setCompanyError] = useState(false);
   const [locationError, setLocationError] = useState(false);
+  const [aboutError, setAboutError] = useState(false);
   const [skillsError, setSkillsError] = useState(false);
 
   const navigate = useNavigate();
 
-  const colors = useMemo(() => [
-    "bg-yellow-500",
-    "bg-green-500",
-    "bg-blue-500",
-    "bg-indigo-500",
-    "bg-purple-500",
-    "bg-pink-500",
-    "bg-teal-500",
-    "bg-red-500",
-  ], []);
+  const colors = useMemo(
+    () => [
+      "bg-yellow-500",
+      "bg-green-500",
+      "bg-blue-500",
+      "bg-indigo-500",
+      "bg-purple-500",
+      "bg-pink-500",
+      "bg-teal-500",
+      "bg-red-500",
+    ],
+    []
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -108,8 +127,10 @@ const Setup: React.FC = () => {
     const postData = await setupAccount(
       name,
       email,
+      profession,
       company,
       location,
+      about,
       selectedSkills.map((skill) => skill.skill),
       work.map((item) => item.work),
       projects.map((item) => item.project)
@@ -172,6 +193,37 @@ const Setup: React.FC = () => {
     );
   }
 
+  function isDate(date: string) {
+    const regex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/(20)?\d{2}$/;
+    return regex.test(date);
+  }
+
+  function formatDate(date: string) {
+    const [month, day, year] = date.split("/");
+
+    const dateObj = new Date(
+      parseInt("20" + year),
+      parseInt(month) - 1,
+      parseInt(day)
+    );
+
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    return monthNames[dateObj.getMonth()] + " " + dateObj.getFullYear();
+  }
   return (
     <div className="my-5 flex flex-col items-center justify-center">
       <div className="mb-10 text-4xl font-bold">
@@ -243,6 +295,35 @@ const Setup: React.FC = () => {
             </div>
           </div>
           <div className="relative">
+            <label htmlFor="profession" className="text-base font-bold">
+              Profession
+            </label>
+            <div className="relative">
+              <input
+                type="text"
+                id="profession"
+                value={profession}
+                placeholder="// Graphic Designer"
+                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${
+                  professionError ? "border-red-500" : ""
+                }`}
+                onChange={(e) => {
+                  setProfession(e.target.value);
+                  if (e.target.value) {
+                    setProfessionError(false);
+                  }
+                }}
+              />
+              <img
+                width="24"
+                height="24"
+                src="https://img.icons8.com/cotton/24/certificate--v1.png"
+                alt="profession"
+                className="absolute left-2 top-9 -translate-y-1/2 transform"
+              />
+            </div>
+          </div>
+          <div className="relative">
             <label htmlFor="company" className="text-base font-bold">
               Company
             </label>
@@ -296,6 +377,34 @@ const Setup: React.FC = () => {
                 height="24"
                 src="https://img.icons8.com/cotton/24/airplane-take-off--v1.png"
                 alt="location"
+                className="absolute left-2 top-9 -translate-y-1/2 transform"
+              />
+            </div>
+          </div>
+          <div className="relative">
+            <label htmlFor="about" className="text-base font-bold">
+              About
+            </label>
+            <div className="relative">
+              <textarea
+                id="about"
+                placeholder="// Please write a short description about yourself"
+                value={about}
+                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${
+                  aboutError ? "border-red-500" : ""
+                }`}
+                onChange={(e) => {
+                  setAbout(e.target.value);
+                  if (e.target.value) {
+                    setAboutError(false);
+                  }
+                }}
+              />
+              <img
+                width="24"
+                height="24"
+                src="https://img.icons8.com/cotton/24/quill-pen.png"
+                alt="about"
                 className="absolute left-2 top-9 -translate-y-1/2 transform"
               />
             </div>
@@ -361,8 +470,10 @@ const Setup: React.FC = () => {
                 if (
                   !name ||
                   !email ||
+                  !profession ||
                   !company ||
                   !location ||
+                  !about ||
                   selectedSkills.length === 0
                 ) {
                   setNameError(!name);
@@ -370,6 +481,9 @@ const Setup: React.FC = () => {
                   setCompanyError(!company);
                   setLocationError(!location);
                   setSkillsError(selectedSkills.length === 0);
+                  setProfessionError(!profession);
+                  setAboutError(!about);
+
                   return;
                 }
 
@@ -379,8 +493,10 @@ const Setup: React.FC = () => {
                 "mt-3 flex cursor-pointer items-center justify-center rounded-2xl px-8 py-3 text-base font-bold transition-all " +
                 (name &&
                 email &&
+                profession &&
                 company &&
                 location &&
+                about &&
                 selectedSkills.length !== 0
                   ? "cursor-pointer bg-black text-white hover:-translate-y-0.5 hover:bg-blue-500 active:translate-y-0.5"
                   : "cursor-default bg-gray-200 text-gray-500")
@@ -432,7 +548,10 @@ const Setup: React.FC = () => {
 
                 <p className="font-bold underline">{job.work.position}</p>
                 <p>
-                  {job.work.startDate}-{job.work.endDate}
+                  {formatDate(job.work.startDate)}-
+                  {job.work.endDate.toLowerCase() !== "current"
+                    ? formatDate(job.work.endDate)
+                    : "Current"}
                 </p>
                 <p className="font mt-5 italic">{job.work.description}</p>
               </div>
@@ -449,10 +568,14 @@ const Setup: React.FC = () => {
                   id="company"
                   placeholder="// Facebook"
                   value={addWork.company}
-                  className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
-                  onChange={(e) =>
-                    setAddWork({ ...addWork, company: e.target.value })
-                  }
+                  className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0
+                  ${companyError ? "border-red-500" : ""}`}
+                  onChange={(e) => {
+                    setAddWork({ ...addWork, company: e.target.value });
+                    if (e.target.value) {
+                      setCompanyError(false);
+                    }
+                  }}
                 />
               </div>
 
@@ -465,10 +588,14 @@ const Setup: React.FC = () => {
                   id="position"
                   placeholder="// the mf CEO"
                   value={addWork.position}
-                  className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
-                  onChange={(e) =>
-                    setAddWork({ ...addWork, position: e.target.value })
-                  }
+                  className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0
+                  ${positionError ? "border-red-500" : ""}`}
+                  onChange={(e) => {
+                    setAddWork({ ...addWork, position: e.target.value });
+                    if (e.target.value) {
+                      setPositionError(false);
+                    }
+                  }}
                 />
               </div>
               <div className="relative">
@@ -478,12 +605,16 @@ const Setup: React.FC = () => {
                 <input
                   type="text"
                   id="start-date"
-                  placeholder="// 106 B.C."
+                  placeholder="// 12/30/12"
                   value={addWork.startDate}
-                  className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
-                  onChange={(e) =>
-                    setAddWork({ ...addWork, startDate: e.target.value })
-                  }
+                  className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0
+                  ${startDateError ? "border-red-500" : ""}`}
+                  onChange={(e) => {
+                    setAddWork({ ...addWork, startDate: e.target.value });
+                    if (e.target.value) {
+                      setStartDateError(false);
+                    }
+                  }}
                 />
               </div>
 
@@ -493,13 +624,17 @@ const Setup: React.FC = () => {
                 </label>
                 <input
                   type="text"
-                  id="start-date"
-                  placeholder="// 44 B.C."
+                  id="end-date"
+                  placeholder="// 6/32/23 or current"
                   value={addWork.endDate}
-                  className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
-                  onChange={(e) =>
-                    setAddWork({ ...addWork, endDate: e.target.value })
-                  }
+                  className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0
+                  ${endDateError ? "border-red-500" : ""}`}
+                  onChange={(e) => {
+                    setAddWork({ ...addWork, endDate: e.target.value });
+                    if (e.target.value) {
+                      setEndDateError(false);
+                    }
+                  }}
                 />
               </div>
 
@@ -511,16 +646,26 @@ const Setup: React.FC = () => {
                   id="description"
                   placeholder="Please write a short description of your job."
                   value={addWork.description}
-                  className="mb-4 mt-2 max-h-52 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
-                  onChange={(e) =>
-                    setAddWork({ ...addWork, description: e.target.value })
-                  }
+                  className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0
+                  ${descriptionError ? "border-red-500" : ""}`}
+                  onChange={(e) => {
+                    setAddWork({ ...addWork, description: e.target.value });
+                    if (e.target.value) {
+                      setDescriptionError(false);
+                    }
+                  }}
                 />
               </div>
               <div className="flex justify-between">
                 <button
                   className="underline transition-all hover:text-red-500"
                   onClick={() => {
+                    setCompanyError(false);
+                    setPositionError(false);
+                    setStartDateError(false);
+                    setEndDateError(false);
+                    setDescriptionError(false);
+
                     setAddingJob(false);
                     setAddWork({
                       company: "",
@@ -545,6 +690,30 @@ const Setup: React.FC = () => {
                       : "cursor-default bg-gray-200 text-gray-500")
                   }
                   onClick={() => {
+                    if (
+                      !addWork.company ||
+                      !addWork.position ||
+                      !addWork.startDate ||
+                      !addWork.endDate ||
+                      !addWork.description
+                    ) {
+                      setCompanyError(!addWork.company);
+                      setPositionError(!addWork.position);
+                      setStartDateError(!addWork.startDate);
+                      setEndDateError(!addWork.endDate);
+                      setDescriptionError(!addWork.description);
+
+                      return;
+                    }
+                    if (
+                      !isDate(addWork.startDate) ||
+                      (!isDate(addWork.endDate) &&
+                        addWork.endDate.toLowerCase() !== "current")
+                    ) {
+                      setStartDateError(!isDate(addWork.startDate));
+                      setEndDateError(!isDate(addWork.endDate));
+                      return;
+                    }
                     setWork([
                       ...work,
                       {
@@ -562,13 +731,6 @@ const Setup: React.FC = () => {
                       description: "",
                     });
                   }}
-                  disabled={
-                    !addWork.company ||
-                    !addWork.position ||
-                    !addWork.startDate ||
-                    !addWork.endDate ||
-                    !addWork.description
-                  }
                 >
                   Add
                 </button>
@@ -576,7 +738,10 @@ const Setup: React.FC = () => {
             </div>
           )}
           {work.length < 1 && (
-            <div className="mb-4 rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all hover:-translate-y-0.5">
+            <div
+              className={`mb-4 rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all hover:-translate-y-0.5 
+                           ${noJobError ? "border-red-500" : ""} `}
+            >
               <div className="flex flex-row justify-between">
                 <h3 className="mb-2 bg-blue-500 px-2 py-1 font-bold text-white">
                   No jobs listed
@@ -593,7 +758,10 @@ const Setup: React.FC = () => {
                 "flex rounded-full bg-black px-5 text-white transition-all hover:-translate-y-0.5 hover:bg-green-500 " +
                 `${addingJob ? "hidden" : ""}`
               }
-              onClick={() => setAddingJob(true)}
+              onClick={() => {
+                setNoJobError(false);
+                setAddingJob(true);
+              }}
             >
               +
             </button>
@@ -606,14 +774,19 @@ const Setup: React.FC = () => {
               Back
             </button>
             <button
-              onClick={incrementPage}
+              onClick={() => {
+                if (work.length < 1) {
+                  setNoJobError(true);
+                  return;
+                }
+                incrementPage();
+              }}
               className={
                 "mt-3 flex cursor-pointer items-center justify-center rounded-2xl px-8 py-3 text-base font-bold transition-all " +
                 (work.length > 0
                   ? "cursor-pointer bg-black text-white hover:-translate-y-0.5 hover:bg-blue-500 active:translate-y-0.5"
                   : "cursor-default bg-gray-200 text-gray-500")
               }
-              disabled={work.length < 1}
             >
               Next
             </button>
@@ -662,10 +835,15 @@ const Setup: React.FC = () => {
                   Language: {project.project.language}
                 </p>
                 <p>
-                  {new Date(project.project.updatedAt).toLocaleString("en-US", {
-                    month: "long",
-                    year: "numeric",
-                  })}
+                  {project.project.updatedAt.toLowerCase() !== "current"
+                    ? new Date(project.project.updatedAt).toLocaleString(
+                        "en-US",
+                        {
+                          month: "long",
+                          year: "numeric",
+                        }
+                      )
+                    : "Current"}
                 </p>
                 <p className="font mt-5 italic">
                   {project.project.description}
@@ -683,10 +861,17 @@ const Setup: React.FC = () => {
                     id="name"
                     placeholder="// Mojo Compiler"
                     value={addProject.name}
-                    className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
-                    onChange={(e) =>
-                      setAddProject({ ...addProject, name: e.target.value })
-                    }
+                    className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 
+                    ${noProjectNameError ? "border-red-500" : ""}`}
+                    onChange={(e) => {
+                      if (e.target.value) {
+                        setNoProjectNameError(false);
+                      }
+                      setAddProject({
+                        ...addProject,
+                        name: e.target.value,
+                      });
+                    }}
                   />
                 </div>
 
@@ -699,10 +884,17 @@ const Setup: React.FC = () => {
                     id="language"
                     placeholder="// Mojo"
                     value={addProject.language}
-                    className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
-                    onChange={(e) =>
-                      setAddProject({ ...addProject, language: e.target.value })
-                    }
+                    className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 
+                    ${noProjectLanguageError ? "border-red-500" : ""}`}
+                    onChange={(e) => {
+                      if (e.target.value) {
+                        setNoProjectLanguageError(false);
+                      }
+                      setAddProject({
+                        ...addProject,
+                        language: e.target.value,
+                      });
+                    }}
                   />
                 </div>
                 <div className="relative">
@@ -712,15 +904,19 @@ const Setup: React.FC = () => {
                   <input
                     type="text"
                     id="date"
-                    placeholder="// 100 A.D."
+                    placeholder="// 01/06/21 or current"
                     value={addProject.updatedAt}
-                    className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
-                    onChange={(e) =>
+                    className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 
+                    ${noProjectDateError ? "border-red-500" : ""}`}
+                    onChange={(e) => {
+                      if (e.target.value) {
+                        setNoProjectDateError(false);
+                      }
                       setAddProject({
                         ...addProject,
                         updatedAt: e.target.value,
-                      })
-                    }
+                      });
+                    }}
                   />
                 </div>
 
@@ -732,19 +928,28 @@ const Setup: React.FC = () => {
                     id="description"
                     placeholder="Please write a short description of your project."
                     value={addProject.description}
-                    className="mb-4 mt-2 max-h-52 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0"
-                    onChange={(e) =>
+                    className={`mb-4 mt-2 max-h-52 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0
+                     ${noProjectDescriptionError ? "border-red-500" : ""}`}
+                    onChange={(e) => {
+                      if (e.target.value) {
+                        setNoProjectDescriptionError(false);
+                      }
                       setAddProject({
                         ...addProject,
                         description: e.target.value,
-                      })
-                    }
+                      });
+                    }}
                   />
                 </div>
                 <div className="flex justify-between">
                   <button
                     className="underline transition-all hover:text-red-500"
                     onClick={() => {
+                      setNoProjectNameError(false);
+                      setNoProjectLanguageError(false);
+                      setNoProjectDateError(false);
+                      setNoProjectDescriptionError(false);
+
                       setAddingProject(false);
                       setAddProject({
                         name: "",
@@ -767,6 +972,25 @@ const Setup: React.FC = () => {
                         : "cursor-default bg-gray-200 text-gray-500")
                     }
                     onClick={() => {
+                      if (
+                        !addProject.name ||
+                        !addProject.language ||
+                        !addProject.updatedAt ||
+                        !addProject.description
+                      ) {
+                        setNoProjectNameError(!addProject.name);
+                        setNoProjectLanguageError(!addProject.language);
+                        setNoProjectDateError(!addProject.updatedAt);
+                        setNoProjectDescriptionError(!addProject.description);
+                        return;
+                      }
+                      if (
+                        !isDate(addProject.updatedAt) &&
+                        addProject.updatedAt.toLowerCase() !== "current"
+                      ) {
+                        setNoProjectDateError(true);
+                        return;
+                      }
                       setProjects([
                         ...projects,
                         {
@@ -783,12 +1007,6 @@ const Setup: React.FC = () => {
                         description: "",
                       });
                     }}
-                    disabled={
-                      !addProject.name ||
-                      !addProject.language ||
-                      !addProject.updatedAt ||
-                      !addProject.description
-                    }
                   >
                     Add
                   </button>
@@ -796,7 +1014,10 @@ const Setup: React.FC = () => {
               </div>
             )}
             {projects.length < 1 && (
-              <div className="mb-4 rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all hover:-translate-y-0.5">
+              <div
+                className={`mb-4 rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all hover:-translate-y-0.5
+                ${noProjectError ? "border-red-500" : ""}`}
+              >
                 <div className="flex flex-row justify-between">
                   <h3 className="mb-2 bg-red-500 px-2 py-1 font-bold text-white">
                     No projects listed
@@ -812,7 +1033,10 @@ const Setup: React.FC = () => {
                   "flex rounded-full bg-black px-5 text-white transition-all hover:-translate-y-0.5 hover:bg-green-500 " +
                   `${addingProject ? "hidden" : ""}`
                 }
-                onClick={() => setAddingProject(true)}
+                onClick={() => {
+                  setNoProjectError(false);
+                  setAddingProject(true);
+                }}
               >
                 +
               </button>
@@ -825,14 +1049,19 @@ const Setup: React.FC = () => {
                 Back
               </button>
               <button
-                onClick={submitSetup}
+                onClick={() => {
+                  if (projects.length < 1) {
+                    setNoProjectError(true);
+                    return;
+                  }
+                  submitSetup();
+                }}
                 className={
                   "mt-3 flex cursor-pointer items-center justify-center rounded-2xl px-8 py-3 text-base font-bold transition-all " +
                   (projects.length > 0
                     ? "cursor-pointer bg-black text-white hover:-translate-y-0.5 hover:bg-blue-500 active:translate-y-0.5"
                     : "cursor-default bg-gray-200 text-gray-500")
                 }
-                disabled={projects.length < 1}
               >
                 Submit
               </button>
