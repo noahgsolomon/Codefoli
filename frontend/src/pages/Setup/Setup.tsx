@@ -14,7 +14,7 @@ const Setup: React.FC = () => {
     const [company, setCompany] = useState('');
     const [location, setLocation] = useState('');
     const [projects, setProjects] = useState<Project[]>([]);
-    const [work, setWork] = useState<Work[]>([]);
+    const [work, setWork] = useState<{work: Work, color: string}[]>([]);
     const [addWork, setAddWork] = useState({company: '', position: '', startDate: '', endDate: '', description: ''});
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
@@ -52,6 +52,16 @@ const Setup: React.FC = () => {
         "bg-emerald-500",
         "bg-lime-500",
         "bg-sky-500",
+    ];
+    const jobColors = [
+        'bg-yellow-500',
+        'bg-green-500',
+        'bg-blue-500',
+        'bg-indigo-500',
+        'bg-purple-500',
+        'bg-pink-500',
+        'bg-teal-500',
+        'bg-red-500'
     ];
 
     if (!localStorage.getItem('NEWBIE')){
@@ -101,7 +111,7 @@ const Setup: React.FC = () => {
     }, [selectedSkills])
 
     const submitSetup = async () => {
-        const postData = await setupAccount(name, email, company, location, selectedSkills.map(skill => skill.skill), work, projects);
+        const postData = await setupAccount(name, email, company, location, selectedSkills.map(skill => skill.skill), work.map(item => item.work), projects);
         if (postData){
             localStorage.setItem('role', 'USER');
             navigate('/dashboard');
@@ -145,53 +155,65 @@ const Setup: React.FC = () => {
         setSelectedSkills(selectedSkills.filter(skill => skill.skill !== skillToRemove));
     };
 
+    function removeJob(indexToRemove: number) {
+        setWork(prevWork => prevWork.filter((_, index) => index !== indexToRemove));
+    }
+
     return (
         <div className="flex justify-center items-center flex-col my-5">
             <div className="mb-10 text-4xl font-bold">Let's set up your <span className="text-white bg-red-500 px-1 py-1">Page</span>!</div>
             {page === 0 && (
-                <form className="bg-white shadow-custom transition-all rounded px-8 pt-6 pb-8 border-2 border-black mb-4 w-8/12" onSubmit={(e) => e.preventDefault()}>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-                            Name
-                        </label>
+                <form className="max-w-2xl mt-5 bg-white shadow-custom transition-all rounded px-8 pt-6 pb-8 border-2 border-black mb-4 w-8/12" onSubmit={(e) => e.preventDefault()}>
+                    <div className="relative">
+                        <label htmlFor="name" className="text-base font-bold">Name</label>
                         <input
-                            className="w-full p-3 my-3 border border-gray-300 rounded-md bg-white transition-shadow"
-                            id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                            type="text"
+                            id="name"
+                            value={name}
+                            placeholder="..."
+                            className="w-full p-3 mb-4 mt-2 placeholder-black border-2 border-black rounded-xl shadow-custom hover:shadow-customHover bg-white transition-shadow ring-transparent focus:border-black focus:ring-0"
+                            onChange={(e) => setName(e.target.value)} />
                     </div>
-                    <div className="mb-4">
-                        <label
-                            className="block text-gray-700 text-sm font-bold mb-2"
-                            htmlFor="email">
-                            Email
-                        </label>
+                    <div className="relative">
+                        <label htmlFor="email" className="text-base font-bold">Email</label>
                         <input
-                            className="w-full p-3 my-3 border border-gray-300 rounded-md bg-white transition-shadow"
-                            id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                            type="email"
+                            id="email"
+                            value={email}
+                            placeholder="..."
+                            className="w-full p-3 mb-4 mt-2 placeholder-black border-2 border-black rounded-xl shadow-custom hover:shadow-customHover bg-white transition-shadow ring-transparent focus:border-black focus:ring-0"
+                            onChange={(e) => setEmail(e.target.value)} />
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="company">
-                            Company
-                        </label>
+                    <div className="relative">
+                        <label htmlFor="company" className="text-base font-bold">Company</label>
                         <input
-                            className="w-full p-3 my-3 border border-gray-300 rounded-md bg-white transition-shadow"
-                            id="company" type="text" value={company} onChange={(e) => setCompany(e.target.value)} />
+                            type="text"
+                            id="company"
+                            value={company}
+                            placeholder="..."
+                            className="w-full p-3 mb-4 mt-2 placeholder-black border-2 border-black rounded-xl shadow-custom hover:shadow-customHover bg-white transition-shadow ring-transparent focus:border-black focus:ring-0"
+                            onChange={(e) => setCompany(e.target.value)}
+                        />
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="company">
-                            Location
-                        </label>
+                    <div className="relative">
+                        <label htmlFor="location" className="text-base font-bold">Location</label>
                         <input
-                            className="w-full p-3 my-3 border border-gray-300 rounded-md bg-white transition-shadow"
-                            id="location" type="text" value={location} onChange={(e) => setLocation(e.target.value)} />
+                            type="text"
+                            id="location"
+                            value={location}
+                            placeholder="..."
+                            className="w-full p-3 mb-4 mt-2 placeholder-black border-2 border-black rounded-xl shadow-custom hover:shadow-customHover bg-white transition-shadow ring-transparent focus:border-black focus:ring-0"
+                            onChange={(e) => setLocation(e.target.value)} />
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="skills">
-                            Skills
-                        </label>
+                    <div className="relative">
+                        <label htmlFor="skills" className="text-base font-bold">Skills</label>
                         <div className="relative">
                             <input
-                                className="w-full p-3 my-3 border border-gray-300 rounded-md bg-white transition-shadow"
-                                id="skills" type="text" value={search} onChange={(e) => setSearch(e.target.value)}/>
+                                type="text"
+                                id="skills"
+                                value={search}
+                                className="w-full p-3 mb-4 mt-2 placeholder-black border-2 border-black rounded-xl shadow-custom hover:shadow-customHover bg-white transition-shadow ring-transparent focus:border-black focus:ring-0"
+                                onChange={(e) => setSearch(e.target.value)}/>
                             {(search && matchingSkills.length > 0) && <div className="overflow-x-hidden absolute w-full left-0 mt-2 bg-white border border-gray-200 z-10 max-h-60 overflow-y-auto rounded pb-72 pt-5">
                                 {matchingSkills.map(skill => (
                                     <div
@@ -229,18 +251,23 @@ const Setup: React.FC = () => {
                 </form>
             )}
             {page === 1 && (
-                <form className="bg-white shadow-custom transition-all rounded px-8 pt-6 pb-8 border-2 border-black mb-4 w-8/12" onSubmit={(e) => e.preventDefault()}>
+                <form className="max-w-2xl mt-5 bg-white shadow-custom transition-all rounded px-8 pt-6 pb-8 border-2 border-black mb-4 w-8/12" onSubmit={(e) => e.preventDefault()}>
                     <div>
                         {work.map((job, index) => (
-                            <div key={index} className="bg-white shadow-custom hover:-translate-y-0.5 transition-all border-2 border-black rounded px-8 pt-6 pb-8 mb-4">
+                            <div key={index} className="bg-white shadow-custom hover:-translate-y-0.5 transition-all border-2 border-black rounded px-4 pt-6 pb-8 mb-4">
                                 <div className="flex flex-row justify-between">
-                                    <h3 className="font-bold mb-2 bg-blue-500 text-white px-2 py-1">{job.company}</h3>
-                                    <button className="border-2 border-black text-sm px-4 rounded-full transition-all hover:-translate-y-0.5 hover:opacity-90 hover:bg-black hover:text-white ">Edit</button>
+                                    <h3 className={`font-bold mb-2 text-white px-2 py-1 ${job.color}`}>{job.work.company}</h3>
+                                    <div className="flex items-center">
+                                        <button
+                                            className="text-sm px-4 py-2 rounded-full transition-all hover:-translate-y-0.5 hover:opacity-90 text-white bg-red-500"
+                                            onClick={() => removeJob(index)}
+                                        >&times;</button>
+                                    </div>
                                 </div>
 
-                                <p className="font-bold underline">{job.position}</p>
-                                <p>{job.startDate}-{job.endDate}</p>
-                                <p className="font italic mt-5">{job.description}</p>
+                                <p className="font-bold underline">{job.work.position}</p>
+                                <p>{job.work.startDate}-{job.work.endDate}</p>
+                                <p className="font italic mt-5">{job.work.description}</p>
                             </div>
                         ))}
                     </div>
@@ -312,7 +339,7 @@ const Setup: React.FC = () => {
                                     className={"flex items-center justify-center text-base cursor-pointer rounded-2xl px-8 py-3 mt-3 transition-all font-bold " + ((addWork.company && addWork.position && addWork.startDate && addWork.endDate && addWork.description) ?
                                         "cursor-pointer text-black hover:-translate-y-0.5 hover:bg-green-500 active:translate-y-0.5 text-white bg-black" : "cursor-default text-gray-500 bg-gray-200")}
                                     onClick={() => {
-                                        setWork([...work, addWork]);
+                                        setWork([...work, {work: addWork, color: jobColors[Math.floor(Math.random() * jobColors.length)]}]);
                                         setAddingJob(false);
                                         setAddWork({company: '', position: '', startDate: '', endDate: '', description: ''});
 
@@ -328,12 +355,9 @@ const Setup: React.FC = () => {
                         <div className="bg-white shadow-custom hover:-translate-y-0.5 transition-all border-2 border-black rounded px-8 pt-6 pb-8 mb-4">
                             <div className="flex flex-row justify-between">
                                 <h3 className="font-bold mb-2 bg-blue-500 text-white px-2 py-1">No jobs listed</h3>
-                                <button className="border-2 border-black text-sm px-4 rounded-full transition-all hover:-translate-y-0.5 hover:opacity-90 hover:bg-black hover:text-white ">Edit</button>
                             </div>
 
-                            <p>add jobs below</p>
-                            <p></p>
-                            <p></p>
+                            <p className="font italic mt-5">Add jobs below</p>
                         </div>
                     )}
                     <div className="mb-32"></div>
