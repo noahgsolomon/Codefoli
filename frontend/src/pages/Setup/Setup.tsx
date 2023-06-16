@@ -133,6 +133,8 @@ const Setup: React.FC = () => {
         }
     }
 
+    //TODO install prettier and prettier tailwind
+
     const decrementPage = () => {
         if (page > 0) {
             setPage(page - 1);
@@ -389,7 +391,7 @@ const Setup: React.FC = () => {
                 </form>
             )}
             {page === 2 && (
-                <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-8/12" onSubmit={(e) => e.preventDefault()}>
+                <form className="max-w-2xl mt-5 bg-white shadow-custom transition-all rounded px-8 pt-6 pb-8 border-2 border-black mb-4 w-8/12" onSubmit={(e) => e.preventDefault()}>
                     <div>
                         {projects.map((project, index) => (
                             <div key={index} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -450,22 +452,34 @@ const Setup: React.FC = () => {
                                 </div>
                             </div>
                         )}
-                        <button
-                            className={`${addingProject ? 'hidden' : ''} flex items-center justify-center cursor-pointer w-full mb-3 rounded-2xl py-1 text-lg transition-all hover:opacity-90 border-2 border-black text-black hover:-translate-y-1`}
-                            onClick={() => setAddingProject(true)}
-                        >
-                            Add project
-                        </button>
+                        {projects.length < 1 && (
+                            <div className="bg-white shadow-custom hover:-translate-y-0.5 transition-all border-2 border-black rounded px-8 pt-6 pb-8 mb-4">
+                                <div className="flex flex-row justify-between">
+                                    <h3 className="font-bold mb-2 bg-blue-500 text-white px-2 py-1">No jobs listed</h3>
+                                </div>
+
+                                <p className="font italic mt-5">Add jobs below</p>
+                            </div>
+                        )}
+                        <div className="flex justify-center mb-4">
+                            <button
+                                className={"flex bg-black text-white px-5 transition-all hover:-translate-y-0.5 hover:bg-green-500 rounded-full " + `${addingProject ? 'hidden' : ''}`}
+                                onClick={() => setAddingProject(true)}
+                            >
+                                +
+                            </button>
+                        </div>
                         <div className="flex justify-between">
                             <button
                                 onClick={decrementPage}
-                                className="flex items-center justify-center cursor-pointer w-full mb-3 rounded-2xl py-1 text-lg transition-all hover:opacity-90 border-2 border-black text-black hover:-translate-y-1"
+                                className="underline hover:text-blue-500 transition-all"
                             >
                                 Back
                             </button>
                             <button
                                 onClick={submitSetup}
-                                className="flex items-center justify-center cursor-pointer w-full mb-3 rounded-2xl py-1 text-lg transition-all hover:opacity-90 border-2 border-black text-black hover:-translate-y-1"
+                                className={"flex items-center justify-center text-base cursor-pointer rounded-2xl px-8 py-3 mt-3 transition-all font-bold " + (projects.length > 0 ?
+                                    "cursor-pointer text-black hover:-translate-y-0.5 hover:bg-blue-500 active:translate-y-0.5 text-white bg-black" : "cursor-default text-gray-500 bg-gray-200")}
                                 disabled={projects.length < 1}
                             >
                                 Submit
