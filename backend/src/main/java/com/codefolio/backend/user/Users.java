@@ -22,6 +22,7 @@ public class Users {
     private String company;
     private String location;
     private String about;
+    private String profession;
     private String gitHubId;
 
     @Enumerated(EnumType.STRING)

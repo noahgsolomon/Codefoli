@@ -70,6 +70,8 @@ public class UserService {
         user.setEmail(userProfile.email());
         user.setCompany(userProfile.company());
         user.setLocation(userProfile.location());
+        user.setProfession(userProfile.profession());
+        user.setAbout(userProfile.about());
         userRepository.save(user);
 
         userProfile.skills().forEach(skill -> {
