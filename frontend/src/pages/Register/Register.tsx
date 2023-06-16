@@ -12,12 +12,11 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-      if (localStorage.getItem('role') === 'NEWBIE') {
-          navigate('/setup');
-      }
-      else if (localStorage.getItem('role') === 'USER') {
-          navigate('/dashboard');
-      } else {
+    if (localStorage.getItem("role") === "NEWBIE") {
+      navigate("/setup");
+    } else if (localStorage.getItem("role") === "USER") {
+      navigate("/dashboard");
+    } else {
       setLoading(false);
     }
   }, [navigate]);
