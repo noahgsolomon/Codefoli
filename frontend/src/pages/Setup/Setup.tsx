@@ -151,9 +151,6 @@ const Setup: React.FC = () => {
       setPage(page + 1);
     }
   };
-
-  //TODO install prettier and prettier tailwind
-
   const decrementPage = () => {
     if (page > 0) {
       setPage(page - 1);
