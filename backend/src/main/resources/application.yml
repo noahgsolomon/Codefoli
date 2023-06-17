@@ -22,7 +22,7 @@ spring:
             scope:
               - read:user
               - user:email
-              - repo
+              - read:repo_hook
             client-id: 5d729095e6b70e4508e7
             client-secret: 9d9383c5242aaa3ac0a03a39b1454a84f7b040c0
             redirect-uri: http://localhost:8080/login/oauth2/code/github
