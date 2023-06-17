@@ -14,7 +14,7 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className={`z-40 flex justify-center items-center lg:py-5 py-3 relative transition-opacity duration-300 ease-linear ${
+      className={`z-40 flex justify-center items-center lg:py-5 lg:px-0 py-3 px-3 relative transition-opacity duration-300 ease-linear ${
         loading ? "invisible opacity-0" : "visible opacity-100"
       }`}
     >
