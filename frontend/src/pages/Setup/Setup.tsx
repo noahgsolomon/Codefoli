@@ -233,7 +233,7 @@ const Setup: React.FC = () => {
       {page === 0 && (
         <form
           noValidate={true}
-          className="mb-4 mt-5 w-8/12 max-w-2xl rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all"
+          className="md:8/12 mb-4 mt-5 w-full max-w-2xl rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all sm:w-11/12"
           onSubmit={(e) => e.preventDefault()}
         >
           <div className="relative">
@@ -510,7 +510,7 @@ const Setup: React.FC = () => {
       {page === 1 && (
         <form
           noValidate={true}
-          className="mb-4 mt-5 w-8/12 max-w-2xl rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all"
+          className="md:8/12 mb-4 mt-5 w-full max-w-2xl rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all sm:w-11/12"
           onSubmit={(e) => e.preventDefault()}
         >
           <div>
@@ -625,7 +625,7 @@ const Setup: React.FC = () => {
                 <input
                   type="text"
                   id="end-date"
-                  placeholder="// 6/32/23 or current"
+                  placeholder="// 6/09/23 or current"
                   value={addWork.endDate}
                   className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0
                   ${endDateError ? "border-red-500" : ""}`}
@@ -796,7 +796,7 @@ const Setup: React.FC = () => {
       {page === 2 && (
         <form
           noValidate={true}
-          className="mb-4 mt-5 w-8/12 max-w-2xl rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all"
+          className="md:8/12 mb-4 mt-5 w-full max-w-2xl rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all sm:w-11/12"
           onSubmit={(e) => e.preventDefault()}
         >
           <div>
@@ -1027,6 +1027,7 @@ const Setup: React.FC = () => {
                 <p className="font mt-5 italic">Add projects below</p>
               </div>
             )}
+            <div className="mb-32"></div>
             <div className="mb-4 flex justify-center">
               <button
                 className={
