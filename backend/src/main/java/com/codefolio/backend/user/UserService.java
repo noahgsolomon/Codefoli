@@ -70,6 +70,8 @@ public class UserService {
         user.setEmail(userProfile.email());
         user.setCompany(userProfile.company());
         user.setLocation(userProfile.location());
+        user.setProfession(userProfile.profession());
+        user.setAbout(userProfile.about());
         userRepository.save(user);
 
         userProfile.skills().forEach(skill -> {
@@ -88,6 +90,7 @@ public class UserService {
         }
 
         userProfile.projects().forEach(project -> {
+            System.out.println(project.getName());
             Projects newProject = new Projects(user, project.getName(), project.getLanguage(), project.getDescription(), project.getUpdatedAt(), user.getName());
             projectsRepository.save(newProject);
         });

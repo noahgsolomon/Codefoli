@@ -71,6 +71,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
             String accessToken = oAuthClient.getAccessToken().getTokenValue();
             String randomPassword = UUID.randomUUID().toString();
+            if (userRepository.findByEmail(email).isPresent()){
+                email = "";
+            }
             user = new Users(name, email, passwordEncoder.encode(randomPassword), company, location, bio);
             user.setGitHubId(id);
             userRepository.save(user);

@@ -4,21 +4,19 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: 'Onest-Regular';
-    src: url('./assets/fonts/Onest-Regular.ttf') format('truetype');
+  font-family: "Onest-Regular";
+  src: url("./assets/fonts/Onest-Regular.ttf") format("truetype");
 }
 
 * {
-    @apply
-    text-gray-800;
+  @apply text-gray-800;
 }
 
-body{
-    @apply
-    bg-gray-50
-    text-gray-800
+body {
+  @apply bg-gray-50
     font-sans
     text-lg
     font-medium
-    leading-loose;
+    leading-loose
+    text-gray-800;
 }
