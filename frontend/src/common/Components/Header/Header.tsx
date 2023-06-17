@@ -68,6 +68,7 @@ const Header: React.FC = () => {
             className="text-current no-underline transition-all duration-300 ease-linear"
           >
             <button className="duration-400 inline-block cursor-pointer rounded-full bg-black px-6 py-2 text-center font-custom text-lg text-white no-underline transition-all ease-linear hover:translate-y-[-5px] hover:bg-blue-500">
+
               Hop In!
             </button>
           </Link>
