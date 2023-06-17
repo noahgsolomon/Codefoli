@@ -8,6 +8,11 @@
   src: url("./assets/fonts/Onest-Regular.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Onest-Bold";
+  src: url("./assets/fonts/Onest-Bold.ttf") format("truetype");
+}
+
 * {
   @apply text-gray-800;
 }
@@ -19,4 +24,9 @@ body {
     font-medium
     leading-loose
     text-gray-800;
+  font-family: "Onest-Regular", sans-serif;
+}
+
+.font-bold {
+  font-family: "Onest-Bold", sans-serif;
 }
