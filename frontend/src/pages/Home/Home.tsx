@@ -16,7 +16,7 @@ const Home: React.FC = () => {
     opacity: inViewIntro ? 1 : 0,
     transform: inViewIntro ? "translateY(0)" : "translateY(20px)",
   });
- const [refTestimonial, inViewTestimonial] = useInView({});
+  const [refTestimonial, inViewTestimonial] = useInView({});
   const fadeInTestimonial = useSpring({
     opacity: inViewTestimonial ? 1 : 0,
     transform: inViewTestimonial ? "translateY(0)" : "translateY(20px)",
@@ -44,7 +44,7 @@ const Home: React.FC = () => {
   }
 
   return (
-<>
+    <>
       <div className="home-container mx-auto my-10 max-w-screen-lg rounded px-5 text-gray-800">
         <main>
           <animated.section
@@ -96,7 +96,7 @@ const Home: React.FC = () => {
               Say
             </h2>
 
-          <blockquote className="testimonial-grid mb-5 border-l-4 border-gray-600 bg-gray-100 px-5 py-4 text-gray-800">
+            <blockquote className="testimonial-grid mb-5 border-l-4 border-gray-600 bg-gray-100 px-5 py-4 text-gray-800">
               "Codefolio made building my portfolio a breeze. It truly
               represents my skills and work." - Jane Doe
             </blockquote>

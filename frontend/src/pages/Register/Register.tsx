@@ -8,6 +8,9 @@ const Register: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(true);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [fullNameError, setFullNameError] = useState(false);
 
   const navigate = useNavigate();
 
@@ -35,61 +38,147 @@ const Register: React.FC = () => {
     return <Loader />;
   }
 
+  function isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
   return (
-    <div className="absolute left-1/2 top-1/2 w-[700px] max-w-[80%] -translate-x-1/2 -translate-y-1/2 transform rounded-xl border-2 border-black bg-gray-100 p-10 text-center shadow-md transition-all hover:shadow-lg">
-      <h2 className="mb-12 text-3xl">
-        <span className="bg-blue-500 px-1 text-white">Register for free!</span>
-      </h2>
-      <form>
-        <input
-          type="text"
-          className="my-3 w-full rounded-md border border-gray-300 bg-white p-3 transition-shadow"
-          placeholder="Full Name"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-        />
-        <input
-          type="email"
-          className="my-3 w-full rounded-md border border-gray-300 bg-white p-3 transition-shadow"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          className="my-3 w-full rounded-md border border-gray-300 bg-white p-3 transition-shadow"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </form>
-      <button
-        className={`mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl px-9 py-6 text-lg transition-all hover:opacity-90 ${
-          fullName.length > 4 && email.length > 4 && password.length > 5
-            ? "bg-blue-600 text-white"
-            : "bg-gray-200 text-gray-500"
-        }`}
-        disabled={
-          !(fullName.length > 4 && email.length > 4 && password.length > 5)
-        }
-        onClick={handleRegister}
-      >
-        Register
-      </button>
-      <p className="my-5 text-gray-500">or</p>
-      <button
-        className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl bg-black px-9 py-6 text-lg text-white transition-all hover:-translate-y-1 hover:opacity-90"
-        onClick={() => {
-          window.location.href = `http://localhost:8080/oauth/authorize/github?redirect_uri=${redirectUri}`;
-        }}
-      >
-        Continue with GitHub
-      </button>
-      <Link to={"/login"}>
-        <p className="mt-5 cursor-pointer text-sm text-blue-600 hover:underline">
-          Already have an account? Log in
-        </p>
-      </Link>
+    <div className="flex items-center justify-center bg-gray-50 p-4">
+      <div className="mt-10 w-[700px] max-w-[80%] rounded-xl border-2 border-black bg-gray-100 p-10 text-center shadow-custom transition-all">
+        <h2 className="mb-12 text-3xl">
+          <p>
+            <span className="bg-blue-500 px-1 text-white">Register</span> for
+            free!
+          </p>
+        </h2>
+        <form noValidate={true} onSubmit={(e) => e.preventDefault()}>
+          <div className="relative text-left">
+            <label htmlFor="name" className="text-base font-bold">
+              Name
+            </label>
+            <div className="relative">
+              <input
+                type="text"
+                id="name"
+                placeholder="// John Doe"
+                value={fullName}
+                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 
+                      ${fullNameError ? "border-red-500" : ""}`}
+                onChange={(e) => {
+                  setFullNameError(false);
+                  setFullName(e.target.value);
+                }}
+              />
+              <img
+                width="24"
+                height="24"
+                src="https://img.icons8.com/cotton/24/person-male--v2.png"
+                alt="name"
+                className="absolute left-2 top-9 -translate-y-1/2 transform"
+              />
+            </div>
+          </div>
+          <div className="relative text-left">
+            <label htmlFor="email" className="text-base font-bold">
+              Email
+            </label>
+            <div className="relative">
+              <input
+                type="text"
+                id="email"
+                placeholder="// example@gmail.com"
+                value={email}
+                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0
+                       ${emailError ? "border-red-500" : ""}`}
+                onChange={(e) => {
+                  setEmailError(false);
+                  setEmail(e.target.value);
+                }}
+              />
+              <img
+                width="24"
+                height="24"
+                src="https://img.icons8.com/cotton/24/shield--v1.png"
+                alt="email"
+                className="absolute left-2 top-9 -translate-y-1/2 transform"
+              />
+            </div>
+          </div>
+          <div className="relative text-left">
+            <label htmlFor="password" className="text-base font-bold">
+              Password
+            </label>
+            <div className="relative">
+              <input
+                type="password"
+                id="password"
+                placeholder="// jeffbezos123"
+                value={password}
+                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 
+                      ${passwordError ? "border-red-500" : ""}`}
+                onChange={(e) => {
+                  setPasswordError(false);
+                  setPassword(e.target.value);
+                }}
+              />
+              <img
+                width="24"
+                height="24"
+                src="https://img.icons8.com/cotton/24/new-post.png"
+                alt="email"
+                className="absolute left-2 top-9 -translate-y-1/2 transform"
+              />
+            </div>
+          </div>
+        </form>
+        <button
+          className={`mt-3 flex w-full cursor-pointer items-center justify-center rounded-2xl px-9 py-6 text-lg transition-all hover:opacity-90 ${
+            fullName.length > 4 && email.length > 4 && password.length > 5
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 text-gray-500"
+          }`}
+          onClick={async () => {
+            if (
+              fullName.length < 5 ||
+              email.length < 5 ||
+              password.length < 6
+            ) {
+              setEmailError(email.length < 4);
+              setPasswordError(password.length < 5);
+              setFullNameError(fullName.length < 4);
+              return;
+            }
+            if (!isValidEmail(email)) {
+              setEmailError(true);
+              return;
+            }
+
+            await handleRegister();
+          }}
+        >
+          Register
+        </button>
+        <p className="my-1 text-gray-500">or</p>
+        <button
+          className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl bg-black px-9 py-6 text-lg text-white transition-all hover:-translate-y-1 hover:opacity-90"
+          onClick={() => {
+            window.location.href = `http://localhost:8080/oauth/authorize/github?redirect_uri=${redirectUri}`;
+          }}
+        >
+          Continue with GitHub
+          <img
+            className="ml-2 h-auto w-8 rounded-2xl bg-white p-1"
+            src={"src/assets/github-logo.png"}
+            alt={"github icon"}
+          />
+        </button>
+        <Link to={"/login"}>
+          <p className="mt-5 cursor-pointer text-sm text-blue-600 hover:underline">
+            Already have an account? Log in
+          </p>
+        </Link>
+      </div>
     </div>
   );
 };
