@@ -8,6 +8,7 @@ import Register from "./pages/Register/Register.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Setup from "./pages/Setup/Setup.tsx";
 import Contact from "./pages/Contact/Contact.tsx";
+import About from "./pages/About/About.tsx";
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/setup" element={<Setup />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </BrowserRouter>
   );
