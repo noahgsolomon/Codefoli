@@ -7,6 +7,8 @@ import Login from "./pages/Login/Login.tsx";
 import Register from "./pages/Register/Register.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Setup from "./pages/Setup/Setup.tsx";
+import Contact from "./pages/Contact/Contact.tsx";
+
 const App: React.FC = () => {
   return (
     <BrowserRouter>
@@ -17,6 +19,7 @@ const App: React.FC = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/setup" element={<Setup />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </BrowserRouter>
   );
