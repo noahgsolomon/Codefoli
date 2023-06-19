@@ -52,7 +52,7 @@ const Login: React.FC = () => {
           <>
             <button
               className="text-base underline transition-all hover:text-blue-500"
-              onClick={() =>{
+              onClick={() => {
                 setEmailError(false);
                 setPasswordError(false);
                 setEmail("");

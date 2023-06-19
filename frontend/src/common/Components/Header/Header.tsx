@@ -14,7 +14,7 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className={`font-bold relative z-40 mx-5 flex items-center justify-center py-5 transition-all ease-linear md:flex-row ${
+      className={`relative z-40 mx-5 flex items-center justify-center py-5 font-bold transition-all ease-linear md:flex-row ${
         loading ? "invisible opacity-0" : "visible opacity-100"
       }`}
     >
@@ -35,36 +35,36 @@ const Header: React.FC = () => {
         ) : showButtons ? (
           <>
             <div className="flex w-full flex-row items-center justify-between text-gray-800 md:flex-row md:text-base">
-             <div className="md:mx-10">
-               <Link
-                   to="/dashboard"
-                   className="mx-2 py-1 text-lg no-underline transition-all hover:text-blue-500 md:mx-10"
-               >
-                 Dashboard
-               </Link>
-               <Link
-                   to="/about"
-                   className="mx-2 py-1 text-lg no-underline transition-all hover:text-blue-500 md:mx-10"
-               >
-                 About
-               </Link>
-               <Link
-                   to="/portfolio"
-                   className="mx-2 py-1 text-lg no-underline transition-all hover:text-blue-500 md:mx-10"
-               >
-                 Portfolio
-               </Link>
-             </div>
-              <a
-                href="mailto:email@example.com"
-                className="flex items-center justify-center rounded-2xl border-2 border-black px-3 py-2 text-white transition-all hover:-translate-y-0.5 hover:bg-blue-500 md:my-0 md:ml-2 hover:border-blue-500"
+              <div className="md:mx-10">
+                <Link
+                  to="/dashboard"
+                  className="mx-2 py-1 text-lg no-underline transition-all hover:text-blue-500 md:mx-10"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  to="/about"
+                  className="mx-2 py-1 text-lg no-underline transition-all hover:text-blue-500 md:mx-10"
+                >
+                  About
+                </Link>
+                <Link
+                  to="/portfolio"
+                  className="mx-2 py-1 text-lg no-underline transition-all hover:text-blue-500 md:mx-10"
+                >
+                  Portfolio
+                </Link>
+              </div>
+              <Link
+                to="/contact"
+                className="flex items-center justify-center rounded-2xl border-2 border-black px-3 py-2 text-white transition-all hover:-translate-y-0.5 hover:border-blue-500 hover:bg-blue-500 md:my-0 md:ml-2"
               >
                 <img
                   className={"w-8 transition-all"}
                   src={"https://img.icons8.com/cotton/48/handshake--v2.png"}
                   alt={"email icon"}
                 />
-              </a>
+              </Link>
             </div>
           </>
         ) : (

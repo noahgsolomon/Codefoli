@@ -723,6 +723,12 @@ const Setup: React.FC = () => {
                       },
                     ]);
                     setAddingJob(false);
+                    setCompanyError(false);
+                    setPositionError(false);
+                    setStartDateError(false);
+                    setEndDateError(false);
+                    setDescriptionError(false);
+
                     setAddWork({
                       company: "",
                       position: "",

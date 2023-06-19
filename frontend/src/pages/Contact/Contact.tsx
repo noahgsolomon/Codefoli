@@ -7,12 +7,12 @@ const Contact = () => {
     <>
       <main>
         <div className="container mx-auto my-20 max-w-screen-lg px-5">
-          <div className="wrapper md:flex items-center gap-10">
-            <div className="content max-w-lg md:mx-0 mx-auto">
-              <h2 className="md:text-6xl text-5xl font-bold md:text-left text-center">
+          <div className="wrapper items-center gap-10 md:flex">
+            <div className="content mx-auto max-w-lg md:mx-0">
+              <h2 className="text-center text-5xl font-bold md:text-left md:text-6xl">
                 <span className="mr-1 bg-blue-500 text-white">Contact</span>me
               </h2>
-              <p className="md:text-left text-center">
+              <p className="text-center md:text-left">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Cupiditate fugiat totam id quo soluta ipsum ducimus incidunt
                 repudiandae esse error!
@@ -47,14 +47,14 @@ const Contact = () => {
               </div>
             </div>
 
-           <Form />
+            <Form />
           </div>
         </div>
 
         {/* FAQs */}
         <section className="px-5">
-          <div className="header max-w-[647px] mx-auto mb-5">
-            <h2 className="md:text-5xl text-2xl font-bold text-center">
+          <div className="header mx-auto mb-5 max-w-[647px]">
+            <h2 className="text-center text-2xl font-bold md:text-5xl">
               Frequestly{" "}
               <span className="bg-red-500 text-white">Asked Questions</span>
             </h2>
@@ -64,7 +64,7 @@ const Contact = () => {
               architecto neque?
             </p>
           </div>
-          <div className="accordion-wrapper max-w-[800px] mx-auto">
+          <div className="accordion-wrapper mx-auto max-w-[800px]">
             <Accordion
               title="Are you open for freelance / contract work?"
               content="Lorem ipsum dolor sit amet consectetur adipisicing elit."

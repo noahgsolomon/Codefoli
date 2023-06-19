@@ -13,6 +13,11 @@
   src: url("./assets/fonts/Onest-Bold.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Onest-Black";
+  src: url("./assets/fonts/Onest-Black.ttf") format("truetype");
+}
+
 * {
   @apply text-gray-800;
 }
@@ -29,4 +34,8 @@ body {
 
 .font-bold {
   font-family: "Onest-Bold", sans-serif;
+}
+
+.font-extra-bold {
+  font-family: "Onest-Black", sans-serif;
 }

@@ -18,9 +18,9 @@ const Accordion = ({ title, content }: AccordionProps) => {
   return (
     <div
       onClick={HandleOpening}
-      className="border-2 border-black rounded-lg mb-5 hover:shadow-customHover transition ease-in hover:-translate-y-1"
+      className="mb-5 rounded-lg border-2 border-black transition ease-in hover:-translate-y-1 hover:shadow-customHover"
     >
-      <div className={" p-4 flex justify-between text-white cursor-pointer"}>
+      <div className={" flex cursor-pointer justify-between p-4 text-white"}>
         <h4 className="font-semibold">{title}</h4>
         {isOpened ? (
           <svg
