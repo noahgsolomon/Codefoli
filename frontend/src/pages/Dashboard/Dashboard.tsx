@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { userDetails } from "api/userapi.tsx";
 import Loader from "Components/Loader/Loader.tsx";
 import UserData from "Type/UserData.tsx";
+import SkillCard from "./SkillCard/SkillCard.tsx";
+import Footer from "Components/Footer/Footer.tsx";
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -25,7 +27,7 @@ const Dashboard: React.FC = () => {
       setLoading(false);
     };
     fetchUser();
-  });
+  }, [navigate]);
 
   if (loading) {
     return <Loader />;
@@ -74,10 +76,19 @@ const Dashboard: React.FC = () => {
             ></img>
           </div>
         </div>
-        <div>
-          My broad set of <span>services and skills</span>
+        <div className="mt-32 flex flex-col items-center text-2xl font-bold">
+          <p className="mb-10">
+            My broad set of{" "}
+            <span className="bg-purple-500 px-2 pb-1 pt-2 text-white">
+              services and skills
+            </span>
+          </p>
+          {userData?.skills.map((skill) => (
+            <SkillCard key={skill} skill={skill} />
+          ))}
         </div>
       </div>
+      <Footer />
     </>
   );
 };
