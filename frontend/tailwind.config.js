@@ -19,6 +19,10 @@ export default {
       animation: {
         'spin-slow': 'spin 2s linear infinite',
       },
+      backgroundImage: {
+        red: 'linear-gradient(rgba(0, 0, 0, 0) 6%, #ff4a60 6%)',
+        blue: 'linear-gradient(rgba(0, 0, 0, 0) 10%, #1c92ff 10%)'
+      }
     },
   },
   variants: {
