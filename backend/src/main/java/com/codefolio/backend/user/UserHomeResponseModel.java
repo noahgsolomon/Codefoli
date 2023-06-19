@@ -1,6 +1,7 @@
 package com.codefolio.backend.user;
 
 import com.codefolio.backend.user.githubrepo.Projects;
+import com.codefolio.backend.user.services.ServicesType;
 import com.codefolio.backend.user.skills.SkillsType;
 import com.codefolio.backend.user.workhistory.Work;
 
@@ -14,6 +15,7 @@ public record UserHomeResponseModel(
         Projects[] projects,
         Work[] work,
         String role,
-        String profession
+        String profession,
+        ServicesType[] services
 ) {
 }

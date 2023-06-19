@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "Components/Loader/Loader.tsx";
 import Work from "Type/Work.tsx";
 import Project from "Type/Project.tsx";
+import { Services } from "Type/Services.tsx";
 
 const Setup: React.FC = () => {
   const [page, setPage] = useState(0);
@@ -38,9 +39,13 @@ const Setup: React.FC = () => {
     description: "",
   });
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState("");
+  const [skillSearch, setSkillsSkillSearch] = useState("");
+  const [serviceSearch, setServicesSearch] = useState("");
   const [selectedSkills, setSelectedSkills] = useState<
     { skill: string; color: string }[]
+  >([]);
+  const [selectedServices, setSelectedServices] = useState<
+    { service: string; color: string }[]
   >([]);
   const [addingJob, setAddingJob] = useState(false);
   const [addingProject, setAddingProject] = useState(false);
@@ -51,8 +56,12 @@ const Setup: React.FC = () => {
     updatedAt: "",
   });
   const allSkills = Skills;
+  const allServices = Services;
   const [matchingSkills, setMatchingSkills] = useState<string[]>([
     ...allSkills,
+  ]);
+  const [matchingServices, setMatchingServices] = useState<string[]>([
+    ...allServices,
   ]);
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
@@ -61,6 +70,7 @@ const Setup: React.FC = () => {
   const [locationError, setLocationError] = useState(false);
   const [aboutError, setAboutError] = useState(false);
   const [skillsError, setSkillsError] = useState(false);
+  const [serviceError, setServiceError] = useState(false);
 
   const navigate = useNavigate();
 
@@ -74,6 +84,15 @@ const Setup: React.FC = () => {
       "bg-pink-500",
       "bg-teal-500",
       "bg-red-500",
+      "bg-orange-500",
+      "bg-lime-500",
+      "bg-cyan-500",
+      "bg-sky-500",
+      "bg-rose-500",
+      "bg-fuchsia-500",
+      "bg-violet-500",
+      "bg-amber-500",
+      "bg-emerald-500",
     ],
     []
   );
@@ -116,12 +135,20 @@ const Setup: React.FC = () => {
   }, [navigate, colors]);
 
   useEffect(() => {
-    const searchUpper = search.toUpperCase();
+    const searchUpper = skillSearch.toUpperCase();
     const newMatchingSkills = allSkills.filter((skill: string) =>
       skill.toUpperCase().includes(searchUpper)
     );
     setMatchingSkills(newMatchingSkills);
-  }, [search, allSkills]);
+  }, [skillSearch, allSkills]);
+
+  useEffect(() => {
+    const searchUpper = serviceSearch.toUpperCase();
+    const newMatchingServices = allServices.filter((service: string) =>
+      service.toUpperCase().includes(searchUpper)
+    );
+    setMatchingServices(newMatchingServices);
+  }, [serviceSearch, allServices]);
 
   const submitSetup = async () => {
     const postData = await setupAccount(
@@ -131,9 +158,28 @@ const Setup: React.FC = () => {
       company,
       location,
       about,
-      selectedSkills.map((skill) => skill.skill),
+      selectedSkills.map((skill) =>
+        skill.skill
+          .replaceAll(" ", "_")
+          .replaceAll(".", "_")
+          .replaceAll("-", "_")
+          .replaceAll("/", "_")
+          .replaceAll("+", "_PLUS")
+          .replaceAll("#", "_SHARP")
+          .toUpperCase()
+      ),
       work.map((item) => item.work),
-      projects.map((item) => item.project)
+      projects.map((item) => item.project),
+      selectedServices.map((service) =>
+        service.service
+          .replaceAll(" ", "_")
+          .replaceAll("-", "_")
+          .replaceAll(".", "_")
+          .replaceAll("/", "_")
+          .replaceAll("+", "_PLUS")
+          .replaceAll("#", "_SHARP")
+          .toUpperCase()
+      )
     );
     if (postData) {
       localStorage.setItem("role", "USER");
@@ -159,7 +205,6 @@ const Setup: React.FC = () => {
   };
 
   const addSkill = (skill: Skills) => {
-    console.log(skill);
     const skillExists = selectedSkills.some((selectedSkill) =>
       Object.is(selectedSkill.skill, skill)
     );
@@ -175,9 +220,31 @@ const Setup: React.FC = () => {
     }
   };
 
+  const addService = (service: Services) => {
+    const serviceExists = selectedServices.some((selectedService) =>
+      Object.is(selectedService.service, service)
+    );
+    if (!serviceExists) {
+      setSelectedServices([
+        ...selectedServices,
+        {
+          service: service,
+          color: colors[Math.floor(Math.random() * colors.length)],
+        },
+      ]);
+      setServiceError(false);
+    }
+  };
+
   const removeSkill = (skillToRemove: string) => {
     setSelectedSkills(
       selectedSkills.filter((skill) => skill.skill !== skillToRemove)
+    );
+  };
+
+  const removeService = (serviceToRemove: string) => {
+    setSelectedServices(
+      selectedServices.filter((service) => service.service !== serviceToRemove)
     );
   };
 
@@ -413,16 +480,20 @@ const Setup: React.FC = () => {
             <label htmlFor="skills" className="text-base font-bold">
               Skills
             </label>
+            <p className="text-sm text-gray-300">Pick up to 12</p>
             <div className="relative">
               <div className="relative">
                 <input
                   type="text"
                   id="skills"
-                  value={search}
+                  value={skillSearch}
                   className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${
                     skillsError ? "border-red-500" : ""
+                  } ${
+                    selectedSkills.length >= 12 ? "bg-green-200 opacity-80" : ""
                   }`}
-                  onChange={(e) => setSearch(e.target.value)}
+                  onChange={(e) => setSkillsSkillSearch(e.target.value)}
+                  disabled={selectedSkills.length >= 12}
                 />
                 <img
                   width="24"
@@ -432,7 +503,7 @@ const Setup: React.FC = () => {
                   className="absolute left-2 top-9 -translate-y-1/2 transform"
                 />
               </div>
-              {search && matchingSkills.length > 0 && (
+              {skillSearch && matchingSkills.length > 0 && (
                 <div className="absolute left-0 z-10 mt-2 max-h-60 w-full overflow-y-auto overflow-x-hidden rounded border border-gray-200 bg-white pb-72 pt-5">
                   {matchingSkills.map((skill) => (
                     <div
@@ -441,7 +512,7 @@ const Setup: React.FC = () => {
                       onClick={() => {
                         if (Skills.includes(skill as Skills)) {
                           addSkill(skill as Skills);
-                          setSearch("");
+                          setSkillsSkillSearch("");
                         }
                       }}
                     >
@@ -455,12 +526,73 @@ const Setup: React.FC = () => {
               <div
                 key={skill.skill}
                 className={
-                  "m-1 inline-block cursor-pointer rounded-full bg-gray-200 p-2 transition-all hover:-translate-y-0.5 hover:opacity-90 " +
+                  "m-1 inline-block cursor-pointer rounded-full p-2 transition-all hover:-translate-y-0.5 hover:opacity-90 " +
                   skill.color
                 }
                 onClick={() => removeSkill(skill.skill)}
               >
                 <span className="px-2 text-white">{skill.skill}</span>
+              </div>
+            ))}
+          </div>
+          <div className="relative">
+            <label htmlFor="services" className="text-base font-bold">
+              Services
+            </label>
+            <p className="text-sm text-gray-300">Pick up to 4</p>
+            <div className="relative">
+              <div className="relative">
+                <input
+                  type="text"
+                  id="services"
+                  value={serviceSearch}
+                  className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${
+                    serviceError ? "border-red-500" : ""
+                  } ${
+                    selectedServices.length >= 4
+                      ? "bg-green-200 opacity-80"
+                      : ""
+                  }`}
+                  onChange={(e) => setServicesSearch(e.target.value)}
+                  disabled={selectedServices.length >= 4}
+                />
+                <img
+                  width="24"
+                  height="24"
+                  src="https://img.icons8.com/cotton/24/trophy--v1.png"
+                  alt="services"
+                  className="absolute left-2 top-9 -translate-y-1/2 transform"
+                />
+              </div>
+              {serviceSearch && matchingServices.length > 0 && (
+                <div className="absolute left-0 z-10 mt-2 max-h-60 w-full overflow-y-auto overflow-x-hidden rounded border border-gray-200 bg-white pb-72 pt-5">
+                  {matchingServices.map((service) => (
+                    <div
+                      key={service}
+                      className="m-1 inline-block cursor-pointer rounded-full border-b border-gray-300 bg-black p-2 transition-all hover:-translate-y-0.5 hover:opacity-90"
+                      onClick={() => {
+                        if (Services.includes(service)) {
+                          addService(service);
+                          setServicesSearch("");
+                        }
+                      }}
+                    >
+                      <span className="px-2 text-white">{service}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            {selectedServices.map((service) => (
+              <div
+                key={service.service}
+                className={
+                  "m-1 inline-block cursor-pointer rounded-full p-2 transition-all hover:-translate-y-0.5 hover:opacity-90 " +
+                  service.color
+                }
+                onClick={() => removeService(service.service)}
+              >
+                <span className="px-2 text-white">{service.service}</span>
               </div>
             ))}
           </div>
@@ -474,7 +606,8 @@ const Setup: React.FC = () => {
                   !company ||
                   !location ||
                   !about ||
-                  selectedSkills.length === 0
+                  selectedSkills.length === 0 ||
+                  selectedServices.length === 0
                 ) {
                   setNameError(!name);
                   setEmailError(!email);
@@ -483,6 +616,7 @@ const Setup: React.FC = () => {
                   setSkillsError(selectedSkills.length === 0);
                   setProfessionError(!profession);
                   setAboutError(!about);
+                  setServiceError(selectedServices.length === 0);
 
                   return;
                 }
@@ -497,7 +631,8 @@ const Setup: React.FC = () => {
                 company &&
                 location &&
                 about &&
-                selectedSkills.length !== 0
+                selectedSkills.length !== 0 &&
+                selectedServices.length !== 0
                   ? "cursor-pointer bg-black text-white hover:-translate-y-0.5 hover:bg-blue-500 active:translate-y-0.5"
                   : "cursor-default bg-gray-200 text-gray-500")
               }

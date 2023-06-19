@@ -26,7 +26,8 @@ const setupAccount = async (
   about: string,
   skills: string[],
   work: Work[],
-  projects: Project[]
+  projects: Project[],
+  services: string[]
 ) => {
   const model = {
     name: name,
@@ -38,6 +39,7 @@ const setupAccount = async (
     skills: skills,
     work: work,
     projects: projects,
+    services: services,
   };
   try {
     const response = await fetch("http://localhost:8080/setup", {

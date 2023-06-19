@@ -2,6 +2,9 @@ package com.codefolio.backend.user;
 
 import com.codefolio.backend.user.githubrepo.ProjectsRepository;
 import com.codefolio.backend.user.githubrepo.Projects;
+import com.codefolio.backend.user.services.Services;
+import com.codefolio.backend.user.services.ServicesRepository;
+import com.codefolio.backend.user.services.ServicesType;
 import com.codefolio.backend.user.skills.Skills;
 import com.codefolio.backend.user.skills.SkillsRepository;
 import com.codefolio.backend.user.skills.SkillsType;
@@ -24,6 +27,7 @@ public class UserService {
     private final WorkRepository workRepository;
     private final ProjectsRepository projectsRepository;
     private final SkillsRepository skillsRepository;
+    private final ServicesRepository servicesRepository;
 
     public ResponseEntity<?> userDetails(Principal principal) {
         if (!(principal instanceof Authentication)) {
@@ -37,10 +41,15 @@ public class UserService {
         List<Work> userWorks = workRepository.findAllByUsers(user);
         List<Projects> userProjects = projectsRepository.findAllByUsers(user);
         List<Skills> userSkills = skillsRepository.findAllByUsers(user);
+        List<Services> userServices = servicesRepository.findAllByUsers(user);
 
         SkillsType[] userSkillsTypes = userSkills.stream()
                 .map(Skills::getSkill)
                 .toArray(SkillsType[]::new);
+
+        ServicesType[] userServicesTypes = userServices.stream()
+                .map(Services::getService)
+                .toArray(ServicesType[]::new);
 
         UserHomeResponseModel userHomeResponseModel = new UserHomeResponseModel(
                 user.getName(),
@@ -52,7 +61,8 @@ public class UserService {
                 userProjects.toArray(new Projects[0]),
                 userWorks.toArray(new Work[0]),
                 user.getRole().toString(),
-                user.getProfession()
+                user.getProfession(),
+                userServicesTypes
         );
 
         return ResponseEntity.ok(userHomeResponseModel);
@@ -76,6 +86,7 @@ public class UserService {
         userRepository.save(user);
 
         userProfile.skills().forEach(skill -> {
+            System.out.println(skill);
             Skills newSkill = new Skills(SkillsType.valueOf(skill), user);
             skillsRepository.save(newSkill);
         });
@@ -83,6 +94,11 @@ public class UserService {
         userProfile.work().forEach(work -> {
             Work newWork = new Work(user, work.getCompany(), work.getPosition(), work.getStartDate(), work.getEndDate(), work.getDescription());
             workRepository.save(newWork);
+        });
+
+        userProfile.services().forEach(service -> {
+            Services newService = new Services(ServicesType.valueOf(service), user);
+            servicesRepository.save(newService);
         });
 
         List<Projects> userProjects = projectsRepository.findAllByUsers(user);
