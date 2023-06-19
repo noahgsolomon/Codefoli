@@ -51,7 +51,8 @@ public class UserService {
                 userSkillsTypes,
                 userProjects.toArray(new Projects[0]),
                 userWorks.toArray(new Work[0]),
-                user.getRole().toString()
+                user.getRole().toString(),
+                user.getProfession()
         );
 
         return ResponseEntity.ok(userHomeResponseModel);

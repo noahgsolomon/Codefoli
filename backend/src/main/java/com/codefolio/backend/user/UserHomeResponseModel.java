@@ -13,6 +13,7 @@ public record UserHomeResponseModel(
         SkillsType[] skills,
         Projects[] projects,
         Work[] work,
-        String role
+        String role,
+        String profession
 ) {
 }
