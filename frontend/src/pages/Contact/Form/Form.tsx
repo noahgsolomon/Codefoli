@@ -23,7 +23,7 @@ const Form = () => {
         setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
     };
 
-    const handleSubmit = (event: React.FormEvent<EventTarget>) => {
+    const handleSubmit = () => {
         console.log(`sending Message using data: ${JSON.stringify(formData)}`)
 
     }
