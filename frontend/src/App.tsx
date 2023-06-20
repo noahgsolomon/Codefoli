@@ -11,6 +11,7 @@ import Contact from "./pages/Contact/Contact.tsx";
 import {userDetails} from "api/userapi.tsx";
 import UserData from "Type/UserData.tsx";
 import {authenticated} from "api/authenticateapi.tsx";
+import About from "./pages/About/About.tsx";
 
 const App: React.FC = () => {
 
@@ -43,6 +44,7 @@ const App: React.FC = () => {
         <Route path="/setup" element={<Setup userData={userData} loading={loading}/>} />
         <Route path="/dashboard" element={<Dashboard  userData={userData} loading={loading}/>} />
         <Route path="/contact" element={<Contact userData={userData} loading={loading} />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </BrowserRouter>
   );
