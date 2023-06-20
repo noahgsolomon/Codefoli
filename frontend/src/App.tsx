@@ -37,7 +37,7 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<Home loading={loading}/>} />
+        <Route path="/home" element={<Home loading={loading}/>} />
         <Route path="/login" element={<Login loading={loading}/>} />
         <Route path="/register" element={<Register loading={loading}/>} />
         <Route path="/setup" element={<Setup userData={userData} loading={loading}/>} />
