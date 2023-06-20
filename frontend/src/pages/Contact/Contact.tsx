@@ -1,8 +1,29 @@
 import Accordion from "Components/Accordion/Accordion";
 import Footer from "Components/Footer/Footer";
 import Form from "./Form/Form";
+import AuthProps from "Type/AuthProps.tsx";
+import React, {useEffect} from "react";
+import Loader from "Components/Loader/Loader.tsx";
+import {useNavigate} from "react-router-dom";
 
-const Contact = () => {
+const Contact:React.FC<AuthProps> = ({userData, loading}) => {
+  console.log(userData);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loading){
+      return;
+    }
+    if (!localStorage.getItem("role")) {
+      navigate("/");
+    } else if (localStorage.getItem("role") === "NEWBIE") {
+      navigate("/setup");
+    }
+  }, [loading, navigate]);
+
+  if (loading){
+    return <Loader/>;
+  }
   return (
     <>
       <main>

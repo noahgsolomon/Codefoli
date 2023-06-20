@@ -1,38 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { userDetails } from "api/userapi.tsx";
 import Loader from "Components/Loader/Loader.tsx";
-import UserData from "Type/UserData.tsx";
 import SkillCard from "./SkillCard/SkillCard.tsx";
 import Footer from "Components/Footer/Footer.tsx";
+import AuthProps from "Type/AuthProps.tsx";
 
-const Dashboard: React.FC = () => {
+
+const Dashboard: React.FC<AuthProps> = ({userData, loading}) => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-  const [userData, setUserData] = useState<UserData>();
+
   useEffect(() => {
-    const fetchUser = async () => {
-      const user = await userDetails();
-      if (user) {
-        if (user.role === "NEWBIE") {
-          navigate("/setup");
-        }
-        setUserData(user);
-        localStorage.setItem("role", "USER");
-        console.log(user);
-      } else {
-        localStorage.removeItem("role");
-        navigate("/login");
-      }
-      setLoading(false);
-    };
-    fetchUser();
-  }, [navigate]);
+    if (loading){
+      return;
+    }
+    if (!localStorage.getItem("role")) {
+      navigate("/");
+    } else if (localStorage.getItem("role") === "NEWBIE") {
+      navigate("/setup");
+    }
+  }, [loading, navigate]);
 
-  if (loading) {
-    return <Loader />;
+  if (loading){
+      return <Loader/>;
   }
-
   return (
     <>
       <div className="container mx-auto px-6">

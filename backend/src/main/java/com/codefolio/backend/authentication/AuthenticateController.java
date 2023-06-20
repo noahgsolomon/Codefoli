@@ -14,9 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import java.util.Date;
 import java.util.Optional;
@@ -93,6 +91,16 @@ public class AuthenticateController {
             return ResponseEntity.ok("Registered successfully");
         }
 
+    }
+
+    @GetMapping("/authenticated")
+    public ResponseEntity<?> authenticated(@CookieValue(value = "SESSION_ID", defaultValue = "") String sessionId) {
+        Optional<UserSession> userSession = userSessionRepository.findBySessionId(sessionId);
+        if (userSession.isPresent()) {
+            return ResponseEntity.ok("Authenticated successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not authenticated");
+        }
     }
 
     public static boolean isValidEmail(String email) {

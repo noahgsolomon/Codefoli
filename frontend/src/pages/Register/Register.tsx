@@ -1,38 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "api/authenticateapi.tsx";
 import Loader from "Components/Loader/Loader.tsx";
+import NoAuthProps from "Type/NoAuthProps.tsx";
 
-const Register: React.FC = () => {
+const Register: React.FC<NoAuthProps> = ({loading}) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(true);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [fullNameError, setFullNameError] = useState(false);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (localStorage.getItem("role") === "NEWBIE") {
-      navigate("/setup");
-    } else if (localStorage.getItem("role") === "USER") {
-      navigate("/dashboard");
-    } else {
-      setLoading(false);
-    }
-  }, [navigate]);
-
   const redirectUri = "http://localhost:5173/dashboard";
 
   const handleRegister = async () => {
     const registerRequest = await register(fullName, email, password);
     if (registerRequest) {
-      localStorage.setItem("role", "NEWBIE");
-      navigate("/setup");
+      window.location.href = "/setup";
     }
   };
+
+  useEffect(() => {
+    if (loading){
+      return;
+    }
+    if (localStorage.getItem("role") === "NEWBIE") {
+      navigate("/setup");
+    } else if (localStorage.getItem("role") === "USER") {
+      navigate("/dashboard");
+    }
+  }, [loading, navigate]);
 
   if (loading) {
     return <Loader />;

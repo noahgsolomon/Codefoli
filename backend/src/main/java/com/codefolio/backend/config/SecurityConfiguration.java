@@ -69,7 +69,7 @@ public class SecurityConfiguration {
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/register", "/login", "/oauth2/authorize/github").permitAll()
+                        .requestMatchers("/register", "/login", "/authenticated","/oauth2/authorize/github" ).permitAll()
                         .anyRequest().authenticated())
                 .oauth2Login(oauth2Login -> oauth2Login.
                         authorizationEndpoint(authorizationEndpointConfig -> authorizationEndpointConfig.baseUri("/oauth2/authorize/github")).successHandler(successHandler))

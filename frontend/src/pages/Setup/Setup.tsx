@@ -1,13 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { setupAccount, userDetails } from "api/userapi.tsx";
+import { setupAccount } from "api/userapi.tsx";
 import { Skills } from "Type/Skills.tsx";
 import { useNavigate } from "react-router-dom";
 import Loader from "Components/Loader/Loader.tsx";
 import Work from "Type/Work.tsx";
 import Project from "Type/Project.tsx";
 import { Services } from "Type/Services.tsx";
+import AuthProps from "Type/AuthProps.tsx";
 
-const Setup: React.FC = () => {
+const Setup: React.FC<AuthProps> = ({userData, loading}) => {
   const [page, setPage] = useState(0);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -38,7 +39,6 @@ const Setup: React.FC = () => {
     endDate: "",
     description: "",
   });
-  const [loading, setLoading] = useState(true);
   const [skillSearch, setSkillsSkillSearch] = useState("");
   const [serviceSearch, setServicesSearch] = useState("");
   const [selectedSkills, setSelectedSkills] = useState<
@@ -98,43 +98,6 @@ const Setup: React.FC = () => {
   );
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await userDetails();
-      if (response) {
-        if (response.role === "USER") {
-          localStorage.setItem("role", "USER");
-          navigate("/dashboard");
-        } else if (response.role === "NEWBIE") {
-          localStorage.setItem("role", "NEWBIE");
-        }
-        setName(response.name);
-        setCompany(response.company || "");
-        setEmail(response.email || "");
-        setLocation(response.location || "");
-        response.projects
-          ? setProjects(
-              response.projects.map((project: Project) => ({
-                project: {
-                  name: project.name,
-                  description: project.description || "",
-                  language: project.language,
-                  updatedAt: project.updatedAt,
-                },
-                color: colors[Math.floor(Math.random() * colors.length)],
-              }))
-            )
-          : setProjects([]);
-        setLoading(false);
-      } else {
-        localStorage.removeItem("role");
-        navigate("/register");
-      }
-    };
-
-    fetchData();
-  }, [navigate, colors]);
-
-  useEffect(() => {
     const searchUpper = skillSearch.toUpperCase();
     const newMatchingSkills = allSkills.filter((skill: string) =>
       skill.toUpperCase().includes(searchUpper)
@@ -149,6 +112,33 @@ const Setup: React.FC = () => {
     );
     setMatchingServices(newMatchingServices);
   }, [serviceSearch, allServices]);
+
+  useEffect(() => {
+    if (!localStorage.getItem("role")) {
+      navigate("/register");
+    } else if (localStorage.getItem("role") === "USER") {
+      navigate("/dashboard");
+    }
+    else{
+      setName(userData.name);
+      setCompany(userData.company || "");
+      setEmail(userData.email || "");
+      setLocation(userData.location || "");
+      userData.projects
+          ? setProjects(
+              userData.projects.map((project: Project) => ({
+                project: {
+                  name: project.name,
+                  description: project.description || "",
+                  language: project.language,
+                  updatedAt: project.updatedAt,
+                },
+                color: colors[Math.floor(Math.random() * colors.length)],
+              }))
+          )
+          : setProjects([]);
+    }
+  }, [navigate, userData, colors]);
 
   const submitSetup = async () => {
     const postData = await setupAccount(
@@ -182,16 +172,14 @@ const Setup: React.FC = () => {
       )
     );
     if (postData) {
-      localStorage.setItem("role", "USER");
-      navigate("/dashboard");
+      window.location.href = "/dashboard";
     } else {
       alert("Error");
     }
   };
-
-  if (loading) {
-    return <Loader />;
-  }
+if (loading) {
+  return <Loader />;
+}
 
   const incrementPage = () => {
     if (page < 2) {

@@ -1,33 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "api/authenticateapi.tsx";
 import Loader from "Components/Loader/Loader.tsx";
+import NoAuthProps from "Type/NoAuthProps.tsx";
 
-const Login: React.FC = () => {
+const Login: React.FC<NoAuthProps> = ({loading}) => {
   const [showFields, setShowFields] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(true);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (localStorage.getItem("role") === "NEWBIE") {
-      navigate("/setup");
-    } else if (localStorage.getItem("role") === "USER") {
-      navigate("/dashboard");
-    } else {
-      setLoading(false);
-    }
-  }, [navigate]);
-
   const handleLogin = async () => {
     const loginRequest = await login(email, password);
     if (loginRequest) {
-      localStorage.setItem("loggedIn", "true");
-      navigate("/dashboard");
+      window.location.href = "/dashboard";
     } else {
       setEmailError(true);
       setPasswordError(true);
@@ -35,6 +24,17 @@ const Login: React.FC = () => {
   };
 
   const redirectUri = "http://localhost:5173/dashboard";
+
+  useEffect(() => {
+    if (loading){
+      return;
+    }
+    if (localStorage.getItem("role") === "NEWBIE") {
+      navigate("/setup");
+    } else if (localStorage.getItem("role") === "USER") {
+      navigate("/dashboard");
+    }
+  }, [loading, navigate]);
 
   if (loading) {
     return <Loader />;

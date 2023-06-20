@@ -25,7 +25,7 @@ public class SessionIdFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return request.getServletPath().equals("/login") || request.getServletPath().equals("/register");
+        return request.getServletPath().equals("/login") || request.getServletPath().equals("/register") || request.getServletPath().equals("/authenticated");
     }
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

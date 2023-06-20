@@ -47,4 +47,24 @@ const register = async (name: string, email: string, password: string) => {
   }
 };
 
-export { login, register };
+const authenticated = async () => {
+  try{
+    const response = await fetch("http://localhost:8080/authenticated", {
+      method: "GET",
+      headers: {'Content-Type': 'application/json'},
+      credentials: "include",
+    });
+    if (response.ok){
+      return response.text();
+    }
+  } catch (e){
+    console.log(e);
+    throw e;
+  }
+
+}
+
+export { login,
+  register,
+  authenticated
+};
