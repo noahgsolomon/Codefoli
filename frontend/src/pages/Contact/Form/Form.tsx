@@ -22,9 +22,10 @@ const Form = () => {
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
 
-  const handleSubmit = () => {
-    console.log(`sending Message using data: ${JSON.stringify(formData)}`);
-  };
+    const handleSubmit = () => {
+        console.log(`sending Message using data: ${JSON.stringify(formData)}`)
+
+    }
 
   return (
     <form className="contact-form rounded-lg border-2 border-black p-5 shadow-custom">
