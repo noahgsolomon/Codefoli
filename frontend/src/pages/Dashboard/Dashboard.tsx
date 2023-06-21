@@ -1,16 +1,14 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "Components/Loader/Loader.tsx";
-import SkillCard from "./SkillCard/SkillCard.tsx";
 import Footer from "Components/Footer/Footer.tsx";
 import AuthProps from "Type/AuthProps.tsx";
+import SkillServiceCards from "./ServiceCards/SkillServiceCards.tsx";
 
-
-const Dashboard: React.FC<AuthProps> = ({userData, loading}) => {
+const Dashboard: React.FC<AuthProps> = ({ userData, loading }) => {
   const navigate = useNavigate();
-
   useEffect(() => {
-    if (loading){
+    if (loading) {
       return;
     }
     if (!localStorage.getItem("role")) {
@@ -20,8 +18,8 @@ const Dashboard: React.FC<AuthProps> = ({userData, loading}) => {
     }
   }, [loading, navigate]);
 
-  if (loading){
-      return <Loader/>;
+  if (loading) {
+    return <Loader />;
   }
   return (
     <>
@@ -66,16 +64,14 @@ const Dashboard: React.FC<AuthProps> = ({userData, loading}) => {
             ></img>
           </div>
         </div>
-        <div className="mt-32 flex flex-col items-center text-2xl font-bold">
-          <p className="mb-10">
+        <div className="mb-10 mt-32 flex flex-col items-center text-2xl font-bold ">
+          <p className="mb-10 leading-relaxed">
             My broad set of{" "}
             <span className="bg-purple-500 px-2 pb-1 pt-2 text-white">
               services and skills
             </span>
           </p>
-          {userData?.skills.map((skill) => (
-            <SkillCard key={skill} skill={skill} />
-          ))}
+          <SkillServiceCards services={userData.services} userData={userData} />
         </div>
       </div>
       <Footer />

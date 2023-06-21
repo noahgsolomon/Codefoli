@@ -164,7 +164,6 @@ export const Skills = [
   "Game Development",
   "Embedded Systems",
   "IoT",
-  "Cyber Security",
   "Ethereum",
   "Solidity",
   "Data Analysis",
