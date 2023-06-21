@@ -166,7 +166,6 @@ public enum SkillsType {
     GAME_DEVELOPMENT,
     EMBEDDED_SYSTEMS,
     IOT,
-    CYBER_SECURITY,
     ETHEREUM,
     SOLIDITY,
     DATA_ANALYSIS,
