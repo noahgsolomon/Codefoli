@@ -18,7 +18,7 @@ const Card: React.FC<Props> = ({ imageUrl, title, description }) => {
           />
         </div>
       )}
-      <div className="content rounded-b-2xl bg-white p-5">
+      <div className="content rounded-b-2xl p-5">
         <h2 className="title text-2xl font-bold">{title}</h2>
         <p className="description text-base">{description}</p>
       </div>
