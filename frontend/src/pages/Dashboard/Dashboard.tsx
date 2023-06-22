@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "Components/Loader/Loader.tsx";
 import Footer from "Components/Footer/Footer.tsx";
@@ -32,6 +32,22 @@ const Dashboard: React.FC<AuthProps> = ({ userData, loading }) => {
   }
   return (
     <>
+      <button
+          className="cursor-pointer fixed top-32 left-8 bg-black px-6 text-white rounded-2xl py-2 hover:bg-blue-500 z-10 transition-all hover:shadow-custom"
+          onClick={() => {
+            // Handle edit button click
+          }}
+      >
+        Edit
+      </button>
+      <button
+          className="cursor-pointer fixed top-48 left-8 bg-green-500 text-white px-4 rounded-2xl py-2 hover:bg-blue-500 z-10 transition-all hover:shadow-custom"
+          onClick={() => {
+            // Handle preview button click
+          }}
+      >
+        Preview
+      </button>
       <animated.div style={animationProps}>
         <div className="container mx-auto px-6">
           <div className="flex flex-col lg:flex-row xl:mx-auto xl:justify-center">

@@ -34,7 +34,7 @@ const SkillServiceCards: React.FC<{
   return (
     <div className="mx-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div className="card mb-5 flex max-w-[400px] flex-col rounded-2xl border-2 border-black bg-white shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover">
-        <div className="mb-5 mt-5 flex flex-wrap gap-2 rounded-tl-2xl rounded-tr-2xl bg-white px-2 py-2">
+        <div style={{marginBottom: (12 - userData.skills.length)*25 + 'px'}} className={`mt-5 flex flex-wrap gap-2 min-h-64 rounded-tl-2xl rounded-tr-2xl bg-white px-2 py-2`}>
           {userData?.skills.map((skill, index) => {
             return (
               <span
