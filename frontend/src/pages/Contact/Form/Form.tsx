@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { useSpring, animated } from "react-spring";
 
 type formData = {
   name: string;
@@ -17,18 +18,25 @@ const Form = () => {
     message: "",
   });
 
+  const animationProps = useSpring({
+    from: { opacity: 0, transform: "translate3d(0, -20px, 0)" },
+    to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
+  });
+
   const handleChange = (event: React.FormEvent<EventTarget>) => {
     const { name, value } = event.target as HTMLInputElement;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
 
-    const handleSubmit = () => {
-        console.log(`sending Message using data: ${JSON.stringify(formData)}`)
-
-    }
+  const handleSubmit = () => {
+    console.log(`sending Message using data: ${JSON.stringify(formData)}`);
+  };
 
   return (
-    <form className="contact-form rounded-lg border-2 border-black p-5 shadow-custom">
+    <animated.form
+      style={animationProps}
+      className="contact-form rounded-lg border-2 border-black p-5 shadow-custom"
+    >
       <div className="mb-5 justify-between gap-5 md:flex">
         <div className="form-control relative w-full">
           <label htmlFor="name" className="mb-4 block font-bold">
@@ -109,7 +117,7 @@ const Form = () => {
       >
         Send Message
       </button>
-    </form>
+    </animated.form>
   );
 };
 

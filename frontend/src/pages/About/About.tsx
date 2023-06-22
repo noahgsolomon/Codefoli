@@ -2,15 +2,16 @@ import Marquee from "Components/Marquee/Marquee";
 import JobCard from "./JobCard/JobCard";
 import Footer from "Components/Footer/Footer";
 import Card from "Components/Card/Card";
+import AuthProps from "Type/AuthProps.tsx";
+import React from "react";
+import Loader from "Components/Loader/Loader.tsx";
 
-const About = () => {
-  const skills = [
-    "Web Design",
-    "Product Design",
-    "Design Thinking",
-    "UI/UX Designer",
-    "Branding",
-  ];
+const About: React.FC<AuthProps> = ({ userData, loading }) => {
+  console.log(userData);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -22,27 +23,9 @@ const About = () => {
               <h2 className="mb-5 text-center text-5xl font-bold md:text-7xl">
                 Hello, I'm <br />{" "}
                 <span className="mt-1 inline-block bg-blue-500 text-white">
-                  John Carter
+                  {userData?.name}
                 </span>
               </h2>
-              <p className="description mb-8 text-center text-lg font-semibold">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Id
-                odio blanditiis mollitia quas, repellat illo.
-              </p>
-              <div className="about-controls text-center">
-                <a
-                  href="#"
-                  className="mb-4 mr-2 inline-block w-full rounded-xl border-2 border-transparent bg-black px-4 py-2 font-bold text-white transition ease-in hover:-translate-y-1 hover:bg-blue-500 md:w-auto"
-                >
-                  Get in touch
-                </a>
-                <a
-                  href="#"
-                  className="inline-block w-full rounded-xl border-2 border-black px-4 py-2 font-bold transition ease-in hover:-translate-y-1 hover:bg-black hover:text-white md:w-auto"
-                >
-                  My story
-                </a>
-              </div>
             </div>
             <div className="image-wrapper order-2 w-full text-center md:order-1 md:self-end">
               <img
@@ -77,18 +60,7 @@ const About = () => {
             </div>
             <div className="content-right">
               <p className="description mb-5 text-lg font-semibold">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                mod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-                ad inim veniam, quis nostrud exercitation ullamco laboris nisi
-                ut aliquip ex ea commodo consequat.
-              </p>
-              <p className="description mb-5 text-lg font-semibold">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Nesciunt, deserunt fugiat rem porro, dolores ducimus explicabo
-                voluptas assumenda beatae eaque sequi at cumque eveniet illo?
-                Voluptatum beatae voluptate voluptates doloribus.
+                {userData.about}
               </p>
               <div className="story-control text-center md:text-left">
                 <a
@@ -107,7 +79,7 @@ const About = () => {
               <h2 className="mb-8 text-4xl font-bold text-white md:text-5xl md:leading-tight">
                 Designing since I was{" "}
                 <span className="mt-2 inline-block bg-red-500 text-white">
-                  16 years old
+                  ? years old
                 </span>
               </h2>
               <p className="description text-lg font-semibold text-white">
@@ -138,14 +110,6 @@ const About = () => {
                   </p>
                 </div>
               </div>
-              <div className="story-control mb-5 text-center md:text-left">
-                <a
-                  href="#"
-                  className="mb-4 mr-2 inline-block w-full rounded-xl border-2 border-transparent bg-white px-4 py-2 font-bold text-black transition ease-in hover:-translate-y-1 hover:bg-blue-500 md:w-auto"
-                >
-                  Get in touch
-                </a>
-              </div>
             </div>
             <div className="content-right">
               <div className="image-wrapper">
@@ -164,37 +128,26 @@ const About = () => {
               Take a look at my <span className="bg-yellow-500">resume</span>
             </h2>
             <div className="resume-events">
-              <JobCard
-                companyTitle="Facebook"
-                role="Mobile Product Designer"
-                description="Vel facilisis volutpat est velit egestas dui. Urna nec cidu praesent semper feugiat. Vulputate ut"
-                duration="Jan 2023 - Present"
-                active
-              />
-              <JobCard
-                companyTitle="Twitter"
-                role="UI / UX Designer"
-                description="Vel facilisis volutpat est velit egestas dui. Urna nec cidu praesent semper feugiat. Vulputate ut"
-                duration="Jan 2021 - Dec 2022"
-              />
-              <JobCard
-                companyTitle="Youtube"
-                role="VP of Design"
-                description="Vel facilisis volutpat est velit egestas dui. Urna nec cidu praesent semper feugiat. Vulputate ut"
-                duration="Mar 2020 - Dec 2020"
-              />
-            </div>
-            <div className="resume-control text-center">
-              <a
-                href="#"
-                className="mb-4 mr-2 inline-block w-full rounded-xl border-2 border-transparent bg-black px-4 py-2 font-bold text-white transition ease-in hover:-translate-y-1 hover:bg-blue-500"
-              >
-                Get in touch
-              </a>
+              {userData.work.map((job, index) => (
+                <JobCard
+                  companyTitle={job.company}
+                  role={job.position}
+                  description={job.description}
+                  duration={job.startDate + " - " + job.endDate}
+                  active={index === 0}
+                />
+              ))}
             </div>
           </div>
         </section>
-        <Marquee items={skills} />
+        <Marquee
+          items={userData.services.map((service) => {
+            return service
+              .split("_")
+              .map((word) => word.charAt(0) + word.slice(1).toLowerCase())
+              .join(" ");
+          })}
+        />
         {/* services */}
         <section className="services">
           <div className="container mx-auto my-20 max-w-screen-lg px-5 py-20">
@@ -210,22 +163,22 @@ const About = () => {
               <Card
                 title="Hard Work"
                 description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa numquam, sequi corporis quaerat voluptatibus deserunt"
-                imageUrl="https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b6863165495ea4480a18a_hard-work-image-paperfolio-webflow-template.png"
+                imageUrl="https://img.icons8.com/cotton/400/fast-delivery--v1.png"
               />
               <Card
                 title="Transparency"
                 description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa numquam, sequi corporis quaerat voluptatibus deserunt"
-                imageUrl="https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633c47da68ca183fc8091e34_transparency-image-paperfolio-webflow-template.png"
+                imageUrl="https://img.icons8.com/cotton/400/search-property.png"
               />
               <Card
                 title="Innovation"
                 description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa numquam, sequi corporis quaerat voluptatibus deserunt"
-                imageUrl="https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633c47da6cc8718f2fb6d9ac_innovation-image-paperfolio-webflow-template.png"
+                imageUrl="https://img.icons8.com/cotton/400/gas-industry.png"
               />
               <Card
                 title="Growth"
                 description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa numquam, sequi corporis quaerat voluptatibus deserunt"
-                imageUrl="https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633c47da606f910b55d8f1f4_growth-image-paperfolio-webflow-template.png"
+                imageUrl="https://img.icons8.com/cotton/400/hand-planting--v1.png"
               />
             </div>
           </div>

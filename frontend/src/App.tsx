@@ -44,7 +44,7 @@ const App: React.FC = () => {
         <Route path="/setup" element={<Setup userData={userData} loading={loading}/>} />
         <Route path="/dashboard" element={<Dashboard  userData={userData} loading={loading}/>} />
         <Route path="/contact" element={<Contact userData={userData} loading={loading} />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/about" element={<About userData={userData} loading={loading} />} />
       </Routes>
     </BrowserRouter>
   );

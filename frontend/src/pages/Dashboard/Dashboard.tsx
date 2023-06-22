@@ -8,6 +8,12 @@ import { useSpring, animated } from "react-spring";
 
 const Dashboard: React.FC<AuthProps> = ({ userData, loading }) => {
   const navigate = useNavigate();
+
+  const [animationProps, setAnimation] = useSpring(() => ({
+    opacity: 0,
+    transform: "translate3d(0, -20px, 0)",
+  }));
+
   useEffect(() => {
     if (loading) {
       return;
@@ -17,12 +23,9 @@ const Dashboard: React.FC<AuthProps> = ({ userData, loading }) => {
     } else if (localStorage.getItem("role") === "NEWBIE") {
       navigate("/setup");
     }
-  }, [loading, navigate]);
-  const animationProps = useSpring({
-    opacity: 1,
-    from: { opacity: 0, transform: "translate3d(0, -20px, 0)" },
-    to: { opacity: 1, transform: "translate3d(0, 0px, 0)" },
-  });
+
+    setAnimation.start({ opacity: 1, transform: "translate3d(0, 0px, 0)" });
+  }, [loading, navigate, setAnimation]);
 
   if (loading) {
     return <Loader />;

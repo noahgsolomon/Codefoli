@@ -2,16 +2,17 @@ import Accordion from "Components/Accordion/Accordion";
 import Footer from "Components/Footer/Footer";
 import Form from "./Form/Form";
 import AuthProps from "Type/AuthProps.tsx";
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import Loader from "Components/Loader/Loader.tsx";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSpring, animated } from "react-spring";
 
-const Contact:React.FC<AuthProps> = ({userData, loading}) => {
+const Contact: React.FC<AuthProps> = ({ userData, loading }) => {
   console.log(userData);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loading){
+    if (loading) {
       return;
     }
     if (!localStorage.getItem("role")) {
@@ -21,15 +22,30 @@ const Contact:React.FC<AuthProps> = ({userData, loading}) => {
     }
   }, [loading, navigate]);
 
-  if (loading){
-    return <Loader/>;
+  const animationProps = useSpring({
+    from: { opacity: 0, transform: "translate3d(-20px, 0, 0)" },
+    to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
+    delay: 100,
+  });
+
+  const faqAnimationProps = useSpring({
+    from: { opacity: 0, transform: "translate3d(0, 20px, 0)" },
+    to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
+    delay: 200,
+  });
+
+  if (loading) {
+    return <Loader />;
   }
   return (
     <>
       <main>
         <div className="container mx-auto my-20 max-w-screen-lg px-5">
           <div className="wrapper items-center gap-10 md:flex">
-            <div className="content mx-auto max-w-lg md:mx-0">
+            <animated.div
+              style={animationProps}
+              className="content mx-auto max-w-lg md:mx-0"
+            >
               <h2 className="text-center text-5xl font-bold md:text-left md:text-6xl">
                 <span className="mr-1 bg-blue-500 text-white">Contact</span>me
               </h2>
@@ -66,17 +82,17 @@ const Contact:React.FC<AuthProps> = ({userData, loading}) => {
                   </a>
                 </div>
               </div>
-            </div>
+            </animated.div>
 
             <Form />
           </div>
         </div>
 
         {/* FAQs */}
-        <section className="px-5">
+        <animated.section style={faqAnimationProps} className="px-5">
           <div className="header mx-auto mb-5 max-w-[647px]">
             <h2 className="text-center text-2xl font-bold md:text-5xl">
-              Frequestly{" "}
+              Frequently{" "}
               <span className="bg-red-500 text-white">Asked Questions</span>
             </h2>
             <p className="text-center">
@@ -107,7 +123,7 @@ const Contact:React.FC<AuthProps> = ({userData, loading}) => {
               content="Lorem ipsum dolor sit amet consectetur adipisicing elit."
             />
           </div>
-        </section>
+        </animated.section>
       </main>
       <Footer />
     </>

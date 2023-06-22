@@ -53,9 +53,10 @@ const SkillServiceCards: React.FC<{
         </div>
       </div>
       <>
-        {services.map((service) => {
+        {services.map((service, index) => {
           return (
             <Card
+              key={index}
               imageUrl={ServiceData[service]?.image}
               title={service.replaceAll("_", " ")}
               description={ServiceData[service]?.description}
@@ -71,7 +72,7 @@ const SkillServiceCards: React.FC<{
         />
         <Link
           to="/contact"
-          className="mx-5 mt-20 rounded-xl bg-black py-4 text-center text-white transition-all hover:-translate-y-0.5 hover:bg-blue-500"
+          className="mx-5 mb-5 mt-20 rounded-xl bg-black py-4 text-center text-white transition-all hover:-translate-y-0.5 hover:bg-blue-500"
         >
           Get in touch
         </Link>
