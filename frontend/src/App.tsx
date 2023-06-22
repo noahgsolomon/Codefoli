@@ -15,7 +15,7 @@ import About from "./pages/About/About.tsx";
 
 const App: React.FC = () => {
 
-    const [userData, setUserData] = useState<UserData>({name: "", email: "", company: "", location: "", profession: "", projects: [], skills: [], work: [], role: "NEWBIE", about: ""});
+    const [userData, setUserData] = useState<UserData>({name: "", email: "", company: "", location: "", profession: "", projects: [], skills: [], work: [], role: "NEWBIE", about: "", services: []});
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {

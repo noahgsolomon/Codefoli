@@ -65,12 +65,12 @@ const Dashboard: React.FC<AuthProps> = ({ userData, loading }) => {
           </div>
         </div>
         <div className="mb-10 mt-32 flex flex-col items-center text-2xl font-bold ">
-          <p className="mb-10 leading-relaxed">
+          <h2 className="mb-10 leading-relaxed text-3xl  md:text-4xl text-center">
             My broad set of{" "}
             <span className="bg-purple-500 px-2 pb-1 pt-2 text-white">
               services and skills
             </span>
-          </p>
+          </h2>
           <SkillServiceCards services={userData.services} userData={userData} />
         </div>
       </div>
