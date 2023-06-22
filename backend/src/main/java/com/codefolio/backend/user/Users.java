@@ -21,6 +21,7 @@ public class Users {
     private String password;
     private String company;
     private String location;
+    @Column(columnDefinition = "TEXT")
     private String about;
     private String profession;
     private String gitHubId;
