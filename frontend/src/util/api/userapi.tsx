@@ -57,4 +57,21 @@ const setupAccount = async (
   }
 };
 
-export { userDetails, setupAccount };
+const getHome = async () => {
+  try {
+    const homeData = await fetch("http://localhost:8080/home", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+    if (homeData) {
+      return await homeData.json();
+    } else {
+      console.log("no data");
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export { userDetails, setupAccount, getHome };
