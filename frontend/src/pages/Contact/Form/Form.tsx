@@ -34,6 +34,7 @@ const Form = () => {
 
   return (
     <animated.form
+      noValidate={true}
       style={animationProps}
       className="contact-form rounded-lg border-2 border-black p-5 shadow-custom"
     >
