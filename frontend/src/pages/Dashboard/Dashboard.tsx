@@ -1,11 +1,11 @@
-import React, {SetStateAction, useEffect, useRef, useState} from "react";
+import React, { SetStateAction, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "Components/Footer/Footer.tsx";
 import SkillServiceCards from "./ServiceCards/SkillServiceCards.tsx";
 import { useSpring, animated } from "react-spring";
 import HomeData from "Type/HomeData.tsx";
 import UserData from "Type/UserData.tsx";
-import {updateDescriptionOne, updateHeaderOne} from "./dashboardapi.tsx";
+import { updateDescriptionOne, updateHeaderOne } from "./dashboardapi.tsx";
 
 const Dashboard: React.FC<{
   pageData: HomeData;
@@ -14,9 +14,13 @@ const Dashboard: React.FC<{
 }> = ({ pageData, userData, setPageData }) => {
   const navigate = useNavigate();
   const [headerOneEdit, setHeaderOneEdit] = useState(false);
-  const [headerOneEditValue, setHeaderOneEditValue] = useState(pageData.headerOne);
+  const [headerOneEditValue, setHeaderOneEditValue] = useState(
+    pageData.headerOne
+  );
   const [descriptionOneEdit, setDescriptionOneEdit] = useState(false);
-  const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(pageData.descriptionOne);
+  const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(
+    pageData.descriptionOne
+  );
   const [imageOneEdit, setImageOneEdit] = useState(false);
 
   const [animationProps, setAnimation] = useSpring(() => ({
@@ -59,16 +63,21 @@ const Dashboard: React.FC<{
       setHeaderOneEditValue(updateHeader);
     }
     setHeaderOneEdit(false);
-  }
+  };
 
   const handleDescriptionOneSubmit = async () => {
-    const updateDescription = await updateDescriptionOne(descriptionOneEditValue);
+    const updateDescription = await updateDescriptionOne(
+      descriptionOneEditValue
+    );
     if (updateDescription) {
-      setPageData((prev) => ({ ...prev, descriptionOne: descriptionOneEditValue }));
+      setPageData((prev) => ({
+        ...prev,
+        descriptionOne: descriptionOneEditValue,
+      }));
       setDescriptionOneEditValue(updateDescription);
     }
     setHeaderOneEdit(false);
-  }
+  };
 
   return (
     <>
@@ -78,62 +87,59 @@ const Dashboard: React.FC<{
             <div>
               <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center justify-center font-bold xl:mt-32">
                 {headerOneEdit ? (
-                    <textarea
-                        ref={headerOneTextareaRef}
-                        value={headerOneEditValue}
-                        onChange={(e) => setHeaderOneEditValue(e.target.value)}
-
-                        onBlur={() => {
-                          setHeaderOneEditValue(pageData.headerOne);
-                          setHeaderOneEdit(false);
-                        }}
-                        onKeyDown={async (e) => {
-                          if (e.key === 'Enter') {
-                            e.preventDefault();
-                            await handleHeaderOneSubmit();
-                          }
-                        }}
-                        className="font-extra-bold focus:ring-0 max-w-[15ch] text-center text-4xl leading-snug md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal appearance-none border-none outline-none bg-transparent resize-none overflow-hidden focus:outline-none"
-                        autoFocus
-                    />
+                  <textarea
+                    ref={headerOneTextareaRef}
+                    value={headerOneEditValue}
+                    onChange={(e) => setHeaderOneEditValue(e.target.value)}
+                    onBlur={() => {
+                      setHeaderOneEditValue(pageData.headerOne);
+                      setHeaderOneEdit(false);
+                    }}
+                    onKeyDown={async (e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        await handleHeaderOneSubmit();
+                      }
+                    }}
+                    className="font-extra-bold max-w-[15ch] resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-4xl leading-snug outline-none focus:outline-none focus:ring-0 md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal"
+                    autoFocus
+                  />
                 ) : (
-                    <h1
-                        className="cursor-pointer select-none font-extra-bold max-w-[15ch] text-center text-4xl leading-snug md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal"
-                        onDoubleClick={() => setHeaderOneEdit(true)}
-                    >
-                      {pageData.headerOne}
-                    </h1>
+                  <h1
+                    className="font-extra-bold max-w-[15ch] cursor-pointer select-none text-center text-4xl leading-snug md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal"
+                    onDoubleClick={() => setHeaderOneEdit(true)}
+                  >
+                    {pageData.headerOne}
+                  </h1>
                 )}
                 {descriptionOneEdit ? (
-                    <textarea
-                        ref={descriptionOneTextareaRef}
-                        value={descriptionOneEditValue}
-                        onChange={(e) => setDescriptionOneEditValue(e.target.value)}
-                        onBlur={() => {
-                          setDescriptionOneEditValue(pageData.descriptionOne);
-                          setDescriptionOneEdit(false);
-                        }}
-                        onKeyDown={async (e) => {
-                          if (e.key === 'Enter') {
-                            e.preventDefault();
-                            await handleDescriptionOneSubmit();
-                            setDescriptionOneEdit(false);
-                          }
-                        }}
-                        className="max-w-[35ch] text-base focus:ring-0 text-center opacity-60 xl:max-w-[50ch] xl:text-left appearance-none border-none outline-none bg-transparent resize-none overflow-hidden focus:outline-none p-0"
-                        autoFocus
-                        maxLength={250}
-                    />
+                  <textarea
+                    ref={descriptionOneTextareaRef}
+                    value={descriptionOneEditValue}
+                    onChange={(e) => setDescriptionOneEditValue(e.target.value)}
+                    onBlur={() => {
+                      setDescriptionOneEditValue(pageData.descriptionOne);
+                      setDescriptionOneEdit(false);
+                    }}
+                    onKeyDown={async (e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        await handleDescriptionOneSubmit();
+                        setDescriptionOneEdit(false);
+                      }
+                    }}
+                    className="max-w-[35ch] resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-base opacity-60 outline-none focus:outline-none focus:ring-0 xl:max-w-[50ch] xl:text-left"
+                    autoFocus
+                    maxLength={250}
+                  />
                 ) : (
-                    <p
-                        className="select-none cursor-pointer max-w-[35ch] text-base text-center opacity-60 xl:max-w-[50ch] xl:text-left"
-                        onDoubleClick={() => setDescriptionOneEdit(true)}
-                    >
-                      {pageData.descriptionOne}
-                    </p>
+                  <p
+                    className="max-w-[35ch] cursor-pointer select-none text-center text-base opacity-60 xl:max-w-[50ch] xl:text-left"
+                    onDoubleClick={() => setDescriptionOneEdit(true)}
+                  >
+                    {pageData.descriptionOne}
+                  </p>
                 )}
-
-
               </div>
               <div className="mx-auto mt-5 flex justify-center xl:justify-start">
                 <Link
@@ -150,16 +156,26 @@ const Dashboard: React.FC<{
                 </Link>
               </div>
             </div>
-            <div className="mx-auto mt-10 lg:mx-0 xl:ml-20 xl:mt-32 relative"
-                 onMouseEnter={() => setImageOneEdit(true)}
-                 onMouseLeave={() => setImageOneEdit(false)}
+            <div
+              className="relative mx-auto mt-10 lg:mx-0 xl:ml-20 xl:mt-32"
+              onMouseEnter={() => setImageOneEdit(true)}
+              onMouseLeave={() => setImageOneEdit(false)}
             >
               <img
-                  className="rounded-3xl shadow-customHover"
-                  src={pageData.profileImage}
-                  alt="pfp"
+                className="rounded-3xl shadow-customHover"
+                src={pageData.profileImage}
+                alt="pfp"
               ></img>
-              <div className={`cursor-pointer font-bold text-3xl absolute w-full h-full rounded-3xl top-0 right-0 p-2 bg-white text-black transition-all ${imageOneEdit ? 'opacity-50' : 'opacity-0'}`} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <div
+                className={`absolute right-0 top-0 h-full w-full cursor-pointer rounded-3xl border-8 border-dashed border-black bg-white p-2 text-3xl font-bold text-black transition-all ${
+                  imageOneEdit ? "opacity-50" : "opacity-0"
+                }`}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 Upload image
               </div>
             </div>
