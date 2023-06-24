@@ -17,7 +17,7 @@ public class Home {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", unique = true)
     private Users users;
 
     private String headerOne;
