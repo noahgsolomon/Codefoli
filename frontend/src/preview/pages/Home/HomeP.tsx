@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { animated, useSpring } from "react-spring";
 import SkillServiceCards from "../../../pages/Dashboard/ServiceCards/SkillServiceCards.tsx";

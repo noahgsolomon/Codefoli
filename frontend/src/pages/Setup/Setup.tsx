@@ -24,6 +24,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
   const [noProjectDateError, setNoProjectDateError] = useState(false);
   const [noProjectDescriptionError, setNoProjectDescriptionError] =
     useState(false);
+  const [loading, setLoading] = useState(true);
   const [noProjectError, setNoProjectError] = useState(false);
 
   const [profession, setProfession] = useState("");
@@ -113,11 +114,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
   }, [serviceSearch, allServices]);
 
   useEffect(() => {
-    if (!localStorage.getItem("role")) {
-      navigate("/register");
-    } else if (localStorage.getItem("role") === "USER") {
-      navigate("/dashboard");
-    } else {
+    if (localStorage.getItem("role") && localStorage.getItem("role") === "NEWBIE") {
       setName(userData.name);
       setCompany(userData.company || "");
       setEmail(userData.email || "");
@@ -135,6 +132,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
             }))
           )
         : setProjects([]);
+      setLoading(false);
     }
   }, [navigate, userData, colors]);
 
@@ -274,6 +272,11 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
 
     return monthNames[dateObj.getMonth()] + " " + dateObj.getFullYear();
   }
+
+  if (loading) {
+    return <></>
+  }
+
   return (
     <div className="my-5 flex flex-col items-center justify-center">
       <div className="mb-10 text-4xl font-bold">

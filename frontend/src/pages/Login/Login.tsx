@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { login } from "api/authenticateapi.tsx";
 
 const Login: React.FC = () => {
@@ -8,8 +8,8 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const navigate = useNavigate();
 
   const handleLogin = async () => {
     const loginRequest = await login(email, password);
@@ -24,12 +24,14 @@ const Login: React.FC = () => {
   const redirectUri = "http://localhost:5173/dashboard";
 
   useEffect(() => {
-    if (localStorage.getItem("role") === "NEWBIE") {
-      navigate("/setup");
-    } else if (localStorage.getItem("role") === "USER") {
-      navigate("/dashboard");
+    if (!localStorage.getItem("role")) {
+      setLoading(false);
     }
-  }, [navigate]);
+  }, []);
+
+  if (loading){
+    return <></>;
+  }
 
   return (
     <div className="flex items-center justify-center bg-gray-50 p-4">

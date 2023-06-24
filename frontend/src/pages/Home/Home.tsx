@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { useSpring, animated, useInView } from "react-spring";
 import { useNavigate } from "react-router-dom";
 import { FiCode, FiRefreshCw, FiLayout } from "react-icons/fi";
@@ -6,6 +6,7 @@ import profileDisplayImg from "assets/profiledisplay.png";
 import user2PfpImg from "assets/user2-pfp.png";
 import userPfpImg from "assets/user-pfp.png";
 import Footer from "Components/Footer/Footer";
+import Loader from "Components/Loader/Loader.tsx";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -20,21 +21,22 @@ const Home: React.FC = () => {
     opacity: inViewTestimonial ? 1 : 0,
     transform: inViewTestimonial ? "translateY(0)" : "translateY(20px)",
   });
-
   const [refFeature, inViewFeature] = useInView({});
   const fadeInFeature = useSpring({
     opacity: inViewFeature ? 1 : 0,
     transform: inViewFeature ? "translateY(0)" : "translateY(20px)",
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (localStorage.getItem("role") === "NEWBIE") {
-      navigate("/setup");
-    } else if (localStorage.getItem("role") === "USER") {
-      navigate("/dashboard");
+    if (!localStorage.getItem("role")) {
+      setLoading(false);
     }
   }, [navigate]);
 
+  if (loading){
+    return <Loader />
+  }
 
   return (
     <>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "Components/Header/Header.tsx";
-import { Route, Routes } from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import Home from "./pages/Home/Home.tsx";
 import Login from "./pages/Login/Login.tsx";
 import Register from "./pages/Register/Register.tsx";
@@ -17,6 +17,11 @@ import Loader from "Components/Loader/Loader.tsx";
 import ContactData from "Type/ContactData.tsx";
 
 const MainApp: React.FC = () => {
+
+  const navigate = useNavigate();
+
+  const [authenticatedUser, setAuthenticatedUser] = useState<boolean>(false);
+
   const [userData, setUserData] = useState<UserData>({
     name: "",
     email: "",
@@ -77,6 +82,7 @@ const MainApp: React.FC = () => {
     const authenticatedCheck = async () => {
       const fetchState = await authenticated();
       if (fetchState) {
+        setAuthenticatedUser(true);
         const homeFetch = await getHome();
         if (homeFetch) {
           setHomeData(homeFetch);
@@ -92,13 +98,22 @@ const MainApp: React.FC = () => {
         const user: UserData = await userDetails();
         setUserData(user);
         localStorage.setItem("role", user.role);
+        const path = window.location.pathname;
+        console.log(path);
+        if (path === '/' || path === '/setup' || path === '/login' || path === '/register') {
+          navigate('/dashboard');
+        }
       } else {
         localStorage.removeItem("role");
+        const path = window.location.pathname;
+        if (path === '/about' || path === '/contact' || path === '/dashboard') {
+          navigate('/');
+        }
       }
       setLoading(false);
     };
     authenticatedCheck();
-  }, []);
+  }, [navigate]);
 
   if (loading) {
     return <Loader />;
@@ -106,7 +121,7 @@ const MainApp: React.FC = () => {
 
   return (
     <>
-      <Header />
+      <Header authenticated={authenticatedUser}/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
