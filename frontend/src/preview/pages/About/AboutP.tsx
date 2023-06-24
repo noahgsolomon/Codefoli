@@ -19,20 +19,20 @@ const AboutP: React.FC<{ userData: UserData; pageData: AboutData }> = ({
           <section className="about mb-20 grid grid-cols-2 justify-center gap-10 md:h-[400px] md:grid-cols-5">
             <div className="content-wrapper col-span-2  md:order-2 md:col-span-3">
               <h2 className="mb-5 text-center text-5xl font-bold md:text-7xl">
-                {pageData.about.headerOne}
+                {pageData.headerOne}
               </h2>
             </div>
             <div className="image-wrapper order-2 w-full text-center md:order-1 md:self-end">
               <img
                 className="inline-block max-w-[150px]"
-                src={pageData.about.iconOne}
+                src={pageData.iconOne}
                 alt="portfolio"
               />
             </div>
             <div className="image-wrapper w-full text-center md:order-last md:self-start">
               <img
                 className="inline-block max-w-[150px]"
-                src={pageData.about.iconTwo}
+                src={pageData.iconTwo}
                 alt="portfolio"
               />
             </div>
@@ -43,15 +43,15 @@ const AboutP: React.FC<{ userData: UserData; pageData: AboutData }> = ({
           <div className="container mx-auto my-20 max-w-screen-lg gap-5 px-5 md:grid md:grid-cols-2 md:items-start md:justify-between">
             <div className="content-left">
               <h2 className="mb-8 text-center text-4xl font-bold md:text-left md:text-6xl md:leading-tight">
-                {pageData.about.headerTwo}
+                {pageData.headerTwo}
               </h2>
               <div className="image-wrapper mb-5 md:max-w-[375px]">
-                <img src={pageData.about.iconThree} alt="" />
+                <img src={pageData.iconThree} alt="" />
               </div>
             </div>
             <div className="content-right">
               <p className="description mb-5 text-lg font-semibold">
-                {pageData.about.descriptionOne}
+                {pageData.descriptionOne}
               </p>
               <div className="story-control text-center md:text-left">
                 <Link
@@ -68,35 +68,35 @@ const AboutP: React.FC<{ userData: UserData; pageData: AboutData }> = ({
           <div className="container mx-auto my-20 max-w-screen-lg gap-5 px-5 py-20 md:grid md:grid-cols-2 md:items-center md:justify-between">
             <div className="content-left">
               <h2 className="mb-8 text-4xl font-bold text-white md:text-5xl md:leading-tight">
-                {pageData.about.headerThree}
+                {pageData.headerThree}
               </h2>
               <p className="description text-lg font-semibold text-white">
-                {pageData.about.descriptionTwo}
+                {pageData.descriptionTwo}
               </p>
               <div className="events-wrapper my-5">
                 <div className="event flex items-start justify-between gap-4">
                   <div className="mt-1 h-4 w-4 rounded border-2 bg-indigo-600"></div>
                   <p className="event-descripition flex-1 pt-0 text-lg font-semibold text-white">
-                    {pageData.about.bulletOne}
+                    {pageData.bulletOne}
                   </p>
                 </div>
                 <div className="event flex items-start justify-between gap-4">
                   <div className="mt-1 h-4 w-4 rounded border-2 bg-sky-600"></div>
                   <p className="event-descripition flex-1 pt-0 text-lg font-semibold text-white">
-                    {pageData.about.bulletTwo}
+                    {pageData.bulletTwo}
                   </p>
                 </div>
                 <div className="event flex items-start justify-between gap-4">
                   <div className="mt-1 h-4 w-4 rounded border-2 bg-yellow-500"></div>
                   <p className="event-descripition flex-1 pt-0 text-lg font-semibold text-white">
-                    {pageData.about.bulletThree}
+                    {pageData.bulletThree}
                   </p>
                 </div>
               </div>
             </div>
             <div className="content-right">
               <div className="image-wrapper">
-                <img src={pageData.about.imageOne} alt="" />
+                <img src={pageData.imageOne} alt="" />
               </div>
             </div>
           </div>
@@ -105,7 +105,7 @@ const AboutP: React.FC<{ userData: UserData; pageData: AboutData }> = ({
         <section className="resume">
           <div className="container mx-auto my-20 max-w-screen-lg px-5 py-20">
             <h2 className="mb-8 text-center text-3xl font-bold">
-              {pageData.about.headerFour}
+              {pageData.headerFour}
             </h2>
             <div className="resume-events">
               {userData.work.map((job, index) => (
@@ -133,10 +133,10 @@ const AboutP: React.FC<{ userData: UserData; pageData: AboutData }> = ({
         <section className="services">
           <div className="container mx-auto my-20 max-w-screen-lg px-5 py-20">
             <h2 className="mb-8 text-center text-3xl font-bold">
-              {pageData.about.headerFive}
+              {pageData.headerFive}
             </h2>
             <p className="desciption mb-8 text-center text-lg font-semibold">
-              {pageData.about.descriptionThree}
+              {pageData.descriptionThree}
             </p>
             <div className="cards-wrapper flex flex-wrap justify-center gap-5 lg:justify-between">
               {pageData.values.map((value, index) => (

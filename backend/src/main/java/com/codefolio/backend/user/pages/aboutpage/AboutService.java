@@ -23,7 +23,23 @@ public class AboutService {
         Users user = getAuthenticatedUser(principal);
         About aboutData = aboutRepository.findByUsers(user);
         List<Values> values = valuesRepository.findAllByUsers(user);
-        AboutModel aboutModel = new AboutModel(aboutData, values);
+        AboutModel aboutModel = new AboutModel(
+                aboutData.getHeaderOne(),
+                aboutData.getIconOne(),
+                aboutData.getIconTwo(),
+                aboutData.getHeaderTwo(),
+                aboutData.getIconThree(),
+                aboutData.getDescriptionOne(),
+                aboutData.getHeaderThree(),
+                aboutData.getDescriptionTwo(),
+                aboutData.getBulletOne(),
+                aboutData.getBulletTwo(),
+                aboutData.getBulletThree(),
+                aboutData.getImageOne(),
+                aboutData.getHeaderFour(),
+                aboutData.getHeaderFive(),
+                aboutData.getDescriptionThree()
+                , values);
         String jsonResponse = gson.toJson(aboutModel);
         return ResponseEntity.ok(jsonResponse);
     }
