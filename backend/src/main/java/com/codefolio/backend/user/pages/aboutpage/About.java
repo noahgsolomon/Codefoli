@@ -18,7 +18,7 @@ public class About {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", unique = true)
     private Users users;
 
     //section one
