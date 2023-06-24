@@ -2,14 +2,12 @@ import React, {useEffect} from "react";
 import { useSpring, animated, useInView } from "react-spring";
 import { useNavigate } from "react-router-dom";
 import { FiCode, FiRefreshCw, FiLayout } from "react-icons/fi";
-import Loader from "Components/Loader/Loader.tsx";
 import profileDisplayImg from "assets/profiledisplay.png";
 import user2PfpImg from "assets/user2-pfp.png";
 import userPfpImg from "assets/user-pfp.png";
 import Footer from "Components/Footer/Footer";
-import NoAuthProps from "Type/NoAuthProps.tsx";
 
-const Home: React.FC<NoAuthProps> = ({loading}) => {
+const Home: React.FC = () => {
   const navigate = useNavigate();
 
   const [refIntro, inViewIntro] = useInView({});
@@ -30,19 +28,12 @@ const Home: React.FC<NoAuthProps> = ({loading}) => {
   });
 
   useEffect(() => {
-    if (loading){
-      return;
-    }
     if (localStorage.getItem("role") === "NEWBIE") {
       navigate("/setup");
     } else if (localStorage.getItem("role") === "USER") {
       navigate("/dashboard");
     }
-  }, [loading, navigate]);
-
-  if (loading) {
-    return <Loader />;
-  }
+  }, [navigate]);
 
 
   return (

@@ -1,12 +1,11 @@
 import React from "react";
-import AuthProps from "Type/AuthProps.tsx";
 import {animated, useSpring} from "react-spring";
-import Loader from "Components/Loader/Loader.tsx";
 import Form from "../../../pages/Contact/Form/Form.tsx";
 import Accordion from "Components/Accordion/Accordion.tsx";
+import UserData from "Type/UserData.tsx";
 
 
-const ContactP: React.FC<AuthProps> = ({ userData, loading }) => {
+const ContactP: React.FC<{ userData: UserData }> = ({ userData }) => {
     console.log(userData);
 
     const animationProps = useSpring({
@@ -21,9 +20,6 @@ const ContactP: React.FC<AuthProps> = ({ userData, loading }) => {
         delay: 200,
     });
 
-    if (loading) {
-        return <Loader />;
-    }
     return (
         <>
             <main className="mb-20">

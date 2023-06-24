@@ -1,16 +1,14 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { animated, useSpring } from "react-spring";
-import Loader from "Components/Loader/Loader.tsx";
 import SkillServiceCards from "../../../pages/Dashboard/ServiceCards/SkillServiceCards.tsx";
 import UserData from "Type/UserData.tsx";
 import HomeData from "Type/HomeData.tsx";
 
 const HomeP: React.FC<{
-  loading: boolean;
   userData: UserData;
   pageData: HomeData;
-}> = ({ userData, loading, pageData }) => {
+}> = ({ userData, pageData }) => {
   const navigate = useNavigate();
 
   const [animationProps, setAnimation] = useSpring(() => ({
@@ -19,9 +17,6 @@ const HomeP: React.FC<{
   }));
 
   useEffect(() => {
-    if (loading) {
-      return;
-    }
     if (!localStorage.getItem("role")) {
       navigate("/");
     } else if (localStorage.getItem("role") === "NEWBIE") {
@@ -29,11 +24,8 @@ const HomeP: React.FC<{
     }
 
     setAnimation.start({ opacity: 1, transform: "translate3d(0, 0px, 0)" });
-  }, [loading, navigate, setAnimation]);
+  }, [navigate, setAnimation]);
 
-  if (loading) {
-    return <Loader />;
-  }
   return (
     <>
       <animated.div style={animationProps}>

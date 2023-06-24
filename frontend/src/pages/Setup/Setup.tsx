@@ -2,13 +2,12 @@ import React, { useEffect, useMemo, useState } from "react";
 import { setupAccount } from "api/userapi.tsx";
 import { Skills } from "Type/Skills.tsx";
 import { useNavigate } from "react-router-dom";
-import Loader from "Components/Loader/Loader.tsx";
 import Work from "Type/Work.tsx";
 import Project from "Type/Project.tsx";
 import { Services } from "Type/Services.tsx";
-import AuthProps from "Type/AuthProps.tsx";
+import UserData from "Type/UserData.tsx";
 
-const Setup: React.FC<AuthProps> = ({userData, loading}) => {
+const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
   const [page, setPage] = useState(0);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -118,25 +117,24 @@ const Setup: React.FC<AuthProps> = ({userData, loading}) => {
       navigate("/register");
     } else if (localStorage.getItem("role") === "USER") {
       navigate("/dashboard");
-    }
-    else{
+    } else {
       setName(userData.name);
       setCompany(userData.company || "");
       setEmail(userData.email || "");
       setLocation(userData.location || "");
       userData.projects
-          ? setProjects(
-              userData.projects.map((project: Project) => ({
-                project: {
-                  name: project.name,
-                  description: project.description || "",
-                  language: project.language,
-                  updatedAt: project.updatedAt,
-                },
-                color: colors[Math.floor(Math.random() * colors.length)],
-              }))
+        ? setProjects(
+            userData.projects.map((project: Project) => ({
+              project: {
+                name: project.name,
+                description: project.description || "",
+                language: project.language,
+                updatedAt: project.updatedAt,
+              },
+              color: colors[Math.floor(Math.random() * colors.length)],
+            }))
           )
-          : setProjects([]);
+        : setProjects([]);
     }
   }, [navigate, userData, colors]);
 
@@ -177,9 +175,6 @@ const Setup: React.FC<AuthProps> = ({userData, loading}) => {
       alert("Error");
     }
   };
-if (loading) {
-  return <Loader />;
-}
 
   const incrementPage = () => {
     if (page < 2) {

@@ -1,10 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "api/authenticateapi.tsx";
-import Loader from "Components/Loader/Loader.tsx";
-import NoAuthProps from "Type/NoAuthProps.tsx";
 
-const Register: React.FC<NoAuthProps> = ({loading}) => {
+const Register: React.FC = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,19 +22,12 @@ const Register: React.FC<NoAuthProps> = ({loading}) => {
   };
 
   useEffect(() => {
-    if (loading){
-      return;
-    }
     if (localStorage.getItem("role") === "NEWBIE") {
       navigate("/setup");
     } else if (localStorage.getItem("role") === "USER") {
       navigate("/dashboard");
     }
-  }, [loading, navigate]);
-
-  if (loading) {
-    return <Loader />;
-  }
+  }, [navigate]);
 
   function isValidEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Loader from "Components/Loader/Loader.tsx";
 import Footer from "Components/Footer/Footer.tsx";
 import SkillServiceCards from "./ServiceCards/SkillServiceCards.tsx";
 import { useSpring, animated } from "react-spring";
@@ -8,10 +7,9 @@ import HomeData from "Type/HomeData.tsx";
 import UserData from "Type/UserData.tsx";
 
 const Dashboard: React.FC<{
-  loading: boolean;
   pageData: HomeData;
   userData: UserData;
-}> = ({ loading, pageData, userData }) => {
+}> = ({ pageData, userData }) => {
   const navigate = useNavigate();
 
   const [animationProps, setAnimation] = useSpring(() => ({
@@ -20,9 +18,6 @@ const Dashboard: React.FC<{
   }));
 
   useEffect(() => {
-    if (loading) {
-      return;
-    }
     if (!localStorage.getItem("role")) {
       navigate("/");
     } else if (localStorage.getItem("role") === "NEWBIE") {
@@ -30,11 +25,8 @@ const Dashboard: React.FC<{
     }
 
     setAnimation.start({ opacity: 1, transform: "translate3d(0, 0px, 0)" });
-  }, [loading, navigate, setAnimation]);
+  }, [ navigate, setAnimation]);
 
-  if (loading) {
-    return <Loader />;
-  }
   return (
     <>
       <button

@@ -1,10 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "api/authenticateapi.tsx";
-import Loader from "Components/Loader/Loader.tsx";
-import NoAuthProps from "Type/NoAuthProps.tsx";
 
-const Login: React.FC<NoAuthProps> = ({loading}) => {
+const Login: React.FC = () => {
   const [showFields, setShowFields] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,19 +24,12 @@ const Login: React.FC<NoAuthProps> = ({loading}) => {
   const redirectUri = "http://localhost:5173/dashboard";
 
   useEffect(() => {
-    if (loading){
-      return;
-    }
     if (localStorage.getItem("role") === "NEWBIE") {
       navigate("/setup");
     } else if (localStorage.getItem("role") === "USER") {
       navigate("/dashboard");
     }
-  }, [loading, navigate]);
-
-  if (loading) {
-    return <Loader />;
-  }
+  }, [navigate]);
 
   return (
     <div className="flex items-center justify-center bg-gray-50 p-4">

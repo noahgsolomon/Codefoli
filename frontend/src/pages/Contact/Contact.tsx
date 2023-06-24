@@ -1,26 +1,22 @@
 import Accordion from "Components/Accordion/Accordion";
 import Footer from "Components/Footer/Footer";
 import Form from "./Form/Form";
-import AuthProps from "Type/AuthProps.tsx";
 import React, { useEffect } from "react";
-import Loader from "Components/Loader/Loader.tsx";
 import { useNavigate } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
+import UserData from "Type/UserData.tsx";
 
-const Contact: React.FC<AuthProps> = ({ userData, loading }) => {
+const Contact: React.FC<{ userData: UserData }> = ({ userData }) => {
   console.log(userData);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loading) {
-      return;
-    }
     if (!localStorage.getItem("role")) {
       navigate("/");
     } else if (localStorage.getItem("role") === "NEWBIE") {
       navigate("/setup");
     }
-  }, [loading, navigate]);
+  }, [navigate]);
 
   const animationProps = useSpring({
     from: { opacity: 0, transform: "translate3d(-20px, 0, 0)" },
@@ -34,9 +30,6 @@ const Contact: React.FC<AuthProps> = ({ userData, loading }) => {
     delay: 200,
   });
 
-  if (loading) {
-    return <Loader />;
-  }
   return (
     <>
       <main>
