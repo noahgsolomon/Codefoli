@@ -42,7 +42,7 @@ const Header: React.FC<{authenticated: boolean}> = ({authenticated}) => {
                   About
                 </Link>
                 <Link
-                  to="/portfolio"
+                  to="/projects"
                   className="mx-2 py-1 text-lg no-underline transition-all hover:text-blue-500 md:mx-10"
                 >
                   Portfolio

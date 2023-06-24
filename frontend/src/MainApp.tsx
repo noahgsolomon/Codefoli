@@ -15,6 +15,8 @@ import HomeData from "Type/HomeData.tsx";
 import AboutData from "Type/AboutData.tsx";
 import Loader from "Components/Loader/Loader.tsx";
 import ContactData from "Type/ContactData.tsx";
+import Projects from "./pages/Projects/Projects.tsx";
+import Project from "./pages/Project/Project.tsx";
 
 const MainApp: React.FC = () => {
 
@@ -138,6 +140,14 @@ const MainApp: React.FC = () => {
         <Route
           path="/about"
           element={<About userData={userData} pageData={aboutData} />}
+        />
+        <Route
+            path="/projects"
+            element={<Projects userData={userData} />}
+        />
+        <Route
+          path="/project"
+          element={<Project />}
         />
       </Routes>
     </>
