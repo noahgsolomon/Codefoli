@@ -7,8 +7,10 @@ import AboutP from "./preview/pages/About/AboutP.tsx";
 import HeaderP from "./preview/common/Components/Header/HeaderP.tsx";
 import UserData from "Type/UserData.tsx";
 import { authenticated } from "api/authenticateapi.tsx";
-import { getHome, userDetails } from "api/userapi.tsx";
+import { getAbout, getHome, userDetails } from "api/userapi.tsx";
 import HomeData from "Type/HomeData.tsx";
+import AboutData from "Type/AboutData.tsx";
+import Loader from "Components/Loader/Loader.tsx";
 
 const PreviewApp: React.FC = () => {
   const [userData, setUserData] = useState<UserData>({
@@ -32,6 +34,27 @@ const PreviewApp: React.FC = () => {
     profileImage: "",
   });
 
+  const [aboutData, setAboutData] = useState<AboutData>({
+    about: {
+      headerOne: "",
+      iconOne: "",
+      iconTwo: "",
+      headerTwo: "",
+      iconThree: "",
+      descriptionOne: "",
+      headerThree: "",
+      descriptionTwo: "",
+      bulletOne: "",
+      bulletTwo: "",
+      bulletThree: "",
+      imageOne: "",
+      headerFour: "",
+      headerFive: "",
+      descriptionThree: "",
+    },
+    values: [{ value: "", description: "" }],
+  });
+
   useEffect(() => {
     const authenticatedCheck = async () => {
       const fetchState = await authenticated();
@@ -39,6 +62,10 @@ const PreviewApp: React.FC = () => {
         const homeFetch = await getHome();
         if (homeFetch) {
           setHomeData(homeFetch);
+        }
+        const aboutFetch = await getAbout();
+        if (aboutFetch) {
+          setAboutData(aboutFetch);
         }
         const user: UserData = await userDetails();
         setUserData(user);
@@ -51,24 +78,23 @@ const PreviewApp: React.FC = () => {
     authenticatedCheck();
   }, []);
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <>
       <HeaderP />
       <Routes>
         <Route
           path="/"
-          element={
-            <HomeP pageData={homeData} userData={userData} loading={loading} />
-          }
+          element={<HomeP pageData={homeData} userData={userData} />}
         />
-        <Route
-          path="/contact"
-          element={<ContactP userData={userData} loading={loading} />}
-        />
+        <Route path="/contact" element={<ContactP userData={userData} />} />
         <Route path="/projects" element={<ProjectsP />} />
         <Route
           path="/about"
-          element={<AboutP userData={userData} loading={loading} />}
+          element={<AboutP userData={userData} pageData={aboutData} />}
         />
       </Routes>
     </>

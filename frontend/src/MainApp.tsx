@@ -10,8 +10,10 @@ import Contact from "./pages/Contact/Contact.tsx";
 import About from "./pages/About/About.tsx";
 import UserData from "Type/UserData.tsx";
 import { authenticated } from "api/authenticateapi.tsx";
-import { getHome, userDetails } from "api/userapi.tsx";
+import { getAbout, getHome, userDetails } from "api/userapi.tsx";
 import HomeData from "Type/HomeData.tsx";
+import AboutData from "Type/AboutData.tsx";
+import Loader from "Components/Loader/Loader.tsx";
 
 const MainApp: React.FC = () => {
   const [userData, setUserData] = useState<UserData>({
@@ -27,6 +29,28 @@ const MainApp: React.FC = () => {
     about: "",
     services: [],
   });
+
+  const [aboutData, setAboutData] = useState<AboutData>({
+    about: {
+      headerOne: "",
+      iconOne: "",
+      iconTwo: "",
+      headerTwo: "",
+      iconThree: "",
+      descriptionOne: "",
+      headerThree: "",
+      descriptionTwo: "",
+      bulletOne: "",
+      bulletTwo: "",
+      bulletThree: "",
+      imageOne: "",
+      headerFour: "",
+      headerFive: "",
+      descriptionThree: "",
+    },
+    values: [{ value: "", description: "" }],
+  });
+
   const [loading, setLoading] = useState<boolean>(true);
   const [homeData, setHomeData] = useState<HomeData>({
     headerOne: "",
@@ -43,6 +67,10 @@ const MainApp: React.FC = () => {
         if (homeFetch) {
           setHomeData(homeFetch);
         }
+        const aboutFetch = await getAbout();
+        if (aboutFetch) {
+          setAboutData(aboutFetch);
+        }
         const user: UserData = await userDetails();
         setUserData(user);
         localStorage.setItem("role", user.role);
@@ -54,34 +82,26 @@ const MainApp: React.FC = () => {
     authenticatedCheck();
   }, []);
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<Home loading={loading} />} />
-        <Route path="/login" element={<Login loading={loading} />} />
-        <Route path="/register" element={<Register loading={loading} />} />
-        <Route
-          path="/setup"
-          element={<Setup userData={userData} loading={loading} />}
-        />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/setup" element={<Setup userData={userData} />} />
         <Route
           path="/dashboard"
-          element={
-            <Dashboard
-              userData={userData}
-              loading={loading}
-              pageData={homeData}
-            />
-          }
+          element={<Dashboard userData={userData} pageData={homeData} />}
         />
-        <Route
-          path="/contact"
-          element={<Contact userData={userData} loading={loading} />}
-        />
+        <Route path="/contact" element={<Contact userData={userData} />} />
         <Route
           path="/about"
-          element={<About userData={userData} loading={loading} />}
+          element={<About userData={userData} pageData={aboutData} />}
         />
       </Routes>
     </>

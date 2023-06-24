@@ -74,4 +74,21 @@ const getHome = async () => {
   }
 };
 
-export { userDetails, setupAccount, getHome };
+const getAbout = async () => {
+  try {
+    const aboutData = await fetch("http://localhost:8080/about", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+    if (aboutData) {
+      return await aboutData.json();
+    } else {
+      console.log("no data");
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export { userDetails, setupAccount, getHome, getAbout };
