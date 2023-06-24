@@ -1,16 +1,20 @@
-import React, { useEffect } from "react";
+import React, {SetStateAction, useEffect, useRef, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "Components/Footer/Footer.tsx";
 import SkillServiceCards from "./ServiceCards/SkillServiceCards.tsx";
 import { useSpring, animated } from "react-spring";
 import HomeData from "Type/HomeData.tsx";
 import UserData from "Type/UserData.tsx";
+import {updateHeaderOne} from "./dashboardapi.tsx";
 
 const Dashboard: React.FC<{
   pageData: HomeData;
+  setPageData: React.Dispatch<SetStateAction<HomeData>>;
   userData: UserData;
-}> = ({ pageData, userData }) => {
+}> = ({ pageData, userData, setPageData }) => {
   const navigate = useNavigate();
+  const [headerOneEdit, setHeaderOneEdit] = useState(false);
+  const [headerOneEditValue, setHeaderOneEditValue] = useState(pageData.headerOne);
 
   const [animationProps, setAnimation] = useSpring(() => ({
     opacity: 0,
@@ -27,32 +31,60 @@ const Dashboard: React.FC<{
     setAnimation.start({ opacity: 1, transform: "translate3d(0, 0px, 0)" });
   }, [navigate, setAnimation]);
 
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  useEffect(() => {
+    if (headerOneEdit && textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [headerOneEdit, headerOneEditValue]);
+
+  const handleHeaderOneSubmit = async () => {
+    //if enter button clicked
+    const updateHeader = await updateHeaderOne(headerOneEditValue);
+    if (updateHeader) {
+      setPageData((prev) => ({ ...prev, headerOne: headerOneEditValue }));
+      setHeaderOneEditValue(updateHeader);
+    }
+    setHeaderOneEdit(false);
+  }
+
   return (
     <>
-      <button
-        className="fixed left-8 top-32 z-10 cursor-pointer rounded-2xl bg-black px-6 py-2 text-white transition-all hover:bg-blue-500 hover:shadow-custom"
-        onClick={() => {
-          // Handle edit button click
-        }}
-      >
-        Edit
-      </button>
-      <button
-        className="fixed left-8 top-48 z-10 cursor-pointer rounded-2xl bg-green-500 px-4 py-2 text-white transition-all hover:bg-blue-500 hover:shadow-custom"
-        onClick={() => {
-          // Handle preview button click
-        }}
-      >
-        Preview
-      </button>
       <animated.div style={animationProps}>
         <div className="container mx-auto px-6">
           <div className="flex flex-col lg:flex-row xl:mx-auto xl:justify-center">
             <div>
               <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center justify-center font-bold xl:mt-32">
-                <h1 className="font-extra-bold max-w-[15ch] text-center text-4xl leading-snug md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal">
-                  {pageData.headerOne}
-                </h1>
+                {headerOneEdit ? (
+                    <textarea
+                        ref={textareaRef}
+                        value={headerOneEditValue}
+                        onChange={(e) => setHeaderOneEditValue(e.target.value)}
+
+                        onBlur={() => {
+                          setHeaderOneEditValue(pageData.headerOne);
+                          setHeaderOneEdit(false);
+                        }}
+                        onKeyDown={async (e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            await handleHeaderOneSubmit();
+                          }
+                        }}
+                        className="font-extra-bold focus:ring-0 max-w-[15ch] text-center text-4xl leading-snug md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal appearance-none border-none outline-none bg-transparent resize-none overflow-hidden focus:outline-none"
+                        autoFocus
+                    />
+                ) : (
+                    <h1
+                        className="cursor-pointer select-none font-extra-bold max-w-[15ch] text-center text-4xl leading-snug md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal"
+                        onDoubleClick={() => setHeaderOneEdit(true)}
+                    >
+                      {pageData.headerOne}
+                    </h1>
+                )}
+
                 <p className="max-w-[35ch] text-center opacity-60 xl:max-w-[50ch] xl:text-left xl:text-base">
                   {pageData.descriptionOne}
                 </p>

@@ -16,11 +16,17 @@ public class HomeService {
     private final HomeRepository homeRepository;
     private final Gson gson;
     public ResponseEntity<?> getHome(Principal principal) {
-        System.out.println("hi");
         Users user = getAuthenticatedUser(principal);
-        System.out.println(user);
         Home homeData = homeRepository.findByUsers(user);
         String jsonResponse = gson.toJson(homeData);
         return ResponseEntity.ok(jsonResponse);
+    }
+
+    public ResponseEntity<?> updateHeaderOne(Principal principal, String headerOne) {
+        Users user = getAuthenticatedUser(principal);
+        Home homeData = homeRepository.findByUsers(user);
+        homeData.setHeaderOne(headerOne);
+        homeRepository.save(homeData);
+        return ResponseEntity.ok(homeData.getHeaderOne());
     }
 }

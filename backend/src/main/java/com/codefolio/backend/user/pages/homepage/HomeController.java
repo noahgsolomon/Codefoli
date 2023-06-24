@@ -1,8 +1,7 @@
 package com.codefolio.backend.user.pages.homepage;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -20,4 +19,8 @@ public class HomeController {
         return homeService.getHome(principal);
     }
 
+    @PutMapping("/home/headerOne")
+    public ResponseEntity<?> updateHeaderOne(Principal principal, @RequestBody String headerOne) {
+        return homeService.updateHeaderOne(principal, headerOne);
+    }
 }

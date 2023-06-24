@@ -73,8 +73,6 @@ const MainApp: React.FC = () => {
     ],
   });
 
-  console.log(contactData);
-
   useEffect(() => {
     const authenticatedCheck = async () => {
       const fetchState = await authenticated();
@@ -116,7 +114,7 @@ const MainApp: React.FC = () => {
         <Route path="/setup" element={<Setup userData={userData} />} />
         <Route
           path="/dashboard"
-          element={<Dashboard userData={userData} pageData={homeData} />}
+          element={<Dashboard userData={userData} pageData={homeData} setPageData={setHomeData} />}
         />
         <Route
           path="/contact"
