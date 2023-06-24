@@ -6,6 +6,7 @@ import com.codefolio.backend.user.pages.aboutpage.About;
 import com.codefolio.backend.user.pages.aboutpage.AboutRepository;
 import com.codefolio.backend.user.pages.aboutpage.values.Values;
 import com.codefolio.backend.user.pages.aboutpage.values.ValuesRepository;
+import com.codefolio.backend.user.pages.aboutpage.values.ValuesType;
 import com.codefolio.backend.user.pages.contactpage.Contact;
 import com.codefolio.backend.user.pages.contactpage.ContactRepository;
 import com.codefolio.backend.user.pages.contactpage.faq.FAQ;
@@ -147,23 +148,25 @@ public class UserService {
         String aboutIconOne = "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b443e2bb8e12b5faf51a7_about-hero-rigth-image-paperfolio-webflow-template.png";
         String aboutIconTwo = "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b440128f648585c383865_about-hero-left-image-paperfolio-webflow-template.png";
         String aboutIconThree = "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b52d3639fb5250039e574_my-story-image-paperfolio-webflow-template.png";
-        String headerThree = "Designing since I was ? years old";
+        String aboutHeaderThree = "Designing since I was ? years old";
         String aboutDescriptionTwo = "I started designing when I was ? years old. My first designs were for my school projects. I was fascinated by the idea of creating something that people can interact with. I studied design for 5 years in college and have been working as a designer for 3 years.";
         String aboutBulletOne = "Passionate about design from a young age.";
         String aboutBulletTwo = "Five years of design education, three professionally.";
         String aboutBulletThree = "Strong advocate of user-centered design.";
         String aboutImageOne = "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b55bcb4baec57b75b66fd_desigining-experience-paperfolio-webflow-template.png";
-        String headerFour = "Take a look at my resume";
-        String headerFive = "The core values that drive my work";
+        String aboutHeaderFour = "Take a look at my resume";
+        String aboutHeaderFive = "The core values that drive my work";
         String aboutDescriptionThree = "Steering the helm of my career is a deeply ingrained set of core values. These principles not only guide my work ethic but also shape the way I view and approach design. Let's delve into the convictions that drive my professional journey.";
 
-        About about = new About(user, aboutHeaderOne, aboutHeaderTwo, aboutDescriptionOne, aboutIconOne, aboutIconTwo, aboutIconThree, headerThree, aboutDescriptionTwo, aboutBulletOne, aboutBulletTwo, aboutBulletThree, aboutImageOne, headerFour, headerFive, aboutDescriptionThree);
+
+
+        About about = new About(user, aboutHeaderOne, aboutIconOne, aboutIconTwo, aboutHeaderTwo, aboutIconThree, aboutDescriptionOne, aboutHeaderThree, aboutDescriptionTwo, aboutBulletOne, aboutBulletTwo, aboutBulletThree, aboutImageOne, aboutHeaderFour, aboutHeaderFive, aboutDescriptionThree);
         aboutRepository.save(about);
 
-        valuesRepository.save(new Values(user, "Hard Work", "I firmly believe that success stems from diligence and dedication. No great achievement comes without concerted effort and a steadfast commitment to one's craft."));
-        valuesRepository.save(new Values(user, "Transparency", "Trust is built on openness and honesty. I strive for transparency in all my actions, ensuring clear communication and setting realistic expectations in every project."));
-        valuesRepository.save(new Values(user, "Innovation", "I am passionate about pushing boundaries and embracing novel ideas. Innovation drives me to continuously seek out and implement creative solutions in my work."));
-        valuesRepository.save(new Values(user, "Growth", "Personal and professional development is paramount. I am committed to learning and growth, both as an individual and as a designer, fostering a mindset of continual improvement."));
+        valuesRepository.save(new Values(user, ValuesType.HARD_WORK));
+        valuesRepository.save(new Values(user,  ValuesType.TRANSPARENCY));
+        valuesRepository.save(new Values(user,  ValuesType.INNOVATION));
+        valuesRepository.save(new Values(user,  ValuesType.GROWTH));
 
         String contactHeaderOne = "Contact me";
         String contactDescriptionOne = "Don't hesitate to get in touch! Whether you're looking for a design consult, interested in a collaboration, or just want to say hello, I'd be delighted to hear from you. I strive to respond promptly and look forward to our potential correspondence!";
