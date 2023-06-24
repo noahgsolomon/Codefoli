@@ -11,7 +11,6 @@ const Project = () => {
                         <h1 className='text-4xl text-center font-bold mb-5'>Lorem ipsum dolor sit amet</h1>
                         <p className='text-center font-semibold mb-5'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere ex similique fuga beatae officia nam unde, velit accusantium et inventore.</p>
                         <div className="image-wrapper rounded-lg overflow-hidden shadow-custom bg-white p-2 border-black border-2 lg:h-[600px]">
-                            {/* <div className="bg-red-500  w-full h-[80%]"></div> */}
                             <img src="https://picsum.photos/2000" alt="" className='rounded-lg object-cover h-full w-full block' />
                         </div>
                     </section>
