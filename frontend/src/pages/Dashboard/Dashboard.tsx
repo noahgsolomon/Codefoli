@@ -17,6 +17,7 @@ const Dashboard: React.FC<{
   const [headerOneEditValue, setHeaderOneEditValue] = useState(pageData.headerOne);
   const [descriptionOneEdit, setDescriptionOneEdit] = useState(false);
   const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(pageData.descriptionOne);
+  const [imageOneEdit, setImageOneEdit] = useState(false);
 
   const [animationProps, setAnimation] = useSpring(() => ({
     opacity: 0,
@@ -149,12 +150,18 @@ const Dashboard: React.FC<{
                 </Link>
               </div>
             </div>
-            <div className="mx-auto mt-10 lg:mx-0 xl:ml-20 xl:mt-32">
+            <div className="mx-auto mt-10 lg:mx-0 xl:ml-20 xl:mt-32 relative"
+                 onMouseEnter={() => setImageOneEdit(true)}
+                 onMouseLeave={() => setImageOneEdit(false)}
+            >
               <img
-                className="rounded-3xl shadow-customHover"
-                src={pageData.profileImage}
-                alt="pfp"
+                  className="rounded-3xl shadow-customHover"
+                  src={pageData.profileImage}
+                  alt="pfp"
               ></img>
+              <div className={`cursor-pointer font-bold text-3xl absolute w-full h-full rounded-3xl top-0 right-0 p-2 bg-white text-black transition-all ${imageOneEdit ? 'opacity-50' : 'opacity-0'}`} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                Upload image
+              </div>
             </div>
           </div>
           <div className="mb-10 mt-32 flex flex-col items-center text-2xl font-bold ">
