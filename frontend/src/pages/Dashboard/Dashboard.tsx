@@ -25,7 +25,7 @@ const Dashboard: React.FC<{
     }
 
     setAnimation.start({ opacity: 1, transform: "translate3d(0, 0px, 0)" });
-  }, [ navigate, setAnimation]);
+  }, [navigate, setAnimation]);
 
   return (
     <>
@@ -50,7 +50,7 @@ const Dashboard: React.FC<{
           <div className="flex flex-col lg:flex-row xl:mx-auto xl:justify-center">
             <div>
               <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center justify-center font-bold xl:mt-32">
-                <h1 className="font-extra-bold max-w-[15ch] text-center text-4xl leading-snug text-black md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal">
+                <h1 className="font-extra-bold max-w-[15ch] text-center text-4xl leading-snug md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal">
                   {pageData.headerOne}
                 </h1>
                 <p className="max-w-[35ch] text-center opacity-60 xl:max-w-[50ch] xl:text-left xl:text-base">
