@@ -20,12 +20,11 @@ public class Values {
     @JoinColumn(name = "user_id")
     private Users users;
 
-    private String value;
-    private String description;
+    @Enumerated(EnumType.STRING)
+    private ValuesType value;
 
-    public Values(Users users, String value, String description) {
+    public Values(Users users, ValuesType value) {
         this.users = users;
         this.value = value;
-        this.description = description;
     }
 }
