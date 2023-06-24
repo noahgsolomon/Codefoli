@@ -91,4 +91,21 @@ const getAbout = async () => {
   }
 };
 
-export { userDetails, setupAccount, getHome, getAbout };
+const getContact = async () => {
+  try {
+    const contactData = await fetch("http://localhost:8080/contact", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+    if (contactData) {
+      return await contactData.json();
+    } else {
+      console.log("no data");
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export { userDetails, setupAccount, getHome, getAbout, getContact };

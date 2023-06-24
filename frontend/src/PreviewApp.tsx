@@ -7,10 +7,11 @@ import AboutP from "./preview/pages/About/AboutP.tsx";
 import HeaderP from "./preview/common/Components/Header/HeaderP.tsx";
 import UserData from "Type/UserData.tsx";
 import { authenticated } from "api/authenticateapi.tsx";
-import { getAbout, getHome, userDetails } from "api/userapi.tsx";
+import { getAbout, getContact, getHome, userDetails } from "api/userapi.tsx";
 import HomeData from "Type/HomeData.tsx";
 import AboutData from "Type/AboutData.tsx";
 import Loader from "Components/Loader/Loader.tsx";
+import ContactData from "Type/ContactData.tsx";
 
 const PreviewApp: React.FC = () => {
   const [userData, setUserData] = useState<UserData>({
@@ -35,24 +36,37 @@ const PreviewApp: React.FC = () => {
   });
 
   const [aboutData, setAboutData] = useState<AboutData>({
-    about: {
-      headerOne: "",
-      iconOne: "",
-      iconTwo: "",
-      headerTwo: "",
-      iconThree: "",
-      descriptionOne: "",
-      headerThree: "",
-      descriptionTwo: "",
-      bulletOne: "",
-      bulletTwo: "",
-      bulletThree: "",
-      imageOne: "",
-      headerFour: "",
-      headerFive: "",
-      descriptionThree: "",
-    },
+    headerOne: "",
+    iconOne: "",
+    iconTwo: "",
+    headerTwo: "",
+    iconThree: "",
+    descriptionOne: "",
+    headerThree: "",
+    descriptionTwo: "",
+    bulletOne: "",
+    bulletTwo: "",
+    bulletThree: "",
+    imageOne: "",
+    headerFour: "",
+    headerFive: "",
+    descriptionThree: "",
     values: [{ value: "", description: "" }],
+  });
+
+  const [contactData, setContactData] = useState<ContactData>({
+    headerOne: "",
+    descriptionOne: "",
+    email: "",
+    phone: "",
+    headerTwo: "",
+    descriptionTwo: "",
+    faq: [
+      {
+        question: "",
+        answer: "",
+      },
+    ],
   });
 
   useEffect(() => {
@@ -66,6 +80,10 @@ const PreviewApp: React.FC = () => {
         const aboutFetch = await getAbout();
         if (aboutFetch) {
           setAboutData(aboutFetch);
+        }
+        const contactFetch = await getContact();
+        if (contactFetch) {
+          setContactData(contactFetch);
         }
         const user: UserData = await userDetails();
         setUserData(user);
@@ -90,7 +108,10 @@ const PreviewApp: React.FC = () => {
           path="/"
           element={<HomeP pageData={homeData} userData={userData} />}
         />
-        <Route path="/contact" element={<ContactP userData={userData} />} />
+        <Route
+          path="/contact"
+          element={<ContactP userData={userData} pageData={contactData} />}
+        />
         <Route path="/projects" element={<ProjectsP />} />
         <Route
           path="/about"

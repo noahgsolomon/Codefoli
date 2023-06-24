@@ -10,10 +10,11 @@ import Contact from "./pages/Contact/Contact.tsx";
 import About from "./pages/About/About.tsx";
 import UserData from "Type/UserData.tsx";
 import { authenticated } from "api/authenticateapi.tsx";
-import { getAbout, getHome, userDetails } from "api/userapi.tsx";
+import { getAbout, getContact, getHome, userDetails } from "api/userapi.tsx";
 import HomeData from "Type/HomeData.tsx";
 import AboutData from "Type/AboutData.tsx";
 import Loader from "Components/Loader/Loader.tsx";
+import ContactData from "Type/ContactData.tsx";
 
 const MainApp: React.FC = () => {
   const [userData, setUserData] = useState<UserData>({
@@ -30,27 +31,6 @@ const MainApp: React.FC = () => {
     services: [],
   });
 
-  const [aboutData, setAboutData] = useState<AboutData>({
-    about: {
-      headerOne: "",
-      iconOne: "",
-      iconTwo: "",
-      headerTwo: "",
-      iconThree: "",
-      descriptionOne: "",
-      headerThree: "",
-      descriptionTwo: "",
-      bulletOne: "",
-      bulletTwo: "",
-      bulletThree: "",
-      imageOne: "",
-      headerFour: "",
-      headerFive: "",
-      descriptionThree: "",
-    },
-    values: [{ value: "", description: "" }],
-  });
-
   const [loading, setLoading] = useState<boolean>(true);
   const [homeData, setHomeData] = useState<HomeData>({
     headerOne: "",
@@ -58,6 +38,42 @@ const MainApp: React.FC = () => {
     headerTwo: "",
     profileImage: "",
   });
+
+  const [aboutData, setAboutData] = useState<AboutData>({
+    headerOne: "",
+    iconOne: "",
+    iconTwo: "",
+    headerTwo: "",
+    iconThree: "",
+    descriptionOne: "",
+    headerThree: "",
+    descriptionTwo: "",
+    bulletOne: "",
+    bulletTwo: "",
+    bulletThree: "",
+    imageOne: "",
+    headerFour: "",
+    headerFive: "",
+    descriptionThree: "",
+    values: [{ value: "", description: "" }],
+  });
+
+  const [contactData, setContactData] = useState<ContactData>({
+    headerOne: "",
+    descriptionOne: "",
+    email: "",
+    phone: "",
+    headerTwo: "",
+    descriptionTwo: "",
+    faq: [
+      {
+        question: "",
+        answer: "",
+      },
+    ],
+  });
+
+  console.log(contactData);
 
   useEffect(() => {
     const authenticatedCheck = async () => {
@@ -70,6 +86,10 @@ const MainApp: React.FC = () => {
         const aboutFetch = await getAbout();
         if (aboutFetch) {
           setAboutData(aboutFetch);
+        }
+        const contactFetch = await getContact();
+        if (contactFetch) {
+          setContactData(contactFetch);
         }
         const user: UserData = await userDetails();
         setUserData(user);
@@ -98,7 +118,10 @@ const MainApp: React.FC = () => {
           path="/dashboard"
           element={<Dashboard userData={userData} pageData={homeData} />}
         />
-        <Route path="/contact" element={<Contact userData={userData} />} />
+        <Route
+          path="/contact"
+          element={<Contact userData={userData} pageData={contactData} />}
+        />
         <Route
           path="/about"
           element={<About userData={userData} pageData={aboutData} />}
