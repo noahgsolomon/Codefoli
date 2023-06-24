@@ -29,4 +29,12 @@ public class HomeService {
         homeRepository.save(homeData);
         return ResponseEntity.ok(homeData.getHeaderOne());
     }
+
+    public ResponseEntity<?> updateDescriptionOne(Principal principal, String descriptionOne) {
+        Users user = getAuthenticatedUser(principal);
+        Home homeData = homeRepository.findByUsers(user);
+        homeData.setDescriptionOne(descriptionOne);
+        homeRepository.save(homeData);
+        return ResponseEntity.ok(homeData.getDescriptionOne());
+    }
 }

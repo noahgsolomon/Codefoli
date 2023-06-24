@@ -23,4 +23,9 @@ public class HomeController {
     public ResponseEntity<?> updateHeaderOne(Principal principal, @RequestBody String headerOne) {
         return homeService.updateHeaderOne(principal, headerOne);
     }
+
+    @PutMapping("/home/descriptionOne")
+    public ResponseEntity<?> updateDescriptionOne(Principal principal, @RequestBody String descriptionOne) {
+        return homeService.updateDescriptionOne(principal, descriptionOne);
+    }
 }

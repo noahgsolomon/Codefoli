@@ -5,7 +5,7 @@ import SkillServiceCards from "./ServiceCards/SkillServiceCards.tsx";
 import { useSpring, animated } from "react-spring";
 import HomeData from "Type/HomeData.tsx";
 import UserData from "Type/UserData.tsx";
-import {updateHeaderOne} from "./dashboardapi.tsx";
+import {updateDescriptionOne, updateHeaderOne} from "./dashboardapi.tsx";
 
 const Dashboard: React.FC<{
   pageData: HomeData;
@@ -15,6 +15,8 @@ const Dashboard: React.FC<{
   const navigate = useNavigate();
   const [headerOneEdit, setHeaderOneEdit] = useState(false);
   const [headerOneEditValue, setHeaderOneEditValue] = useState(pageData.headerOne);
+  const [descriptionOneEdit, setDescriptionOneEdit] = useState(false);
+  const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(pageData.descriptionOne);
 
   const [animationProps, setAnimation] = useSpring(() => ({
     opacity: 0,
@@ -31,14 +33,22 @@ const Dashboard: React.FC<{
     setAnimation.start({ opacity: 1, transform: "translate3d(0, 0px, 0)" });
   }, [navigate, setAnimation]);
 
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
-    if (headerOneEdit && textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    if (headerOneEdit && headerOneTextareaRef.current) {
+      headerOneTextareaRef.current.style.height = "auto";
+      headerOneTextareaRef.current.style.height = `${headerOneTextareaRef.current.scrollHeight}px`;
     }
   }, [headerOneEdit, headerOneEditValue]);
+
+  useEffect(() => {
+    if (descriptionOneEdit && descriptionOneTextareaRef.current) {
+      descriptionOneTextareaRef.current.style.height = "auto";
+      descriptionOneTextareaRef.current.style.height = `${descriptionOneTextareaRef.current.scrollHeight}px`;
+    }
+  }, [descriptionOneEdit, descriptionOneEditValue]);
 
   const handleHeaderOneSubmit = async () => {
     //if enter button clicked
@@ -46,6 +56,15 @@ const Dashboard: React.FC<{
     if (updateHeader) {
       setPageData((prev) => ({ ...prev, headerOne: headerOneEditValue }));
       setHeaderOneEditValue(updateHeader);
+    }
+    setHeaderOneEdit(false);
+  }
+
+  const handleDescriptionOneSubmit = async () => {
+    const updateDescription = await updateDescriptionOne(descriptionOneEditValue);
+    if (updateDescription) {
+      setPageData((prev) => ({ ...prev, descriptionOne: descriptionOneEditValue }));
+      setDescriptionOneEditValue(updateDescription);
     }
     setHeaderOneEdit(false);
   }
@@ -59,7 +78,7 @@ const Dashboard: React.FC<{
               <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center justify-center font-bold xl:mt-32">
                 {headerOneEdit ? (
                     <textarea
-                        ref={textareaRef}
+                        ref={headerOneTextareaRef}
                         value={headerOneEditValue}
                         onChange={(e) => setHeaderOneEditValue(e.target.value)}
 
@@ -84,10 +103,36 @@ const Dashboard: React.FC<{
                       {pageData.headerOne}
                     </h1>
                 )}
+                {descriptionOneEdit ? (
+                    <textarea
+                        ref={descriptionOneTextareaRef}
+                        value={descriptionOneEditValue}
+                        onChange={(e) => setDescriptionOneEditValue(e.target.value)}
+                        onBlur={() => {
+                          setDescriptionOneEditValue(pageData.descriptionOne);
+                          setDescriptionOneEdit(false);
+                        }}
+                        onKeyDown={async (e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            await handleDescriptionOneSubmit();
+                            setDescriptionOneEdit(false);
+                          }
+                        }}
+                        className="max-w-[35ch] text-base focus:ring-0 text-center opacity-60 xl:max-w-[50ch] xl:text-left appearance-none border-none outline-none bg-transparent resize-none overflow-hidden focus:outline-none p-0"
+                        autoFocus
+                        maxLength={250}
+                    />
+                ) : (
+                    <p
+                        className="select-none cursor-pointer max-w-[35ch] text-base text-center opacity-60 xl:max-w-[50ch] xl:text-left"
+                        onDoubleClick={() => setDescriptionOneEdit(true)}
+                    >
+                      {pageData.descriptionOne}
+                    </p>
+                )}
 
-                <p className="max-w-[35ch] text-center opacity-60 xl:max-w-[50ch] xl:text-left xl:text-base">
-                  {pageData.descriptionOne}
-                </p>
+
               </div>
               <div className="mx-auto mt-5 flex justify-center xl:justify-start">
                 <Link
