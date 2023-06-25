@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.UUID;
 
 import static com.codefolio.backend.user.UserService.getAuthenticatedUser;
 
@@ -25,9 +24,9 @@ public class UploadImageService {
     private final HomeRepository homeRepository;
 
     public ResponseEntity<?> uploadFile(MultipartFile file, Principal principal) {
-        System.out.println("uploadFile");
+        Users user = getAuthenticatedUser(principal);
         String bucketName = "codefolioimagebucket";
-        String key = UUID.randomUUID().toString();
+        String key = user.getId() + "-profile-image";
         System.out.println(file);
         System.out.println(file.getContentType());
         String contentType = file.getContentType();
@@ -46,11 +45,9 @@ public class UploadImageService {
         }
         ImageResponse imageResponse = new ImageResponse(s3Client.getUrl(bucketName, key).toString());
         System.out.println(imageResponse.url());
-        Users user = getAuthenticatedUser(principal);
         Home home = homeRepository.findByUsers(user);
         home.setProfileImage(imageResponse.url());
         homeRepository.save(home);
-
         return ResponseEntity.ok(imageResponse);
     }
 
