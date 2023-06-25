@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, {useEffect, useState} from "react";
 import Card from "Components/Card/Card.tsx";
 import UserData from "Type/UserData.tsx";
 import { ServiceData } from "Type/Services.tsx";
@@ -10,10 +10,13 @@ const SkillServiceCards: React.FC<{
   userData: UserData;
   preview: boolean;
 }> = ({ services, userData, preview }) => {
-  const colors = useMemo(
-    () => COLORS,
-    []
-  );
+
+    const [skillColors, setSkillColors] = useState<string[]>([]);
+
+    useEffect(() => {
+        const colors = userData?.skills.map(() => COLORS[Math.floor(Math.random() * COLORS.length)]);
+        setSkillColors(colors);
+    }, [userData?.skills]);
 
   return (
     <div className="mx-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -24,7 +27,7 @@ const SkillServiceCards: React.FC<{
               <span
                 key={index}
                 className={`inline-flex cursor-pointer items-center justify-center rounded-lg px-3 text-white transition-all hover:-translate-y-0.5 ${
-                  colors[Math.floor(Math.random() * colors.length)]
+                    skillColors[index]
                 } py-2 text-sm`}
               >
                 {skill.replaceAll("_", " ")}

@@ -85,23 +85,29 @@ const Dashboard: React.FC<{
     if (!e.target.files) return;
     const file = e.target.files[0];
     const formData = new FormData();
-    formData.append('file', file);
-    console.log(formData.get('file'))
+    formData.append("file", file);
+    console.log(formData.get("file"));
     try {
-      const response = await fetch('http://localhost:8080/profile-image-upload', {
-        method: 'POST',
-        body: formData,
-        credentials: 'include',
-      });
+      const response = await fetch(
+        "http://localhost:8080/profile-image-upload",
+        {
+          method: "POST",
+          body: formData,
+          credentials: "include",
+        }
+      );
 
       if (!response.ok) {
         return;
       }
 
       const data = await response.json();
-      setPageData({ ...pageData, profileImage: data.url });
+      setPageData({
+        ...pageData,
+        profileImage: `${data.url}?timestamp=${new Date().getTime()}`,
+      });
     } catch (error) {
-      console.error('Error uploading file: ', error);
+      console.error("Error uploading file: ", error);
     }
   };
 
@@ -184,27 +190,27 @@ const Dashboard: React.FC<{
               </div>
             </div>
             <div
-                className="relative mx-auto mt-10 lg:mx-0 xl:ml-20 xl:mt-32"
-                onMouseEnter={() => setImageOneEdit(true)}
-                onMouseLeave={() => setImageOneEdit(false)}
-                onClick={() => fileInput.current && fileInput.current.click()}
+              className="relative mx-auto mt-10 lg:mx-0 xl:ml-20 xl:mt-32"
+              onMouseEnter={() => setImageOneEdit(true)}
+              onMouseLeave={() => setImageOneEdit(false)}
+              onClick={() => fileInput.current && fileInput.current.click()}
             >
               <input
-                  type="file"
-                  ref={fileInput}
-                  className="hidden"
-                  accept=".jpg,.png"
-                  onChange={handleFileUpload}
+                type="file"
+                ref={fileInput}
+                className="hidden"
+                accept=".jpg,.png"
+                onChange={handleFileUpload}
               />
               <img
-                  className="rounded-3xl shadow-customHover"
-                  src={pageData.profileImage}
-                  alt="pfp"
+                className="w-96 rounded-3xl shadow-customHover"
+                src={pageData.profileImage}
+                alt="pfp"
               ></img>
               <div
-                  className={`absolute right-0 top-0 h-full w-full cursor-pointer rounded-3xl border-8 border-dashed border-black bg-white p-2 text-3xl font-bold text-black transition-all flex justify-center items-center ${
-                      imageOneEdit ? "opacity-50" : "opacity-0"
-                  }`}
+                className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-3xl border-8 border-dashed border-black bg-white p-2 text-3xl font-bold text-black transition-all ${
+                  imageOneEdit ? "opacity-50" : "opacity-0"
+                }`}
               >
                 Drag or click to upload image
               </div>
