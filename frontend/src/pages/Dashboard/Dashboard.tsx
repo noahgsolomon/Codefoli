@@ -79,6 +79,32 @@ const Dashboard: React.FC<{
     setHeaderOneEdit(false);
   };
 
+  const fileInput = useRef<HTMLInputElement | null>(null);
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+    console.log(formData.get('file'))
+    try {
+      const response = await fetch('http://localhost:8080/profile-image-upload', {
+        method: 'POST',
+        body: formData,
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        return;
+      }
+
+      const data = await response.json();
+      setPageData({ ...pageData, profileImage: data.url });
+    } catch (error) {
+      console.error('Error uploading file: ', error);
+    }
+  };
+
   return (
     <>
       <animated.div style={animationProps}>
@@ -103,6 +129,7 @@ const Dashboard: React.FC<{
                     }}
                     className="font-extra-bold max-w-[15ch] resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-4xl leading-snug outline-none focus:outline-none focus:ring-0 md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal"
                     autoFocus
+                    maxLength={50}
                   />
                 ) : (
                   <h1
@@ -149,34 +176,37 @@ const Dashboard: React.FC<{
                   Get in touch
                 </Link>
                 <Link
-                  to="/portfolio"
+                  to="/projects"
                   className="rounded-xl border-2 border-black px-6 py-4 font-bold transition-all hover:-translate-y-0.5 hover:bg-black hover:text-white"
                 >
-                  View Portfolio
+                  View Projects
                 </Link>
               </div>
             </div>
             <div
-              className="relative mx-auto mt-10 lg:mx-0 xl:ml-20 xl:mt-32"
-              onMouseEnter={() => setImageOneEdit(true)}
-              onMouseLeave={() => setImageOneEdit(false)}
+                className="relative mx-auto mt-10 lg:mx-0 xl:ml-20 xl:mt-32"
+                onMouseEnter={() => setImageOneEdit(true)}
+                onMouseLeave={() => setImageOneEdit(false)}
+                onClick={() => fileInput.current && fileInput.current.click()}
             >
+              <input
+                  type="file"
+                  ref={fileInput}
+                  className="hidden"
+                  accept=".jpg,.png"
+                  onChange={handleFileUpload}
+              />
               <img
-                className="rounded-3xl shadow-customHover"
-                src={pageData.profileImage}
-                alt="pfp"
+                  className="rounded-3xl shadow-customHover"
+                  src={pageData.profileImage}
+                  alt="pfp"
               ></img>
               <div
-                className={`absolute right-0 top-0 h-full w-full cursor-pointer rounded-3xl border-8 border-dashed border-black bg-white p-2 text-3xl font-bold text-black transition-all ${
-                  imageOneEdit ? "opacity-50" : "opacity-0"
-                }`}
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
+                  className={`absolute right-0 top-0 h-full w-full cursor-pointer rounded-3xl border-8 border-dashed border-black bg-white p-2 text-3xl font-bold text-black transition-all flex justify-center items-center ${
+                      imageOneEdit ? "opacity-50" : "opacity-0"
+                  }`}
               >
-                Upload image
+                Drag or click to upload image
               </div>
             </div>
           </div>
@@ -185,6 +215,7 @@ const Dashboard: React.FC<{
             <SkillServiceCards
               services={userData.services}
               userData={userData}
+              preview={false}
             />
           </div>
         </div>

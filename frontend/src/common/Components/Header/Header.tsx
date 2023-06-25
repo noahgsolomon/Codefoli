@@ -20,9 +20,11 @@ const Header: React.FC<{authenticated: boolean}> = ({authenticated}) => {
         className="mx-auto flex w-full flex-col items-center justify-between rounded-xl border-2 border-black bg-white px-4 py-3 shadow-custom transition-all md:flex-row"
         style={{ maxWidth: "50rem" }}
       >
-        <h1 className="hover:p-2 cursor-pointer select-none transition-all hover:bg-blue-500 hover:text-white text-4xl text-current no-underline md:text-2xl">
+        <Link
+            to={authenticated ? "/dashboard" : "/"}
+            className="hover:p-2 cursor-pointer select-none transition-all hover:bg-blue-500 hover:text-white text-4xl text-current no-underline md:text-2xl">
             Codefolio
-        </h1>
+        </Link>
         {blank ? (
           <></>
         ) : authenticated ? (
@@ -45,7 +47,7 @@ const Header: React.FC<{authenticated: boolean}> = ({authenticated}) => {
                   to="/projects"
                   className="mx-2 py-1 text-lg no-underline transition-all hover:text-blue-500 md:mx-10"
                 >
-                  Portfolio
+                  Projects
                 </Link>
               </div>
               <Link

@@ -8,7 +8,8 @@ import { COLORS } from "../../../util/constants";
 const SkillServiceCards: React.FC<{
   services: string[];
   userData: UserData;
-}> = ({ services, userData }) => {
+  preview: boolean;
+}> = ({ services, userData, preview }) => {
   const colors = useMemo(
     () => COLORS,
     []
@@ -54,7 +55,7 @@ const SkillServiceCards: React.FC<{
           alt="email"
         />
         <Link
-          to="/contact"
+          to={`${preview ? '/preview' : ''}/contact`}
           className="mx-5 mb-5 mt-20 rounded-xl bg-black py-4 text-center text-white transition-all hover:-translate-y-0.5 hover:bg-blue-500"
         >
           Get in touch

@@ -48,10 +48,10 @@ const HomeP: React.FC<{
                   Get in touch
                 </Link>
                 <Link
-                  to="/preview/portfolio"
+                  to="/preview/projects"
                   className="rounded-xl border-2 border-black px-6 py-4 font-bold transition-all hover:-translate-y-0.5 hover:bg-black hover:text-white"
                 >
-                  View Portfolio
+                  View Projects
                 </Link>
               </div>
             </div>
@@ -68,6 +68,7 @@ const HomeP: React.FC<{
             <SkillServiceCards
               services={userData.services}
               userData={userData}
+              preview={true}
             />
           </div>
         </div>

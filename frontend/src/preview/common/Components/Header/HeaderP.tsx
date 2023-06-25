@@ -36,10 +36,10 @@ const HeaderP: React.FC = () => {
                 About
               </Link>
               <Link
-                to="/preview/portfolio"
+                to="/preview/projects"
                 className="mx-2 py-1 text-lg no-underline transition-all hover:text-blue-500 md:mx-10"
               >
-                Portfolio
+                Projects
               </Link>
             </div>
             <Link
