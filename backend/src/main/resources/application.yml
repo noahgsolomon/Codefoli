@@ -29,8 +29,8 @@ spring:
   main:
     web-application-type: servlet
 
-logging:
-  level:
-    org:
-        springframework:
-            security: DEBUG
+#logging:
+#  level:
+#    org:
+#        springframework:
+#            security: DEBUG

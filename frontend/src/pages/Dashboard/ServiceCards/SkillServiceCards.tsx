@@ -11,6 +11,7 @@ const SkillServiceCards: React.FC<{
   preview: boolean;
 }> = ({ services, userData, preview }) => {
 
+    const [languageHover, setLanguageHover] = useState<boolean>(false);
     const [skillColors, setSkillColors] = useState<string[]>([]);
 
     useEffect(() => {
@@ -18,9 +19,24 @@ const SkillServiceCards: React.FC<{
         setSkillColors(colors);
     }, [userData?.skills]);
 
+
   return (
     <div className="mx-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <div className="card mb-5 flex max-w-[400px] flex-col rounded-2xl border-2 border-black bg-white shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover">
+      <div className="card relative mb-5 flex max-w-[400px] flex-col rounded-2xl border-2 border-black bg-white shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover"
+           onMouseEnter={() => {
+               if (preview) {
+                   return;
+               }
+               setLanguageHover(true);
+           }}
+           onMouseLeave={() => {
+               if (preview){
+                   return;
+               }
+               setLanguageHover(false);
+           }}
+      >
+          <button className={`${languageHover ? 'opacity-100' : 'opacity-0'} absolute -top-4 -right-4 bg-white border-2 border-red-500 rounded-lg px-3 py-1 text-red-500 transition-all hover:-translate-y-0.5`}>x</button>
         <div style={{marginBottom: (12 - userData.skills.length)*25 + 'px'}} className={`mt-5 flex flex-wrap gap-2 min-h-64 rounded-tl-2xl rounded-tr-2xl bg-white px-2 py-2`}>
           {userData?.skills.map((skill, index) => {
             return (
@@ -28,12 +44,15 @@ const SkillServiceCards: React.FC<{
                 key={index}
                 className={`inline-flex cursor-pointer items-center justify-center rounded-lg px-3 text-white transition-all hover:-translate-y-0.5 ${
                     skillColors[index]
-                } py-2 text-sm`}
+                } ${!preview ? 'hover:bg-red-500 hover:line-through' : ''} py-2 text-sm`}
               >
                 {skill.replaceAll("_", " ")}
               </span>
             );
           })}
+            <span
+                className={`${languageHover ? 'opacity-100' : 'opacity-0'} bg-gray-300 inline-flex cursor-pointer items-center justify-center rounded-lg px-3 text-white transition-all hover:-translate-y-0.5 hover:bg-black hover:text-white`}
+            >+</span>
         </div>
         <div className="content flex-grow rounded-b-2xl bg-blue p-5">
           <h2 className="text-2xl font-bold text-white">{"</>"} Languages</h2>
@@ -47,6 +66,7 @@ const SkillServiceCards: React.FC<{
               imageUrl={ServiceData[service]?.image}
               title={service.replaceAll("_", " ")}
               description={ServiceData[service]?.description}
+              preview={preview}
             />
           );
         })}
