@@ -35,8 +35,27 @@ const updateDescriptionOne = async (descriptionOne: string) => {
     }
 }
 
+const updateHeaderTwo = async (headerTwo: string) => {
+    try{
+        const updateFetch = await fetch("http://localhost:8080/home/headerTwo", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: headerTwo,
+            credentials: "include",
+        });
+
+        if (updateFetch.ok){
+            return await updateFetch.text();
+        }
+
+    } catch (e){
+        console.log(e);
+    }
+}
+
 
 export {
     updateHeaderOne,
     updateDescriptionOne,
+    updateHeaderTwo
 }

@@ -5,7 +5,7 @@ import SkillServiceCards from "./ServiceCards/SkillServiceCards.tsx";
 import { useSpring, animated } from "react-spring";
 import HomeData from "Type/HomeData.tsx";
 import UserData from "Type/UserData.tsx";
-import { updateDescriptionOne, updateHeaderOne } from "./dashboardapi.tsx";
+import {updateDescriptionOne, updateHeaderOne, updateHeaderTwo} from "./dashboardapi.tsx";
 
 const Dashboard: React.FC<{
   pageData: HomeData;
@@ -21,6 +21,10 @@ const Dashboard: React.FC<{
   const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(
     pageData.descriptionOne
   );
+  const [headerTwoEdit, setHeaderTwoEdit] = useState(false);
+  const [headerTwoEditValue, setHeaderTwoEditValue] = useState(
+        pageData.headerTwo
+  );
   const [imageOneEdit, setImageOneEdit] = useState(false);
 
   const [animationProps, setAnimation] = useSpring(() => ({
@@ -30,17 +34,12 @@ const Dashboard: React.FC<{
   const [imageLoading, setImageLoading] = useState(false);
 
   useEffect(() => {
-    if (!localStorage.getItem("role")) {
-      navigate("/");
-    } else if (localStorage.getItem("role") === "NEWBIE") {
-      navigate("/setup");
-    }
-
     setAnimation.start({ opacity: 1, transform: "translate3d(0, 0px, 0)" });
   }, [navigate, setAnimation]);
 
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+    const headerTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
     if (headerOneEdit && headerOneTextareaRef.current) {
@@ -56,8 +55,14 @@ const Dashboard: React.FC<{
     }
   }, [descriptionOneEdit, descriptionOneEditValue]);
 
+  useEffect(() => {
+    if (headerTwoEdit && headerTwoTextareaRef.current) {
+      headerTwoTextareaRef.current.style.height = "auto";
+      headerTwoTextareaRef.current.style.height = `${headerTwoTextareaRef.current.scrollHeight}px`;
+    }
+    }, [headerTwoEdit, headerTwoEditValue]);
+
   const handleHeaderOneSubmit = async () => {
-    //if enter button clicked
     const updateHeader = await updateHeaderOne(headerOneEditValue);
     if (updateHeader) {
       setPageData((prev) => ({ ...prev, headerOne: headerOneEditValue }));
@@ -79,6 +84,15 @@ const Dashboard: React.FC<{
     }
     setHeaderOneEdit(false);
   };
+
+    const handleHeaderTwoSubmit = async () => {
+    const updateHeader = await updateHeaderTwo(headerTwoEditValue);
+    if (updateHeader) {
+      setPageData((prev) => ({ ...prev, headerTwo: headerTwoEditValue }));
+      setHeaderTwoEditValue(updateHeader);
+    }
+    setHeaderTwoEdit(false);
+    };
 
   const fileInput = useRef<HTMLInputElement | null>(null);
 
@@ -224,7 +238,34 @@ const Dashboard: React.FC<{
             </div>
           </div>
           <div className="mb-10 mt-32 flex flex-col items-center text-2xl font-bold ">
-            <p className="mb-10 leading-relaxed">{pageData.headerTwo}</p>
+            {headerTwoEdit ? (
+                <textarea
+                    ref={headerTwoTextareaRef}
+                    value={headerTwoEditValue}
+                    onChange={(e) => setHeaderTwoEditValue(e.target.value)}
+                    onBlur={() => {
+                      setHeaderTwoEditValue(pageData.headerTwo);
+                      setHeaderTwoEdit(false);
+                    }}
+                    onKeyDown={async (e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        await handleHeaderTwoSubmit();
+                        setHeaderTwoEdit(false);
+                      }
+                    }}
+                    className="text-2xl mb-10 leading-relaxed resize-none appearance-none overflow-hidden border-none bg-transparent outline-none focus:outline-none focus:ring-0"
+                    autoFocus
+                    maxLength={50}
+                />
+            ) : (
+                <p
+                    className="text-center mb-10 leading-relaxed cursor-pointer select-none"
+                    onDoubleClick={() => setHeaderTwoEdit(true)}
+                >
+                  {pageData.headerTwo}
+                </p>
+            )}
             <SkillServiceCards
               services={userData.services}
               userData={userData}
