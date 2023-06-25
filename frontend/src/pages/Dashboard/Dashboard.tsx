@@ -27,6 +27,7 @@ const Dashboard: React.FC<{
     opacity: 0,
     transform: "translate3d(0, -20px, 0)",
   }));
+  const [imageLoading, setImageLoading] = useState(false);
 
   useEffect(() => {
     if (!localStorage.getItem("role")) {
@@ -83,6 +84,7 @@ const Dashboard: React.FC<{
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
+    setImageLoading(true);
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append("file", file);
@@ -98,6 +100,7 @@ const Dashboard: React.FC<{
       );
 
       if (!response.ok) {
+        setImageLoading(false);
         return;
       }
 
@@ -106,7 +109,9 @@ const Dashboard: React.FC<{
         ...pageData,
         profileImage: `${data.url}?timestamp=${new Date().getTime()}`,
       });
+      setTimeout(() => setImageLoading(false), 500);
     } catch (error) {
+      setImageLoading(false);
       console.error("Error uploading file: ", error);
     }
   };
@@ -190,7 +195,9 @@ const Dashboard: React.FC<{
               </div>
             </div>
             <div
-              className="relative mx-auto mt-10 lg:mx-0 xl:ml-20 xl:mt-32"
+              className={`relative mx-auto mt-10 transition-all lg:mx-0 xl:ml-20 xl:mt-32 ${
+                imageLoading ? "opacity-0" : "opacity-100"
+              }`}
               onMouseEnter={() => setImageOneEdit(true)}
               onMouseLeave={() => setImageOneEdit(false)}
               onClick={() => fileInput.current && fileInput.current.click()}
@@ -203,7 +210,7 @@ const Dashboard: React.FC<{
                 onChange={handleFileUpload}
               />
               <img
-                className="w-96 rounded-3xl shadow-customHover"
+                className="h-96 w-96 rounded-3xl shadow-customHover"
                 src={pageData.profileImage}
                 alt="pfp"
               ></img>
