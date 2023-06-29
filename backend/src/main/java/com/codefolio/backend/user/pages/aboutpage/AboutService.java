@@ -43,4 +43,12 @@ public class AboutService {
         String jsonResponse = gson.toJson(aboutModel);
         return ResponseEntity.ok(jsonResponse);
     }
+
+    public ResponseEntity<?> updateHeaderOne(Principal principal, String headerOne) {
+        Users user = getAuthenticatedUser(principal);
+        About aboutData = aboutRepository.findByUsers(user);
+        aboutData.setHeaderOne(headerOne);
+        aboutRepository.save(aboutData);
+        return ResponseEntity.ok(aboutData.getHeaderOne());
+    }
 }

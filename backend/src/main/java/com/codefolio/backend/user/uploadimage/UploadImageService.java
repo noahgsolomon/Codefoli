@@ -55,7 +55,7 @@ public class UploadImageService {
 
     public ResponseEntity<?> uploadIconThreeAbout(MultipartFile file, Principal principal) {
         Users user = getAuthenticatedUser(principal);
-        ImageResponse imageResponse = uploadImage(file, user.getId() + "-about-icon-two", "codefolioimagebucket");
+        ImageResponse imageResponse = uploadImage(file, user.getId() + "-about-icon-three", "codefolioimagebucket");
         About about = aboutRepository.findByUsers(user);
         about.setIconThree(imageResponse.url());
         aboutRepository.save(about);

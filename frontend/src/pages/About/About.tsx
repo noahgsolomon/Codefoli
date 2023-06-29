@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { ValuesData } from "Type/Values.tsx";
 import UserData from "Type/UserData.tsx";
 import AboutData from "Type/AboutData.tsx";
+import { updateHeaderOneAbout } from "./aboutapi.tsx";
 
 const About: React.FC<{
   userData: UserData;
@@ -17,7 +18,12 @@ const About: React.FC<{
   const iconOneFileInput = useRef<HTMLInputElement | null>(null);
   const [iconTwoEdit, setIconTwoEdit] = useState<boolean>(false);
   const iconTwoFileInput = useRef<HTMLInputElement | null>(null);
-
+  const [iconThreeEdit, setIconThreeEdit] = useState<boolean>(false);
+  const iconThreeFileInput = useRef<HTMLInputElement | null>(null);
+  const [headerOneEdit, setHeaderOneEdit] = useState(false);
+  const [headerOneEditValue, setHeaderOneEditValue] = useState(
+    pageData.headerOne
+  );
   const handleFileUpload = async (
     path: string,
     setEdit: React.Dispatch<React.SetStateAction<boolean>>,
@@ -55,6 +61,16 @@ const About: React.FC<{
     }
   };
 
+  const handleHeaderOneSubmit = async () => {
+    const updateHeader = await updateHeaderOneAbout(headerOneEditValue);
+    if (updateHeader) {
+      setPageData((prev) => ({ ...prev, headerOne: headerOneEditValue }));
+      setHeaderOneEditValue(updateHeader);
+    }
+    setHeaderOneEdit(false);
+  };
+  const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+
   return (
     <>
       <main>
@@ -62,9 +78,33 @@ const About: React.FC<{
           {/* about */}
           <section className="about mb-20 grid grid-cols-2 justify-center gap-10 md:h-[400px] md:grid-cols-5">
             <div className="content-wrapper col-span-2  md:order-2 md:col-span-3">
-              <h2 className="mb-5 text-center text-5xl font-bold md:text-7xl">
-                {pageData.headerOne}
-              </h2>
+              {headerOneEdit ? (
+                <textarea
+                  ref={headerOneTextareaRef}
+                  value={headerOneEditValue}
+                  onChange={(e) => setHeaderOneEditValue(e.target.value)}
+                  onBlur={() => {
+                    setHeaderOneEditValue(pageData.headerOne);
+                    setHeaderOneEdit(false);
+                  }}
+                  onKeyDown={async (e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      await handleHeaderOneSubmit();
+                    }
+                  }}
+                  className="mb-5 resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-5xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-7xl"
+                  autoFocus
+                  maxLength={50}
+                />
+              ) : (
+                <h2
+                  className="mb-5 cursor-pointer select-none text-center text-5xl font-bold md:text-7xl"
+                  onDoubleClick={() => setHeaderOneEdit(true)}
+                >
+                  {pageData.headerOne}
+                </h2>
+              )}
             </div>
             <div
               className="image-wrapper relative order-2 w-full text-center md:order-1 md:self-end"
@@ -145,8 +185,37 @@ const About: React.FC<{
               <h2 className="mb-8 text-center text-4xl font-bold md:text-left md:text-6xl md:leading-tight">
                 {pageData.headerTwo}
               </h2>
-              <div className="image-wrapper mb-5 md:max-w-[375px]">
+              <div
+                className="image-wrapper relative mb-5 md:max-w-[375px]"
+                onMouseEnter={() => setIconThreeEdit(true)}
+                onMouseLeave={() => setIconThreeEdit(false)}
+                onClick={() =>
+                  iconThreeFileInput.current &&
+                  iconThreeFileInput.current.click()
+                }
+              >
+                <input
+                  type="file"
+                  ref={iconThreeFileInput}
+                  className="hidden"
+                  accept=".jpg,.png"
+                  onChange={async (e) => {
+                    await handleFileUpload(
+                      "about-icon-three-upload",
+                      setIconThreeEdit,
+                      "iconThree",
+                      e
+                    );
+                  }}
+                />
                 <img src={pageData.iconThree} alt="" />
+                <div
+                  className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-3xl border-8 border-dashed border-black bg-white text-3xl font-bold text-black transition-all ${
+                    iconThreeEdit ? "opacity-50" : "opacity-0"
+                  }`}
+                >
+                  click to upload image
+                </div>
               </div>
             </div>
             <div className="content-right">
