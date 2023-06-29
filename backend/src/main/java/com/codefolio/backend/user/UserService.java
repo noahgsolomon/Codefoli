@@ -158,8 +158,6 @@ public class UserService {
         String aboutHeaderFive = "The core values that drive my work";
         String aboutDescriptionThree = "Steering the helm of my career is a deeply ingrained set of core values. These principles not only guide my work ethic but also shape the way I view and approach design. Let's delve into the convictions that drive my professional journey.";
 
-
-
         About about = new About(user, aboutHeaderOne, aboutIconOne, aboutIconTwo, aboutHeaderTwo, aboutIconThree, aboutDescriptionOne, aboutHeaderThree, aboutDescriptionTwo, aboutBulletOne, aboutBulletTwo, aboutBulletThree, aboutImageOne, aboutHeaderFour, aboutHeaderFive, aboutDescriptionThree);
         aboutRepository.save(about);
 

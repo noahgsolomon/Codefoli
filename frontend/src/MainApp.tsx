@@ -84,32 +84,43 @@ const MainApp: React.FC = () => {
   useEffect(() => {
     const authenticatedCheck = async () => {
       const fetchState = await authenticated();
+      console.log(fetchState);
       if (fetchState) {
-        setAuthenticatedUser(true);
-        const homeFetch = await getHome();
-        if (homeFetch) {
-          setHomeData(homeFetch);
-        }
-        const aboutFetch = await getAbout();
-        if (aboutFetch) {
-          setAboutData(aboutFetch);
-        }
-        const contactFetch = await getContact();
-        if (contactFetch) {
-          setContactData(contactFetch);
-        }
         const user: UserData = await userDetails();
-        setUserData(user);
-        localStorage.setItem("role", user.role);
-        const path = window.location.pathname;
-        console.log(path);
-        if (path === '/' || path === '/setup' || path === '/login' || path === '/register') {
-          navigate('/dashboard');
+        if (user.role === "NEWBIE") {
+          if (window.location.pathname !== "/setup") {
+            navigate("/setup");
+          }
+          localStorage.setItem("role", user.role);
+          setAuthenticatedUser(true);
+          setUserData(user);
+        }
+        else{
+          setAuthenticatedUser(true);
+          const homeFetch = await getHome();
+          if (homeFetch) {
+            setHomeData(homeFetch);
+          }
+          const aboutFetch = await getAbout();
+          if (aboutFetch) {
+            setAboutData(aboutFetch);
+          }
+          const contactFetch = await getContact();
+          if (contactFetch) {
+            setContactData(contactFetch);
+          }
+          setUserData(user);
+          localStorage.setItem("role", user.role);
+          const path = window.location.pathname;
+          console.log(path);
+          if (path === '/' || path === '/login' || path === '/register') {
+            navigate('/dashboard');
+          }
         }
       } else {
         localStorage.removeItem("role");
         const path = window.location.pathname;
-        if (path === '/about' || path === '/contact' || path === '/dashboard') {
+        if (path === '/about' || path === '/contact' || path === '/dashboard' || path === '/setup') {
           navigate('/');
         }
       }

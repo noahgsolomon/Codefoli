@@ -3,7 +3,7 @@ type Project = {
   description: string;
   language: string;
   updatedAt: string;
-  imageUrl: string;
+  imageUrl?: string;
 };
 
 export default Project;
