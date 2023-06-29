@@ -7,7 +7,11 @@ import { Link } from "react-router-dom";
 import { ValuesData } from "Type/Values.tsx";
 import UserData from "Type/UserData.tsx";
 import AboutData from "Type/AboutData.tsx";
-import { updateHeaderOneAbout } from "./aboutapi.tsx";
+import {
+  updateDescriptionOneAbout,
+  updateHeaderOneAbout,
+  updateHeaderTwoAbout,
+} from "./aboutapi.tsx";
 
 const About: React.FC<{
   userData: UserData;
@@ -24,6 +28,18 @@ const About: React.FC<{
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
     pageData.headerOne
   );
+  const [headerTwoEdit, setHeaderTwoEdit] = useState(false);
+  const [headerTwoEditValue, setHeaderTwoEditValue] = useState(
+    pageData.headerTwo
+  );
+  const [descriptionOneEdit, setDescriptionOneEdit] = useState(false);
+  const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(
+    pageData.descriptionOne
+  );
+  const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const headerTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+
   const handleFileUpload = async (
     path: string,
     setEdit: React.Dispatch<React.SetStateAction<boolean>>,
@@ -69,7 +85,28 @@ const About: React.FC<{
     }
     setHeaderOneEdit(false);
   };
-  const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const handleHeaderTwoSubmit = async () => {
+    const updateHeader = await updateHeaderTwoAbout(headerTwoEditValue);
+    if (updateHeader) {
+      setPageData((prev) => ({ ...prev, headerTwo: headerTwoEditValue }));
+      setHeaderTwoEditValue(updateHeader);
+    }
+    setHeaderTwoEdit(false);
+  };
+
+  const handleDescriptionOneSubmit = async () => {
+    const updateHeader = await updateDescriptionOneAbout(
+      descriptionOneEditValue
+    );
+    if (updateHeader) {
+      setPageData((prev) => ({
+        ...prev,
+        descriptionOne: descriptionOneEditValue,
+      }));
+      setDescriptionOneEditValue(updateHeader);
+    }
+    setDescriptionOneEdit(false);
+  };
 
   return (
     <>
@@ -77,7 +114,7 @@ const About: React.FC<{
         <div className="container mx-auto my-20 max-w-screen-lg px-5">
           {/* about */}
           <section className="about mb-20 grid grid-cols-2 justify-center gap-10 md:h-[400px] md:grid-cols-5">
-            <div className="content-wrapper col-span-2  md:order-2 md:col-span-3">
+            <div className="content-wrapper col-span-2 flex justify-center  md:order-2 md:col-span-3">
               {headerOneEdit ? (
                 <textarea
                   ref={headerOneTextareaRef}
@@ -93,7 +130,7 @@ const About: React.FC<{
                       await handleHeaderOneSubmit();
                     }
                   }}
-                  className="mb-5 resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-5xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-7xl"
+                  className=" mb-5 resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-5xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-7xl"
                   autoFocus
                   maxLength={50}
                 />
@@ -182,9 +219,36 @@ const About: React.FC<{
         <section className="story mb-20">
           <div className="container mx-auto my-20 max-w-screen-lg gap-5 px-5 md:grid md:grid-cols-2 md:items-start md:justify-between">
             <div className="content-left">
-              <h2 className="mb-8 text-center text-4xl font-bold md:text-left md:text-6xl md:leading-tight">
-                {pageData.headerTwo}
-              </h2>
+              <div className="flex">
+                {headerTwoEdit ? (
+                  <textarea
+                    ref={headerTwoTextareaRef}
+                    value={headerTwoEditValue}
+                    onChange={(e) => setHeaderTwoEditValue(e.target.value)}
+                    onBlur={() => {
+                      setHeaderTwoEditValue(pageData.headerTwo);
+                      setHeaderTwoEdit(false);
+                    }}
+                    onKeyDown={async (e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        await handleHeaderTwoSubmit();
+                      }
+                    }}
+                    className=" mb-5 resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-5xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-7xl"
+                    autoFocus
+                    maxLength={25}
+                  />
+                ) : (
+                  <h2
+                    className="mb-8 cursor-pointer select-none text-center text-4xl font-bold md:text-left md:text-6xl md:leading-tight"
+                    onDoubleClick={() => setHeaderTwoEdit(true)}
+                  >
+                    {pageData.headerTwo}
+                  </h2>
+                )}
+              </div>
+
               <div
                 className="image-wrapper relative mb-5 md:max-w-[375px]"
                 onMouseEnter={() => setIconThreeEdit(true)}
@@ -219,9 +283,33 @@ const About: React.FC<{
               </div>
             </div>
             <div className="content-right">
-              <p className="description mb-5 text-lg font-semibold">
-                {pageData.descriptionOne}
-              </p>
+              {descriptionOneEdit ? (
+                <textarea
+                  ref={descriptionOneTextareaRef}
+                  value={descriptionOneEditValue}
+                  onChange={(e) => setDescriptionOneEditValue(e.target.value)}
+                  onBlur={() => {
+                    setDescriptionOneEditValue(pageData.headerTwo);
+                    setDescriptionOneEdit(false);
+                  }}
+                  onKeyDown={async (e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      await handleDescriptionOneSubmit();
+                    }
+                  }}
+                  className="mb-5 resize-none appearance-none overflow-hidden border-none bg-transparent text-lg font-semibold leading-snug outline-none focus:outline-none focus:ring-0"
+                  autoFocus
+                  maxLength={25}
+                />
+              ) : (
+                <p
+                  className="description mb-5 cursor-pointer select-none text-lg font-semibold"
+                  onDoubleClick={() => setDescriptionOneEdit(true)}
+                >
+                  {pageData.descriptionOne}
+                </p>
+              )}
               <div className="story-control text-center md:text-left">
                 <Link
                   to="/preview/contact"

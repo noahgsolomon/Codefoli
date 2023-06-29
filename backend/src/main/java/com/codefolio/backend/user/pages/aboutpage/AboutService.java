@@ -51,4 +51,20 @@ public class AboutService {
         aboutRepository.save(aboutData);
         return ResponseEntity.ok(aboutData.getHeaderOne());
     }
+
+    public ResponseEntity<?> updateHeaderTwo(Principal principal, String headerTwo) {
+        Users user = getAuthenticatedUser(principal);
+        About aboutData = aboutRepository.findByUsers(user);
+        aboutData.setHeaderTwo(headerTwo);
+        aboutRepository.save(aboutData);
+        return ResponseEntity.ok(aboutData.getHeaderTwo());
+    }
+
+    public ResponseEntity<?> updateDescriptionOne(Principal principal, String descriptionOne) {
+        Users user = getAuthenticatedUser(principal);
+        About aboutData = aboutRepository.findByUsers(user);
+        aboutData.setDescriptionOne(descriptionOne);
+        aboutRepository.save(aboutData);
+        return ResponseEntity.ok(aboutData.getDescriptionOne());
+    }
 }
