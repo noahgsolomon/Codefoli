@@ -62,6 +62,7 @@ const MainApp: React.FC = () => {
     headerFour: "",
     headerFive: "",
     descriptionThree: "",
+    sectionTwoActive: true,
     values: [{ value: "", description: "" }],
   });
 

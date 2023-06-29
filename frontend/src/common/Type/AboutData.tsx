@@ -14,6 +14,7 @@ type AboutData = {
   headerFour: string;
   headerFive: string;
   descriptionThree: string;
+  sectionTwoActive: boolean;
   values: [
     {
       value: string;

@@ -1,10 +1,7 @@
 package com.codefolio.backend.user.pages.aboutpage;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -34,5 +31,10 @@ public class AboutController {
     @PutMapping("/about/description-one")
     public ResponseEntity<?> updateDescriptionOne(Principal principal, @RequestBody String descriptionOne) {
         return aboutService.updateDescriptionOne(principal, descriptionOne);
+    }
+
+    @PutMapping("/about/change-section-two")
+    public ResponseEntity<?> removeSectionTwo(Principal principal, @RequestBody String active) {
+        return aboutService.changeSectionTwo(principal, active);
     }
 }

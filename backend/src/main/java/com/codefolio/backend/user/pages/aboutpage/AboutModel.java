@@ -20,5 +20,6 @@ public record AboutModel(
         String headerFour,
         String headerFive,
         String descriptionThree,
+        boolean sectionTwoActive,
         List<Values> values) {
 }

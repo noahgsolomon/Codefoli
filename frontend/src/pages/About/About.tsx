@@ -8,10 +8,12 @@ import { ValuesData } from "Type/Values.tsx";
 import UserData from "Type/UserData.tsx";
 import AboutData from "Type/AboutData.tsx";
 import {
+  changeSectionTwoActive,
   updateDescriptionOneAbout,
   updateHeaderOneAbout,
   updateHeaderTwoAbout,
 } from "./aboutapi.tsx";
+import AddSection from "Components/AddSection/AddSection.tsx";
 
 const About: React.FC<{
   userData: UserData;
@@ -39,6 +41,12 @@ const About: React.FC<{
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const headerTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const [sectionTwoHover, setSectionTwoHover] = useState<boolean>(false);
+  const [removeSectionTwoHover, setRemoveSectionTwoHover] = useState<boolean>(
+    false
+    );
+
 
   const handleFileUpload = async (
     path: string,
@@ -107,6 +115,8 @@ const About: React.FC<{
     }
     setDescriptionOneEdit(false);
   };
+
+  console.log(pageData);
 
   return (
     <>
@@ -321,43 +331,69 @@ const About: React.FC<{
             </div>
           </div>
         </section>
-        <section className="story mb-20 bg-black">
-          <div className="container mx-auto my-20 max-w-screen-lg gap-5 px-5 py-20 md:grid md:grid-cols-2 md:items-center md:justify-between">
-            <div className="content-left">
-              <h2 className="mb-8 text-4xl font-bold text-white md:text-5xl md:leading-tight">
-                {pageData.headerThree}
-              </h2>
-              <p className="description text-lg font-semibold text-white">
-                {pageData.descriptionTwo}
-              </p>
-              <div className="events-wrapper my-5">
-                <div className="event flex items-start justify-between gap-4">
-                  <div className="mt-1 h-4 w-4 rounded border-2 bg-indigo-600"></div>
-                  <p className="event-descripition flex-1 pt-0 text-lg font-semibold text-white">
-                    {pageData.bulletOne}
-                  </p>
+        { pageData.sectionTwoActive ? (
+            <section className="story mb-20 bg-black relative"
+          onMouseEnter={() => setSectionTwoHover(true)}
+          onMouseLeave={() => setSectionTwoHover(false)}
+          >
+            <div className={`absolute top-0 right-0 bg-red-300 w-full h-full transition-all ${removeSectionTwoHover ? 'opacity-25' : 'opacity-0'}`}></div>
+            <button
+                className={`${sectionTwoHover ? 'opacity-100' : 'opacity-0'} absolute transition-all hover:scale-105 top-0 right-10 mt-5 bg-red-500 rounded-2xl px-5 text-white font-bold hover:-translate-y-0.5`}
+                onMouseEnter={() => setRemoveSectionTwoHover(true)}
+                onMouseLeave={() => setRemoveSectionTwoHover(false)}
+                  onClick={async () => {
+                    const changeSectionTwo = await changeSectionTwoActive("true");
+                    if (changeSectionTwo){
+                        setPageData((prev) => ({
+                            ...prev,
+                            sectionTwoActive: false,
+                        }));
+                        }
+                    setRemoveSectionTwoHover(false);
+                  }}
+            >
+              -
+            </button>
+            <div className="container mx-auto my-20 max-w-screen-lg gap-5 px-5 py-20 md:grid md:grid-cols-2 md:items-center md:justify-between">
+              <div className="content-left">
+                <h2 className="mb-8 text-4xl font-bold text-white md:text-5xl md:leading-tight">
+                  {pageData.headerThree}
+                </h2>
+                <p className="description text-lg font-semibold text-white">
+                  {pageData.descriptionTwo}
+                </p>
+                <div className="events-wrapper my-5">
+                  <div className="event flex items-start justify-between gap-4">
+                    <div className="mt-1 h-4 w-4 rounded border-2 bg-indigo-600"></div>
+                    <p className="event-descripition flex-1 pt-0 text-lg font-semibold text-white">
+                      {pageData.bulletOne}
+                    </p>
+                  </div>
+                  <div className="event flex items-start justify-between gap-4">
+                    <div className="mt-1 h-4 w-4 rounded border-2 bg-sky-600"></div>
+                    <p className="event-descripition flex-1 pt-0 text-lg font-semibold text-white">
+                      {pageData.bulletTwo}
+                    </p>
+                  </div>
+                  <div className="event flex items-start justify-between gap-4">
+                    <div className="mt-1 h-4 w-4 rounded border-2 bg-yellow-500"></div>
+                    <p className="event-descripition flex-1 pt-0 text-lg font-semibold text-white">
+                      {pageData.bulletThree}
+                    </p>
+                  </div>
                 </div>
-                <div className="event flex items-start justify-between gap-4">
-                  <div className="mt-1 h-4 w-4 rounded border-2 bg-sky-600"></div>
-                  <p className="event-descripition flex-1 pt-0 text-lg font-semibold text-white">
-                    {pageData.bulletTwo}
-                  </p>
-                </div>
-                <div className="event flex items-start justify-between gap-4">
-                  <div className="mt-1 h-4 w-4 rounded border-2 bg-yellow-500"></div>
-                  <p className="event-descripition flex-1 pt-0 text-lg font-semibold text-white">
-                    {pageData.bulletThree}
-                  </p>
+              </div>
+              <div className="content-right">
+                <div className="image-wrapper">
+                  <img src={pageData.imageOne} alt="" />
                 </div>
               </div>
             </div>
-            <div className="content-right">
-              <div className="image-wrapper">
-                <img src={pageData.imageOne} alt="" />
-              </div>
-            </div>
-          </div>
-        </section>
+          </section>
+        ) : (
+            <AddSection setPageData={setPageData}/>
+        )
+        }
         {/* resume */}
         <section className="resume">
           <div className="container mx-auto my-20 max-w-screen-lg px-5 py-20">

@@ -38,8 +38,9 @@ public class AboutService {
                 aboutData.getImageOne(),
                 aboutData.getHeaderFour(),
                 aboutData.getHeaderFive(),
-                aboutData.getDescriptionThree()
-                , values);
+                aboutData.getDescriptionThree(),
+                aboutData.isSectionTwoActive(),
+                values);
         String jsonResponse = gson.toJson(aboutModel);
         return ResponseEntity.ok(jsonResponse);
     }
@@ -67,4 +68,25 @@ public class AboutService {
         aboutRepository.save(aboutData);
         return ResponseEntity.ok(aboutData.getDescriptionOne());
     }
+
+    public ResponseEntity<?> changeSectionTwo(Principal principal, String active) {
+        Users user = getAuthenticatedUser(principal);
+        About aboutData = aboutRepository.findByUsers(user);
+        if (active.equals("true")){
+            aboutData.setHeaderTwo("Designing since I was ? years old");
+            aboutData.setDescriptionTwo("I started designing when I was ? years old. My first designs were for my school projects. I was fascinated by the idea of creating something that people can interact with. I studied design for 5 years in college and have been working as a designer for 3 years.");
+            aboutData.setImageOne("https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b55bcb4baec57b75b66fd_desigining-experience-paperfolio-webflow-template.png");
+            aboutData.setBulletOne("Passionate about design from a young age.");
+            aboutData.setBulletTwo("Five years of design education, three professionally.");
+            aboutData.setBulletThree("Strong advocate of user-centered design.");
+            aboutData.setSectionTwoActive(false);
+        }
+        else {
+            aboutData.setSectionTwoActive(true);
+        }
+
+        aboutRepository.save(aboutData);
+        return ResponseEntity.ok(aboutData.getDescriptionOne());
+    }
+
 }

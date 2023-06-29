@@ -48,6 +48,7 @@ public class About {
     private String headerFive;
     @Column(length = 1000)
     private String descriptionThree;
+    private boolean sectionTwoActive;
 
     public About(
             Users users,
@@ -82,5 +83,6 @@ public class About {
         this.headerFour = headerFour;
         this.headerFive = headerFive;
         this.descriptionThree = descriptionThree;
+        sectionTwoActive = true;
     }
 }
