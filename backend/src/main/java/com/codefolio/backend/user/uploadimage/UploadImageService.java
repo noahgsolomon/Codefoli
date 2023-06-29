@@ -4,6 +4,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.codefolio.backend.user.Users;
+import com.codefolio.backend.user.pages.aboutpage.About;
+import com.codefolio.backend.user.pages.aboutpage.AboutRepository;
 import com.codefolio.backend.user.pages.homepage.Home;
 import com.codefolio.backend.user.pages.homepage.HomeRepository;
 import lombok.AllArgsConstructor;
@@ -22,18 +24,58 @@ public class UploadImageService {
 
     private final AmazonS3 s3Client;
     private final HomeRepository homeRepository;
+    private final AboutRepository aboutRepository;
 
-    public ResponseEntity<?> uploadFile(MultipartFile file, Principal principal) {
+    public ResponseEntity<?> uploadProfileImage(MultipartFile file, Principal principal) {
         Users user = getAuthenticatedUser(principal);
-        String bucketName = "codefolioimagebucket";
-        String key = user.getId() + "-profile-image";
-        System.out.println(file);
-        System.out.println(file.getContentType());
+        ImageResponse imageResponse = uploadImage(file, user.getId() + "-profile-image", "codefoliobucket");
+        Home home = homeRepository.findByUsers(user);
+        home.setProfileImage(imageResponse.url());
+        homeRepository.save(home);
+        return ResponseEntity.ok(imageResponse);
+    }
+
+    public ResponseEntity<?> uploadIconOneAbout(MultipartFile file, Principal principal) {
+        Users user = getAuthenticatedUser(principal);
+        ImageResponse imageResponse = uploadImage(file, user.getId() + "-about-icon-one", "codefoliobucket");
+        About about = aboutRepository.findByUsers(user);
+        about.setIconOne(imageResponse.url());
+        aboutRepository.save(about);
+        return ResponseEntity.ok(imageResponse);
+    }
+
+    public ResponseEntity<?> uploadIconTwoAbout(MultipartFile file, Principal principal) {
+        Users user = getAuthenticatedUser(principal);
+        ImageResponse imageResponse = uploadImage(file, user.getId() + "-about-icon-two", "codefoliobucket");
+        About about = aboutRepository.findByUsers(user);
+        about.setIconTwo(imageResponse.url());
+        aboutRepository.save(about);
+        return ResponseEntity.ok(imageResponse);
+    }
+
+    public ResponseEntity<?> uploadIconThreeAbout(MultipartFile file, Principal principal) {
+        Users user = getAuthenticatedUser(principal);
+        ImageResponse imageResponse = uploadImage(file, user.getId() + "-about-icon-two", "codefoliobucket");
+        About about = aboutRepository.findByUsers(user);
+        about.setIconThree(imageResponse.url());
+        aboutRepository.save(about);
+        return ResponseEntity.ok(imageResponse);
+    }
+
+    public ResponseEntity<?> uploadImageOneAbout(MultipartFile file, Principal principal) {
+        Users user = getAuthenticatedUser(principal);
+        ImageResponse imageResponse = uploadImage(file, user.getId() + "-about-image-one", "codefoliobucket");
+        About about = aboutRepository.findByUsers(user);
+        about.setImageOne(imageResponse.url());
+        aboutRepository.save(about);
+        return ResponseEntity.ok(imageResponse);
+    }
+
+    public ImageResponse uploadImage(MultipartFile file, String key, String bucketName){
         String contentType = file.getContentType();
         if (!"image/jpeg".equals(contentType) && !"image/png".equals(contentType)) {
             throw new IllegalArgumentException("Invalid file type. Only PNG and JPG images are accepted.");
         }
-
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(contentType);
         metadata.setContentLength(file.getSize());
@@ -43,12 +85,7 @@ public class UploadImageService {
         } catch (IOException e) {
             throw new RuntimeException("Error uploading file", e);
         }
-        ImageResponse imageResponse = new ImageResponse(s3Client.getUrl(bucketName, key).toString());
-        System.out.println(imageResponse.url());
-        Home home = homeRepository.findByUsers(user);
-        home.setProfileImage(imageResponse.url());
-        homeRepository.save(home);
-        return ResponseEntity.ok(imageResponse);
+        return new ImageResponse(s3Client.getUrl(bucketName, key).toString());
     }
 
 }
