@@ -69,9 +69,30 @@ const changeSectionTwoActive = async (sectionTwoActive: string) => {
 
 }
 
+const updateHeaderThreeAbout = async (headerThree: string) => {
+  try {
+    const updateFetch = await fetch(
+        "http://localhost:8080/about/header-three",
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: headerThree,
+          credentials: "include",
+        }
+    );
+
+    if (updateFetch.ok) {
+      return await updateFetch.text();
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export {
   updateHeaderOneAbout,
   updateHeaderTwoAbout,
   updateDescriptionOneAbout,
   changeSectionTwoActive,
+  updateHeaderThreeAbout
 };

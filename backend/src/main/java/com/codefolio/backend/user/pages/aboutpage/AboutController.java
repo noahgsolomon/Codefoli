@@ -37,4 +37,9 @@ public class AboutController {
     public ResponseEntity<?> removeSectionTwo(Principal principal, @RequestBody String active) {
         return aboutService.changeSectionTwo(principal, active);
     }
+
+    @PutMapping("/about/header-three")
+    public ResponseEntity<?> updateHeaderThree(Principal principal, @RequestBody String headerThree) {
+        return aboutService.updateHeaderThree(principal, headerThree);
+    }
 }

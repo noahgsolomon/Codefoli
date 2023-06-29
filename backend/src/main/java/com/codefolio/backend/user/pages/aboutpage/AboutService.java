@@ -89,4 +89,13 @@ public class AboutService {
         return ResponseEntity.ok(aboutData.getDescriptionOne());
     }
 
+    public ResponseEntity<?> updateHeaderThree(Principal principal, String headerThree) {
+        Users user = getAuthenticatedUser(principal);
+        About aboutData = aboutRepository.findByUsers(user);
+        aboutData.setHeaderThree(headerThree);
+        aboutRepository.save(aboutData);
+        return ResponseEntity.ok(aboutData.getHeaderThree());
+    }
+
+
 }
