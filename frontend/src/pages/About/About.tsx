@@ -2,17 +2,58 @@ import Marquee from "Components/Marquee/Marquee";
 import JobCard from "./JobCard/JobCard";
 import Footer from "Components/Footer/Footer";
 import Card from "Components/Card/Card";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ValuesData } from "Type/Values.tsx";
 import UserData from "Type/UserData.tsx";
 import AboutData from "Type/AboutData.tsx";
 
-const About: React.FC<{ userData: UserData; pageData: AboutData }> = ({
-  userData,
-  pageData,
-}) => {
-  console.log(userData);
+const About: React.FC<{
+  userData: UserData;
+  pageData: AboutData;
+  setPageData: React.Dispatch<React.SetStateAction<AboutData>>;
+}> = ({ userData, pageData, setPageData }) => {
+  const [iconOneEdit, setIconOneEdit] = useState<boolean>(false);
+  const iconOneFileInput = useRef<HTMLInputElement | null>(null);
+  const [iconTwoEdit, setIconTwoEdit] = useState<boolean>(false);
+  const iconTwoFileInput = useRef<HTMLInputElement | null>(null);
+
+  const handleFileUpload = async (
+    path: string,
+    setEdit: React.Dispatch<React.SetStateAction<boolean>>,
+    imageKey: keyof AboutData,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (!e.target.files) return;
+    setEdit(true);
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      const response = await fetch(`http://localhost:8080/${path}`, {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        setEdit(false);
+        return;
+      }
+
+      console.log([imageKey]);
+
+      const data = await response.json();
+      setPageData({
+        ...pageData,
+        [imageKey]: `${data.url}?timestamp=${new Date().getTime()}`,
+      });
+      setTimeout(() => setEdit(false), 500);
+    } catch (error) {
+      setEdit(false);
+      console.error("Error uploading file: ", error);
+    }
+  };
 
   return (
     <>
@@ -25,19 +66,75 @@ const About: React.FC<{ userData: UserData; pageData: AboutData }> = ({
                 {pageData.headerOne}
               </h2>
             </div>
-            <div className="image-wrapper order-2 w-full text-center md:order-1 md:self-end">
+            <div
+              className="image-wrapper relative order-2 w-full text-center md:order-1 md:self-end"
+              onMouseEnter={() => setIconOneEdit(true)}
+              onMouseLeave={() => setIconOneEdit(false)}
+              onClick={() =>
+                iconOneFileInput.current && iconOneFileInput.current.click()
+              }
+            >
+              <input
+                type="file"
+                ref={iconOneFileInput}
+                className="hidden"
+                accept=".jpg,.png"
+                onChange={async (e) => {
+                  await handleFileUpload(
+                    "about-icon-one-upload",
+                    setIconOneEdit,
+                    "iconOne",
+                    e
+                  );
+                }}
+              />
               <img
-                className="inline-block max-w-[150px]"
+                className="inline-block max-w-[150px] rounded-full shadow-custom"
                 src={pageData.iconOne}
                 alt="portfolio"
               />
+              <div
+                className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-full border-8 border-dashed border-black bg-white text-xl font-bold text-black transition-all ${
+                  iconOneEdit ? "opacity-50" : "opacity-0"
+                }`}
+              >
+                click to upload image
+              </div>
             </div>
-            <div className="image-wrapper w-full text-center md:order-last md:self-start">
+            <div
+              className="image-wrapper relative w-full text-center md:order-last md:self-start"
+              onMouseEnter={() => setIconTwoEdit(true)}
+              onMouseLeave={() => setIconTwoEdit(false)}
+              onClick={() =>
+                iconTwoFileInput.current && iconTwoFileInput.current.click()
+              }
+            >
+              <input
+                type="file"
+                ref={iconTwoFileInput}
+                className="hidden"
+                accept=".jpg,.png"
+                onChange={async (e) => {
+                  await handleFileUpload(
+                    "about-icon-two-upload",
+                    setIconTwoEdit,
+                    "iconTwo",
+                    e
+                  );
+                }}
+              />
               <img
-                className="inline-block max-w-[150px]"
+                className="inline-block max-w-[150px] rounded-full shadow-custom"
                 src={pageData.iconTwo}
                 alt="portfolio"
               />
+              <div
+                className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-full border-8 border-dashed border-black bg-white text-xl font-bold text-black transition-all ${
+                  iconTwoEdit ? "opacity-50" : "opacity-0"
+                }`}
+              >
+                click to upload image
+              </div>
             </div>
           </section>
         </div>

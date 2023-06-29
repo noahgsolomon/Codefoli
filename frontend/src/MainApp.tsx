@@ -139,7 +139,7 @@ const MainApp: React.FC = () => {
         />
         <Route
           path="/about"
-          element={<About userData={userData} pageData={aboutData} />}
+          element={<About userData={userData} pageData={aboutData} setPageData={setAboutData}/>}
         />
         <Route
             path="/projects"
