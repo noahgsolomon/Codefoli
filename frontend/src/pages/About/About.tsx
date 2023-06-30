@@ -8,7 +8,11 @@ import { ValuesData } from "Type/Values.tsx";
 import UserData from "Type/UserData.tsx";
 import AboutData from "Type/AboutData.tsx";
 import {
+  changeSectionThreeActive,
   changeSectionTwoActive,
+  updateBulletOneAbout,
+  updateBulletThreeAbout,
+  updateBulletTwoAbout,
   updateDescriptionOneAbout,
   updateDescriptionTwoAbout,
   updateHeaderOneAbout,
@@ -52,14 +56,34 @@ const About: React.FC<{
   const [headerThreeEditValue, setHeaderThreeEditValue] = useState(
     pageData.headerThree
   );
+  const [bulletOneEdit, setBulletOneEdit] = useState(false);
+  const [bulletOneEditValue, setBulletOneEditValue] = useState(
+    pageData.bulletOne
+  );
+  const [bulletTwoEdit, setBulletTwoEdit] = useState(false);
+  const [bulletTwoEditValue, setBulletTwoEditValue] = useState(
+    pageData.bulletTwo
+  );
+  const [bulletThreeEdit, setBulletThreeEdit] = useState(false);
+  const [bulletThreeEditValue, setBulletThreeEditValue] = useState(
+    pageData.bulletThree
+  );
+
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const headerTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const headerThreeTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const descriptionTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const bulletOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const bulletTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const bulletThreeTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const [sectionTwoHover, setSectionTwoHover] = useState<boolean>(false);
   const [removeSectionTwoHover, setRemoveSectionTwoHover] =
+    useState<boolean>(false);
+
+  const [sectionThreeHover, setSectionThreeHover] = useState<boolean>(false);
+  const [removeSectionThreeHover, setRemoveSectionThreeHover] =
     useState<boolean>(false);
 
   const handleFileUpload = async (
@@ -156,6 +180,42 @@ const About: React.FC<{
     setHeaderThreeEdit(false);
   };
 
+  const handleBulletTwoSubmit = async () => {
+    const updateHeader = await updateBulletTwoAbout(bulletTwoEditValue);
+    if (updateHeader) {
+      setPageData((prev) => ({
+        ...prev,
+        bulletTwo: bulletTwoEditValue,
+      }));
+      setBulletTwoEditValue(updateHeader);
+    }
+    setBulletTwoEdit(false);
+  };
+
+  const handleBulletOneSubmit = async () => {
+    const updateHeader = await updateBulletOneAbout(bulletOneEditValue);
+    if (updateHeader) {
+      setPageData((prev) => ({
+        ...prev,
+        bulletOne: bulletOneEditValue,
+      }));
+      setBulletOneEditValue(updateHeader);
+    }
+    setBulletOneEdit(false);
+  };
+
+  const handleBulletThreeSubmit = async () => {
+    const updateHeader = await updateBulletThreeAbout(bulletThreeEditValue);
+    if (updateHeader) {
+      setPageData((prev) => ({
+        ...prev,
+        bulletThree: bulletThreeEditValue,
+      }));
+      setBulletThreeEditValue(updateHeader);
+    }
+    setBulletThreeEdit(false);
+  };
+
   return (
     <>
       <main>
@@ -191,76 +251,87 @@ const About: React.FC<{
                 </h2>
               )}
             </div>
-            <div
-              className="image-wrapper relative order-2 w-full text-center md:order-1 md:self-end"
-              onMouseEnter={() => setIconOneEdit(true)}
-              onMouseLeave={() => setIconOneEdit(false)}
-              onClick={() =>
-                iconOneFileInput.current && iconOneFileInput.current.click()
-              }
-            >
-              <input
-                type="file"
-                ref={iconOneFileInput}
-                className="hidden"
-                accept=".jpg,.png"
-                onChange={async (e) => {
-                  await handleFileUpload(
-                    "about-icon-one-upload",
-                    setIconOneEdit,
-                    "iconOne",
-                    e
-                  );
-                }}
-              />
-              <img
-                className="inline-block max-h-[150px] max-w-[150px] rounded-full shadow-custom"
-                src={pageData.iconOne}
-                alt="portfolio"
-              />
+            {pageData.iconOneActive && (
               <div
-                className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-full border-8 border-dashed border-black bg-white text-xl font-bold text-black transition-all ${
-                  iconOneEdit ? "opacity-50" : "opacity-0"
-                }`}
-              >
-                click to upload image
-              </div>
-            </div>
-            <div
-              className="image-wrapper relative w-full text-center md:order-last md:self-start"
-              onMouseEnter={() => setIconTwoEdit(true)}
-              onMouseLeave={() => setIconTwoEdit(false)}
-              onClick={() =>
-                iconTwoFileInput.current && iconTwoFileInput.current.click()
-              }
-            >
-              <input
-                type="file"
-                ref={iconTwoFileInput}
-                className="hidden"
-                accept=".jpg,.png"
-                onChange={async (e) => {
-                  await handleFileUpload(
-                    "about-icon-two-upload",
-                    setIconTwoEdit,
-                    "iconTwo",
-                    e
-                  );
+                className="image-wrapper relative order-2 w-full text-center md:order-1 md:self-end"
+                onMouseEnter={() => setIconOneEdit(true)}
+                onMouseLeave={() => setIconOneEdit(false)}
+                onClick={() => {
+                  iconOneFileInput.current && iconOneFileInput.current.click();
                 }}
-              />
-              <img
-                className="inline-block max-w-[150px] rounded-full shadow-custom"
-                src={pageData.iconTwo}
-                alt="portfolio"
-              />
-              <div
-                className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-full border-8 border-dashed border-black bg-white text-xl font-bold text-black transition-all ${
-                  iconTwoEdit ? "opacity-50" : "opacity-0"
-                }`}
               >
-                click to upload image
+                <button
+                  className={`absolute -right-8 top-0 z-20 rounded-full bg-red-500 px-4 text-white transition-all ${
+                    iconOneEdit ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  x
+                </button>
+                <input
+                  type="file"
+                  ref={iconOneFileInput}
+                  className="hidden"
+                  accept=".jpg,.png"
+                  onChange={async (e) => {
+                    await handleFileUpload(
+                      "about-icon-one-upload",
+                      setIconOneEdit,
+                      "iconOne",
+                      e
+                    );
+                  }}
+                />
+                <img
+                  className="inline-block max-h-[150px] max-w-[150px] rounded-full shadow-custom"
+                  src={pageData.iconOne}
+                  alt="portfolio"
+                />
+                <div
+                  className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-full border-8 border-dashed border-black bg-white text-xl font-bold text-black transition-all ${
+                    iconOneEdit ? "opacity-50" : "opacity-0"
+                  }`}
+                >
+                  click to upload image
+                </div>
               </div>
-            </div>
+            )}
+            {pageData.iconTwoActive && (
+              <div
+                className="image-wrapper relative w-full text-center md:order-last md:self-start"
+                onMouseEnter={() => setIconTwoEdit(true)}
+                onMouseLeave={() => setIconTwoEdit(false)}
+                onClick={() =>
+                  iconTwoFileInput.current && iconTwoFileInput.current.click()
+                }
+              >
+                <input
+                  type="file"
+                  ref={iconTwoFileInput}
+                  className="hidden"
+                  accept=".jpg,.png"
+                  onChange={async (e) => {
+                    await handleFileUpload(
+                      "about-icon-two-upload",
+                      setIconTwoEdit,
+                      "iconTwo",
+                      e
+                    );
+                  }}
+                />
+                <img
+                  className="inline-block max-w-[150px] rounded-full shadow-custom"
+                  src={pageData.iconTwo}
+                  alt="portfolio"
+                />
+                <div
+                  className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-full border-8 border-dashed border-black bg-white text-xl font-bold text-black transition-all ${
+                    iconTwoEdit ? "opacity-50" : "opacity-0"
+                  }`}
+                >
+                  click to upload image
+                </div>
+              </div>
+            )}
           </section>
         </div>
         {/* Story */}
@@ -296,43 +367,44 @@ const About: React.FC<{
                   </h2>
                 )}
               </div>
-
-              <div
-                className="image-wrapper relative mb-5 md:max-w-[375px]"
-                onMouseEnter={() => setIconThreeEdit(true)}
-                onMouseLeave={() => setIconThreeEdit(false)}
-                onClick={() =>
-                  iconThreeFileInput.current &&
-                  iconThreeFileInput.current.click()
-                }
-              >
-                <input
-                  type="file"
-                  ref={iconThreeFileInput}
-                  className="hidden"
-                  accept=".jpg,.png"
-                  onChange={async (e) => {
-                    await handleFileUpload(
-                      "about-icon-three-upload",
-                      setIconThreeEdit,
-                      "iconThree",
-                      e
-                    );
-                  }}
-                />
-                <img
-                  src={pageData.iconThree}
-                  alt=""
-                  className="rounded-3xl shadow-custom"
-                />
+              {pageData.iconThreeActive && (
                 <div
-                  className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-3xl border-8 border-dashed border-black bg-white text-3xl font-bold text-black transition-all ${
-                    iconThreeEdit ? "opacity-50" : "opacity-0"
-                  }`}
+                  className="image-wrapper relative mb-5 max-w-[375px] sm:mx-auto md:mx-0"
+                  onMouseEnter={() => setIconThreeEdit(true)}
+                  onMouseLeave={() => setIconThreeEdit(false)}
+                  onClick={() =>
+                    iconThreeFileInput.current &&
+                    iconThreeFileInput.current.click()
+                  }
                 >
-                  click to upload image
+                  <input
+                    type="file"
+                    ref={iconThreeFileInput}
+                    className="hidden"
+                    accept=".jpg,.png"
+                    onChange={async (e) => {
+                      await handleFileUpload(
+                        "about-icon-three-upload",
+                        setIconThreeEdit,
+                        "iconThree",
+                        e
+                      );
+                    }}
+                  />
+                  <img
+                    src={pageData.iconThree}
+                    alt=""
+                    className="rounded-3xl shadow-custom"
+                  />
+                  <div
+                    className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-3xl border-8 border-dashed border-black bg-white text-3xl font-bold text-black transition-all ${
+                      iconThreeEdit ? "opacity-50" : "opacity-0"
+                    }`}
+                  >
+                    click to upload image
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
             <div className="content-right">
               {descriptionOneEdit ? (
@@ -448,8 +520,8 @@ const About: React.FC<{
                         await handleDescriptionTwoSubmit();
                       }
                     }}
-                    className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg font-semibold leading-snug text-white outline-none focus:outline-none focus:ring-0"
-                    style={{ minHeight: "7.5em" }}
+                    className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
+                    style={{ minHeight: "14rem" }}
                     autoFocus
                     maxLength={250}
                   />
@@ -465,27 +537,101 @@ const About: React.FC<{
                 <div className="events-wrapper my-5">
                   <div className="event flex items-start justify-between gap-4">
                     <div className="mt-1 h-4 w-4 rounded border-2 bg-indigo-600"></div>
-                    <p className="event-descripition flex-1 pt-0 text-lg font-semibold text-white">
-                      {pageData.bulletOne}
-                    </p>
+                    {bulletOneEdit ? (
+                      <textarea
+                        ref={bulletOneTextareaRef}
+                        value={bulletOneEditValue}
+                        onChange={(e) => setBulletOneEditValue(e.target.value)}
+                        onBlur={() => {
+                          setBulletOneEditValue(pageData.bulletOne);
+                          setBulletOneEdit(false);
+                        }}
+                        onKeyDown={async (e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            await handleBulletOneSubmit();
+                          }
+                        }}
+                        className="w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
+                        autoFocus
+                        maxLength={250}
+                      />
+                    ) : (
+                      <p
+                        className="event-descripition flex-1 cursor-pointer select-none pt-0 text-lg font-semibold text-white transition-all hover:opacity-50"
+                        onClick={() => setBulletOneEdit(true)}
+                      >
+                        {pageData.bulletOne}
+                      </p>
+                    )}
                   </div>
                   <div className="event flex items-start justify-between gap-4">
                     <div className="mt-1 h-4 w-4 rounded border-2 bg-sky-600"></div>
-                    <p className="event-descripition flex-1 pt-0 text-lg font-semibold text-white">
-                      {pageData.bulletTwo}
-                    </p>
+                    {bulletTwoEdit ? (
+                      <textarea
+                        ref={bulletTwoTextareaRef}
+                        value={bulletTwoEditValue}
+                        onChange={(e) => setBulletTwoEditValue(e.target.value)}
+                        onBlur={() => {
+                          setBulletTwoEditValue(pageData.bulletTwo);
+                          setBulletTwoEdit(false);
+                        }}
+                        onKeyDown={async (e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            await handleBulletTwoSubmit();
+                          }
+                        }}
+                        className="w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
+                        autoFocus
+                        maxLength={250}
+                      />
+                    ) : (
+                      <p
+                        className="event-descripition flex-1 cursor-pointer select-none pt-0 text-lg font-semibold text-white transition-all hover:opacity-50"
+                        onClick={() => setBulletTwoEdit(true)}
+                      >
+                        {pageData.bulletTwo}
+                      </p>
+                    )}
                   </div>
                   <div className="event flex items-start justify-between gap-4">
                     <div className="mt-1 h-4 w-4 rounded border-2 bg-yellow-500"></div>
-                    <p className="event-descripition flex-1 pt-0 text-lg font-semibold text-white">
-                      {pageData.bulletThree}
-                    </p>
+                    {bulletThreeEdit ? (
+                      <textarea
+                        ref={bulletThreeTextareaRef}
+                        value={bulletThreeEditValue}
+                        onChange={(e) =>
+                          setBulletThreeEditValue(e.target.value)
+                        }
+                        onBlur={() => {
+                          setBulletThreeEditValue(pageData.bulletThree);
+                          setBulletThreeEdit(false);
+                        }}
+                        onKeyDown={async (e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            await handleBulletThreeSubmit();
+                          }
+                        }}
+                        className="w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
+                        autoFocus
+                        maxLength={250}
+                      />
+                    ) : (
+                      <p
+                        className="event-descripition flex-1 cursor-pointer select-none pt-0 text-lg font-semibold text-white transition-all hover:opacity-50"
+                        onClick={() => setBulletThreeEdit(true)}
+                      >
+                        {pageData.bulletThree}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
-              <div className="content-right">
+              <div className="content-right flex items-center justify-center">
                 <div
-                  className={`image-wrapper relative mb-5 transition-all md:max-w-[375px] ${
+                  className={`image-wrapper relative mb-5 max-w-[375px] transition-all ${
                     removeSectionTwoHover
                       ? "rounded-3xl bg-red-300 opacity-25"
                       : ""
@@ -524,28 +670,66 @@ const About: React.FC<{
             </div>
           </section>
         ) : (
-          <AddSection setPageData={setPageData} />
+          <AddSection pageData={pageData} setPageData={setPageData} />
         )}
-        {/* resume */}
-        <section className="resume">
-          <div className="container mx-auto my-20 max-w-screen-lg px-5 py-20">
-            <h2 className="mb-8 text-center text-3xl font-bold">
-              {pageData.headerFour}
-            </h2>
-            <div className="resume-events">
-              {userData.work.map((job, index) => (
-                <JobCard
-                  key={index}
-                  companyTitle={job.company}
-                  role={job.position}
-                  description={job.description}
-                  duration={job.startDate + " - " + job.endDate}
-                  active={index === 0}
-                />
-              ))}
+        {/* resume section3*/}
+        {pageData.sectionThreeActive ? (
+          <section
+            className="resume relative"
+            onMouseEnter={() => setSectionThreeHover(true)}
+            onMouseLeave={() => setSectionThreeHover(false)}
+          >
+            {removeSectionThreeHover && (
+              <div
+                className={` absolute right-0 top-0 h-full w-full bg-red-300 opacity-25 transition-all`}
+              ></div>
+            )}
+            <button
+              className={`${
+                sectionThreeHover ? "opacity-100" : "opacity-0"
+              } absolute right-10 top-0 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
+              onMouseEnter={() => setRemoveSectionThreeHover(true)}
+              onMouseLeave={() => setRemoveSectionThreeHover(false)}
+              onClick={async () => {
+                const changeSectionThree = await changeSectionThreeActive(
+                  "true"
+                );
+                if (changeSectionThree) {
+                  setPageData((prev) => ({
+                    ...prev,
+                    sectionThreeActive: false,
+                  }));
+                }
+                setRemoveSectionThreeHover(false);
+              }}
+            >
+              -
+            </button>
+            <div className="container mx-auto my-20 max-w-screen-lg px-5 py-20">
+              <h2 className="mb-8 text-center text-3xl font-bold">
+                {pageData.headerFour}
+              </h2>
+              <div className="resume-events">
+                {userData.work.map((job, index) => (
+                  <JobCard
+                    key={index}
+                    companyTitle={job.company}
+                    role={job.position}
+                    description={job.description}
+                    duration={job.startDate + " - " + job.endDate}
+                    active={index === 0}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ) : (
+          <>
+            {pageData.sectionTwoActive && (
+              <AddSection pageData={pageData} setPageData={setPageData} />
+            )}
+          </>
+        )}
         <Marquee
           items={userData.services.map((service) => {
             return service

@@ -1,40 +1,70 @@
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 import AboutData from "Type/AboutData.tsx";
-import {changeSectionTwoActive} from "../../../pages/About/aboutapi.tsx";
+import {
+  changeSectionThreeActive,
+  changeSectionTwoActive,
+} from "../../../pages/About/aboutapi.tsx";
 
 const AddSection: React.FC<{
-    setPageData: React.Dispatch<React.SetStateAction<AboutData>>;
-}> = ({setPageData}) => {
+  pageData: AboutData;
+  setPageData: React.Dispatch<React.SetStateAction<AboutData>>;
+}> = ({ setPageData, pageData }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [sectionList, setSectionList] = useState<string[]>([]);
 
-    const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    const list: string[] = [];
+    if (!pageData.sectionTwoActive) {
+      list.push("Story");
+    }
+    if (!pageData.sectionThreeActive) {
+      list.push("Resume");
+    }
+    setSectionList(list);
+  }, [pageData.sectionTwoActive, pageData.sectionThreeActive]);
 
-    return (
-        <div className="relative py-0.5 w-full bg-black flex justify-center items-center">
+  return (
+    <div className="relative mb-20 flex w-full items-center justify-center bg-black py-0.5">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="absolute flex h-10 w-10 items-center justify-center rounded-full border-2 border-black bg-green-500 transition-all hover:-translate-y-0.5 hover:shadow-custom"
+      >
+        <span className="text-lg font-bold text-white">+</span>
+      </button>
+      {isOpen && (
+        <div className="absolute top-full z-10 mt-10 w-48 rounded border-2 border-black bg-white py-2 shadow-custom transition-all">
+          {sectionList.map((section, index) => (
             <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="hover:shadow-custom hover:-translate-y-0.5 bg-green-500 transition-all border-2 border-black absolute rounded-full w-10 h-10 flex items-center justify-center"
+              key={index}
+              className="text-normal block w-full rounded px-4 py-2 text-gray-900 transition-all hover:underline"
+              onClick={async () => {
+                let change;
+                if (section === "Story") {
+                  change = await changeSectionTwoActive("false");
+                  if (change) {
+                    setPageData((prev) => ({
+                      ...prev,
+                      sectionTwoActive: true,
+                    }));
+                  }
+                } else if (section === "Resume") {
+                  change = await changeSectionThreeActive("false");
+                  if (change) {
+                    setPageData((prev) => ({
+                      ...prev,
+                      sectionThreeActive: true,
+                    }));
+                  }
+                }
+              }}
             >
-                <span className="text-white text-lg font-bold">+</span>
+              {section}
             </button>
-            {isOpen && (
-                <div className="border-2 border-black transition-all absolute top-full mt-10 w-48 py-2 bg-white rounded shadow-custom">
-                    <button className="w-full transition-all block px-4 py-2 text-normal text-gray-900 rounded hover:underline"
-                    onClick={async () => {
-                        const changeSectionTwo = await changeSectionTwoActive("false");
-                        if (changeSectionTwo) {
-                            setPageData((prev) => {
-                                return {
-                                    ...prev,
-                                    sectionTwoActive: true,
-                                };
-                            });
-                        }
-                    }}
-                    >Story</button>
-                </div>
-            )}
+          ))}
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default AddSection;
