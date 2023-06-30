@@ -3,7 +3,7 @@ import AboutData from "Type/AboutData.tsx";
 import {
   changeSectionThreeActive,
   changeSectionTwoActive,
-} from "../../../pages/About/aboutapi.tsx";
+} from "../aboutapi.tsx";
 
 const AddSection: React.FC<{
   pageData: AboutData;
