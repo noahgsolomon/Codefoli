@@ -40,6 +40,10 @@ public class AboutService {
                 aboutData.getHeaderFive(),
                 aboutData.getDescriptionThree(),
                 aboutData.isSectionTwoActive(),
+                aboutData.isSectionThreeActive(),
+                aboutData.isIconOneActive(),
+                aboutData.isIconTwoActive(),
+                aboutData.isIconThreeActive(),
                 values);
         String jsonResponse = gson.toJson(aboutModel);
         return ResponseEntity.ok(jsonResponse);
@@ -95,7 +99,15 @@ public class AboutService {
         }
 
         aboutRepository.save(aboutData);
-        return ResponseEntity.ok(aboutData.getDescriptionOne());
+        return ResponseEntity.ok("removed section two");
+    }
+
+    public ResponseEntity<?> changeSectionThree(Principal principal, String active) {
+        Users user = getAuthenticatedUser(principal);
+        About aboutData = aboutRepository.findByUsers(user);
+        aboutData.setSectionThreeActive(!active.equals("true"));
+        aboutRepository.save(aboutData);
+        return ResponseEntity.ok("removed section three");
     }
 
     public ResponseEntity<?> updateHeaderThree(Principal principal, String headerThree) {
@@ -106,5 +118,25 @@ public class AboutService {
         return ResponseEntity.ok(aboutData.getHeaderThree());
     }
 
-
+    public ResponseEntity<?> updateBulletOne(Principal principal, String bulletOne) {
+        Users user = getAuthenticatedUser(principal);
+        About aboutData = aboutRepository.findByUsers(user);
+        aboutData.setBulletOne(bulletOne);
+        aboutRepository.save(aboutData);
+        return ResponseEntity.ok(aboutData.getBulletOne());
+    }
+    public ResponseEntity<?> updateBulletTwo(Principal principal, String bulletTwo) {
+        Users user = getAuthenticatedUser(principal);
+        About aboutData = aboutRepository.findByUsers(user);
+        aboutData.setBulletTwo(bulletTwo);
+        aboutRepository.save(aboutData);
+        return ResponseEntity.ok(aboutData.getBulletTwo());
+    }
+    public ResponseEntity<?> updateBulletThree(Principal principal, String bulletThree) {
+        Users user = getAuthenticatedUser(principal);
+        About aboutData = aboutRepository.findByUsers(user);
+        aboutData.setBulletThree(bulletThree);
+        aboutRepository.save(aboutData);
+        return ResponseEntity.ok(aboutData.getBulletThree());
+    }
 }

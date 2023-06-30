@@ -43,12 +43,15 @@ public class About {
     private String imageOne;
     //section three jobs
     private String headerFour;
-
     //section four what drives me
     private String headerFive;
     @Column(length = 1000)
     private String descriptionThree;
     private boolean sectionTwoActive;
+    private boolean iconOneActive;
+    private boolean iconTwoActive;
+    private boolean iconThreeActive;
+    private boolean sectionThreeActive;
 
     public About(
             Users users,
@@ -84,5 +87,9 @@ public class About {
         this.headerFive = headerFive;
         this.descriptionThree = descriptionThree;
         sectionTwoActive = true;
+        iconOneActive = true;
+        iconTwoActive = true;
+        iconThreeActive = true;
+        sectionThreeActive = true;
     }
 }

@@ -21,5 +21,9 @@ public record AboutModel(
         String headerFive,
         String descriptionThree,
         boolean sectionTwoActive,
+        boolean sectionThreeActive,
+        boolean iconOneActive,
+        boolean iconTwoActive,
+        boolean iconThreeActive,
         List<Values> values) {
 }
