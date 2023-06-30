@@ -1,5 +1,4 @@
 import Marquee from "Components/Marquee/Marquee";
-import JobCard from "./JobCard/JobCard";
 import Footer from "Components/Footer/Footer";
 import Card from "Components/Card/Card";
 import React, { useRef, useState } from "react";
@@ -8,13 +7,13 @@ import { ValuesData } from "Type/Values.tsx";
 import UserData from "Type/UserData.tsx";
 import AboutData from "Type/AboutData.tsx";
 import {
-  changeSectionThreeActive,
   updateDescriptionOneAbout,
   updateHeaderOneAbout,
   updateHeaderTwoAbout,
 } from "./aboutapi.tsx";
 import AddSection from "./AddSection/AddSection.tsx";
 import StorySection from "./Sections/StorySection.tsx";
+import ResumeSection from "./Sections/ResumeSection.tsx";
 
 const About: React.FC<{
   userData: UserData;
@@ -44,10 +43,6 @@ const About: React.FC<{
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const headerTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
-
-  const [sectionThreeHover, setSectionThreeHover] = useState<boolean>(false);
-  const [removeSectionThreeHover, setRemoveSectionThreeHover] =
-    useState<boolean>(false);
 
   const handleFileUpload = async (
     path: string,
@@ -358,55 +353,7 @@ const About: React.FC<{
         )}
         {/* resume section3*/}
         {pageData.sectionThreeActive ? (
-          <section
-            className="resume relative"
-            onMouseEnter={() => setSectionThreeHover(true)}
-            onMouseLeave={() => setSectionThreeHover(false)}
-          >
-            {removeSectionThreeHover && (
-              <div
-                className={` absolute right-0 top-0 h-full w-full bg-red-300 opacity-25 transition-all`}
-              ></div>
-            )}
-            <button
-              className={`${
-                sectionThreeHover ? "opacity-100" : "opacity-0"
-              } absolute right-10 top-0 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
-              onMouseEnter={() => setRemoveSectionThreeHover(true)}
-              onMouseLeave={() => setRemoveSectionThreeHover(false)}
-              onClick={async () => {
-                const changeSectionThree = await changeSectionThreeActive(
-                  "true"
-                );
-                if (changeSectionThree) {
-                  setPageData((prev) => ({
-                    ...prev,
-                    sectionThreeActive: false,
-                  }));
-                }
-                setRemoveSectionThreeHover(false);
-              }}
-            >
-              -
-            </button>
-            <div className="container mx-auto my-20 max-w-screen-lg px-5 py-20">
-              <h2 className="mb-8 text-center text-3xl font-bold">
-                {pageData.headerFour}
-              </h2>
-              <div className="resume-events">
-                {userData.work.map((job, index) => (
-                  <JobCard
-                    key={index}
-                    companyTitle={job.company}
-                    role={job.position}
-                    description={job.description}
-                    duration={job.startDate + " - " + job.endDate}
-                    active={index === 0}
-                  />
-                ))}
-              </div>
-            </div>
-          </section>
+          <ResumeSection userData={userData} pageData={pageData} setPageData={setPageData}/>
         ) : (
           <>
             {pageData.sectionTwoActive && (
