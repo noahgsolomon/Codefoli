@@ -63,6 +63,10 @@ const MainApp: React.FC = () => {
     headerFive: "",
     descriptionThree: "",
     sectionTwoActive: true,
+    sectionThreeActive: true,
+    iconOneActive: true,
+    iconTwoActive: true,
+    iconThreeActive: true,
     values: [{ value: "", description: "" }],
   });
 
@@ -132,6 +136,8 @@ const MainApp: React.FC = () => {
   if (loading) {
     return <Loader />;
   }
+
+  console.log(aboutData);
 
   return (
     <>
