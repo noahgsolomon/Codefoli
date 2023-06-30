@@ -10,7 +10,9 @@ import AboutData from "Type/AboutData.tsx";
 import {
   changeSectionTwoActive,
   updateDescriptionOneAbout,
-  updateHeaderOneAbout, updateHeaderThreeAbout,
+  updateDescriptionTwoAbout,
+  updateHeaderOneAbout,
+  updateHeaderThreeAbout,
   updateHeaderTwoAbout,
 } from "./aboutapi.tsx";
 import AddSection from "Components/AddSection/AddSection.tsx";
@@ -26,6 +28,10 @@ const About: React.FC<{
   const iconTwoFileInput = useRef<HTMLInputElement | null>(null);
   const [iconThreeEdit, setIconThreeEdit] = useState<boolean>(false);
   const iconThreeFileInput = useRef<HTMLInputElement | null>(null);
+
+  const [imageOneEdit, setImageOneEdit] = useState<boolean>(false);
+  const imageOneFileInput = useRef<HTMLInputElement | null>(null);
+
   const [headerOneEdit, setHeaderOneEdit] = useState(false);
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
     pageData.headerOne
@@ -38,20 +44,23 @@ const About: React.FC<{
   const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(
     pageData.descriptionOne
   );
+  const [descriptionTwoEdit, setDescriptionTwoEdit] = useState(false);
+  const [descriptionTwoEditValue, setDescriptionTwoEditValue] = useState(
+    pageData.descriptionTwo
+  );
   const [headerThreeEdit, setHeaderThreeEdit] = useState(false);
-    const [headerThreeEditValue, setHeaderThreeEditValue] = useState(
-        pageData.headerThree
-        );
+  const [headerThreeEditValue, setHeaderThreeEditValue] = useState(
+    pageData.headerThree
+  );
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const headerTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const headerThreeTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const descriptionTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const [sectionTwoHover, setSectionTwoHover] = useState<boolean>(false);
-  const [removeSectionTwoHover, setRemoveSectionTwoHover] = useState<boolean>(
-    false
-    );
-
+  const [removeSectionTwoHover, setRemoveSectionTwoHover] =
+    useState<boolean>(false);
 
   const handleFileUpload = async (
     path: string,
@@ -121,10 +130,22 @@ const About: React.FC<{
     setDescriptionOneEdit(false);
   };
 
-  const handleHeaderThreeSubmit = async () => {
-    const updateHeader = await updateHeaderThreeAbout(
-        headerThreeEditValue
+  const handleDescriptionTwoSubmit = async () => {
+    const updateHeader = await updateDescriptionTwoAbout(
+      descriptionTwoEditValue
     );
+    if (updateHeader) {
+      setPageData((prev) => ({
+        ...prev,
+        descriptionTwo: descriptionTwoEditValue,
+      }));
+      setDescriptionTwoEditValue(updateHeader);
+    }
+    setDescriptionTwoEdit(false);
+  };
+
+  const handleHeaderThreeSubmit = async () => {
+    const updateHeader = await updateHeaderThreeAbout(headerThreeEditValue);
     if (updateHeader) {
       setPageData((prev) => ({
         ...prev,
@@ -157,14 +178,14 @@ const About: React.FC<{
                       await handleHeaderOneSubmit();
                     }
                   }}
-                  className=" mb-5 resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-5xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-7xl"
+                  className=" mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-5xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-7xl"
                   autoFocus
                   maxLength={50}
                 />
               ) : (
                 <h2
-                  className="mb-5 cursor-pointer select-none text-center text-5xl font-bold md:text-7xl"
-                  onDoubleClick={() => setHeaderOneEdit(true)}
+                  className="mb-5 cursor-pointer select-none text-center text-5xl font-bold transition-all hover:opacity-50 md:text-7xl"
+                  onClick={() => setHeaderOneEdit(true)}
                 >
                   {pageData.headerOne}
                 </h2>
@@ -193,7 +214,7 @@ const About: React.FC<{
                 }}
               />
               <img
-                className="inline-block max-w-[150px] max-h-[150px] rounded-full shadow-custom"
+                className="inline-block max-h-[150px] max-w-[150px] rounded-full shadow-custom"
                 src={pageData.iconOne}
                 alt="portfolio"
               />
@@ -262,14 +283,14 @@ const About: React.FC<{
                         await handleHeaderTwoSubmit();
                       }
                     }}
-                    className=" mb-5 resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-5xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-7xl"
+                    className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-4xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-left md:text-6xl md:leading-tight"
                     autoFocus
                     maxLength={25}
                   />
                 ) : (
                   <h2
-                    className="mb-8 cursor-pointer select-none text-center text-4xl font-bold md:text-left md:text-6xl md:leading-tight"
-                    onDoubleClick={() => setHeaderTwoEdit(true)}
+                    className="mb-8 cursor-pointer select-none text-center text-4xl font-bold transition-all hover:opacity-50 md:text-left md:text-6xl md:leading-tight"
+                    onClick={() => setHeaderTwoEdit(true)}
                   >
                     {pageData.headerTwo}
                   </h2>
@@ -299,7 +320,11 @@ const About: React.FC<{
                     );
                   }}
                 />
-                <img src={pageData.iconThree} alt="" />
+                <img
+                  src={pageData.iconThree}
+                  alt=""
+                  className="rounded-3xl shadow-custom"
+                />
                 <div
                   className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-3xl border-8 border-dashed border-black bg-white text-3xl font-bold text-black transition-all ${
                     iconThreeEdit ? "opacity-50" : "opacity-0"
@@ -316,7 +341,7 @@ const About: React.FC<{
                   value={descriptionOneEditValue}
                   onChange={(e) => setDescriptionOneEditValue(e.target.value)}
                   onBlur={() => {
-                    setDescriptionOneEditValue(pageData.headerTwo);
+                    setDescriptionOneEditValue(pageData.descriptionOne);
                     setDescriptionOneEdit(false);
                   }}
                   onKeyDown={async (e) => {
@@ -325,14 +350,15 @@ const About: React.FC<{
                       await handleDescriptionOneSubmit();
                     }
                   }}
-                  className="mb-5 resize-none appearance-none overflow-hidden border-none bg-transparent text-lg font-semibold leading-snug outline-none focus:outline-none focus:ring-0"
+                  className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg font-semibold leading-snug outline-none focus:outline-none focus:ring-0"
+                  style={{ minHeight: "8em" }}
                   autoFocus
-                  maxLength={25}
+                  maxLength={250}
                 />
               ) : (
                 <p
-                  className="description mb-5 cursor-pointer select-none text-lg font-semibold"
-                  onDoubleClick={() => setDescriptionOneEdit(true)}
+                  className="description mb-5 cursor-pointer select-none text-lg font-semibold transition-all hover:opacity-50"
+                  onClick={() => setDescriptionOneEdit(true)}
                 >
                   {pageData.descriptionOne}
                 </p>
@@ -348,62 +374,94 @@ const About: React.FC<{
             </div>
           </div>
         </section>
-        { pageData.sectionTwoActive ? (
-            <section className="story mb-20 bg-black relative"
-          onMouseEnter={() => setSectionTwoHover(true)}
-          onMouseLeave={() => setSectionTwoHover(false)}
+        {pageData.sectionTwoActive ? (
+          <section
+            className="story relative mb-20 bg-black transition-all"
+            onMouseEnter={() => setSectionTwoHover(true)}
+            onMouseLeave={() => setSectionTwoHover(false)}
           >
-              {
-                removeSectionTwoHover && <div className={`absolute top-0 right-0 bg-red-300 w-full h-full transition-all opacity-25`}></div>
-              }
+            {removeSectionTwoHover && (
+              <div
+                className={` absolute right-0 top-0 h-full w-full bg-red-300 opacity-25 transition-all`}
+              ></div>
+            )}
             <button
-                className={`${sectionTwoHover ? 'opacity-100' : 'opacity-0'} absolute transition-all hover:scale-105 top-0 right-10 mt-5 bg-red-500 rounded-2xl px-5 text-white font-bold hover:-translate-y-0.5`}
-                onMouseEnter={() => setRemoveSectionTwoHover(true)}
-                onMouseLeave={() => setRemoveSectionTwoHover(false)}
-                  onClick={async () => {
-                    const changeSectionTwo = await changeSectionTwoActive("true");
-                    if (changeSectionTwo){
-                        setPageData((prev) => ({
-                            ...prev,
-                            sectionTwoActive: false,
-                        }));
-                        }
-                    setRemoveSectionTwoHover(false);
-                  }}
+              className={`${
+                sectionTwoHover ? "opacity-100" : "opacity-0"
+              } absolute right-10 top-0 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
+              onMouseEnter={() => setRemoveSectionTwoHover(true)}
+              onMouseLeave={() => setRemoveSectionTwoHover(false)}
+              onClick={async () => {
+                const changeSectionTwo = await changeSectionTwoActive("true");
+                if (changeSectionTwo) {
+                  setPageData((prev) => ({
+                    ...prev,
+                    sectionTwoActive: false,
+                  }));
+                }
+                setRemoveSectionTwoHover(false);
+              }}
             >
               -
             </button>
             <div className="container mx-auto my-20 max-w-screen-lg gap-5 px-5 py-20 md:grid md:grid-cols-2 md:items-center md:justify-between">
               <div className="content-left">
-                { headerThreeEdit ? (
-                    <textarea
-                        ref={headerThreeTextareaRef}
-                        value={headerThreeEditValue}
-                        onChange={(e) => setHeaderThreeEditValue(e.target.value)}
-                        onBlur={() => {
-                          setHeaderThreeEditValue(pageData.headerThree);
-                          setHeaderThreeEdit(false);
-                        }}
-                        onKeyDown={async (e) => {
-                          if (e.key === "Enter") {
-                            e.preventDefault();
-                            await handleHeaderThreeSubmit();
-                          }
-                        }}
-                        className="mb-8 text-4xl font-bold text-white md:text-5xl md:leading-tight resize-none appearance-none overflow-hidden border-none bg-transparent outline-none focus:outline-none focus:ring-0"
-                        autoFocus
-                        maxLength={50}
-                    />
+                {headerThreeEdit ? (
+                  <textarea
+                    ref={headerThreeTextareaRef}
+                    value={headerThreeEditValue}
+                    onChange={(e) => setHeaderThreeEditValue(e.target.value)}
+                    onBlur={() => {
+                      setHeaderThreeEditValue(pageData.headerThree);
+                      setHeaderThreeEdit(false);
+                    }}
+                    onKeyDown={async (e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        await handleHeaderThreeSubmit();
+                      }
+                    }}
+                    className="mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-4xl font-bold text-white outline-none focus:outline-none focus:ring-0 md:text-5xl md:leading-tight"
+                    autoFocus
+                    maxLength={50}
+                  />
                 ) : (
-                  <h2 className="select-none cursor-pointer mb-8 text-4xl font-bold text-white md:text-5xl md:leading-tight"
-                    onDoubleClick={() => setHeaderThreeEdit(true)}
+                  <h2
+                    className="mb-8 cursor-pointer select-none text-4xl font-bold text-white transition-all hover:opacity-50 md:text-5xl md:leading-tight"
+                    onClick={() => setHeaderThreeEdit(true)}
                   >
                     {pageData.headerThree}
                   </h2>
                 )}
-                <p className="description text-lg font-semibold text-white">
-                  {pageData.descriptionTwo}
-                </p>
+                {descriptionTwoEdit ? (
+                  <textarea
+                    ref={descriptionTwoTextareaRef}
+                    value={descriptionTwoEditValue}
+                    onChange={(e) => setDescriptionTwoEditValue(e.target.value)}
+                    onBlur={() => {
+                      setDescriptionTwoEditValue(pageData.descriptionTwo);
+                      setDescriptionTwoEdit(false);
+                    }}
+                    onKeyDown={async (e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        await handleDescriptionTwoSubmit();
+                      }
+                    }}
+                    className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg font-semibold leading-snug text-white outline-none focus:outline-none focus:ring-0"
+                    style={{ minHeight: "7.5em" }}
+                    autoFocus
+                    maxLength={250}
+                  />
+                ) : (
+                  <p
+                    className="description cursor-pointer select-none text-lg font-semibold text-white transition-all hover:opacity-50"
+                    onClick={() => setDescriptionTwoEdit(true)}
+                  >
+                    {pageData.descriptionTwo}
+                  </p>
+                )}
+
                 <div className="events-wrapper my-5">
                   <div className="event flex items-start justify-between gap-4">
                     <div className="mt-1 h-4 w-4 rounded border-2 bg-indigo-600"></div>
@@ -426,16 +484,48 @@ const About: React.FC<{
                 </div>
               </div>
               <div className="content-right">
-                <div className="image-wrapper">
-                  <img src={pageData.imageOne} alt="" />
+                <div
+                  className={`image-wrapper relative mb-5 transition-all md:max-w-[375px] ${
+                    removeSectionTwoHover
+                      ? "rounded-3xl bg-red-300 opacity-25"
+                      : ""
+                  }`}
+                  onMouseEnter={() => setImageOneEdit(true)}
+                  onMouseLeave={() => setImageOneEdit(false)}
+                  onClick={() =>
+                    imageOneFileInput.current &&
+                    imageOneFileInput.current.click()
+                  }
+                >
+                  <input
+                    type="file"
+                    ref={imageOneFileInput}
+                    className="hidden"
+                    accept=".jpg,.png"
+                    onChange={async (e) => {
+                      await handleFileUpload(
+                        "about-image-one-upload",
+                        setImageOneEdit,
+                        "imageOne",
+                        e
+                      );
+                    }}
+                  />
+                  <img src={pageData.imageOne} alt="" className="rounded-3xl" />
+                  <div
+                    className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-3xl border-8 border-dashed border-black bg-white text-3xl font-bold text-black transition-all ${
+                      imageOneEdit ? "opacity-50" : "opacity-0"
+                    }`}
+                  >
+                    click to upload image
+                  </div>
                 </div>
               </div>
             </div>
           </section>
         ) : (
-            <AddSection setPageData={setPageData}/>
-        )
-        }
+          <AddSection setPageData={setPageData} />
+        )}
         {/* resume */}
         <section className="resume">
           <div className="container mx-auto my-20 max-w-screen-lg px-5 py-20">

@@ -33,6 +33,11 @@ public class AboutController {
         return aboutService.updateDescriptionOne(principal, descriptionOne);
     }
 
+    @PutMapping("/about/description-two")
+    public ResponseEntity<?> updateDescriptionTwo(Principal principal, @RequestBody String descriptionTwo) {
+        return aboutService.updateDescriptionTwo(principal, descriptionTwo);
+    }
+
     @PutMapping("/about/change-section-two")
     public ResponseEntity<?> removeSectionTwo(Principal principal, @RequestBody String active) {
         return aboutService.changeSectionTwo(principal, active);

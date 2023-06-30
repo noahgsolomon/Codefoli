@@ -69,6 +69,15 @@ public class AboutService {
         return ResponseEntity.ok(aboutData.getDescriptionOne());
     }
 
+    public ResponseEntity<?> updateDescriptionTwo(Principal principal, String descriptionTwo) {
+        Users user = getAuthenticatedUser(principal);
+        About aboutData = aboutRepository.findByUsers(user);
+        aboutData.setDescriptionTwo(descriptionTwo);
+        aboutRepository.save(aboutData);
+        return ResponseEntity.ok(aboutData.getDescriptionTwo());
+    }
+
+
     public ResponseEntity<?> changeSectionTwo(Principal principal, String active) {
         Users user = getAuthenticatedUser(principal);
         About aboutData = aboutRepository.findByUsers(user);

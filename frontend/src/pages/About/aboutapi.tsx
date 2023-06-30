@@ -54,31 +54,53 @@ const updateDescriptionOneAbout = async (descriptionOne: string) => {
 
 const changeSectionTwoActive = async (sectionTwoActive: string) => {
   try {
-    const response = await fetch("http://localhost:8080/about/change-section-two", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: sectionTwoActive,
-      credentials: "include",
-    });
+    const response = await fetch(
+      "http://localhost:8080/about/change-section-two",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: sectionTwoActive,
+        credentials: "include",
+      }
+    );
     if (response.ok) {
       return await response.text();
     }
   } catch (e) {
     console.log(e);
   }
-
-}
+};
 
 const updateHeaderThreeAbout = async (headerThree: string) => {
   try {
     const updateFetch = await fetch(
-        "http://localhost:8080/about/header-three",
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: headerThree,
-          credentials: "include",
-        }
+      "http://localhost:8080/about/header-three",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: headerThree,
+        credentials: "include",
+      }
+    );
+
+    if (updateFetch.ok) {
+      return await updateFetch.text();
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const updateDescriptionTwoAbout = async (descriptionTwo: string) => {
+  try {
+    const updateFetch = await fetch(
+      "http://localhost:8080/about/description-two",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: descriptionTwo,
+        credentials: "include",
+      }
     );
 
     if (updateFetch.ok) {
@@ -94,5 +116,6 @@ export {
   updateHeaderTwoAbout,
   updateDescriptionOneAbout,
   changeSectionTwoActive,
-  updateHeaderThreeAbout
+  updateHeaderThreeAbout,
+  updateDescriptionTwoAbout,
 };
