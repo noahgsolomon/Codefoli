@@ -283,7 +283,7 @@ const About: React.FC<{
                         await handleHeaderTwoSubmit();
                       }
                     }}
-                    className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-4xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-left md:text-6xl md:leading-tight"
+                    className="mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-4xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-left md:text-6xl md:leading-tight"
                     autoFocus
                     maxLength={25}
                   />

@@ -152,14 +152,14 @@ const Dashboard: React.FC<{
                         await handleHeaderOneSubmit();
                       }
                     }}
-                    className="font-extra-bold max-w-[15ch] resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-4xl leading-snug outline-none focus:outline-none focus:ring-0 md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal"
+                    className="font-extra-bold w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-4xl leading-snug outline-none focus:outline-none focus:ring-0 md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal"
                     autoFocus
                     maxLength={50}
                   />
                 ) : (
                   <h1
-                    className="font-extra-bold max-w-[15ch] cursor-pointer select-none text-center text-4xl leading-snug md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal"
-                    onDoubleClick={() => setHeaderOneEdit(true)}
+                    className="hover:opacity-50 transition-all font-extra-bold max-w-[15ch] cursor-pointer select-none text-center text-4xl leading-snug md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal"
+                    onClick={() => setHeaderOneEdit(true)}
                   >
                     {pageData.headerOne}
                   </h1>
@@ -180,14 +180,14 @@ const Dashboard: React.FC<{
                         setDescriptionOneEdit(false);
                       }
                     }}
-                    className="max-w-[35ch] resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-base opacity-60 outline-none focus:outline-none focus:ring-0 xl:max-w-[50ch] xl:text-left"
+                    className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-base opacity-60 outline-none focus:outline-none focus:ring-0 xl:max-w-[50ch] xl:text-left"
                     autoFocus
                     maxLength={250}
                   />
                 ) : (
                   <p
-                    className="max-w-[35ch] cursor-pointer select-none text-center text-base opacity-60 xl:max-w-[50ch] xl:text-left"
-                    onDoubleClick={() => setDescriptionOneEdit(true)}
+                    className="hover:opacity-50 transition-all max-w-[35ch] cursor-pointer select-none text-center text-base opacity-60 xl:max-w-[50ch] xl:text-left"
+                    onClick={() => setDescriptionOneEdit(true)}
                   >
                     {pageData.descriptionOne}
                   </p>
@@ -224,7 +224,7 @@ const Dashboard: React.FC<{
                 onChange={handleFileUpload}
               />
               <img
-                className="h-96 w-96 rounded-3xl shadow-customHover"
+                className="rounded-3xl shadow-customHover"
                 src={pageData.profileImage}
                 alt="pfp"
               ></img>
@@ -254,14 +254,14 @@ const Dashboard: React.FC<{
                         setHeaderTwoEdit(false);
                       }
                     }}
-                    className="text-2xl mb-10 leading-relaxed resize-none appearance-none overflow-hidden border-none bg-transparent outline-none focus:outline-none focus:ring-0"
+                    className="text-center w-full text-2xl leading-relaxed resize-none appearance-none overflow-hidden border-none bg-transparent outline-none focus:outline-none focus:ring-0"
                     autoFocus
                     maxLength={50}
                 />
             ) : (
                 <p
-                    className="text-center mb-10 leading-relaxed cursor-pointer select-none"
-                    onDoubleClick={() => setHeaderTwoEdit(true)}
+                    className="hover:opacity-50 transition-all text-center mb-10 leading-relaxed cursor-pointer select-none"
+                    onClick={() => setHeaderTwoEdit(true)}
                 >
                   {pageData.headerTwo}
                 </p>
