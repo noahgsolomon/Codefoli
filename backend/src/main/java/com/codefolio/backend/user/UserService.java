@@ -13,6 +13,20 @@ import com.codefolio.backend.user.pages.contactpage.faq.FAQ;
 import com.codefolio.backend.user.pages.contactpage.faq.FAQRepository;
 import com.codefolio.backend.user.pages.homepage.Home;
 import com.codefolio.backend.user.pages.homepage.HomeRepository;
+import com.codefolio.backend.user.sections.PageType;
+import com.codefolio.backend.user.sections.Section;
+import com.codefolio.backend.user.sections.SectionRepository;
+import com.codefolio.backend.user.sections.SectionType;
+import com.codefolio.backend.user.sections.type.faq.FAQSection;
+import com.codefolio.backend.user.sections.type.faq.FAQSectionRepository;
+import com.codefolio.backend.user.sections.type.resume.ResumeSection;
+import com.codefolio.backend.user.sections.type.resume.ResumeSectionRepository;
+import com.codefolio.backend.user.sections.type.skill.SkillSection;
+import com.codefolio.backend.user.sections.type.skill.SkillSectionRepository;
+import com.codefolio.backend.user.sections.type.story.StorySection;
+import com.codefolio.backend.user.sections.type.story.StorySectionRepository;
+import com.codefolio.backend.user.sections.type.value.ValueSection;
+import com.codefolio.backend.user.sections.type.value.ValueSectionRepository;
 import com.codefolio.backend.user.services.Services;
 import com.codefolio.backend.user.services.ServicesRepository;
 import com.codefolio.backend.user.services.ServicesType;
@@ -45,6 +59,12 @@ public class UserService {
     private final ValuesRepository valuesRepository;
     private final ContactRepository contactRepository;
     private final FAQRepository faqRepository;
+    private final SectionRepository sectionRepository;
+    private final ResumeSectionRepository resumeSectionRepository;
+    private final StorySectionRepository storySectionRepository;
+    private final SkillSectionRepository skillSectionRepository;
+    private final ValueSectionRepository valueSectionRepository;
+    private final FAQSectionRepository faqSectionRepository;
 
 
     public static Users getAuthenticatedUser(Principal principal) {
@@ -134,6 +154,12 @@ public class UserService {
             projectsRepository.save(newProject);
         });
 
+        faqRepository.save(new FAQ(user, "What is your design process?", "My design process starts with understanding the client's needs, then moving onto research, ideation, prototyping, and finally, implementation."));
+        faqRepository.save(new FAQ(user, "How long does a project usually take?", "The duration of a project varies depending on its complexity and scope, but typically it ranges from a few weeks to a few months."));
+        faqRepository.save(new FAQ(user, "Do you collaborate with other designers?", "Yes, I often collaborate with other designers and believe that teamwork can lead to more innovative and comprehensive solutions."));
+        faqRepository.save(new FAQ(user, "What types of projects do you work on?", "I work on a wide range of projects, from website and app design to branding and graphic design. Each project brings its own unique challenges and opportunities."));
+        faqRepository.save(new FAQ(user, "How can I contact you for a project?", "You can reach out to me via the contact form on this website, or directly through email. I look forward to discussing how we can work together."));
+
         user.setRole(RoleType.USER);
         userRepository.save(user);
         String homeHeaderOne = "I'm " + user.getName() + ", a " + user.getProfession() + " from " + user.getLocation();
@@ -148,38 +174,56 @@ public class UserService {
         String aboutIconOne = "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b443e2bb8e12b5faf51a7_about-hero-rigth-image-paperfolio-webflow-template.png";
         String aboutIconTwo = "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b440128f648585c383865_about-hero-left-image-paperfolio-webflow-template.png";
         String aboutIconThree = "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b52d3639fb5250039e574_my-story-image-paperfolio-webflow-template.png";
-        String aboutHeaderThree = "Designing since I was ? years old";
-        String aboutDescriptionTwo = "I started designing when I was ? years old. My first designs were for my school projects. I was fascinated by the idea of creating something that people can interact with. I studied design for 5 years in college and have been working as a designer for 3 years.";
-        String aboutBulletOne = "Passionate about design from a young age.";
-        String aboutBulletTwo = "Five years of design education, three professionally.";
-        String aboutBulletThree = "Strong advocate of user-centered design.";
-        String aboutImageOne = "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b55bcb4baec57b75b66fd_desigining-experience-paperfolio-webflow-template.png";
-        String aboutHeaderFour = "Take a look at my resume";
-        String aboutHeaderFive = "The core values that drive my work";
-        String aboutDescriptionThree = "Steering the helm of my career is a deeply ingrained set of core values. These principles not only guide my work ethic but also shape the way I view and approach design. Let's delve into the convictions that drive my professional journey.";
 
-        About about = new About(user, aboutHeaderOne, aboutIconOne, aboutIconTwo, aboutHeaderTwo, aboutIconThree, aboutDescriptionOne, aboutHeaderThree, aboutDescriptionTwo, aboutBulletOne, aboutBulletTwo, aboutBulletThree, aboutImageOne, aboutHeaderFour, aboutHeaderFive, aboutDescriptionThree);
+        About about = new About(user, aboutHeaderOne, aboutIconOne, aboutIconTwo, aboutHeaderTwo, aboutIconThree, aboutDescriptionOne);
         aboutRepository.save(about);
-
-        valuesRepository.save(new Values(user, ValuesType.HARD_WORK));
-        valuesRepository.save(new Values(user,  ValuesType.TRANSPARENCY));
-        valuesRepository.save(new Values(user,  ValuesType.INNOVATION));
-        valuesRepository.save(new Values(user,  ValuesType.GROWTH));
 
         String contactHeaderOne = "Contact me";
         String contactDescriptionOne = "Don't hesitate to get in touch! Whether you're looking for a design consult, interested in a collaboration, or just want to say hello, I'd be delighted to hear from you. I strive to respond promptly and look forward to our potential correspondence!";
         String contactEmail = user.getEmail();
         String contactPhone = "(123) 456 - 7890";
-        String contactHeaderTwo = "Frequently Asked Questions";
-        String contactDescriptionTwo = "From understanding my design process to discussing project timelines, I've gathered responses to questions often asked by clients and collaborators. If you can't find your answer here, feel free to reach out!";
-        Contact contact = new Contact(user, contactHeaderOne, contactDescriptionOne, contactEmail, contactPhone, contactHeaderTwo, contactDescriptionTwo);
+        Contact contact = new Contact(user, contactHeaderOne, contactDescriptionOne, contactEmail, contactPhone);
         contactRepository.save(contact);
 
-        faqRepository.save(new FAQ(user, "What is your design process?", "My design process starts with understanding the client's needs, then moving onto research, ideation, prototyping, and finally, implementation."));
-        faqRepository.save(new FAQ(user, "How long does a project usually take?", "The duration of a project varies depending on its complexity and scope, but typically it ranges from a few weeks to a few months."));
-        faqRepository.save(new FAQ(user, "Do you collaborate with other designers?", "Yes, I often collaborate with other designers and believe that teamwork can lead to more innovative and comprehensive solutions."));
-        faqRepository.save(new FAQ(user, "What types of projects do you work on?", "I work on a wide range of projects, from website and app design to branding and graphic design. Each project brings its own unique challenges and opportunities."));
-        faqRepository.save(new FAQ(user, "How can I contact you for a project?", "You can reach out to me via the contact form on this website, or directly through email. I look forward to discussing how we can work together."));
+        String StoryHeaderOne = "Designing since I was ? years old";
+        String StoryDescriptionOne = "I started designing when I was ? years old. My first designs were for my school projects. I was fascinated by the idea of creating something that people can interact with. I studied design for 5 years in college and have been working as a designer for 3 years.";
+        String StoryBulletOne = "Passionate about design from a young age.";
+        String StoryBulletTwo = "Five years of design education, three professionally.";
+        String StoryBulletThree = "Strong advocate of user-centered design.";
+        String StoryImageOne = "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b55bcb4baec57b75b66fd_desigining-experience-paperfolio-webflow-template.png";
+        String ResumeHeaderOne = "Take a look at my resume";
+        String ValueHeaderOne = "The core values that drive my work";
+        String ValueDescriptionOne = "Steering the helm of my career is a deeply ingrained set of core values. These principles not only guide my work ethic but also shape the way I view and approach design. Let's delve into the convictions that drive my professional journey.";
+
+        String faqHeaderOne = "Frequently Asked Questions";
+        String faqDescriptionOne = "From understanding my design process to discussing project timelines, I've gathered responses to questions often asked by clients and collaborators. If you can't find your answer here, feel free to reach out!";
+
+        StorySection storySection = new StorySection(user, StoryHeaderOne, StoryDescriptionOne, StoryBulletOne, StoryBulletTwo, StoryBulletThree, StoryImageOne);
+        storySectionRepository.save(storySection);
+
+        ResumeSection resumeSection = new ResumeSection(user, ResumeHeaderOne);
+        resumeSectionRepository.save(resumeSection);
+
+        ValueSection valuesSection = new ValueSection(user, ValueHeaderOne, ValueDescriptionOne);
+        valueSectionRepository.save(valuesSection);
+
+        FAQSection faqSection = new FAQSection(user, faqHeaderOne, faqDescriptionOne);
+        faqSectionRepository.save(faqSection);
+
+        SkillSection skillSection = new SkillSection(user, "My broad set of services and skills");
+        skillSectionRepository.save(skillSection);
+
+        Section aboutStorySectionOne = new Section(user, SectionType.STORY, PageType.ABOUT, 1);
+        Section aboutResumeSectionTwo = new Section(user, SectionType.RESUME, PageType.ABOUT, 2);
+        Section aboutValuesSectionThree = new Section(user, SectionType.VALUES, PageType.ABOUT, 3);
+        Section homeSkillSectionOne = new Section(user, SectionType.SKILL, PageType.HOME, 1);
+        Section contactFaqSectionOne = new Section(user, SectionType.FAQ, PageType.CONTACT, 1);
+        sectionRepository.saveAll(List.of(aboutStorySectionOne, aboutResumeSectionTwo, aboutValuesSectionThree, homeSkillSectionOne, contactFaqSectionOne));
+
+        valuesRepository.save(new Values(user, ValuesType.HARD_WORK));
+        valuesRepository.save(new Values(user,  ValuesType.TRANSPARENCY));
+        valuesRepository.save(new Values(user,  ValuesType.INNOVATION));
+        valuesRepository.save(new Values(user,  ValuesType.GROWTH));
 
         return ResponseEntity.ok("Profile setup successfully!");
     }

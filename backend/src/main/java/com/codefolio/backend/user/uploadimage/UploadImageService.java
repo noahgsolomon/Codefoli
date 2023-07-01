@@ -8,6 +8,8 @@ import com.codefolio.backend.user.pages.aboutpage.About;
 import com.codefolio.backend.user.pages.aboutpage.AboutRepository;
 import com.codefolio.backend.user.pages.homepage.Home;
 import com.codefolio.backend.user.pages.homepage.HomeRepository;
+import com.codefolio.backend.user.sections.type.story.StorySection;
+import com.codefolio.backend.user.sections.type.story.StorySectionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Optional;
 
 import static com.codefolio.backend.user.UserService.getAuthenticatedUser;
 
@@ -25,6 +28,7 @@ public class UploadImageService {
     private final AmazonS3 s3Client;
     private final HomeRepository homeRepository;
     private final AboutRepository aboutRepository;
+    private final StorySectionRepository storySectionRepository;
 
     public ResponseEntity<?> uploadProfileImage(MultipartFile file, Principal principal) {
         Users user = getAuthenticatedUser(principal);
@@ -65,10 +69,15 @@ public class UploadImageService {
     public ResponseEntity<?> uploadImageOneAbout(MultipartFile file, Principal principal) {
         Users user = getAuthenticatedUser(principal);
         ImageResponse imageResponse = uploadImage(file, user.getId() + "-about-image-one", "codefolioimagebucket");
-        About about = aboutRepository.findByUsers(user);
-        about.setImageOne(imageResponse.url());
-        aboutRepository.save(about);
-        return ResponseEntity.ok(imageResponse);
+        Optional<StorySection> optionalStorySection = storySectionRepository.findByUsers(user);
+        if (optionalStorySection.isPresent()) {
+            StorySection storySection = optionalStorySection.get();
+            storySection.setImageOne(imageResponse.url());
+            storySectionRepository.save(storySection);
+            return ResponseEntity.ok(imageResponse);
+        } else {
+            return ResponseEntity.badRequest().body("StorySection not found for the given user");
+        }
     }
 
     public ImageResponse uploadImage(MultipartFile file, String key, String bucketName){

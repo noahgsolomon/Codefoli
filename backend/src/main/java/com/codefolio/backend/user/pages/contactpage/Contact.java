@@ -25,16 +25,11 @@ public class Contact {
     private String email;
     private String phone;
 
-    private String headerTwo;
-    private String descriptionTwo;
-
-    public Contact(Users users, String headerOne, String descriptionOne, String email, String phone, String headerTwo, String descriptionTwo) {
+    public Contact(Users users, String headerOne, String descriptionOne, String email, String phone) {
         this.users = users;
         this.headerOne = headerOne;
         this.descriptionOne = descriptionOne;
         this.email = email;
         this.phone = phone;
-        this.headerTwo = headerTwo;
-        this.descriptionTwo = descriptionTwo;
     }
 }

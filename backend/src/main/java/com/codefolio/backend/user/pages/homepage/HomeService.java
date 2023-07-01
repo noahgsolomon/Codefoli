@@ -37,12 +37,4 @@ public class HomeService {
         homeRepository.save(homeData);
         return ResponseEntity.ok(homeData.getDescriptionOne());
     }
-
-    public ResponseEntity<?> updateHeaderTwo(Principal principal, String headerTwo) {
-        Users user = getAuthenticatedUser(principal);
-        Home homeData = homeRepository.findByUsers(user);
-        homeData.setHeaderTwo(headerTwo);
-        homeRepository.save(homeData);
-        return ResponseEntity.ok(homeData.getHeaderTwo());
-    }
 }
