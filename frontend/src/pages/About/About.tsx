@@ -12,8 +12,8 @@ import {
   updateHeaderTwoAbout,
 } from "./aboutapi.tsx";
 import AddSection from "./AddSection/AddSection.tsx";
-import StorySection from "./Sections/StorySection.tsx";
-import ResumeSection from "./Sections/ResumeSection.tsx";
+import StorySection from "Components/Sections/StorySection.tsx";
+import ResumeSection from "Components/Sections/ResumeSection.tsx";
 
 const About: React.FC<{
   userData: UserData;
@@ -156,13 +156,6 @@ const About: React.FC<{
                   iconOneFileInput.current && iconOneFileInput.current.click();
                 }}
               >
-                <button
-                  className={`absolute -right-8 top-0 z-20 rounded-full bg-red-500 px-4 text-white transition-all ${
-                    iconOneEdit ? "opacity-100" : "opacity-0"
-                  }`}
-                >
-                  x
-                </button>
                 <input
                   type="file"
                   ref={iconOneFileInput}
@@ -349,7 +342,8 @@ const About: React.FC<{
             pageData={pageData}
           />
         ) : (
-          <AddSection pageData={pageData} setPageData={setPageData} />
+          <>
+          </>
         )}
         {/* resume section3*/}
         {pageData.sectionThreeActive ? (

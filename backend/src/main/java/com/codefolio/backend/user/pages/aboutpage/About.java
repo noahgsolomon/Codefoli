@@ -20,8 +20,6 @@ public class About {
     @ManyToOne
     @JoinColumn(name = "user_id", unique = true)
     private Users users;
-
-    //section one
     private String headerOne;
     private String iconOne;
     private String iconTwo;
@@ -30,29 +28,6 @@ public class About {
     @Column(length = 1000)
     private String descriptionOne;
 
-    //section two
-    private String headerThree;
-    @Column(length = 1000)
-    private String descriptionTwo;
-    @Column(length = 1000)
-    private String bulletOne;
-    @Column(length = 1000)
-    private String bulletTwo;
-    @Column(length = 1000)
-    private String bulletThree;
-    private String imageOne;
-    //section three jobs
-    private String headerFour;
-    //section four what drives me
-    private String headerFive;
-    @Column(length = 1000)
-    private String descriptionThree;
-    private boolean sectionTwoActive;
-    private boolean iconOneActive;
-    private boolean iconTwoActive;
-    private boolean iconThreeActive;
-    private boolean sectionThreeActive;
-
     public About(
             Users users,
             String headerOne,
@@ -60,16 +35,7 @@ public class About {
             String iconTwo,
             String headerTwo,
             String iconThree,
-            String descriptionOne,
-            String headerThree,
-            String descriptionTwo,
-            String bulletOne,
-            String bulletTwo,
-            String bulletThree,
-            String imageOne,
-            String headerFour,
-            String headerFive,
-            String descriptionThree) {
+            String descriptionOne) {
         this.users = users;
         this.headerOne = headerOne;
         this.iconOne = iconOne;
@@ -77,19 +43,5 @@ public class About {
         this.headerTwo = headerTwo;
         this.iconThree = iconThree;
         this.descriptionOne = descriptionOne;
-        this.headerThree = headerThree;
-        this.descriptionTwo = descriptionTwo;
-        this.bulletOne = bulletOne;
-        this.bulletTwo = bulletTwo;
-        this.bulletThree = bulletThree;
-        this.imageOne = imageOne;
-        this.headerFour = headerFour;
-        this.headerFive = headerFive;
-        this.descriptionThree = descriptionThree;
-        sectionTwoActive = true;
-        iconOneActive = true;
-        iconTwoActive = true;
-        iconThreeActive = true;
-        sectionThreeActive = true;
     }
 }
