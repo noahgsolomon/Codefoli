@@ -6,14 +6,12 @@ const Card:
       title: string;
       description: string;
       children?: React.ReactNode;
-      imageSize?: 'cover' | 'contain';
       preview?: boolean;
     }> =
     ({ imageUrl,
        title,
        description,
        children,
-       imageSize = 'contain',
        preview=true
      }) => {
   const [hovered, setHovered] = React.useState(false);
@@ -27,7 +25,7 @@ const Card:
       {imageUrl && (
         <div className="img-wrapper relative h-[250px] overflow-hidden rounded-t-lg">
           <img
-            className={`inline-block h-full w-full transform object-${imageSize} transition-transform duration-300 ease-in-out ${hovered ? "scale-110" : ""
+            className={`inline-block h-full w-full transform object-contain transition-all ease-in-out ${hovered ? "scale-105" : ""
               }`}
             src={imageUrl}
             alt=""

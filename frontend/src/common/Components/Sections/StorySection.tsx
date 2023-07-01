@@ -6,7 +6,7 @@ import {
   updateBulletTwoAbout,
   updateDescriptionTwoAbout,
   updateHeaderThreeAbout,
-} from "../aboutapi.tsx";
+} from "../../../pages/About/aboutapi.tsx";
 import AboutData from "Type/AboutData.tsx";
 
 const StorySection: React.FC<{

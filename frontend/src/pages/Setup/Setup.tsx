@@ -707,7 +707,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                 <input
                   type="text"
                   id="position"
-                  placeholder="// the mf CEO"
+                  placeholder="// the CEO"
                   value={addWork.position}
                   className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0
                   ${positionError ? "border-red-500" : ""}`}
