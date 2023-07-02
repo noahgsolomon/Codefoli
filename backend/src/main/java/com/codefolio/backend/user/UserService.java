@@ -215,7 +215,7 @@ public class UserService {
 
         Section aboutStorySectionOne = new Section(user, SectionType.STORY, PageType.ABOUT, 1);
         Section aboutResumeSectionTwo = new Section(user, SectionType.RESUME, PageType.ABOUT, 2);
-        Section aboutValuesSectionThree = new Section(user, SectionType.VALUES, PageType.ABOUT, 3);
+        Section aboutValuesSectionThree = new Section(user, SectionType.VALUE, PageType.ABOUT, 3);
         Section homeSkillSectionOne = new Section(user, SectionType.SKILL, PageType.HOME, 1);
         Section contactFaqSectionOne = new Section(user, SectionType.FAQ, PageType.CONTACT, 1);
         sectionRepository.saveAll(List.of(aboutStorySectionOne, aboutResumeSectionTwo, aboutValuesSectionThree, homeSkillSectionOne, contactFaqSectionOne));
