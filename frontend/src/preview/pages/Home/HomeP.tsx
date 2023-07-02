@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { animated, useSpring } from "react-spring";
-import SkillServiceCards from "../../../pages/Dashboard/ServiceCards/SkillServiceCards.tsx";
+import SkillSection from "Components/Sections/SkillSection.tsx";
 import UserData from "Type/UserData.tsx";
 import HomeData from "Type/HomeData.tsx";
 
@@ -65,7 +65,7 @@ const HomeP: React.FC<{
           </div>
           <div className="mb-10 mt-32 flex flex-col items-center text-2xl font-bold ">
             <p className="mb-10 leading-relaxed">{pageData.headerTwo}</p>
-            <SkillServiceCards
+            <SkillSection
               services={userData.services}
               userData={userData}
               preview={true}

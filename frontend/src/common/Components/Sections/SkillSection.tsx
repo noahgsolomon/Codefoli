@@ -3,10 +3,10 @@ import Card from "Components/Card/Card.tsx";
 import UserData from "Type/UserData.tsx";
 import { ServiceData } from "Type/Services.tsx";
 import { Link } from "react-router-dom";
-import { COLORS } from "../../../util/constants";
+import { COLORS } from "../../../util/constants.ts";
 import {SkillType} from "Type/Section.tsx";
 
-const SkillServiceCards: React.FC<{
+const SkillSection: React.FC<{
   userData: UserData;
   details: SkillType
   preview: boolean;
@@ -96,4 +96,4 @@ const SkillServiceCards: React.FC<{
 
   );
 };
-export default SkillServiceCards;
+export default SkillSection;

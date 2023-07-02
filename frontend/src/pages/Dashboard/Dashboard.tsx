@@ -5,7 +5,7 @@ import { useSpring, animated } from "react-spring";
 import HomeData from "Type/HomeData.tsx";
 import UserData from "Type/UserData.tsx";
 import {updateDescriptionOne, updateHeaderOne} from "./dashboardapi.tsx";
-import SkillServiceCards from "./ServiceCards/SkillServiceCards.tsx";
+import SkillSection from "Components/Sections/SkillSection.tsx";
 
 const Dashboard: React.FC<{
   pageData: HomeData;
@@ -223,7 +223,7 @@ const Dashboard: React.FC<{
           const { type, details } = section;
           switch (type) {
             case 'SKILL':
-              return <SkillServiceCards key={index} userData={userData} preview={false} details={details} />;
+              return <SkillSection key={index} userData={userData} preview={false} details={details} />;
             // case 'STORY':
             //   return <StorySection key={index} details={details} />;
             // case 'RESUME':
