@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { animated, useSpring } from "react-spring";
-import SkillSection from "Components/Sections/SkillSection.tsx";
 import UserData from "Type/UserData.tsx";
 import HomeData from "Type/HomeData.tsx";
 
@@ -9,6 +8,7 @@ const HomeP: React.FC<{
   userData: UserData;
   pageData: HomeData;
 }> = ({ userData, pageData }) => {
+  console.log(userData);
   const navigate = useNavigate();
 
   const [animationProps, setAnimation] = useSpring(() => ({
@@ -65,11 +65,10 @@ const HomeP: React.FC<{
           </div>
           <div className="mb-10 mt-32 flex flex-col items-center text-2xl font-bold ">
             <p className="mb-10 leading-relaxed">{pageData.headerTwo}</p>
-            <SkillSection
-              services={userData.services}
-              userData={userData}
-              preview={true}
-            />
+            {/*<SkillSection*/}
+            {/*  userData={userData}*/}
+            {/*  preview={true}*/}
+            {/*/>*/}
           </div>
         </div>
       </animated.div>
