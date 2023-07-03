@@ -44,6 +44,7 @@ const MainApp: React.FC = () => {
     descriptionOne: "",
     headerTwo: "",
     profileImage: "",
+    sections: [],
   });
 
   const [aboutData, setAboutData] = useState<AboutData>({

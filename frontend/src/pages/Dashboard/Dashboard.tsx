@@ -1,11 +1,11 @@
 import React, { SetStateAction, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "Components/Footer/Footer.tsx";
-import SkillServiceCards from "./ServiceCards/SkillServiceCards.tsx";
 import { useSpring, animated } from "react-spring";
 import HomeData from "Type/HomeData.tsx";
 import UserData from "Type/UserData.tsx";
-import {updateDescriptionOne, updateHeaderOne, updateHeaderTwo} from "./dashboardapi.tsx";
+import {updateDescriptionOne, updateHeaderOne} from "./dashboardapi.tsx";
+import SkillSection from "Components/Sections/SkillSection.tsx";
 
 const Dashboard: React.FC<{
   pageData: HomeData;
@@ -21,10 +21,6 @@ const Dashboard: React.FC<{
   const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(
     pageData.descriptionOne
   );
-  const [headerTwoEdit, setHeaderTwoEdit] = useState(false);
-  const [headerTwoEditValue, setHeaderTwoEditValue] = useState(
-        pageData.headerTwo
-  );
   const [imageOneEdit, setImageOneEdit] = useState(false);
 
   const [animationProps, setAnimation] = useSpring(() => ({
@@ -39,7 +35,6 @@ const Dashboard: React.FC<{
 
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
-    const headerTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
     if (headerOneEdit && headerOneTextareaRef.current) {
@@ -54,13 +49,6 @@ const Dashboard: React.FC<{
       descriptionOneTextareaRef.current.style.height = `${descriptionOneTextareaRef.current.scrollHeight}px`;
     }
   }, [descriptionOneEdit, descriptionOneEditValue]);
-
-  useEffect(() => {
-    if (headerTwoEdit && headerTwoTextareaRef.current) {
-      headerTwoTextareaRef.current.style.height = "auto";
-      headerTwoTextareaRef.current.style.height = `${headerTwoTextareaRef.current.scrollHeight}px`;
-    }
-    }, [headerTwoEdit, headerTwoEditValue]);
 
   const handleHeaderOneSubmit = async () => {
     const updateHeader = await updateHeaderOne(headerOneEditValue);
@@ -84,15 +72,6 @@ const Dashboard: React.FC<{
     }
     setHeaderOneEdit(false);
   };
-
-    const handleHeaderTwoSubmit = async () => {
-    const updateHeader = await updateHeaderTwo(headerTwoEditValue);
-    if (updateHeader) {
-      setPageData((prev) => ({ ...prev, headerTwo: headerTwoEditValue }));
-      setHeaderTwoEditValue(updateHeader);
-    }
-    setHeaderTwoEdit(false);
-    };
 
   const fileInput = useRef<HTMLInputElement | null>(null);
 
@@ -129,6 +108,8 @@ const Dashboard: React.FC<{
       console.error("Error uploading file: ", error);
     }
   };
+
+  console.log(pageData);
 
   return (
     <>
@@ -237,42 +218,24 @@ const Dashboard: React.FC<{
               </div>
             </div>
           </div>
-          <div className="mb-10 mt-32 flex flex-col items-center text-2xl font-bold ">
-            {headerTwoEdit ? (
-                <textarea
-                    ref={headerTwoTextareaRef}
-                    value={headerTwoEditValue}
-                    onChange={(e) => setHeaderTwoEditValue(e.target.value)}
-                    onBlur={() => {
-                      setHeaderTwoEditValue(pageData.headerTwo);
-                      setHeaderTwoEdit(false);
-                    }}
-                    onKeyDown={async (e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        await handleHeaderTwoSubmit();
-                        setHeaderTwoEdit(false);
-                      }
-                    }}
-                    className="text-center w-full text-2xl leading-relaxed resize-none appearance-none overflow-hidden border-none bg-transparent outline-none focus:outline-none focus:ring-0"
-                    autoFocus
-                    maxLength={50}
-                />
-            ) : (
-                <p
-                    className="hover:opacity-50 transition-all text-center mb-10 leading-relaxed cursor-pointer select-none"
-                    onClick={() => setHeaderTwoEdit(true)}
-                >
-                  {pageData.headerTwo}
-                </p>
-            )}
-            <SkillServiceCards
-              services={userData.services}
-              userData={userData}
-              preview={false}
-            />
-          </div>
         </div>
+        {pageData.sections.map((section, index) => {
+          const { type, details } = section;
+          switch (type) {
+            case 'SKILL':
+              return <SkillSection key={index} userData={userData} preview={false} details={details} />;
+            // case 'STORY':
+            //   return <StorySection key={index} details={details} />;
+            // case 'RESUME':
+            //   return <ResumeSection key={index} details={details} />;
+            // case 'FAQ':
+            //   return <FAQSection key={index} details={details} />;
+            // case 'VALUE':
+            //   return <ValueSection key={index} details={details} />;
+            default:
+              return null;
+          }
+        })}
       </animated.div>
       <Footer />
     </>

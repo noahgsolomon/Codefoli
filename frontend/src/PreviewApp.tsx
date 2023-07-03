@@ -33,6 +33,7 @@ const PreviewApp: React.FC = () => {
     descriptionOne: "",
     headerTwo: "",
     profileImage: "",
+    sections: [],
   });
 
   const [aboutData, setAboutData] = useState<AboutData>({
@@ -51,6 +52,11 @@ const PreviewApp: React.FC = () => {
     headerFour: "",
     headerFive: "",
     descriptionThree: "",
+    sectionTwoActive: true,
+    sectionThreeActive: true,
+    iconOneActive: true,
+    iconTwoActive: true,
+    iconThreeActive: true,
     values: [{ value: "", description: "" }],
   });
 

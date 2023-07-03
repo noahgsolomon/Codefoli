@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { changeSectionThreeActive } from "../aboutapi.tsx";
-import JobCard from "../JobCard/JobCard.tsx";
+import { changeSectionThreeActive } from "../../../pages/About/aboutapi.tsx";
+import JobCard from "../../../pages/About/JobCard/JobCard.tsx";
 import AboutData from "Type/AboutData.tsx";
 import UserData from "Type/UserData.tsx";
 

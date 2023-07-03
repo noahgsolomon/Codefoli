@@ -1,4 +1,4 @@
-package com.codefolio.backend.user.pages.contactpage;
+package com.codefolio.backend.user.sections.type.value;
 
 import com.codefolio.backend.user.Users;
 import jakarta.persistence.*;
@@ -11,25 +11,22 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 @NoArgsConstructor
-public class Contact {
+public class ValueSection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", unique = true)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
     private Users users;
-
     private String headerOne;
+    @Column(length = 1000)
     private String descriptionOne;
-    private String email;
-    private String phone;
 
-    public Contact(Users users, String headerOne, String descriptionOne, String email, String phone) {
+    public ValueSection(Users users, String headerOne, String descriptionOne) {
         this.users = users;
         this.headerOne = headerOne;
         this.descriptionOne = descriptionOne;
-        this.email = email;
-        this.phone = phone;
     }
+
 }

@@ -28,7 +28,6 @@ const Projects: React.FC<{ userData: UserData }> = ({ userData }) => {
                             description={description}
                             imageUrl={imageUrl}
                             key={Math.random().toString()}
-                            imageSize='cover'
                         >
                             <Link
                                 to='/project'

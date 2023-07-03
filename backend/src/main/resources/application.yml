@@ -2,6 +2,8 @@ server:
   port: 8080
 
 spring:
+  thymeleaf:
+    check-template-location: false
   datasource:
     url: jdbc:postgresql://localhost:5432/codefolio
     username: postgres
@@ -13,6 +15,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+    open-in-view: false
     show-sql: false
   security:
     oauth2:

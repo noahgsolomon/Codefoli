@@ -116,6 +116,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         cookie.setPath("/");
         cookie.setSecure(true);
         cookie.setHttpOnly(true);
+        cookie.setMaxAge(60 * 60 * 24 * 30);
         response.addCookie(cookie);
 
         System.out.println("User session saved: " + userSession.getId());

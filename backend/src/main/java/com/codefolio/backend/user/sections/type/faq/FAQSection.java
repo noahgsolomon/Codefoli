@@ -1,9 +1,8 @@
-package com.codefolio.backend.user.pages.contactpage;
+package com.codefolio.backend.user.sections.type.faq;
 
 import com.codefolio.backend.user.Users;
 import jakarta.persistence.*;
 import lombok.*;
-
 @Table
 @Entity
 @Getter
@@ -11,25 +10,20 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 @NoArgsConstructor
-public class Contact {
+public class FAQSection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", unique = true)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
     private Users users;
-
     private String headerOne;
     private String descriptionOne;
-    private String email;
-    private String phone;
 
-    public Contact(Users users, String headerOne, String descriptionOne, String email, String phone) {
+    public FAQSection(Users users, String headerOne, String descriptionOne) {
         this.users = users;
         this.headerOne = headerOne;
         this.descriptionOne = descriptionOne;
-        this.email = email;
-        this.phone = phone;
     }
 }
