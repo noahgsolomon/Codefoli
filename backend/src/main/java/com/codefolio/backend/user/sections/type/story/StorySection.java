@@ -22,18 +22,18 @@ public class StorySection {
     private String headerOne;
     @Column(length = 1000)
     private String descriptionOne;
-    private String bracketOne;
-    private String bracketTwo;
-    private String bracketThree;
+    private String bulletOne;
+    private String bulletTwo;
+    private String bulletThree;
     private String imageOne;
 
-    public StorySection(Users users, String headerOne, String descriptionOne, String bracketOne, String bracketTwo, String bracketThree, String imageOne) {
+    public StorySection(Users users, String headerOne, String descriptionOne, String bulletOne, String bulletTwo, String bulletThree, String imageOne) {
         this.users = users;
         this.headerOne = headerOne;
         this.descriptionOne = descriptionOne;
-        this.bracketOne = bracketOne;
-        this.bracketTwo = bracketTwo;
-        this.bracketThree = bracketThree;
+        this.bulletOne = bulletOne;
+        this.bulletTwo = bulletTwo;
+        this.bulletThree = bulletThree;
         this.imageOne = imageOne;
     }
 }
