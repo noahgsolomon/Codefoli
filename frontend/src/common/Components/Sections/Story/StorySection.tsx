@@ -156,7 +156,11 @@ const StorySection: React.FC<{
       const data = await response.json();
       setPageData((prev) => ({
         ...prev,
-        [imageKey]: data,
+        sections: prev.sections.map((section) =>
+            section.type === 'STORY'
+                ? { ...section, details: { ...section.details, [imageKey]: data.url + `?date=${new Date()}` } }
+                : section
+        ),
       }));
       setTimeout(() => setEdit(false), 500);
     } catch (error) {
