@@ -51,7 +51,7 @@ public class HomeService {
                 });
                 case STORY -> storySectionRepository.findByUsers(user).ifPresent(storySection -> {
                     map.put("type", "STORY");
-                    map.put("details", new StorySectionResponseModel(storySection.getHeaderOne(), storySection.getDescriptionOne(), storySection.getBracketOne(), storySection.getBracketTwo(), storySection.getBracketThree(), storySection.getImageOne()));
+                    map.put("details", new StorySectionResponseModel(storySection.getHeaderOne(), storySection.getDescriptionOne(), storySection.getBulletOne(), storySection.getBulletTwo(), storySection.getBulletThree(), storySection.getImageOne()));
                     sectionDetails.add(map);
                 });
                 case SKILL -> skillSectionRepository.findByUsers(user).ifPresent(skillSection -> {

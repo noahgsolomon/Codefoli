@@ -6,7 +6,7 @@ import HomeData from "Type/HomeData.tsx";
 import UserData from "Type/UserData.tsx";
 import {updateDescriptionOne, updateHeaderOne} from "./dashboardapi.tsx";
 import SkillSection from "Components/Sections/SkillSection.tsx";
-import StorySection from "Components/Sections/StorySection.tsx";
+import StorySection from "Components/Sections/Story/StorySection.tsx";
 
 const Dashboard: React.FC<{
   pageData: HomeData;

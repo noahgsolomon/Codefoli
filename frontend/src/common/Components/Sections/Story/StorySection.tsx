@@ -2,18 +2,19 @@ import React, {SetStateAction, useRef, useState} from "react";
 import {
   changeStoryActive,
 
-} from "../../../pages/About/aboutapi.tsx";
+} from "../../../../pages/About/aboutapi.tsx";
 import {StoryType} from "Type/Section.tsx";
 import {
   updateBulletOneStory,
   updateBulletThreeStory,
   updateBulletTwoStory, updateDescriptionOneStory, updateHeaderOneStory
-} from "Components/Sections/api/sectionapi.tsx";
+} from "Components/Sections/Story/storyapi.tsx";
+import HomeData from "Type/HomeData.tsx";
 
 const StorySection: React.FC<{
   details: StoryType;
-  setDetails: React.Dispatch<SetStateAction<StoryType>>;
-}> = ({ details, setDetails }) => {
+  setPageData: React.Dispatch<SetStateAction<HomeData>>;
+}> = ({ details, setPageData }) => {
   const [imageOneEdit, setImageOneEdit] = useState<boolean>(false);
   const imageOneFileInput = useRef<HTMLInputElement | null>(null);
   const [descriptionOneEdit, setDescriptionOneEdit] = useState(false);
@@ -47,15 +48,19 @@ const StorySection: React.FC<{
     useState<boolean>(false);
 
   const handleDescriptionOneSubmit = async () => {
-    const updateHeader = await updateDescriptionOneStory(
+    const updateDescription = await updateDescriptionOneStory(
       descriptionOneEditValue
     );
-    if (updateHeader) {
-      setDetails((prev) => ({
+    if (updateDescription) {
+      setPageData((prev) => ({
         ...prev,
-        descriptionOne: descriptionOneEditValue,
+        sections: prev.sections.map((section) =>
+            section.type === 'STORY'
+                ? { ...section, details: { ...section.details, descriptionOne: descriptionOneEditValue } }
+                : section
+        ),
       }));
-      setDescriptionOneEditValue(updateHeader);
+      setDescriptionOneEditValue(updateDescription);
     }
     setDescriptionOneEdit(false);
   };
@@ -63,9 +68,13 @@ const StorySection: React.FC<{
   const handleHeaderOneSubmit = async () => {
     const updateHeader = await updateHeaderOneStory(headerOneEditValue);
     if (updateHeader) {
-      setDetails((prev) => ({
+      setPageData((prev) => ({
         ...prev,
-        headerOne: headerOneEditValue,
+        sections: prev.sections.map((section) =>
+            section.type === 'STORY'
+                ? { ...section, details: { ...section.details, headerOne: headerOneEditValue } }
+                : section
+        ),
       }));
       setHeaderOneEditValue(updateHeader);
     }
@@ -73,37 +82,49 @@ const StorySection: React.FC<{
   };
 
   const handleBulletOneSubmit = async () => {
-    const updateHeader = await updateBulletOneStory(bulletOneEditValue);
-    if (updateHeader) {
-      setDetails((prev) => ({
+    const updateBullet = await updateBulletOneStory(bulletOneEditValue);
+    if (updateBullet) {
+      setPageData((prev) => ({
         ...prev,
-        bulletOne: bulletOneEditValue,
+        sections: prev.sections.map((section) =>
+            section.type === 'STORY'
+                ? { ...section, details: { ...section.details, bulletOne: bulletOneEditValue } }
+                : section
+        ),
       }));
-      setBulletOneEditValue(updateHeader);
+      setBulletOneEditValue(updateBullet);
     }
     setBulletOneEdit(false);
   };
 
   const handleBulletTwoSubmit = async () => {
-    const updateHeader = await updateBulletTwoStory(bulletTwoEditValue);
-    if (updateHeader) {
-      setDetails((prev) => ({
+    const updateBullet = await updateBulletTwoStory(bulletTwoEditValue);
+    if (updateBullet) {
+      setPageData((prev) => ({
         ...prev,
-        bulletTwo: bulletTwoEditValue,
+        sections: prev.sections.map((section) =>
+            section.type === 'STORY'
+                ? { ...section, details: { ...section.details, bulletTwo: bulletTwoEditValue } }
+                : section
+        ),
       }));
-      setBulletTwoEditValue(updateHeader);
+      setBulletOneEditValue(updateBullet);
     }
     setBulletTwoEdit(false);
   };
 
   const handleBulletThreeSubmit = async () => {
-    const updateHeader = await updateBulletThreeStory(bulletThreeEditValue);
-    if (updateHeader) {
-      setDetails((prev) => ({
+    const updateBullet = await updateBulletThreeStory(bulletThreeEditValue);
+    if (updateBullet) {
+      setPageData((prev) => ({
         ...prev,
-        bulletThree: bulletThreeEditValue,
+        sections: prev.sections.map((section) =>
+            section.type === 'STORY'
+                ? { ...section, details: { ...section.details, bulletThree: bulletThreeEditValue } }
+                : section
+        ),
       }));
-      setBulletThreeEditValue(updateHeader);
+      setBulletOneEditValue(updateBullet);
     }
     setBulletThreeEdit(false);
   };
@@ -134,10 +155,10 @@ const StorySection: React.FC<{
       console.log([imageKey]);
 
       const data = await response.json();
-      setDetails({
-        ...details,
-        [imageKey]: `${data.url}?timestamp=${new Date().getTime()}`,
-      });
+      setPageData((prev) => ({
+        ...prev,
+        [imageKey]: data,
+      }));
       setTimeout(() => setEdit(false), 500);
     } catch (error) {
       setEdit(false);
@@ -165,7 +186,7 @@ const StorySection: React.FC<{
         onClick={async () => {
           const changeStory = await changeStoryActive("true");
           if (changeStory) {
-            setDetails((prev) => ({
+            setPageData((prev) => ({
               ...prev,
               storyActive: false,
             }));
@@ -189,6 +210,7 @@ const StorySection: React.FC<{
               onKeyDown={async (e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
+                  console.log('pressed')
                   await handleHeaderOneSubmit();
                 }
               }}
