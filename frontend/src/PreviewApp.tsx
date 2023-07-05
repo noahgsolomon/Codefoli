@@ -43,21 +43,6 @@ const PreviewApp: React.FC = () => {
     headerTwo: "",
     iconThree: "",
     descriptionOne: "",
-    headerThree: "",
-    descriptionTwo: "",
-    bulletOne: "",
-    bulletTwo: "",
-    bulletThree: "",
-    imageOne: "",
-    headerFour: "",
-    headerFive: "",
-    descriptionThree: "",
-    sectionTwoActive: true,
-    sectionThreeActive: true,
-    iconOneActive: true,
-    iconTwoActive: true,
-    iconThreeActive: true,
-    values: [{ value: "", description: "" }],
   });
 
   const [contactData, setContactData] = useState<ContactData>({

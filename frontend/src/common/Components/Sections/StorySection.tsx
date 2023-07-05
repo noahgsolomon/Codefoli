@@ -1,98 +1,81 @@
-import React, { useRef, useState } from "react";
+import React, {SetStateAction, useRef, useState} from "react";
 import {
-  changeSectionTwoActive,
-  updateBulletOneAbout,
-  updateBulletThreeAbout,
-  updateBulletTwoAbout,
-  updateDescriptionTwoAbout,
-  updateHeaderThreeAbout,
+  changeStoryActive,
+
 } from "../../../pages/About/aboutapi.tsx";
-import AboutData from "Type/AboutData.tsx";
+import {StoryType} from "Type/Section.tsx";
+import {
+  updateBulletOneStory,
+  updateBulletThreeStory,
+  updateBulletTwoStory, updateDescriptionOneStory, updateHeaderOneStory
+} from "Components/Sections/api/sectionapi.tsx";
 
 const StorySection: React.FC<{
-  setPageData: React.Dispatch<React.SetStateAction<AboutData>>;
-  pageData: AboutData;
-  handleFileUpload: (
-    path: string,
-    setEdit: React.Dispatch<React.SetStateAction<boolean>>,
-    imageKey: keyof AboutData,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => void;
-}> = ({ setPageData, pageData, handleFileUpload }) => {
+  details: StoryType;
+  setDetails: React.Dispatch<SetStateAction<StoryType>>;
+}> = ({ details, setDetails }) => {
   const [imageOneEdit, setImageOneEdit] = useState<boolean>(false);
   const imageOneFileInput = useRef<HTMLInputElement | null>(null);
-  const [descriptionTwoEdit, setDescriptionTwoEdit] = useState(false);
-  const [descriptionTwoEditValue, setDescriptionTwoEditValue] = useState(
-    pageData.descriptionTwo
+  const [descriptionOneEdit, setDescriptionOneEdit] = useState(false);
+  const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(
+    details.descriptionOne
   );
-  const [headerThreeEdit, setHeaderThreeEdit] = useState(false);
-  const [headerThreeEditValue, setHeaderThreeEditValue] = useState(
-    pageData.headerThree
+  const [headerOneEdit, setHeaderOneEdit] = useState(false);
+  const [headerOneEditValue, setHeaderOneEditValue] = useState(
+    details.headerOne
   );
   const [bulletOneEdit, setBulletOneEdit] = useState(false);
   const [bulletOneEditValue, setBulletOneEditValue] = useState(
-    pageData.bulletOne
+    details.bulletOne
   );
   const [bulletTwoEdit, setBulletTwoEdit] = useState(false);
   const [bulletTwoEditValue, setBulletTwoEditValue] = useState(
-    pageData.bulletTwo
+    details.bulletTwo
   );
   const [bulletThreeEdit, setBulletThreeEdit] = useState(false);
   const [bulletThreeEditValue, setBulletThreeEditValue] = useState(
-    pageData.bulletThree
+    details.bulletThree
   );
-  const headerThreeTextareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const descriptionTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const bulletOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const bulletTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const bulletThreeTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const [sectionTwoHover, setSectionTwoHover] = useState<boolean>(false);
-  const [removeSectionTwoHover, setRemoveSectionTwoHover] =
+  const [StoryHover, setStoryHover] = useState<boolean>(false);
+  const [removeStory, setRemoveStory] =
     useState<boolean>(false);
 
-  const handleDescriptionTwoSubmit = async () => {
-    const updateHeader = await updateDescriptionTwoAbout(
-      descriptionTwoEditValue
+  const handleDescriptionOneSubmit = async () => {
+    const updateHeader = await updateDescriptionOneStory(
+      descriptionOneEditValue
     );
     if (updateHeader) {
-      setPageData((prev) => ({
+      setDetails((prev) => ({
         ...prev,
-        descriptionTwo: descriptionTwoEditValue,
+        descriptionOne: descriptionOneEditValue,
       }));
-      setDescriptionTwoEditValue(updateHeader);
+      setDescriptionOneEditValue(updateHeader);
     }
-    setDescriptionTwoEdit(false);
+    setDescriptionOneEdit(false);
   };
 
-  const handleHeaderThreeSubmit = async () => {
-    const updateHeader = await updateHeaderThreeAbout(headerThreeEditValue);
+  const handleHeaderOneSubmit = async () => {
+    const updateHeader = await updateHeaderOneStory(headerOneEditValue);
     if (updateHeader) {
-      setPageData((prev) => ({
+      setDetails((prev) => ({
         ...prev,
-        headerThree: headerThreeEditValue,
+        headerOne: headerOneEditValue,
       }));
-      setHeaderThreeEditValue(updateHeader);
+      setHeaderOneEditValue(updateHeader);
     }
-    setHeaderThreeEdit(false);
-  };
-
-  const handleBulletTwoSubmit = async () => {
-    const updateHeader = await updateBulletTwoAbout(bulletTwoEditValue);
-    if (updateHeader) {
-      setPageData((prev) => ({
-        ...prev,
-        bulletTwo: bulletTwoEditValue,
-      }));
-      setBulletTwoEditValue(updateHeader);
-    }
-    setBulletTwoEdit(false);
+    setHeaderOneEdit(false);
   };
 
   const handleBulletOneSubmit = async () => {
-    const updateHeader = await updateBulletOneAbout(bulletOneEditValue);
+    const updateHeader = await updateBulletOneStory(bulletOneEditValue);
     if (updateHeader) {
-      setPageData((prev) => ({
+      setDetails((prev) => ({
         ...prev,
         bulletOne: bulletOneEditValue,
       }));
@@ -101,10 +84,22 @@ const StorySection: React.FC<{
     setBulletOneEdit(false);
   };
 
-  const handleBulletThreeSubmit = async () => {
-    const updateHeader = await updateBulletThreeAbout(bulletThreeEditValue);
+  const handleBulletTwoSubmit = async () => {
+    const updateHeader = await updateBulletTwoStory(bulletTwoEditValue);
     if (updateHeader) {
-      setPageData((prev) => ({
+      setDetails((prev) => ({
+        ...prev,
+        bulletTwo: bulletTwoEditValue,
+      }));
+      setBulletTwoEditValue(updateHeader);
+    }
+    setBulletTwoEdit(false);
+  };
+
+  const handleBulletThreeSubmit = async () => {
+    const updateHeader = await updateBulletThreeStory(bulletThreeEditValue);
+    if (updateHeader) {
+      setDetails((prev) => ({
         ...prev,
         bulletThree: bulletThreeEditValue,
       }));
@@ -113,51 +108,88 @@ const StorySection: React.FC<{
     setBulletThreeEdit(false);
   };
 
+  const handleFileUpload = async (
+      path: string,
+      setEdit: React.Dispatch<React.SetStateAction<boolean>>,
+      imageKey: keyof StoryType,
+      e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (!e.target.files) return;
+    setEdit(true);
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      const response = await fetch(`http://localhost:8080/${path}`, {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        setEdit(false);
+        return;
+      }
+
+      console.log([imageKey]);
+
+      const data = await response.json();
+      setDetails({
+        ...details,
+        [imageKey]: `${data.url}?timestamp=${new Date().getTime()}`,
+      });
+      setTimeout(() => setEdit(false), 500);
+    } catch (error) {
+      setEdit(false);
+      console.error("Error uploading file: ", error);
+    }
+  };
+
   return (
     <section
       className="story relative mb-20 bg-black transition-all"
-      onMouseEnter={() => setSectionTwoHover(true)}
-      onMouseLeave={() => setSectionTwoHover(false)}
+      onMouseEnter={() => setStoryHover(true)}
+      onMouseLeave={() => setStoryHover(false)}
     >
-      {removeSectionTwoHover && (
+      {removeStory && (
         <div
           className={` absolute right-0 top-0 h-full w-full bg-red-300 opacity-25 transition-all`}
         ></div>
       )}
       <button
         className={`${
-          sectionTwoHover ? "opacity-100" : "opacity-0"
+          StoryHover ? "opacity-100" : "opacity-0"
         } absolute right-10 top-0 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
-        onMouseEnter={() => setRemoveSectionTwoHover(true)}
-        onMouseLeave={() => setRemoveSectionTwoHover(false)}
+        onMouseEnter={() => setRemoveStory(true)}
+        onMouseLeave={() => setRemoveStory(false)}
         onClick={async () => {
-          const changeSectionTwo = await changeSectionTwoActive("true");
-          if (changeSectionTwo) {
-            setPageData((prev) => ({
+          const changeStory = await changeStoryActive("true");
+          if (changeStory) {
+            setDetails((prev) => ({
               ...prev,
-              sectionTwoActive: false,
+              storyActive: false,
             }));
           }
-          setRemoveSectionTwoHover(false);
+          setRemoveStory(false);
         }}
       >
         -
       </button>
       <div className="container mx-auto my-20 max-w-screen-lg gap-5 px-5 py-20 md:grid md:grid-cols-2 md:items-center md:justify-between">
         <div className="content-left">
-          {headerThreeEdit ? (
+          {headerOneEdit ? (
             <textarea
-              ref={headerThreeTextareaRef}
-              value={headerThreeEditValue}
-              onChange={(e) => setHeaderThreeEditValue(e.target.value)}
+              ref={headerOneTextareaRef}
+              value={headerOneEditValue}
+              onChange={(e) => setHeaderOneEditValue(e.target.value)}
               onBlur={() => {
-                setHeaderThreeEditValue(pageData.headerThree);
-                setHeaderThreeEdit(false);
+                setHeaderOneEditValue(details.headerOne);
+                setHeaderOneEdit(false);
               }}
               onKeyDown={async (e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
-                  await handleHeaderThreeSubmit();
+                  await handleHeaderOneSubmit();
                 }
               }}
               className="mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-4xl font-bold text-white outline-none focus:outline-none focus:ring-0 md:text-5xl md:leading-tight"
@@ -167,24 +199,24 @@ const StorySection: React.FC<{
           ) : (
             <h2
               className="mb-8 cursor-pointer select-none text-4xl font-bold text-white transition-all hover:opacity-50 md:text-5xl md:leading-tight"
-              onClick={() => setHeaderThreeEdit(true)}
+              onClick={() => setHeaderOneEdit(true)}
             >
-              {pageData.headerThree}
+              {details.headerOne}
             </h2>
           )}
-          {descriptionTwoEdit ? (
+          {descriptionOneEdit ? (
             <textarea
-              ref={descriptionTwoTextareaRef}
-              value={descriptionTwoEditValue}
-              onChange={(e) => setDescriptionTwoEditValue(e.target.value)}
+              ref={descriptionOneTextareaRef}
+              value={descriptionOneEditValue}
+              onChange={(e) => setDescriptionOneEditValue(e.target.value)}
               onBlur={() => {
-                setDescriptionTwoEditValue(pageData.descriptionTwo);
-                setDescriptionTwoEdit(false);
+                setDescriptionOneEditValue(details.descriptionOne);
+                setDescriptionOneEdit(false);
               }}
               onKeyDown={async (e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
-                  await handleDescriptionTwoSubmit();
+                  await handleDescriptionOneSubmit();
                 }
               }}
               className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
@@ -195,9 +227,9 @@ const StorySection: React.FC<{
           ) : (
             <p
               className="description cursor-pointer select-none text-lg font-semibold text-white transition-all hover:opacity-50"
-              onClick={() => setDescriptionTwoEdit(true)}
+              onClick={() => setDescriptionOneEdit(true)}
             >
-              {pageData.descriptionTwo}
+              {details.descriptionOne}
             </p>
           )}
 
@@ -210,7 +242,7 @@ const StorySection: React.FC<{
                   value={bulletOneEditValue}
                   onChange={(e) => setBulletOneEditValue(e.target.value)}
                   onBlur={() => {
-                    setBulletOneEditValue(pageData.bulletOne);
+                    setBulletOneEditValue(details.bulletOne);
                     setBulletOneEdit(false);
                   }}
                   onKeyDown={async (e) => {
@@ -228,7 +260,7 @@ const StorySection: React.FC<{
                   className="event-descripition flex-1 cursor-pointer select-none pt-0 text-lg font-semibold text-white transition-all hover:opacity-50"
                   onClick={() => setBulletOneEdit(true)}
                 >
-                  {pageData.bulletOne}
+                  {details.bulletOne}
                 </p>
               )}
             </div>
@@ -240,7 +272,7 @@ const StorySection: React.FC<{
                   value={bulletTwoEditValue}
                   onChange={(e) => setBulletTwoEditValue(e.target.value)}
                   onBlur={() => {
-                    setBulletTwoEditValue(pageData.bulletTwo);
+                    setBulletTwoEditValue(details.bulletTwo);
                     setBulletTwoEdit(false);
                   }}
                   onKeyDown={async (e) => {
@@ -258,7 +290,7 @@ const StorySection: React.FC<{
                   className="event-descripition flex-1 cursor-pointer select-none pt-0 text-lg font-semibold text-white transition-all hover:opacity-50"
                   onClick={() => setBulletTwoEdit(true)}
                 >
-                  {pageData.bulletTwo}
+                  {details.bulletTwo}
                 </p>
               )}
             </div>
@@ -270,7 +302,7 @@ const StorySection: React.FC<{
                   value={bulletThreeEditValue}
                   onChange={(e) => setBulletThreeEditValue(e.target.value)}
                   onBlur={() => {
-                    setBulletThreeEditValue(pageData.bulletThree);
+                    setBulletThreeEditValue(details.bulletThree);
                     setBulletThreeEdit(false);
                   }}
                   onKeyDown={async (e) => {
@@ -288,7 +320,7 @@ const StorySection: React.FC<{
                   className="event-descripition flex-1 cursor-pointer select-none pt-0 text-lg font-semibold text-white transition-all hover:opacity-50"
                   onClick={() => setBulletThreeEdit(true)}
                 >
-                  {pageData.bulletThree}
+                  {details.bulletThree}
                 </p>
               )}
             </div>
@@ -297,7 +329,7 @@ const StorySection: React.FC<{
         <div className="content-right flex items-center justify-center">
           <div
             className={`image-wrapper relative mb-5 max-w-[375px] transition-all ${
-              removeSectionTwoHover ? "rounded-3xl bg-red-300 opacity-25" : ""
+              removeStory ? "rounded-3xl bg-red-300 opacity-25" : ""
             }`}
             onMouseEnter={() => setImageOneEdit(true)}
             onMouseLeave={() => setImageOneEdit(false)}
@@ -319,7 +351,7 @@ const StorySection: React.FC<{
                 );
               }}
             />
-            <img src={pageData.imageOne} alt="" className="rounded-3xl" />
+            <img src={details.imageOne} alt="" className="rounded-3xl" />
             <div
               className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-3xl border-8 border-dashed border-black bg-white text-3xl font-bold text-black transition-all ${
                 imageOneEdit ? "opacity-50" : "opacity-0"

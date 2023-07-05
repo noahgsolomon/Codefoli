@@ -1,9 +1,9 @@
 type StoryType = {
     headerOne: string,
     descriptionOne: string,
-    bracketOne: string,
-    bracketTwo: string,
-    bracketThree: string,
+    bulletOne: string,
+    bulletTwo: string,
+    bulletThree: string,
     imageOne: string
 }
 

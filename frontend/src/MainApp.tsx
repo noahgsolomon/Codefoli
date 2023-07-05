@@ -54,21 +54,6 @@ const MainApp: React.FC = () => {
     headerTwo: "",
     iconThree: "",
     descriptionOne: "",
-    headerThree: "",
-    descriptionTwo: "",
-    bulletOne: "",
-    bulletTwo: "",
-    bulletThree: "",
-    imageOne: "",
-    headerFour: "",
-    headerFive: "",
-    descriptionThree: "",
-    sectionTwoActive: true,
-    sectionThreeActive: true,
-    iconOneActive: true,
-    iconTwoActive: true,
-    iconThreeActive: true,
-    values: [{ value: "", description: "" }],
   });
 
   const [contactData, setContactData] = useState<ContactData>({
@@ -150,7 +135,7 @@ const MainApp: React.FC = () => {
         <Route path="/setup" element={<Setup userData={userData} />} />
         <Route
           path="/dashboard"
-          element={<Dashboard userData={userData} pageData={homeData} setPageData={setHomeData} />}
+          element={<Dashboard userData={userData} pageData={homeData} setPageData={setHomeData}/>}
         />
         <Route
           path="/contact"
