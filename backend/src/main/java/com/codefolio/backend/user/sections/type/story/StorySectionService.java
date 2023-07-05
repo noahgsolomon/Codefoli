@@ -43,4 +43,43 @@ public class StorySectionService {
         }
     }
 
+    public ResponseEntity<?> updateBulletOne(Principal principal, String bulletOne) {
+        Users user = getAuthenticatedUser(principal);
+        Optional<StorySection> optionalStoryData = storySectionRepository.findByUsers(user);
+        if (optionalStoryData.isPresent()) {
+            StorySection storyData = optionalStoryData.get();
+            storyData.setBulletOne(bulletOne);
+            storySectionRepository.save(storyData);
+            return ResponseEntity.ok(storyData.getBulletOne());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    public ResponseEntity<?> updateBulletTwo(Principal principal, String bulletTwo) {
+        Users user = getAuthenticatedUser(principal);
+        Optional<StorySection> optionalStoryData = storySectionRepository.findByUsers(user);
+        if (optionalStoryData.isPresent()) {
+            StorySection storyData = optionalStoryData.get();
+            storyData.setBulletTwo(bulletTwo);
+            storySectionRepository.save(storyData);
+            return ResponseEntity.ok(storyData.getBulletTwo());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    public ResponseEntity<?> updateBulletThree(Principal principal, String bulletThree) {
+        Users user = getAuthenticatedUser(principal);
+        Optional<StorySection> optionalStoryData = storySectionRepository.findByUsers(user);
+        if (optionalStoryData.isPresent()) {
+            StorySection storyData = optionalStoryData.get();
+            storyData.setBulletThree(bulletThree);
+            storySectionRepository.save(storyData);
+            return ResponseEntity.ok(storyData.getBulletThree());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

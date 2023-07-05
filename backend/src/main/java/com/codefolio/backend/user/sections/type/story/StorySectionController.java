@@ -25,6 +25,20 @@ public class StorySectionController {
         return storySectionService.updateDescriptionOne(principal, descriptionOne);
     }
 
+    @PutMapping("/story/bullet-one")
+    public ResponseEntity<?> updateBulletOne(Principal principal, @RequestBody String bulletOne) {
+        return storySectionService.updateBulletOne(principal, bulletOne);
+    }
+    @PutMapping("/story/bullet-two")
+    public ResponseEntity<?> updateBulletTwo(Principal principal, @RequestBody String bulletTwo) {
+        return storySectionService.updateBulletTwo(principal, bulletTwo);
+    }
+
+    @PutMapping("/story/bullet-three")
+    public ResponseEntity<?> updateBulletThree(Principal principal, @RequestBody String bulletThree) {
+        return storySectionService.updateBulletThree(principal, bulletThree);
+    }
+
 
 
 }
