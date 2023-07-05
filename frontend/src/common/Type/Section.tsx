@@ -39,5 +39,6 @@ export type {
     ResumeType,
     SkillType,
     FAQType,
-    ValueType
+    ValueType,
+    SectionType
 }

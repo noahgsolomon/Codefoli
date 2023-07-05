@@ -1,8 +1,4 @@
 import React, {SetStateAction, useRef, useState} from "react";
-import {
-  changeStoryActive,
-
-} from "../../../../pages/About/aboutapi.tsx";
 import {StoryType} from "Type/Section.tsx";
 import {
   updateBulletOneStory,
@@ -10,11 +6,14 @@ import {
   updateBulletTwoStory, updateDescriptionOneStory, updateHeaderOneStory
 } from "Components/Sections/Story/storyapi.tsx";
 import HomeData from "Type/HomeData.tsx";
+import PageType from "Type/Pages.tsx";
+import {removeSection} from "Components/Sections/api/sectionapi.tsx";
 
 const StorySection: React.FC<{
+  page: PageType;
   details: StoryType;
   setPageData: React.Dispatch<SetStateAction<HomeData>>;
-}> = ({ details, setPageData }) => {
+}> = ({ page, details, setPageData }) => {
   const [imageOneEdit, setImageOneEdit] = useState<boolean>(false);
   const imageOneFileInput = useRef<HTMLInputElement | null>(null);
   const [descriptionOneEdit, setDescriptionOneEdit] = useState(false);
@@ -184,14 +183,15 @@ const StorySection: React.FC<{
         onMouseEnter={() => setRemoveStory(true)}
         onMouseLeave={() => setRemoveStory(false)}
         onClick={async () => {
-          const changeStory = await changeStoryActive("true");
-          if (changeStory) {
-            setPageData((prev) => ({
-              ...prev,
-              storyActive: false,
-            }));
-          }
-          setRemoveStory(false);
+            const remove = await removeSection(page, 'STORY');
+            if (remove) {
+                setPageData((prev) => ({
+                ...prev,
+                sections: prev.sections.filter(
+                    (section) => section.type !== "STORY"
+                ),
+                }));
+            }
         }}
       >
         -

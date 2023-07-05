@@ -226,8 +226,12 @@ const Dashboard: React.FC<{
             case 'SKILL':
               return <SkillSection key={index} userData={userData} preview={false} details={details} />;
             case 'STORY':
-              return <StorySection key={index} details={details} setPageData={setPageData}/>;
-            // case 'RESUME':
+              return (
+                  'descriptionOne' in details && 'bulletOne' in details && 'bulletTwo' in details && 'bulletThree' in details && 'imageOne' in details
+                      ? <StorySection page={'HOME'} key={index} details={details} setPageData={setPageData}/>
+                      : null
+              );
+              // case 'RESUME':
             //   return <ResumeSection key={index} details={details} />;
             // case 'FAQ':
             //   return <FAQSection key={index} details={details} />;

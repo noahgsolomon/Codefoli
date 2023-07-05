@@ -93,8 +93,13 @@ const updateBulletThreeStory = async (bulletThree: string) => {
         console.log(e);
     }
 };
-export {updateBulletThreeStory};
-export {updateBulletTwoStory};
-export {updateBulletOneStory};
-export {updateDescriptionOneStory};
-export {updateHeaderOneStory};
+
+
+
+export {
+    updateBulletThreeStory,
+    updateBulletTwoStory,
+    updateBulletOneStory,
+    updateDescriptionOneStory,
+    updateHeaderOneStory
+};
