@@ -6,6 +6,7 @@ import HomeData from "Type/HomeData.tsx";
 import UserData from "Type/UserData.tsx";
 import {updateDescriptionOne, updateHeaderOne} from "./dashboardapi.tsx";
 import SkillSection from "Components/Sections/SkillSection.tsx";
+import StorySection from "Components/Sections/StorySection.tsx";
 
 const Dashboard: React.FC<{
   pageData: HomeData;
@@ -224,8 +225,8 @@ const Dashboard: React.FC<{
           switch (type) {
             case 'SKILL':
               return <SkillSection key={index} userData={userData} preview={false} details={details} />;
-            // case 'STORY':
-            //   return <StorySection key={index} details={details} />;
+            case 'STORY':
+              return <StorySection key={index} details={details} setPageData={setPageData}/>;
             // case 'RESUME':
             //   return <ResumeSection key={index} details={details} />;
             // case 'FAQ':

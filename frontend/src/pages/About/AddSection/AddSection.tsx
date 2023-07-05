@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import AboutData from "Type/AboutData.tsx";
 import {
   changeSectionThreeActive,
-  changeSectionTwoActive,
+  changeStoryActive,
 } from "../aboutapi.tsx";
 
 const AddSection: React.FC<{
@@ -40,11 +40,11 @@ const AddSection: React.FC<{
               onClick={async () => {
                 let change;
                 if (section === "Story") {
-                  change = await changeSectionTwoActive("false");
+                  change = await changeStoryActive("false");
                   if (change) {
                     setPageData((prev) => ({
                       ...prev,
-                      sectionTwoActive: true,
+                      storyActive: true,
                     }));
                   }
                 } else if (section === "Resume") {

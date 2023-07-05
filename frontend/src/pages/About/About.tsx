@@ -12,7 +12,7 @@ import {
   updateHeaderTwoAbout,
 } from "./aboutapi.tsx";
 import AddSection from "./AddSection/AddSection.tsx";
-import StorySection from "Components/Sections/StorySection.tsx";
+// import StorySection from "Components/Sections/StorySection.tsx";
 import ResumeSection from "Components/Sections/ResumeSection.tsx";
 
 const About: React.FC<{
@@ -335,16 +335,16 @@ const About: React.FC<{
             </div>
           </div>
         </section>
-        {pageData.sectionTwoActive ? (
-          <StorySection
-            handleFileUpload={handleFileUpload}
-            setPageData={setPageData}
-            pageData={pageData}
-          />
-        ) : (
-          <>
-          </>
-        )}
+        {/*{pageData.sectionTwoActive ? (*/}
+        {/*  <StorySection*/}
+        {/*    handleFileUpload={handleFileUpload}*/}
+        {/*    setPageData={setPageData}*/}
+        {/*    pageData={pageData}*/}
+        {/*  />*/}
+        {/*) : (*/}
+        {/*  <>*/}
+        {/*  </>*/}
+        {/*)}*/}
         {/* resume section3*/}
         {pageData.sectionThreeActive ? (
           <ResumeSection userData={userData} pageData={pageData} setPageData={setPageData}/>

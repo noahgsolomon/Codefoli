@@ -5,26 +5,6 @@ type AboutData = {
   headerTwo: string;
   iconThree: string;
   descriptionOne: string;
-  headerThree: string;
-  descriptionTwo: string;
-  bulletOne: string;
-  bulletTwo: string;
-  bulletThree: string;
-  imageOne: string;
-  headerFour: string;
-  headerFive: string;
-  descriptionThree: string;
-  sectionTwoActive: boolean;
-  sectionThreeActive: boolean;
-  iconOneActive: boolean;
-  iconTwoActive: boolean;
-  iconThreeActive: boolean;
-  values: [
-    {
-      value: string;
-      description: string;
-    }
-  ];
 };
 
 export default AboutData;
