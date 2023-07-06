@@ -2,7 +2,7 @@ import React from 'react'
 import Card from 'Components/Card/Card'
 import Footer from 'Components/Footer/Footer'
 import ArrowRight from 'assets/icons/arrow-right.svg'
-import { COLORS } from '../../util/constants'
+import { COLORS } from '../../util/colors.ts'
 import UserData from "Type/UserData.tsx";
 import {Link} from "react-router-dom";
 

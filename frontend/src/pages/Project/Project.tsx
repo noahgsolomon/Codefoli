@@ -1,6 +1,6 @@
 import LinkIcon from 'assets/icons/arrow-up-right.svg'
 import Footer from 'Components/Footer/Footer'
-import { COLORS } from '../../util/constants'
+import { COLORS } from '../../util/colors.ts'
 
 const Project = () => {
     return (

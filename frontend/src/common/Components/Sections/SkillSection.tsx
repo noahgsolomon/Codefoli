@@ -3,7 +3,7 @@ import Card from "Components/Card/Card.tsx";
 import UserData from "Type/UserData.tsx";
 import { ServiceData } from "Type/Services.tsx";
 import { Link } from "react-router-dom";
-import { COLORS } from "../../../util/constants.ts";
+import { COLORS } from "../../../util/colors.ts";
 import {SkillType} from "Type/Section.tsx";
 
 const SkillSection: React.FC<{
