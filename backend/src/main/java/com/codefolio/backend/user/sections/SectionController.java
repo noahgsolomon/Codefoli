@@ -1,5 +1,6 @@
 package com.codefolio.backend.user.sections;
 
+import com.codefolio.backend.util.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,7 @@ public class SectionController {
     }
 
     @DeleteMapping("/remove-section")
-    public ResponseEntity<?> removeSection(Principal principal, @RequestBody RemoveSectionModel remove) {
+    public ResponseEntity<Response> removeSection(Principal principal, @RequestBody RemoveSectionModel remove) {
         return sectionService.removeSection(principal, remove);
     }
 

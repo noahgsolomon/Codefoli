@@ -1,5 +1,6 @@
 package com.codefolio.backend.user.pages.homepage;
 
+import com.codefolio.backend.util.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,17 +16,17 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public ResponseEntity<?> getHome(Principal principal) {
+    public ResponseEntity<Response> getHome(Principal principal) {
         return homeService.getHome(principal);
     }
 
     @PutMapping("/home/headerOne")
-    public ResponseEntity<?> updateHeaderOne(Principal principal, @RequestBody String headerOne) {
+    public ResponseEntity<Response> updateHeaderOne(Principal principal, @RequestBody String headerOne) {
         return homeService.updateHeaderOne(principal, headerOne);
     }
 
     @PutMapping("/home/descriptionOne")
-    public ResponseEntity<?> updateDescriptionOne(Principal principal, @RequestBody String descriptionOne) {
+    public ResponseEntity<Response> updateDescriptionOne(Principal principal, @RequestBody String descriptionOne) {
         return homeService.updateDescriptionOne(principal, descriptionOne);
     }
 }

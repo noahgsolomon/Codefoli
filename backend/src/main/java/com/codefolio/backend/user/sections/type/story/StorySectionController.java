@@ -1,5 +1,6 @@
 package com.codefolio.backend.user.sections.type.story;
 
+import com.codefolio.backend.util.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,25 +18,25 @@ public class StorySectionController {
     }
 
     @PutMapping("/story/header-one")
-    public ResponseEntity<?> updateHeaderOne(Principal principal, @RequestBody String headerOne) {
+    public ResponseEntity<Response> updateHeaderOne(Principal principal, @RequestBody String headerOne) {
         return storySectionService.updateHeaderOne(principal, headerOne);
     }
     @PutMapping("/story/description-one")
-    public ResponseEntity<?> updateDescriptionOne(Principal principal, @RequestBody String descriptionOne) {
+    public ResponseEntity<Response> updateDescriptionOne(Principal principal, @RequestBody String descriptionOne) {
         return storySectionService.updateDescriptionOne(principal, descriptionOne);
     }
 
     @PutMapping("/story/bullet-one")
-    public ResponseEntity<?> updateBulletOne(Principal principal, @RequestBody String bulletOne) {
+    public ResponseEntity<Response> updateBulletOne(Principal principal, @RequestBody String bulletOne) {
         return storySectionService.updateBulletOne(principal, bulletOne);
     }
     @PutMapping("/story/bullet-two")
-    public ResponseEntity<?> updateBulletTwo(Principal principal, @RequestBody String bulletTwo) {
+    public ResponseEntity<Response> updateBulletTwo(Principal principal, @RequestBody String bulletTwo) {
         return storySectionService.updateBulletTwo(principal, bulletTwo);
     }
 
     @PutMapping("/story/bullet-three")
-    public ResponseEntity<?> updateBulletThree(Principal principal, @RequestBody String bulletThree) {
+    public ResponseEntity<Response> updateBulletThree(Principal principal, @RequestBody String bulletThree) {
         return storySectionService.updateBulletThree(principal, bulletThree);
     }
 

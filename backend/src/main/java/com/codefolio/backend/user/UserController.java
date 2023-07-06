@@ -1,5 +1,6 @@
 package com.codefolio.backend.user;
 
+import com.codefolio.backend.util.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +19,12 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<?> userDetails(Principal principal){
+    public ResponseEntity<Response> userDetails(Principal principal){
         return userService.userDetails(principal);
     }
 
     @PostMapping("/setup")
-    public ResponseEntity<?> setup(@RequestBody UserProfileRequestModel userProfile, Principal principal){
+    public ResponseEntity<Response> setup(@RequestBody UserProfileRequestModel userProfile, Principal principal){
         return userService.setup(userProfile, principal);
     }
 }

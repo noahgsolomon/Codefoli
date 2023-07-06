@@ -1,5 +1,6 @@
 package com.codefolio.backend.user.pages.contactpage;
 
+import com.codefolio.backend.util.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +17,7 @@ public class ContactController {
     }
 
     @GetMapping("/contact")
-    public ResponseEntity<?> getContact(Principal principal){
+    public ResponseEntity<Response> getContact(Principal principal){
         return contactService.getContact(principal);
     }
 }

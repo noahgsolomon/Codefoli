@@ -1,5 +1,6 @@
 package com.codefolio.backend.user.uploadimage;
 
+import com.codefolio.backend.util.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,24 +19,24 @@ public class UploadImageController {
     }
 
     @PostMapping("/profile-image-upload")
-    public ResponseEntity<?> uploadProfileImage(@RequestParam("file") MultipartFile file, Principal principal) {
+    public ResponseEntity<Response> uploadProfileImage(@RequestParam("file") MultipartFile file, Principal principal) {
         return uploadImageService.uploadProfileImage(file, principal);
     }
 
     @PostMapping("/about-icon-one-upload")
-    public ResponseEntity<?> uploadIconOneAbout(@RequestParam("file") MultipartFile file, Principal principal) {
+    public ResponseEntity<Response> uploadIconOneAbout(@RequestParam("file") MultipartFile file, Principal principal) {
         return uploadImageService.uploadIconOneAbout(file, principal);
     }
     @PostMapping("/about-icon-two-upload")
-    public ResponseEntity<?> uploadIconTwoAbout(@RequestParam("file") MultipartFile file, Principal principal) {
+    public ResponseEntity<Response> uploadIconTwoAbout(@RequestParam("file") MultipartFile file, Principal principal) {
         return uploadImageService.uploadIconTwoAbout(file, principal);
     }
     @PostMapping("/about-icon-three-upload")
-    public ResponseEntity<?> uploadIconThreeAbout(@RequestParam("file") MultipartFile file, Principal principal) {
+    public ResponseEntity<Response> uploadIconThreeAbout(@RequestParam("file") MultipartFile file, Principal principal) {
         return uploadImageService.uploadIconThreeAbout(file, principal);
     }
     @PostMapping("/about-image-one-upload")
-    public ResponseEntity<?> uploadImageOneAbout(@RequestParam("file") MultipartFile file, Principal principal) {
+    public ResponseEntity<Response> uploadImageOneAbout(@RequestParam("file") MultipartFile file, Principal principal) {
         return uploadImageService.uploadImageOneAbout(file, principal);
     }
 }
