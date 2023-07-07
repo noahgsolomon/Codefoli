@@ -1,16 +1,19 @@
-import React, { useState } from "react";
-import { changeSectionThreeActive } from "../../../pages/About/aboutapi.tsx";
+import React, {SetStateAction, useState} from "react";
 import JobCard from "../../../pages/About/JobCard/JobCard.tsx";
-import AboutData from "Type/AboutData.tsx";
 import UserData from "Type/UserData.tsx";
+import PageType from "Type/Pages.tsx";
+import {ResumeType} from "Type/Section.tsx";
+import AnyPageData from "Type/AnyPageData.tsx";
+import {removeSection} from "Components/Sections/api/sectionapi.tsx";
 
 const ResumeSection: React.FC<{
-  pageData: AboutData;
-  setPageData: React.Dispatch<React.SetStateAction<AboutData>>;
-  userData: UserData;
-}> = ({ pageData, setPageData, userData }) => {
+  page: PageType;
+  details: ResumeType;
+  setPageData: React.Dispatch<SetStateAction<AnyPageData>>;
+  userData: UserData
+}> = ({ page, details, setPageData, userData }) => {
   const [sectionThreeHover, setSectionThreeHover] = useState<boolean>(false);
-  const [removeSectionThreeHover, setRemoveSectionThreeHover] =
+  const [removeSectionThreeHover, setRemoveResumeSection] =
     useState<boolean>(false);
 
   return (
@@ -28,24 +31,25 @@ const ResumeSection: React.FC<{
         className={`${
           sectionThreeHover ? "opacity-100" : "opacity-0"
         } absolute right-10 top-0 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
-        onMouseEnter={() => setRemoveSectionThreeHover(true)}
-        onMouseLeave={() => setRemoveSectionThreeHover(false)}
+        onMouseEnter={() => setRemoveResumeSection(true)}
+        onMouseLeave={() => setRemoveResumeSection(false)}
         onClick={async () => {
-          const changeSectionThree = await changeSectionThreeActive("true");
-          if (changeSectionThree) {
+          const remove = await removeSection(page, 'RESUME');
+          if (remove) {
             setPageData((prev) => ({
               ...prev,
-              sectionThreeActive: false,
+              sections: prev.sections.filter(
+                  (section) => section.type !== "RESUME"
+              ),
             }));
           }
-          setRemoveSectionThreeHover(false);
         }}
       >
         -
       </button>
       <div className="container mx-auto my-20 max-w-screen-lg px-5 py-20">
         <h2 className="mb-8 text-center text-3xl font-bold">
-          {pageData.headerFour}
+          {details.headerOne}
         </h2>
         <div className="resume-events">
           {userData.work.map((job, index) => (

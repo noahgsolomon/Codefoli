@@ -11,7 +11,7 @@ import {
 } from "./aboutapi.tsx";
 import SkillSection from "Components/Sections/SkillSection.tsx";
 import StorySection from "Components/Sections/Story/StorySection.tsx";
-// import ResumeSection from "Components/Sections/ResumeSection.tsx";
+import ResumeSection from "Components/Sections/ResumeSection.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 
 const About: React.FC<{
@@ -347,8 +347,8 @@ const About: React.FC<{
                       ? <StorySection page={'ABOUT'} key={index} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>}/>
                       : null
               );
-              // case 'RESUME':
-              //   return <ResumeSection key={index} details={details} />;
+              case 'RESUME':
+                return <ResumeSection key={index} page={'ABOUT'} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} userData={userData}/>;
               // case 'FAQ':
               //   return <FAQSection key={index} details={details} />;
               // case 'VALUE':

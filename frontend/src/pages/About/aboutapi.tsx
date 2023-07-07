@@ -70,64 +70,9 @@ const updateDescriptionOneAbout = async (descriptionOne: string) => {
     }
 };
 
-const changeStoryActive = async (sectionTwoActive: string) => {
-    try {
-        const response = await fetch(
-            "http://localhost:8080/about/change-section-two",
-            {
-                method: "PUT",
-                headers: {"Content-Type": "application/json"},
-                body: sectionTwoActive,
-                credentials: "include",
-            }
-        );
-        const responseJson = await response.json();
-        if (responseJson.status === 'OK') {
-            return responseJson.data;
-        }
-        else {
-            console.log(responseJson.message);
-            return responseJson.message;
-        }
-    } catch (e) {
-        console.log(e);
-    }
-};
-
-const changeSectionThreeActive = async (sectionThreeActive: string) => {
-    try {
-        const response = await fetch(
-            "http://localhost:8080/about/change-section-three",
-            {
-                method: "PUT",
-                headers: {"Content-Type": "application/json"},
-                body: sectionThreeActive,
-                credentials: "include",
-            }
-        );
-        const responseJson = await response.json();
-        if (responseJson.status === 'OK') {
-            return responseJson.data;
-        }
-        else {
-            console.log(responseJson.message);
-            return responseJson.message;
-        }
-    } catch (e) {
-        console.log(e);
-    }
-};
-
-
 export {
   updateHeaderOneAbout,
   updateHeaderTwoAbout,
   updateDescriptionOneAbout,
-  changeStoryActive,
-  changeSectionThreeActive,
-
-
-
-
 
 };
