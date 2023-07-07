@@ -28,6 +28,35 @@ export const Values = [
   "Trustworthiness",
 ];
 
+export type ValuesFormatted =
+  | "INTEGRITY"
+  | "QUALITY"
+  | "GROWTH"
+  | "INNOVATION"
+  | "HARD_WORK"
+  | "TRANSPARENCY"
+  | "TEAMWORK"
+  | "RESPECT"
+  | "TRUST"
+  | "ACCOUNTABILITY"
+  | "PASSION"
+  | "FUN"
+  | "CUSTOMER_SATISFACTION"
+  | "SOCIAL_RESPONSIBILITY"
+  | "DIVERSITY"
+  | "EMPOWERMENT"
+  | "EXCELLENCE"
+  | "CREATIVITY"
+  | "EFFICIENCY"
+  | "FLEXIBILITY"
+  | "HONESTY"
+  | "LOYALTY"
+  | "OPENNESS"
+  | "RELIABILITY"
+  | "RESPONSIVENESS"
+  | "SUSTAINABILITY"
+  | "TRUSTWORTHINESS";
+
 export const ValuesData: {
   [key: string]: { description: string; image: string };
 } = {

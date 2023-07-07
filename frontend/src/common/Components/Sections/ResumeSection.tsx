@@ -1,45 +1,45 @@
-import React, {SetStateAction, useState} from "react";
+import React, { SetStateAction, useState } from "react";
 import JobCard from "../../../pages/About/JobCard/JobCard.tsx";
 import UserData from "Type/UserData.tsx";
 import PageType from "Type/Pages.tsx";
-import {ResumeType} from "Type/Section.tsx";
+import { ResumeType } from "Type/Section.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
-import {removeSection} from "Components/Sections/api/sectionapi.tsx";
+import { removeSection } from "Components/Sections/api/sectionapi.tsx";
 
 const ResumeSection: React.FC<{
   page: PageType;
   details: ResumeType;
   setPageData: React.Dispatch<SetStateAction<AnyPageData>>;
-  userData: UserData
+  userData: UserData;
 }> = ({ page, details, setPageData, userData }) => {
-  const [sectionThreeHover, setSectionThreeHover] = useState<boolean>(false);
-  const [removeSectionThreeHover, setRemoveResumeSection] =
+  const [resumeSectionHover, setResumeSectionHover] = useState<boolean>(false);
+  const [removeResumeSection, setRemoveResumeSection] =
     useState<boolean>(false);
 
   return (
     <section
       className="resume relative"
-      onMouseEnter={() => setSectionThreeHover(true)}
-      onMouseLeave={() => setSectionThreeHover(false)}
+      onMouseEnter={() => setResumeSectionHover(true)}
+      onMouseLeave={() => setResumeSectionHover(false)}
     >
-      {removeSectionThreeHover && (
+      {removeResumeSection && (
         <div
           className={` absolute right-0 top-0 h-full w-full bg-red-300 opacity-25 transition-all`}
         ></div>
       )}
       <button
         className={`${
-          sectionThreeHover ? "opacity-100" : "opacity-0"
+          resumeSectionHover ? "opacity-100" : "opacity-0"
         } absolute right-10 top-0 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onMouseEnter={() => setRemoveResumeSection(true)}
         onMouseLeave={() => setRemoveResumeSection(false)}
         onClick={async () => {
-          const remove = await removeSection(page, 'RESUME');
+          const remove = await removeSection(page, "RESUME");
           if (remove) {
             setPageData((prev) => ({
               ...prev,
               sections: prev.sections.filter(
-                  (section) => section.type !== "RESUME"
+                (section) => section.type !== "RESUME"
               ),
             }));
           }

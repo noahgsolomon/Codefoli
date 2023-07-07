@@ -7,15 +7,15 @@ import SkillSection from "Components/Sections/SkillSection.tsx";
 import StorySection from "Components/Sections/Story/StorySection.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import ResumeSection from "Components/Sections/ResumeSection.tsx";
-import FAQSection from "Components/Sections/Story/FAQSection.tsx";
+import FAQSection from "Components/Sections/FAQSection.tsx";
 import UserData from "Type/UserData.tsx";
+import ValueSection from "Components/Sections/ValueSection.tsx";
 
 const Contact: React.FC<{
   pageData: ContactData;
   setPageData: React.Dispatch<React.SetStateAction<ContactData>>;
   userData: UserData;
-}> = ({ pageData, setPageData, userData}) => {
-
+}> = ({ pageData, setPageData, userData }) => {
   const animationProps = useSpring({
     from: { opacity: 0, transform: "translate3d(-20px, 0, 0)" },
     to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
@@ -74,24 +74,82 @@ const Contact: React.FC<{
       {pageData.sections.map((section, index) => {
         const { type, details } = section;
         switch (type) {
-          case 'SKILL':
-            return <SkillSection key={index} userData={userData} preview={false} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} page={'HOME'}/>;
-          case 'STORY':
+          case "SKILL":
             return (
-                'descriptionOne' in details && 'bulletOne' in details && 'bulletTwo' in details && 'bulletThree' in details && 'imageOne' in details
-                    ? <StorySection page={'CONTACT'} key={index} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>}/>
-                    : null
+              <SkillSection
+                key={index}
+                userData={userData}
+                preview={false}
+                details={details}
+                setPageData={
+                  setPageData as React.Dispatch<
+                    React.SetStateAction<AnyPageData>
+                  >
+                }
+                page={"HOME"}
+              />
             );
-          case 'RESUME':
-            return <ResumeSection key={index} page={'CONTACT'} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} userData={userData}/>;
-          case 'FAQ':
+          case "STORY":
+            return "descriptionOne" in details &&
+              "bulletOne" in details &&
+              "bulletTwo" in details &&
+              "bulletThree" in details &&
+              "imageOne" in details ? (
+              <StorySection
+                page={"CONTACT"}
+                key={index}
+                details={details}
+                setPageData={
+                  setPageData as React.Dispatch<
+                    React.SetStateAction<AnyPageData>
+                  >
+                }
+              />
+            ) : null;
+          case "RESUME":
             return (
-                'descriptionOne' in details && 'headerOne' in details && 'faq' in details
-                    ? <FAQSection setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} key={index} page={'CONTACT'} details={details} />
-                    : null
+              <ResumeSection
+                key={index}
+                page={"CONTACT"}
+                details={details}
+                setPageData={
+                  setPageData as React.Dispatch<
+                    React.SetStateAction<AnyPageData>
+                  >
+                }
+                userData={userData}
+              />
             );
-            // case 'VALUE':
-            //   return <ValueSection key={index} details={details} />;
+          case "FAQ":
+            return "descriptionOne" in details &&
+              "headerOne" in details &&
+              "faq" in details ? (
+              <FAQSection
+                setPageData={
+                  setPageData as React.Dispatch<
+                    React.SetStateAction<AnyPageData>
+                  >
+                }
+                key={index}
+                page={"CONTACT"}
+                details={details}
+              />
+            ) : null;
+          case "VALUE":
+            return "descriptionOne" in details &&
+              "headerOne" in details &&
+              "values" in details ? (
+              <ValueSection
+                setPageData={
+                  setPageData as React.Dispatch<
+                    React.SetStateAction<AnyPageData>
+                  >
+                }
+                key={index}
+                page={"HOME"}
+                details={details}
+              />
+            ) : null;
           default:
             return null;
         }

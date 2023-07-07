@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useSpring, animated, useInView } from "react-spring";
 import { useNavigate } from "react-router-dom";
 import { FiCode, FiRefreshCw, FiLayout } from "react-icons/fi";
@@ -34,8 +34,8 @@ const Home: React.FC = () => {
     }
   }, [navigate]);
 
-  if (loading){
-    return <Loader />
+  if (loading) {
+    return <Loader />;
   }
 
   return (

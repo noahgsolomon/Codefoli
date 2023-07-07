@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "Components/Header/Header.tsx";
-import {Route, Routes, useNavigate} from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./pages/Home/Home.tsx";
 import Login from "./pages/Login/Login.tsx";
 import Register from "./pages/Register/Register.tsx";
@@ -19,7 +19,6 @@ import Projects from "./pages/Projects/Projects.tsx";
 import Project from "./pages/Project/Project.tsx";
 
 const MainApp: React.FC = () => {
-
   const navigate = useNavigate();
 
   const [authenticatedUser, setAuthenticatedUser] = useState<boolean>(false);
@@ -78,8 +77,7 @@ const MainApp: React.FC = () => {
           localStorage.setItem("role", user.role);
           setAuthenticatedUser(true);
           setUserData(user);
-        }
-        else{
+        } else {
           setAuthenticatedUser(true);
           const homeFetch = await getHome();
           if (homeFetch) {
@@ -97,15 +95,20 @@ const MainApp: React.FC = () => {
           localStorage.setItem("role", user.role);
           const path = window.location.pathname;
           console.log(path);
-          if (path === '/' || path === '/login' || path === '/register') {
-            navigate('/dashboard');
+          if (path === "/" || path === "/login" || path === "/register") {
+            navigate("/dashboard");
           }
         }
       } else {
         localStorage.removeItem("role");
         const path = window.location.pathname;
-        if (path === '/about' || path === '/contact' || path === '/dashboard' || path === '/setup') {
-          navigate('/');
+        if (
+          path === "/about" ||
+          path === "/contact" ||
+          path === "/dashboard" ||
+          path === "/setup"
+        ) {
+          navigate("/");
         }
       }
       setLoading(false);
@@ -121,7 +124,7 @@ const MainApp: React.FC = () => {
 
   return (
     <>
-      <Header authenticated={authenticatedUser}/>
+      <Header authenticated={authenticatedUser} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -129,24 +132,36 @@ const MainApp: React.FC = () => {
         <Route path="/setup" element={<Setup userData={userData} />} />
         <Route
           path="/dashboard"
-          element={<Dashboard userData={userData} pageData={homeData} setPageData={setHomeData}/>}
+          element={
+            <Dashboard
+              userData={userData}
+              pageData={homeData}
+              setPageData={setHomeData}
+            />
+          }
         />
         <Route
           path="/contact"
-          element={<Contact pageData={contactData} userData={userData} setPageData={setContactData}/>}
+          element={
+            <Contact
+              pageData={contactData}
+              userData={userData}
+              setPageData={setContactData}
+            />
+          }
         />
         <Route
           path="/about"
-          element={<About userData={userData} pageData={aboutData} setPageData={setAboutData}/>}
+          element={
+            <About
+              userData={userData}
+              pageData={aboutData}
+              setPageData={setAboutData}
+            />
+          }
         />
-        <Route
-            path="/projects"
-            element={<Projects userData={userData} />}
-        />
-        <Route
-          path="/project"
-          element={<Project />}
-        />
+        <Route path="/projects" element={<Projects userData={userData} />} />
+        <Route path="/project" element={<Project />} />
       </Routes>
     </>
   );

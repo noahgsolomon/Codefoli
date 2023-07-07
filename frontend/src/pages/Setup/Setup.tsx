@@ -114,7 +114,10 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
   }, [serviceSearch, allServices]);
 
   useEffect(() => {
-    if (localStorage.getItem("role") && localStorage.getItem("role") === "NEWBIE") {
+    if (
+      localStorage.getItem("role") &&
+      localStorage.getItem("role") === "NEWBIE"
+    ) {
       setName(userData.name);
       setCompany(userData.company || "");
       setEmail(userData.email || "");
@@ -274,7 +277,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
   }
 
   if (loading) {
-    return <></>
+    return <></>;
   }
 
   return (

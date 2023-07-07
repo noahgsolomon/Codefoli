@@ -13,7 +13,8 @@ import SkillSection from "Components/Sections/SkillSection.tsx";
 import StorySection from "Components/Sections/Story/StorySection.tsx";
 import ResumeSection from "Components/Sections/ResumeSection.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
-import FAQSection from "Components/Sections/Story/FAQSection.tsx";
+import FAQSection from "Components/Sections/FAQSection.tsx";
+import ValueSection from "Components/Sections/ValueSection.tsx";
 
 const About: React.FC<{
   userData: UserData;
@@ -148,74 +149,74 @@ const About: React.FC<{
               )}
             </div>
             <div
-                className="image-wrapper relative order-2 w-full text-center md:order-1 md:self-end"
-                onMouseEnter={() => setIconOneEdit(true)}
-                onMouseLeave={() => setIconOneEdit(false)}
-                onClick={() => {
-                  iconOneFileInput.current && iconOneFileInput.current.click();
-                }}
+              className="image-wrapper relative order-2 w-full text-center md:order-1 md:self-end"
+              onMouseEnter={() => setIconOneEdit(true)}
+              onMouseLeave={() => setIconOneEdit(false)}
+              onClick={() => {
+                iconOneFileInput.current && iconOneFileInput.current.click();
+              }}
             >
-                <input
-                  type="file"
-                  ref={iconOneFileInput}
-                  className="hidden"
-                  accept=".jpg,.png"
-                  onChange={async (e) => {
-                    await handleFileUpload(
-                      "about-icon-one-upload",
-                      setIconOneEdit,
-                      "iconOne",
-                      e
-                    );
-                  }}
-                />
-                <img
-                  className="inline-block max-h-[150px] max-w-[150px] rounded-full shadow-custom"
-                  src={pageData.iconOne}
-                  alt="portfolio"
-                />
-                <div
-                  className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-full border-8 border-dashed border-black bg-white text-xl font-bold text-black transition-all ${
-                    iconOneEdit ? "opacity-50" : "opacity-0"
-                  }`}
-                >
-                  click to upload image
-                </div>
+              <input
+                type="file"
+                ref={iconOneFileInput}
+                className="hidden"
+                accept=".jpg,.png"
+                onChange={async (e) => {
+                  await handleFileUpload(
+                    "about-icon-one-upload",
+                    setIconOneEdit,
+                    "iconOne",
+                    e
+                  );
+                }}
+              />
+              <img
+                className="inline-block max-h-[150px] max-w-[150px] rounded-full shadow-custom"
+                src={pageData.iconOne}
+                alt="portfolio"
+              />
+              <div
+                className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-full border-8 border-dashed border-black bg-white text-xl font-bold text-black transition-all ${
+                  iconOneEdit ? "opacity-50" : "opacity-0"
+                }`}
+              >
+                click to upload image
+              </div>
             </div>
             <div
-                className="image-wrapper relative w-full text-center md:order-last md:self-start"
-                onMouseEnter={() => setIconTwoEdit(true)}
-                onMouseLeave={() => setIconTwoEdit(false)}
-                onClick={() =>
-                  iconTwoFileInput.current && iconTwoFileInput.current.click()
-                }
+              className="image-wrapper relative w-full text-center md:order-last md:self-start"
+              onMouseEnter={() => setIconTwoEdit(true)}
+              onMouseLeave={() => setIconTwoEdit(false)}
+              onClick={() =>
+                iconTwoFileInput.current && iconTwoFileInput.current.click()
+              }
             >
-                <input
-                  type="file"
-                  ref={iconTwoFileInput}
-                  className="hidden"
-                  accept=".jpg,.png"
-                  onChange={async (e) => {
-                    await handleFileUpload(
-                      "about-icon-two-upload",
-                      setIconTwoEdit,
-                      "iconTwo",
-                      e
-                    );
-                  }}
-                />
-                <img
-                  className="inline-block max-w-[150px] rounded-full shadow-custom"
-                  src={pageData.iconTwo}
-                  alt="portfolio"
-                />
-                <div
-                  className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-full border-8 border-dashed border-black bg-white text-xl font-bold text-black transition-all ${
-                    iconTwoEdit ? "opacity-50" : "opacity-0"
-                  }`}
-                >
-                  click to upload image
-                </div>
+              <input
+                type="file"
+                ref={iconTwoFileInput}
+                className="hidden"
+                accept=".jpg,.png"
+                onChange={async (e) => {
+                  await handleFileUpload(
+                    "about-icon-two-upload",
+                    setIconTwoEdit,
+                    "iconTwo",
+                    e
+                  );
+                }}
+              />
+              <img
+                className="inline-block max-w-[150px] rounded-full shadow-custom"
+                src={pageData.iconTwo}
+                alt="portfolio"
+              />
+              <div
+                className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-full border-8 border-dashed border-black bg-white text-xl font-bold text-black transition-all ${
+                  iconTwoEdit ? "opacity-50" : "opacity-0"
+                }`}
+              >
+                click to upload image
+              </div>
             </div>
           </section>
         </div>
@@ -253,40 +254,40 @@ const About: React.FC<{
                 )}
               </div>
               <div
-                  className="image-wrapper relative mb-5 max-w-[375px] sm:mx-auto md:mx-0"
-                  onMouseEnter={() => setIconThreeEdit(true)}
-                  onMouseLeave={() => setIconThreeEdit(false)}
-                  onClick={() =>
-                    iconThreeFileInput.current &&
-                    iconThreeFileInput.current.click()
-                  }
+                className="image-wrapper relative mb-5 max-w-[375px] sm:mx-auto md:mx-0"
+                onMouseEnter={() => setIconThreeEdit(true)}
+                onMouseLeave={() => setIconThreeEdit(false)}
+                onClick={() =>
+                  iconThreeFileInput.current &&
+                  iconThreeFileInput.current.click()
+                }
+              >
+                <input
+                  type="file"
+                  ref={iconThreeFileInput}
+                  className="hidden"
+                  accept=".jpg,.png"
+                  onChange={async (e) => {
+                    await handleFileUpload(
+                      "about-icon-three-upload",
+                      setIconThreeEdit,
+                      "iconThree",
+                      e
+                    );
+                  }}
+                />
+                <img
+                  src={pageData.iconThree}
+                  alt=""
+                  className="rounded-3xl shadow-custom"
+                />
+                <div
+                  className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-3xl border-8 border-dashed border-black bg-white text-3xl font-bold text-black transition-all ${
+                    iconThreeEdit ? "opacity-50" : "opacity-0"
+                  }`}
                 >
-                  <input
-                    type="file"
-                    ref={iconThreeFileInput}
-                    className="hidden"
-                    accept=".jpg,.png"
-                    onChange={async (e) => {
-                      await handleFileUpload(
-                        "about-icon-three-upload",
-                        setIconThreeEdit,
-                        "iconThree",
-                        e
-                      );
-                    }}
-                  />
-                  <img
-                    src={pageData.iconThree}
-                    alt=""
-                    className="rounded-3xl shadow-custom"
-                  />
-                  <div
-                    className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-3xl border-8 border-dashed border-black bg-white text-3xl font-bold text-black transition-all ${
-                      iconThreeEdit ? "opacity-50" : "opacity-0"
-                    }`}
-                  >
-                    click to upload image
-                  </div>
+                  click to upload image
+                </div>
               </div>
             </div>
             <div className="content-right">
@@ -340,24 +341,82 @@ const About: React.FC<{
         {pageData.sections.map((section, index) => {
           const { type, details } = section;
           switch (type) {
-            case 'SKILL':
-              return <SkillSection key={index} userData={userData} preview={false} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} page={'HOME'}/>;
-            case 'STORY':
+            case "SKILL":
               return (
-                  'descriptionOne' in details && 'bulletOne' in details && 'bulletTwo' in details && 'bulletThree' in details && 'imageOne' in details
-                      ? <StorySection page={'ABOUT'} key={index} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>}/>
-                      : null
+                <SkillSection
+                  key={index}
+                  userData={userData}
+                  preview={false}
+                  details={details}
+                  setPageData={
+                    setPageData as React.Dispatch<
+                      React.SetStateAction<AnyPageData>
+                    >
+                  }
+                  page={"HOME"}
+                />
               );
-              case 'RESUME':
-                return <ResumeSection key={index} page={'ABOUT'} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} userData={userData}/>;
-              case 'FAQ':
-                return (
-                    'descriptionOne' in details && 'headerOne' in details && 'faq' in details
-                        ? <FAQSection setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} key={index} page={'ABOUT'} details={details} />
-                        : null
-                );
-              // case 'VALUE':
-              //   return <ValueSection key={index} details={details} />;
+            case "STORY":
+              return "descriptionOne" in details &&
+                "bulletOne" in details &&
+                "bulletTwo" in details &&
+                "bulletThree" in details &&
+                "imageOne" in details ? (
+                <StorySection
+                  page={"ABOUT"}
+                  key={index}
+                  details={details}
+                  setPageData={
+                    setPageData as React.Dispatch<
+                      React.SetStateAction<AnyPageData>
+                    >
+                  }
+                />
+              ) : null;
+            case "RESUME":
+              return (
+                <ResumeSection
+                  key={index}
+                  page={"ABOUT"}
+                  details={details}
+                  setPageData={
+                    setPageData as React.Dispatch<
+                      React.SetStateAction<AnyPageData>
+                    >
+                  }
+                  userData={userData}
+                />
+              );
+            case "FAQ":
+              return "descriptionOne" in details &&
+                "headerOne" in details &&
+                "faq" in details ? (
+                <FAQSection
+                  setPageData={
+                    setPageData as React.Dispatch<
+                      React.SetStateAction<AnyPageData>
+                    >
+                  }
+                  key={index}
+                  page={"ABOUT"}
+                  details={details}
+                />
+              ) : null;
+            case "VALUE":
+              return "descriptionOne" in details &&
+                "headerOne" in details &&
+                "values" in details ? (
+                <ValueSection
+                  setPageData={
+                    setPageData as React.Dispatch<
+                      React.SetStateAction<AnyPageData>
+                    >
+                  }
+                  key={index}
+                  page={"ABOUT"}
+                  details={details}
+                />
+              ) : null;
             default:
               return null;
           }

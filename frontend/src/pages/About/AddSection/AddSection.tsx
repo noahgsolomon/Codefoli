@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import AboutData from "Type/AboutData.tsx";
 
 const AddSection: React.FC<{

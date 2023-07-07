@@ -1,17 +1,21 @@
 import React from "react";
 
 type props = {
-    items: string[]
-}
+  items: string[];
+};
 
-const Marquee: React.FC<props> = ({items}) => {
+const Marquee: React.FC<props> = ({ items }) => {
   return (
-    <div className="overflow-x-hidden bg-black mt-32">
-    <div className="py-8 animate-marquee whitespace-nowrap ">
-        {items.map(item => <span className="mx-4 text-2xl font-bold text-white" key={item}>{item}</span>)}
+    <div className="mt-32 overflow-x-hidden bg-black">
+      <div className="animate-marquee whitespace-nowrap py-8 ">
+        {items.map((item) => (
+          <span className="mx-4 text-2xl font-bold text-white" key={item}>
+            {item}
+          </span>
+        ))}
+      </div>
     </div>
-</div>
-  )
-}
+  );
+};
 
-export default Marquee
+export default Marquee;

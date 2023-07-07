@@ -1,15 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-const Header: React.FC<{authenticated: boolean}> = ({authenticated}) => {
+const Header: React.FC<{ authenticated: boolean }> = ({ authenticated }) => {
   const location = useLocation();
   const blank = ["/setup"].includes(location.pathname);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-      setLoading(false);
+    setLoading(false);
   }, []);
-
 
   return (
     <header
@@ -21,9 +20,10 @@ const Header: React.FC<{authenticated: boolean}> = ({authenticated}) => {
         style={{ maxWidth: "50rem" }}
       >
         <Link
-            to={authenticated ? "/dashboard" : "/"}
-            className="hover:p-2 cursor-pointer select-none transition-all hover:bg-blue-500 hover:text-white text-4xl text-current no-underline md:text-2xl">
-            Codefolio
+          to={authenticated ? "/dashboard" : "/"}
+          className="cursor-pointer select-none text-4xl text-current no-underline transition-all hover:bg-blue-500 hover:p-2 hover:text-white md:text-2xl"
+        >
+          Codefolio
         </Link>
         {blank ? (
           <></>
@@ -33,7 +33,7 @@ const Header: React.FC<{authenticated: boolean}> = ({authenticated}) => {
               <div className="lg:mx-10">
                 <Link
                   to="/dashboard"
-                  className="mx-2 py-1 text-lg no-underline transition-all md:mx-10 hover:text-blue-500"
+                  className="mx-2 py-1 text-lg no-underline transition-all hover:text-blue-500 md:mx-10"
                 >
                   Dashboard
                 </Link>

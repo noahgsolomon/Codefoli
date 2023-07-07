@@ -26,7 +26,7 @@ const Register: React.FC = () => {
     }
   }, []);
 
-  if (loading){
+  if (loading) {
     return <></>;
   }
 

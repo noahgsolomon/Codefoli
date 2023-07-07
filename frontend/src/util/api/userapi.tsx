@@ -9,7 +9,7 @@ const userDetails = async () => {
     });
 
     const responseJson = await response.json();
-    if (responseJson.status === 'OK') {
+    if (responseJson.status === "OK") {
       return responseJson.data;
     } else {
       console.log(responseJson.message);
@@ -21,16 +21,16 @@ const userDetails = async () => {
 };
 
 const setupAccount = async (
-    name: string,
-    email: string,
-    profession: string,
-    company: string,
-    location: string,
-    about: string,
-    skills: string[],
-    work: Work[],
-    projects: Project[],
-    services: string[]
+  name: string,
+  email: string,
+  profession: string,
+  company: string,
+  location: string,
+  about: string,
+  skills: string[],
+  work: Work[],
+  projects: Project[],
+  services: string[]
 ) => {
   const model = {
     name: name,
@@ -53,7 +53,7 @@ const setupAccount = async (
     });
 
     const responseJson = await response.json();
-    if (responseJson.status === 'OK') {
+    if (responseJson.status === "OK") {
       return responseJson.data;
     } else {
       console.log(responseJson.message);
@@ -73,7 +73,7 @@ const getHome = async () => {
     });
 
     const responseJson = await homeData.json();
-    if (responseJson.status === 'OK') {
+    if (responseJson.status === "OK") {
       return responseJson.data;
     } else {
       console.log(responseJson.message);
@@ -84,7 +84,6 @@ const getHome = async () => {
   }
 };
 
-
 const getAbout = async () => {
   try {
     const aboutData = await fetch("http://localhost:8080/about", {
@@ -94,7 +93,7 @@ const getAbout = async () => {
     });
 
     const responseJson = await aboutData.json();
-    if (responseJson.status === 'OK') {
+    if (responseJson.status === "OK") {
       return responseJson.data;
     } else {
       console.log(responseJson.message);
@@ -114,7 +113,7 @@ const getContact = async () => {
     });
 
     const responseJson = await contactData.json();
-    if (responseJson.status === 'OK') {
+    if (responseJson.status === "OK") {
       return responseJson.data;
     } else {
       console.log(responseJson.message);
@@ -124,6 +123,5 @@ const getContact = async () => {
     console.log(e);
   }
 };
-
 
 export { userDetails, setupAccount, getHome, getAbout, getContact };

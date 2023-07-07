@@ -1,5 +1,5 @@
 type NoAuthProps = {
-    loading: boolean;
-}
+  loading: boolean;
+};
 
 export default NoAuthProps;

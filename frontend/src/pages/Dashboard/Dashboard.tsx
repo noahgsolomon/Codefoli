@@ -4,12 +4,13 @@ import Footer from "Components/Footer/Footer.tsx";
 import { useSpring, animated } from "react-spring";
 import HomeData from "Type/HomeData.tsx";
 import UserData from "Type/UserData.tsx";
-import {updateDescriptionOne, updateHeaderOne} from "./dashboardapi.tsx";
+import { updateDescriptionOne, updateHeaderOne } from "./dashboardapi.tsx";
 import SkillSection from "Components/Sections/SkillSection.tsx";
 import StorySection from "Components/Sections/Story/StorySection.tsx";
 import ResumeSection from "Components/Sections/ResumeSection.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
-import FAQSection from "Components/Sections/Story/FAQSection.tsx";
+import FAQSection from "Components/Sections/FAQSection.tsx";
+import ValueSection from "Components/Sections/ValueSection.tsx";
 
 const Dashboard: React.FC<{
   pageData: HomeData;
@@ -143,7 +144,7 @@ const Dashboard: React.FC<{
                   />
                 ) : (
                   <h1
-                    className="hover:opacity-50 transition-all font-extra-bold max-w-[15ch] cursor-pointer select-none text-center text-4xl leading-snug md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal"
+                    className="font-extra-bold max-w-[15ch] cursor-pointer select-none text-center text-4xl leading-snug transition-all hover:opacity-50 md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal"
                     onClick={() => setHeaderOneEdit(true)}
                   >
                     {pageData.headerOne}
@@ -171,7 +172,7 @@ const Dashboard: React.FC<{
                   />
                 ) : (
                   <p
-                    className="hover:opacity-50 transition-all max-w-[35ch] cursor-pointer select-none text-center text-base opacity-60 xl:max-w-[50ch] xl:text-left"
+                    className="max-w-[35ch] cursor-pointer select-none text-center text-base opacity-60 transition-all hover:opacity-50 xl:max-w-[50ch] xl:text-left"
                     onClick={() => setDescriptionOneEdit(true)}
                   >
                     {pageData.descriptionOne}
@@ -226,24 +227,82 @@ const Dashboard: React.FC<{
         {pageData.sections.map((section, index) => {
           const { type, details } = section;
           switch (type) {
-            case 'SKILL':
-              return <SkillSection key={index} userData={userData} preview={false} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} page={'HOME'}/>;
-            case 'STORY':
+            case "SKILL":
               return (
-                  'descriptionOne' in details && 'bulletOne' in details && 'bulletTwo' in details && 'bulletThree' in details && 'imageOne' in details
-                      ? <StorySection page={'HOME'} key={index} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>}/>
-                      : null
+                <SkillSection
+                  key={index}
+                  userData={userData}
+                  preview={false}
+                  details={details}
+                  setPageData={
+                    setPageData as React.Dispatch<
+                      React.SetStateAction<AnyPageData>
+                    >
+                  }
+                  page={"HOME"}
+                />
               );
-            case 'RESUME':
-              return <ResumeSection key={index} page={'HOME'} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} userData={userData}/>;
-            case 'FAQ':
+            case "STORY":
+              return "descriptionOne" in details &&
+                "bulletOne" in details &&
+                "bulletTwo" in details &&
+                "bulletThree" in details &&
+                "imageOne" in details ? (
+                <StorySection
+                  page={"HOME"}
+                  key={index}
+                  details={details}
+                  setPageData={
+                    setPageData as React.Dispatch<
+                      React.SetStateAction<AnyPageData>
+                    >
+                  }
+                />
+              ) : null;
+            case "RESUME":
               return (
-                  'descriptionOne' in details && 'headerOne' in details && 'faq' in details
-                      ? <FAQSection setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} key={index} page={'HOME'} details={details} />
-                      : null
+                <ResumeSection
+                  key={index}
+                  page={"HOME"}
+                  details={details}
+                  setPageData={
+                    setPageData as React.Dispatch<
+                      React.SetStateAction<AnyPageData>
+                    >
+                  }
+                  userData={userData}
+                />
               );
-            // case 'VALUE':
-            //   return <ValueSection key={index} details={details} />;
+            case "FAQ":
+              return "descriptionOne" in details &&
+                "headerOne" in details &&
+                "faq" in details ? (
+                <FAQSection
+                  setPageData={
+                    setPageData as React.Dispatch<
+                      React.SetStateAction<AnyPageData>
+                    >
+                  }
+                  key={index}
+                  page={"HOME"}
+                  details={details}
+                />
+              ) : null;
+            case "VALUE":
+              return "descriptionOne" in details &&
+                "headerOne" in details &&
+                "values" in details ? (
+                <ValueSection
+                  setPageData={
+                    setPageData as React.Dispatch<
+                      React.SetStateAction<AnyPageData>
+                    >
+                  }
+                  key={index}
+                  page={"HOME"}
+                  details={details}
+                />
+              ) : null;
             default:
               return null;
           }

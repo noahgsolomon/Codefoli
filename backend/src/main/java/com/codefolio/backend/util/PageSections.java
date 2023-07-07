@@ -1,6 +1,9 @@
 package com.codefolio.backend.util;
 
 import com.codefolio.backend.user.Users;
+import com.codefolio.backend.user.pages.aboutpage.values.Values;
+import com.codefolio.backend.user.pages.aboutpage.values.ValuesRepository;
+import com.codefolio.backend.user.pages.aboutpage.values.ValuesResponseModel;
 import com.codefolio.backend.user.pages.contactpage.faq.FAQ;
 import com.codefolio.backend.user.pages.contactpage.faq.FAQRepository;
 import com.codefolio.backend.user.pages.contactpage.faq.FAQResponseModel;
@@ -41,6 +44,7 @@ public class PageSections {
     private final StorySectionRepository storySectionRepository;
     private final ValueSectionRepository valueSectionRepository;
     private final FAQRepository faqRepository;
+    private final ValuesRepository valuesRepository;
 
     public List<Object> getSections(Users user, PageType pageType) {
         List<Section> sections = sectionRepository.findAllByUsersAndPage(user, pageType);
@@ -53,8 +57,13 @@ public class PageSections {
                 case VALUE -> {
                     ValueSection valueSection = valueSectionRepository.findByUsers(user).orElse(null);
                     if (valueSection != null) {
+                        List<Values> values = valuesRepository.findAllByUsers(user);
+                        List<ValuesResponseModel> valuesList = new ArrayList<>();
+                        for (Values value: values){
+                            valuesList.add(new ValuesResponseModel(value.getValue()));
+                        }
                         map.put("type", "VALUE");
-                        map.put("details", new ValueSectionResponseModel(valueSection.getHeaderOne(), valueSection.getDescriptionOne()));
+                        map.put("details", new ValueSectionResponseModel(valueSection.getHeaderOne(), valueSection.getDescriptionOne(), valuesList));
                         sectionDetails.add(map);
                     }
                 }

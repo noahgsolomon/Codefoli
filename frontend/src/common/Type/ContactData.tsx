@@ -1,4 +1,4 @@
-import {Section} from "Type/Section.tsx";
+import { Section } from "Type/Section.tsx";
 
 type ContactData = {
   headerOne: string;

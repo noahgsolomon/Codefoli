@@ -1,12 +1,14 @@
-import React, {SetStateAction, useRef, useState} from "react";
-import {StoryType} from "Type/Section.tsx";
+import React, { SetStateAction, useRef, useState } from "react";
+import { StoryType } from "Type/Section.tsx";
 import {
   updateBulletOneStory,
   updateBulletThreeStory,
-  updateBulletTwoStory, updateDescriptionOneStory, updateHeaderOneStory
+  updateBulletTwoStory,
+  updateDescriptionOneStory,
+  updateHeaderOneStory,
 } from "Components/Sections/Story/storyapi.tsx";
 import PageType from "Type/Pages.tsx";
-import {removeSection} from "Components/Sections/api/sectionapi.tsx";
+import { removeSection } from "Components/Sections/api/sectionapi.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 
 const StorySection: React.FC<{
@@ -43,8 +45,7 @@ const StorySection: React.FC<{
   const bulletThreeTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const [StoryHover, setStoryHover] = useState<boolean>(false);
-  const [removeStory, setRemoveStory] =
-    useState<boolean>(false);
+  const [removeStory, setRemoveStory] = useState<boolean>(false);
 
   const handleDescriptionOneSubmit = async () => {
     const updateDescription = await updateDescriptionOneStory(
@@ -54,9 +55,15 @@ const StorySection: React.FC<{
       setPageData((prev) => ({
         ...prev,
         sections: prev.sections.map((section) =>
-            section.type === 'STORY'
-                ? { ...section, details: { ...section.details, descriptionOne: descriptionOneEditValue } }
-                : section
+          section.type === "STORY"
+            ? {
+                ...section,
+                details: {
+                  ...section.details,
+                  descriptionOne: descriptionOneEditValue,
+                },
+              }
+            : section
         ),
       }));
       setDescriptionOneEditValue(updateDescription);
@@ -70,9 +77,12 @@ const StorySection: React.FC<{
       setPageData((prev) => ({
         ...prev,
         sections: prev.sections.map((section) =>
-            section.type === 'STORY'
-                ? { ...section, details: { ...section.details, headerOne: headerOneEditValue } }
-                : section
+          section.type === "STORY"
+            ? {
+                ...section,
+                details: { ...section.details, headerOne: headerOneEditValue },
+              }
+            : section
         ),
       }));
       setHeaderOneEditValue(updateHeader);
@@ -86,9 +96,12 @@ const StorySection: React.FC<{
       setPageData((prev) => ({
         ...prev,
         sections: prev.sections.map((section) =>
-            section.type === 'STORY'
-                ? { ...section, details: { ...section.details, bulletOne: bulletOneEditValue } }
-                : section
+          section.type === "STORY"
+            ? {
+                ...section,
+                details: { ...section.details, bulletOne: bulletOneEditValue },
+              }
+            : section
         ),
       }));
       setBulletOneEditValue(updateBullet);
@@ -102,9 +115,12 @@ const StorySection: React.FC<{
       setPageData((prev) => ({
         ...prev,
         sections: prev.sections.map((section) =>
-            section.type === 'STORY'
-                ? { ...section, details: { ...section.details, bulletTwo: bulletTwoEditValue } }
-                : section
+          section.type === "STORY"
+            ? {
+                ...section,
+                details: { ...section.details, bulletTwo: bulletTwoEditValue },
+              }
+            : section
         ),
       }));
       setBulletOneEditValue(updateBullet);
@@ -118,9 +134,15 @@ const StorySection: React.FC<{
       setPageData((prev) => ({
         ...prev,
         sections: prev.sections.map((section) =>
-            section.type === 'STORY'
-                ? { ...section, details: { ...section.details, bulletThree: bulletThreeEditValue } }
-                : section
+          section.type === "STORY"
+            ? {
+                ...section,
+                details: {
+                  ...section.details,
+                  bulletThree: bulletThreeEditValue,
+                },
+              }
+            : section
         ),
       }));
       setBulletOneEditValue(updateBullet);
@@ -129,10 +151,10 @@ const StorySection: React.FC<{
   };
 
   const handleFileUpload = async (
-      path: string,
-      setEdit: React.Dispatch<React.SetStateAction<boolean>>,
-      imageKey: keyof StoryType,
-      e: React.ChangeEvent<HTMLInputElement>
+    path: string,
+    setEdit: React.Dispatch<React.SetStateAction<boolean>>,
+    imageKey: keyof StoryType,
+    e: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (!e.target.files) return;
     setEdit(true);
@@ -157,9 +179,15 @@ const StorySection: React.FC<{
       setPageData((prev) => ({
         ...prev,
         sections: prev.sections.map((section) =>
-            section.type === 'STORY'
-                ? { ...section, details: { ...section.details, [imageKey]: data.url + `?date=${new Date()}` } }
-                : section
+          section.type === "STORY"
+            ? {
+                ...section,
+                details: {
+                  ...section.details,
+                  [imageKey]: data.url + `?date=${new Date()}`,
+                },
+              }
+            : section
         ),
       }));
       setTimeout(() => setEdit(false), 500);
@@ -171,7 +199,7 @@ const StorySection: React.FC<{
 
   return (
     <section
-      className="story relative mt-20 mb-20 bg-black transition-all"
+      className="story relative mb-20 mt-20 bg-black transition-all"
       onMouseEnter={() => setStoryHover(true)}
       onMouseLeave={() => setStoryHover(false)}
     >
@@ -187,15 +215,15 @@ const StorySection: React.FC<{
         onMouseEnter={() => setRemoveStory(true)}
         onMouseLeave={() => setRemoveStory(false)}
         onClick={async () => {
-            const remove = await removeSection(page, 'STORY');
-            if (remove) {
-                setPageData((prev) => ({
-                ...prev,
-                sections: prev.sections.filter(
-                    (section) => section.type !== "STORY"
-                ),
-                }));
-            }
+          const remove = await removeSection(page, "STORY");
+          if (remove) {
+            setPageData((prev) => ({
+              ...prev,
+              sections: prev.sections.filter(
+                (section) => section.type !== "STORY"
+              ),
+            }));
+          }
         }}
       >
         -
@@ -214,7 +242,7 @@ const StorySection: React.FC<{
               onKeyDown={async (e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
-                  console.log('pressed')
+                  console.log("pressed");
                   await handleHeaderOneSubmit();
                 }
               }}

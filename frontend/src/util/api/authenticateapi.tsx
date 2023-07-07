@@ -1,5 +1,3 @@
-
-
 const login = async (email: string, password: string) => {
   try {
     const response = await fetch("http://localhost:8080/login", {
@@ -65,8 +63,4 @@ const authenticated = async () => {
   }
 };
 
-
-export { login,
-  register,
-  authenticated
-};
+export { login, register, authenticated };

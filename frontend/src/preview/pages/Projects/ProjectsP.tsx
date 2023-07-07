@@ -1,10 +1,7 @@
 import React from "react";
 
-
 const ProjectsP: React.FC = () => {
-    return (
-        <></>
-    )
-}
+  return <></>;
+};
 
 export default ProjectsP;

@@ -10,7 +10,6 @@ const Login: React.FC = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [loading, setLoading] = useState(true);
 
-
   const handleLogin = async () => {
     const loginRequest = await login(email, password);
     if (loginRequest) {
@@ -29,7 +28,7 @@ const Login: React.FC = () => {
     }
   }, []);
 
-  if (loading){
+  if (loading) {
     return <></>;
   }
 
