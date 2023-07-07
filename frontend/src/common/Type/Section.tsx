@@ -23,6 +23,10 @@ type SkillType = {
 type FAQType = {
     headerOne: string,
     descriptionOne: string,
+    faq: [{
+        question: string,
+        answer: string
+    }]
 }
 
 type SectionDetails = StoryType | ResumeType | SkillType | FAQType | ValueType;

@@ -62,14 +62,7 @@ const MainApp: React.FC = () => {
     descriptionOne: "",
     email: "",
     phone: "",
-    headerTwo: "",
-    descriptionTwo: "",
-    faq: [
-      {
-        question: "",
-        answer: "",
-      },
-    ],
+    sections: [],
   });
 
   useEffect(() => {
@@ -140,7 +133,7 @@ const MainApp: React.FC = () => {
         />
         <Route
           path="/contact"
-          element={<Contact userData={userData} pageData={contactData} />}
+          element={<Contact pageData={contactData} userData={userData} setPageData={setContactData}/>}
         />
         <Route
           path="/about"

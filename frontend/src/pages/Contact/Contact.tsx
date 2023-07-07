@@ -1,37 +1,25 @@
-import Accordion from "Components/Accordion/Accordion";
 import Footer from "Components/Footer/Footer";
 import Form from "./Form/Form";
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import { useSpring, animated } from "react-spring";
-import UserData from "Type/UserData.tsx";
 import ContactData from "Type/ContactData.tsx";
+import SkillSection from "Components/Sections/SkillSection.tsx";
+import StorySection from "Components/Sections/Story/StorySection.tsx";
+import AnyPageData from "Type/AnyPageData.tsx";
+import ResumeSection from "Components/Sections/ResumeSection.tsx";
+import FAQSection from "Components/Sections/Story/FAQSection.tsx";
+import UserData from "Type/UserData.tsx";
 
-const Contact: React.FC<{ userData: UserData; pageData: ContactData }> = ({
-  userData,
-  pageData,
-}) => {
-  console.log(userData);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!localStorage.getItem("role")) {
-      navigate("/");
-    } else if (localStorage.getItem("role") === "NEWBIE") {
-      navigate("/setup");
-    }
-  }, [navigate]);
+const Contact: React.FC<{
+  pageData: ContactData;
+  setPageData: React.Dispatch<React.SetStateAction<ContactData>>;
+  userData: UserData;
+}> = ({ pageData, setPageData, userData}) => {
 
   const animationProps = useSpring({
     from: { opacity: 0, transform: "translate3d(-20px, 0, 0)" },
     to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
     delay: 100,
-  });
-
-  const faqAnimationProps = useSpring({
-    from: { opacity: 0, transform: "translate3d(0, 20px, 0)" },
-    to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
-    delay: 200,
   });
 
   return (
@@ -82,26 +70,32 @@ const Contact: React.FC<{ userData: UserData; pageData: ContactData }> = ({
             <Form />
           </div>
         </div>
-
-        {/* FAQs */}
-        <animated.section style={faqAnimationProps} className="px-5">
-          <div className="header mx-auto mb-5 max-w-[647px]">
-            <h2 className="text-center text-2xl font-bold md:text-5xl">
-              {pageData.headerTwo}
-            </h2>
-            <p className="text-center">{pageData.descriptionTwo}</p>
-          </div>
-          <div className="accordion-wrapper mx-auto max-w-[800px]">
-            {pageData.faq.map((faq, index) => (
-              <Accordion
-                key={index}
-                title={faq.question}
-                content={faq.answer}
-              />
-            ))}
-          </div>
-        </animated.section>
       </main>
+      {pageData.sections.map((section, index) => {
+        const { type, details } = section;
+        switch (type) {
+          case 'SKILL':
+            return <SkillSection key={index} userData={userData} preview={false} details={details} />;
+          case 'STORY':
+            return (
+                'descriptionOne' in details && 'bulletOne' in details && 'bulletTwo' in details && 'bulletThree' in details && 'imageOne' in details
+                    ? <StorySection page={'ABOUT'} key={index} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>}/>
+                    : null
+            );
+          case 'RESUME':
+            return <ResumeSection key={index} page={'ABOUT'} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} userData={userData}/>;
+          case 'FAQ':
+            return (
+                'descriptionOne' in details && 'headerOne' in details && 'faq' in details
+                    ? <FAQSection key={index} page={'ABOUT'} details={details} />
+                    : null
+            );
+            // case 'VALUE':
+            //   return <ValueSection key={index} details={details} />;
+          default:
+            return null;
+        }
+      })}
       <Footer />
     </>
   );

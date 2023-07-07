@@ -1,6 +1,8 @@
 package com.codefolio.backend.user.pages.contactpage;
 
 import com.codefolio.backend.user.Users;
+import com.codefolio.backend.user.sections.PageType;
+import com.codefolio.backend.util.PageSections;
 import com.codefolio.backend.util.Response;
 import com.codefolio.backend.util.StatusType;
 import lombok.AllArgsConstructor;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.List;
 
 import static com.codefolio.backend.user.UserService.getAuthenticatedUser;
 
@@ -17,6 +20,7 @@ import static com.codefolio.backend.user.UserService.getAuthenticatedUser;
 public class ContactService {
 
     private final ContactRepository contactRepository;
+    private final PageSections pageSections;
 
     public ResponseEntity<Response> getContact(Principal principal) {
         try {
@@ -32,11 +36,15 @@ public class ContactService {
                         .body(new Response(StatusType.NOT_FOUND, "Contact data not found", null));
             }
 
+            List<Object> sectionDetails = pageSections.getSections(users, PageType.CONTACT);
+
             ContactModel contactModel = new ContactModel(
                     contact.getHeaderOne(),
                     contact.getDescriptionOne(),
                     contact.getEmail(),
-                    contact.getPhone());
+                    contact.getPhone(),
+                    sectionDetails
+                    );
 
             return ResponseEntity.ok(new Response(StatusType.OK, "Contact data fetched successfully", contactModel));
 

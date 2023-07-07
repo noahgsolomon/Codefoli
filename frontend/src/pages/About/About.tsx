@@ -13,6 +13,7 @@ import SkillSection from "Components/Sections/SkillSection.tsx";
 import StorySection from "Components/Sections/Story/StorySection.tsx";
 import ResumeSection from "Components/Sections/ResumeSection.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
+import FAQSection from "Components/Sections/Story/FAQSection.tsx";
 
 const About: React.FC<{
   userData: UserData;
@@ -349,8 +350,12 @@ const About: React.FC<{
               );
               case 'RESUME':
                 return <ResumeSection key={index} page={'ABOUT'} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} userData={userData}/>;
-              // case 'FAQ':
-              //   return <FAQSection key={index} details={details} />;
+              case 'FAQ':
+                return (
+                    'descriptionOne' in details && 'headerOne' in details && 'faq' in details
+                        ? <FAQSection key={index} page={'ABOUT'} details={details} />
+                        : null
+                );
               // case 'VALUE':
               //   return <ValueSection key={index} details={details} />;
             default:
