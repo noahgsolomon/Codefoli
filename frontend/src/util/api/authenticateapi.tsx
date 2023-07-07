@@ -1,3 +1,5 @@
+
+
 const login = async (email: string, password: string) => {
   try {
     const response = await fetch("http://localhost:8080/login", {
@@ -6,8 +8,8 @@ const login = async (email: string, password: string) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: email,
-        password: password,
+        email,
+        password,
       }),
       credentials: "include",
     });
@@ -30,9 +32,9 @@ const register = async (name: string, email: string, password: string) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: name,
-        email: email,
-        password: password,
+        name,
+        email,
+        password,
       }),
       credentials: "include",
     });
@@ -48,21 +50,21 @@ const register = async (name: string, email: string, password: string) => {
 };
 
 const authenticated = async () => {
-  try{
+  try {
     const response = await fetch("http://localhost:8080/authenticated", {
       method: "GET",
-      headers: {'Content-Type': 'application/json'},
+      headers: { "Content-Type": "application/json" },
       credentials: "include",
     });
-    if (response.ok){
+    if (response.ok) {
       return response.text();
     }
-  } catch (e){
+  } catch (e) {
     console.log(e);
     throw e;
   }
+};
 
-}
 
 export { login,
   register,

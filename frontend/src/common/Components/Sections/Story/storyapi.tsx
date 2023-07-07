@@ -9,9 +9,13 @@ const updateHeaderOneStory = async (headerOne: string) => {
                 credentials: "include",
             }
         );
-
-        if (updateFetch.ok) {
-            return await updateFetch.text();
+        const updateFetchJson = await updateFetch.json();
+        if (updateFetchJson.status === 'OK') {
+            return updateFetchJson.data;
+        }
+        else {
+            console.log(updateFetchJson.message);
+            return updateFetchJson.message;
         }
     } catch (e) {
         console.log(e);
@@ -28,14 +32,19 @@ const updateDescriptionOneStory = async (descriptionOne: string) => {
                 credentials: "include",
             }
         );
-
-        if (updateFetch.ok) {
-            return await updateFetch.text();
+        const updateFetchJson = await updateFetch.json();
+        if (updateFetchJson.status === 'OK') {
+            return updateFetchJson.data;
+        }
+        else {
+            console.log(updateFetchJson.message);
+            return updateFetchJson.message;
         }
     } catch (e) {
         console.log(e);
     }
 };
+
 const updateBulletOneStory = async (bulletOne: string) => {
     try {
         const updateFetch = await fetch(
@@ -47,14 +56,19 @@ const updateBulletOneStory = async (bulletOne: string) => {
                 credentials: "include",
             }
         );
-
-        if (updateFetch.ok) {
-            return await updateFetch.text();
+        const updateFetchJson = await updateFetch.json();
+        if (updateFetchJson.status === 'OK') {
+            return updateFetchJson.data;
+        }
+        else {
+            console.log(updateFetchJson.message);
+            return updateFetchJson.message;
         }
     } catch (e) {
         console.log(e);
     }
 };
+
 const updateBulletTwoStory = async (bulletTwo: string) => {
     try {
         const updateFetch = await fetch(
@@ -66,14 +80,19 @@ const updateBulletTwoStory = async (bulletTwo: string) => {
                 credentials: "include",
             }
         );
-
-        if (updateFetch.ok) {
-            return await updateFetch.text();
+        const updateFetchJson = await updateFetch.json();
+        if (updateFetchJson.status === 'OK') {
+            return updateFetchJson.data;
+        }
+        else {
+            console.log(updateFetchJson.message);
+            return updateFetchJson.message;
         }
     } catch (e) {
         console.log(e);
     }
 };
+
 const updateBulletThreeStory = async (bulletThree: string) => {
     try {
         const updateFetch = await fetch(
@@ -85,14 +104,19 @@ const updateBulletThreeStory = async (bulletThree: string) => {
                 credentials: "include",
             }
         );
-
-        if (updateFetch.ok) {
-            return await updateFetch.text();
+        const updateFetchJson = await updateFetch.json();
+        if (updateFetchJson.status === 'OK') {
+            return updateFetchJson.data;
+        }
+        else {
+            console.log(updateFetchJson.message);
+            return updateFetchJson.message;
         }
     } catch (e) {
         console.log(e);
     }
 };
+
 
 
 
