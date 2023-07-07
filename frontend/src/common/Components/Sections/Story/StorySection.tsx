@@ -5,14 +5,14 @@ import {
   updateBulletThreeStory,
   updateBulletTwoStory, updateDescriptionOneStory, updateHeaderOneStory
 } from "Components/Sections/Story/storyapi.tsx";
-import HomeData from "Type/HomeData.tsx";
 import PageType from "Type/Pages.tsx";
 import {removeSection} from "Components/Sections/api/sectionapi.tsx";
+import AnyPageData from "Type/AnyPageData.tsx";
 
 const StorySection: React.FC<{
   page: PageType;
   details: StoryType;
-  setPageData: React.Dispatch<SetStateAction<HomeData>>;
+  setPageData: React.Dispatch<SetStateAction<AnyPageData>>;
 }> = ({ page, details, setPageData }) => {
   const [imageOneEdit, setImageOneEdit] = useState<boolean>(false);
   const imageOneFileInput = useRef<HTMLInputElement | null>(null);

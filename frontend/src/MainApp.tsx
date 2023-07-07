@@ -54,6 +54,7 @@ const MainApp: React.FC = () => {
     headerTwo: "",
     iconThree: "",
     descriptionOne: "",
+    sections: [],
   });
 
   const [contactData, setContactData] = useState<ContactData>({

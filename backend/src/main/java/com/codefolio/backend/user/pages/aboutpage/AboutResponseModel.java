@@ -1,12 +1,15 @@
 package com.codefolio.backend.user.pages.aboutpage;
 
 
-public record AboutModel(
+import java.util.List;
+
+public record AboutResponseModel(
         String headerOne,
         String iconOne,
         String iconTwo,
         String headerTwo,
         String iconThree,
-        String descriptionOne
+        String descriptionOne,
+        List<Object> sections
 ) {
 }

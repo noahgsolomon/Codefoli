@@ -1,9 +1,7 @@
 import Marquee from "Components/Marquee/Marquee";
 import Footer from "Components/Footer/Footer";
-import Card from "Components/Card/Card";
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ValuesData } from "Type/Values.tsx";
 import UserData from "Type/UserData.tsx";
 import AboutData from "Type/AboutData.tsx";
 import {
@@ -11,9 +9,10 @@ import {
   updateHeaderOneAbout,
   updateHeaderTwoAbout,
 } from "./aboutapi.tsx";
-import AddSection from "./AddSection/AddSection.tsx";
-// import StorySection from "Components/Sections/StorySection.tsx";
-import ResumeSection from "Components/Sections/ResumeSection.tsx";
+import SkillSection from "Components/Sections/SkillSection.tsx";
+import StorySection from "Components/Sections/Story/StorySection.tsx";
+// import ResumeSection from "Components/Sections/ResumeSection.tsx";
+import AnyPageData from "Type/AnyPageData.tsx";
 
 const About: React.FC<{
   userData: UserData;
@@ -147,15 +146,14 @@ const About: React.FC<{
                 </h2>
               )}
             </div>
-            {pageData.iconOneActive && (
-              <div
+            <div
                 className="image-wrapper relative order-2 w-full text-center md:order-1 md:self-end"
                 onMouseEnter={() => setIconOneEdit(true)}
                 onMouseLeave={() => setIconOneEdit(false)}
                 onClick={() => {
                   iconOneFileInput.current && iconOneFileInput.current.click();
                 }}
-              >
+            >
                 <input
                   type="file"
                   ref={iconOneFileInput}
@@ -182,17 +180,15 @@ const About: React.FC<{
                 >
                   click to upload image
                 </div>
-              </div>
-            )}
-            {pageData.iconTwoActive && (
-              <div
+            </div>
+            <div
                 className="image-wrapper relative w-full text-center md:order-last md:self-start"
                 onMouseEnter={() => setIconTwoEdit(true)}
                 onMouseLeave={() => setIconTwoEdit(false)}
                 onClick={() =>
                   iconTwoFileInput.current && iconTwoFileInput.current.click()
                 }
-              >
+            >
                 <input
                   type="file"
                   ref={iconTwoFileInput}
@@ -219,8 +215,7 @@ const About: React.FC<{
                 >
                   click to upload image
                 </div>
-              </div>
-            )}
+            </div>
           </section>
         </div>
         {/* Story */}
@@ -256,8 +251,7 @@ const About: React.FC<{
                   </h2>
                 )}
               </div>
-              {pageData.iconThreeActive && (
-                <div
+              <div
                   className="image-wrapper relative mb-5 max-w-[375px] sm:mx-auto md:mx-0"
                   onMouseEnter={() => setIconThreeEdit(true)}
                   onMouseLeave={() => setIconThreeEdit(false)}
@@ -292,8 +286,7 @@ const About: React.FC<{
                   >
                     click to upload image
                   </div>
-                </div>
-              )}
+              </div>
             </div>
             <div className="content-right">
               {descriptionOneEdit ? (
@@ -335,26 +328,6 @@ const About: React.FC<{
             </div>
           </div>
         </section>
-        {/*{pageData.sectionTwoActive ? (*/}
-        {/*  <StorySection*/}
-        {/*    handleFileUpload={handleFileUpload}*/}
-        {/*    setPageData={setPageData}*/}
-        {/*    pageData={pageData}*/}
-        {/*  />*/}
-        {/*) : (*/}
-        {/*  <>*/}
-        {/*  </>*/}
-        {/*)}*/}
-        {/* resume section3*/}
-        {pageData.sectionThreeActive ? (
-          <ResumeSection userData={userData} pageData={pageData} setPageData={setPageData}/>
-        ) : (
-          <>
-            {pageData.sectionTwoActive && (
-              <AddSection pageData={pageData} setPageData={setPageData} />
-            )}
-          </>
-        )}
         <Marquee
           items={userData.services.map((service) => {
             return service
@@ -363,27 +336,27 @@ const About: React.FC<{
               .join(" ");
           })}
         />
-        {/* services */}
-        <section className="services">
-          <div className="container mx-auto my-20 max-w-screen-lg px-5 py-20">
-            <h2 className="mb-8 text-center text-3xl font-bold">
-              {pageData.headerFive}
-            </h2>
-            <p className="desciption mb-8 text-center text-lg font-semibold">
-              {pageData.descriptionThree}
-            </p>
-            <div className="cards-wrapper flex flex-wrap justify-center gap-5 lg:justify-between">
-              {pageData.values.map((value, index) => (
-                <Card
-                  key={index}
-                  title={value.value.replaceAll("_", " ")}
-                  description={ValuesData[value.value].description}
-                  imageUrl={ValuesData[value.value].image}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
+        {pageData.sections.map((section, index) => {
+          const { type, details } = section;
+          switch (type) {
+            case 'SKILL':
+              return <SkillSection key={index} userData={userData} preview={false} details={details} />;
+            case 'STORY':
+              return (
+                  'descriptionOne' in details && 'bulletOne' in details && 'bulletTwo' in details && 'bulletThree' in details && 'imageOne' in details
+                      ? <StorySection page={'ABOUT'} key={index} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>}/>
+                      : null
+              );
+              // case 'RESUME':
+              //   return <ResumeSection key={index} details={details} />;
+              // case 'FAQ':
+              //   return <FAQSection key={index} details={details} />;
+              // case 'VALUE':
+              //   return <ValueSection key={index} details={details} />;
+            default:
+              return null;
+          }
+        })}
       </main>
       <Footer />
     </>
