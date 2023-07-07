@@ -5,15 +5,22 @@ import { ServiceData } from "Type/Services.tsx";
 import { Link } from "react-router-dom";
 import { COLORS } from "../../../util/colors.ts";
 import {SkillType} from "Type/Section.tsx";
+import {removeSection} from "Components/Sections/api/sectionapi.tsx";
+import AnyPageData from "Type/AnyPageData.tsx";
+import PageType from "Type/Pages.tsx";
 
 const SkillSection: React.FC<{
   userData: UserData;
+  setPageData: React.Dispatch<React.SetStateAction<AnyPageData>>;
+  page: PageType;
   details: SkillType
   preview: boolean;
-}> = ({ userData, details, preview }) => {
+}> = ({ userData, details, preview, setPageData, page }) => {
 
     const [languageHover, setLanguageHover] = useState<boolean>(false);
     const [skillColors, setSkillColors] = useState<string[]>([]);
+    const [skillHover, setSkillHover] = useState<boolean>(false);
+    const [removeSkill, setRemoveSkill] = useState<boolean>(false);
 
     useEffect(() => {
         const colors = userData?.skills.map(() => COLORS[Math.floor(Math.random() * COLORS.length)]);
@@ -22,7 +29,35 @@ const SkillSection: React.FC<{
 
 
   return (
-      <div className="mt-20 mb-20">
+      <div className="mt-20 mb-20 relative"
+           onMouseEnter={() => setSkillHover(true)}
+           onMouseLeave={() => setSkillHover(false)}
+      >
+          {removeSkill && (
+              <div
+                  className={` absolute right-0 top-0 h-full w-full bg-red-300 opacity-25 transition-all`}
+              ></div>
+          )}
+          <button
+              className={`${
+                  skillHover ? "opacity-100" : "opacity-0"
+              } absolute right-10 top-0 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
+              onMouseEnter={() => setRemoveSkill(true)}
+              onMouseLeave={() => setRemoveSkill(false)}
+              onClick={async () => {
+                  const remove = await removeSection(page, 'SKILL');
+                  if (remove) {
+                      setPageData((prev) => ({
+                          ...prev,
+                          sections: prev.sections.filter(
+                              (section) => section.type !== "SKILL"
+                          ),
+                      }));
+                  }
+              }}
+          >
+              -
+          </button>
           <h2
               className="text-2xl font-bold hover:opacity-50 transition-all text-center mb-10 leading-relaxed cursor-pointer select-none"
           >

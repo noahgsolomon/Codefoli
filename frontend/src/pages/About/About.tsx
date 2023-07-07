@@ -341,7 +341,7 @@ const About: React.FC<{
           const { type, details } = section;
           switch (type) {
             case 'SKILL':
-              return <SkillSection key={index} userData={userData} preview={false} details={details} />;
+              return <SkillSection key={index} userData={userData} preview={false} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} page={'HOME'}/>;
             case 'STORY':
               return (
                   'descriptionOne' in details && 'bulletOne' in details && 'bulletTwo' in details && 'bulletThree' in details && 'imageOne' in details
@@ -353,7 +353,7 @@ const About: React.FC<{
               case 'FAQ':
                 return (
                     'descriptionOne' in details && 'headerOne' in details && 'faq' in details
-                        ? <FAQSection key={index} page={'ABOUT'} details={details} />
+                        ? <FAQSection setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} key={index} page={'ABOUT'} details={details} />
                         : null
                 );
               // case 'VALUE':

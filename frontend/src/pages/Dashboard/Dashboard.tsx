@@ -7,6 +7,9 @@ import UserData from "Type/UserData.tsx";
 import {updateDescriptionOne, updateHeaderOne} from "./dashboardapi.tsx";
 import SkillSection from "Components/Sections/SkillSection.tsx";
 import StorySection from "Components/Sections/Story/StorySection.tsx";
+import ResumeSection from "Components/Sections/ResumeSection.tsx";
+import AnyPageData from "Type/AnyPageData.tsx";
+import FAQSection from "Components/Sections/Story/FAQSection.tsx";
 
 const Dashboard: React.FC<{
   pageData: HomeData;
@@ -224,17 +227,21 @@ const Dashboard: React.FC<{
           const { type, details } = section;
           switch (type) {
             case 'SKILL':
-              return <SkillSection key={index} userData={userData} preview={false} details={details} />;
+              return <SkillSection key={index} userData={userData} preview={false} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} page={'HOME'}/>;
             case 'STORY':
               return (
                   'descriptionOne' in details && 'bulletOne' in details && 'bulletTwo' in details && 'bulletThree' in details && 'imageOne' in details
-                      ? <StorySection page={'HOME'} key={index} details={details} setPageData={setPageData}/>
+                      ? <StorySection page={'HOME'} key={index} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>}/>
                       : null
               );
-              // case 'RESUME':
-            //   return <ResumeSection key={index} details={details} />;
-            // case 'FAQ':
-            //   return <FAQSection key={index} details={details} />;
+            case 'RESUME':
+              return <ResumeSection key={index} page={'HOME'} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} userData={userData}/>;
+            case 'FAQ':
+              return (
+                  'descriptionOne' in details && 'headerOne' in details && 'faq' in details
+                      ? <FAQSection setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} key={index} page={'HOME'} details={details} />
+                      : null
+              );
             // case 'VALUE':
             //   return <ValueSection key={index} details={details} />;
             default:

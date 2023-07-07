@@ -75,19 +75,19 @@ const Contact: React.FC<{
         const { type, details } = section;
         switch (type) {
           case 'SKILL':
-            return <SkillSection key={index} userData={userData} preview={false} details={details} />;
+            return <SkillSection key={index} userData={userData} preview={false} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} page={'HOME'}/>;
           case 'STORY':
             return (
                 'descriptionOne' in details && 'bulletOne' in details && 'bulletTwo' in details && 'bulletThree' in details && 'imageOne' in details
-                    ? <StorySection page={'ABOUT'} key={index} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>}/>
+                    ? <StorySection page={'CONTACT'} key={index} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>}/>
                     : null
             );
           case 'RESUME':
-            return <ResumeSection key={index} page={'ABOUT'} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} userData={userData}/>;
+            return <ResumeSection key={index} page={'CONTACT'} details={details} setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} userData={userData}/>;
           case 'FAQ':
             return (
                 'descriptionOne' in details && 'headerOne' in details && 'faq' in details
-                    ? <FAQSection key={index} page={'ABOUT'} details={details} />
+                    ? <FAQSection setPageData={setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>} key={index} page={'CONTACT'} details={details} />
                     : null
             );
             // case 'VALUE':

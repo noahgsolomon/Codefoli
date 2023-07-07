@@ -171,7 +171,7 @@ const StorySection: React.FC<{
 
   return (
     <section
-      className="story relative mb-20 bg-black transition-all"
+      className="story relative mt-20 mb-20 bg-black transition-all"
       onMouseEnter={() => setStoryHover(true)}
       onMouseLeave={() => setStoryHover(false)}
     >
