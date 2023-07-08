@@ -11,6 +11,8 @@ import ResumeSection from "Components/Sections/ResumeSection.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import FAQSection from "Components/Sections/FAQSection.tsx";
 import ValueSection from "Components/Sections/ValueSection.tsx";
+import AddSection from "../About/AddSection/AddSection.tsx";
+import { SectionType } from "Type/Section.tsx";
 
 const Dashboard: React.FC<{
   pageData: HomeData;
@@ -114,7 +116,13 @@ const Dashboard: React.FC<{
     }
   };
 
-  console.log(pageData);
+  const allSectionTypes: SectionType[] = [
+    "STORY",
+    "RESUME",
+    "SKILL",
+    "FAQ",
+    "VALUE",
+  ] as SectionType[];
 
   return (
     <>
@@ -226,9 +234,14 @@ const Dashboard: React.FC<{
         </div>
         {pageData.sections.map((section, index) => {
           const { type, details } = section;
+          const availableSectionTypes = allSectionTypes.filter(
+            (t) => t !== type
+          );
+
+          let sectionComponent;
           switch (type) {
             case "SKILL":
-              return (
+              sectionComponent = (
                 <SkillSection
                   key={index}
                   userData={userData}
@@ -242,25 +255,28 @@ const Dashboard: React.FC<{
                   page={"HOME"}
                 />
               );
+              break;
             case "STORY":
-              return "descriptionOne" in details &&
+              sectionComponent =
+                "descriptionOne" in details &&
                 "bulletOne" in details &&
                 "bulletTwo" in details &&
                 "bulletThree" in details &&
                 "imageOne" in details ? (
-                <StorySection
-                  page={"HOME"}
-                  key={index}
-                  details={details}
-                  setPageData={
-                    setPageData as React.Dispatch<
-                      React.SetStateAction<AnyPageData>
-                    >
-                  }
-                />
-              ) : null;
+                  <StorySection
+                    page={"HOME"}
+                    key={index}
+                    details={details}
+                    setPageData={
+                      setPageData as React.Dispatch<
+                        React.SetStateAction<AnyPageData>
+                      >
+                    }
+                  />
+                ) : null;
+              break;
             case "RESUME":
-              return (
+              sectionComponent = (
                 <ResumeSection
                   key={index}
                   page={"HOME"}
@@ -273,39 +289,52 @@ const Dashboard: React.FC<{
                   userData={userData}
                 />
               );
+              break;
             case "FAQ":
-              return "descriptionOne" in details &&
+              sectionComponent =
+                "descriptionOne" in details &&
                 "headerOne" in details &&
                 "faq" in details ? (
-                <FAQSection
-                  setPageData={
-                    setPageData as React.Dispatch<
-                      React.SetStateAction<AnyPageData>
-                    >
-                  }
-                  key={index}
-                  page={"HOME"}
-                  details={details}
-                />
-              ) : null;
+                  <FAQSection
+                    setPageData={
+                      setPageData as React.Dispatch<
+                        React.SetStateAction<AnyPageData>
+                      >
+                    }
+                    key={index}
+                    page={"HOME"}
+                    details={details}
+                  />
+                ) : null;
+              break;
             case "VALUE":
-              return "descriptionOne" in details &&
+              sectionComponent =
+                "descriptionOne" in details &&
                 "headerOne" in details &&
                 "values" in details ? (
-                <ValueSection
-                  setPageData={
-                    setPageData as React.Dispatch<
-                      React.SetStateAction<AnyPageData>
-                    >
-                  }
-                  key={index}
-                  page={"HOME"}
-                  details={details}
-                />
-              ) : null;
+                  <ValueSection
+                    setPageData={
+                      setPageData as React.Dispatch<
+                        React.SetStateAction<AnyPageData>
+                      >
+                    }
+                    key={index}
+                    page={"HOME"}
+                    details={details}
+                  />
+                ) : null;
+              break;
             default:
-              return null;
+              sectionComponent = null;
           }
+
+          return [
+            <AddSection
+              key={`add-${index}`}
+              sections={availableSectionTypes}
+            />,
+            sectionComponent,
+          ];
         })}
       </animated.div>
       <Footer />
