@@ -8,7 +8,8 @@ const AddSection: React.FC<{
   sections: SectionType[];
   page: PageType;
   setPageData: React.Dispatch<SetStateAction<AnyPageData>>;
-}> = ({ sections, page, setPageData }) => {
+  order: number;
+}> = ({ sections, page, setPageData, order }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hover, setHover] = useState(false);
 
@@ -34,16 +35,36 @@ const AddSection: React.FC<{
               key={index}
               className="text-normal block w-full rounded px-4 py-2 text-gray-900 transition-all hover:underline"
               onClick={async () => {
-                const addSectionFetch = await addSection(page, section);
+                const addSectionFetch = await addSection(page, section, order);
                 if (addSectionFetch) {
-                  setPageData((prev) => ({
-                    ...prev,
-                    sections: [
-                      ...prev.sections,
-                      { type: section, details: addSectionFetch.data },
-                    ],
-                  }));
+                  setPageData((prev) => {
+                    let updatedSections = [...prev.sections];
+
+                    updatedSections = updatedSections.map((sec) => {
+                      if (sec.details.order >= order) {
+                        return {
+                          ...sec,
+                          details: {
+                            ...sec.details,
+                            order: sec.details.order + 1,
+                          },
+                        };
+                      } else {
+                        return sec;
+                      }
+                    });
+                    updatedSections.push({
+                      type: section,
+                      details: addSectionFetch.data,
+                    });
+
+                    return {
+                      ...prev,
+                      sections: updatedSections,
+                    };
+                  });
                 }
+
                 setIsOpen(false);
               }}
             >
