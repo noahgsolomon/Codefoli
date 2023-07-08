@@ -63,7 +63,7 @@ public class PageSections {
                             valuesList.add(new ValuesResponseModel(value.getValue()));
                         }
                         map.put("type", "VALUE");
-                        map.put("details", new ValueSectionResponseModel(valueSection.getHeaderOne(), valueSection.getDescriptionOne(), valuesList));
+                        map.put("details", new ValueSectionResponseModel(valueSection.getHeaderOne(), valueSection.getDescriptionOne(), valuesList, section.getPageOrder()));
                         sectionDetails.add(map);
                     }
                 }
@@ -71,7 +71,7 @@ public class PageSections {
                     StorySection storySection = storySectionRepository.findByUsers(user).orElse(null);
                     if (storySection != null) {
                         map.put("type", "STORY");
-                        map.put("details", new StorySectionResponseModel(storySection.getHeaderOne(), storySection.getDescriptionOne(), storySection.getBulletOne(), storySection.getBulletTwo(), storySection.getBulletThree(), storySection.getImageOne()));
+                        map.put("details", new StorySectionResponseModel(storySection.getHeaderOne(), storySection.getDescriptionOne(), storySection.getBulletOne(), storySection.getBulletTwo(), storySection.getBulletThree(), storySection.getImageOne(), section.getPageOrder()));
                         sectionDetails.add(map);
                     }
                 }
@@ -79,7 +79,7 @@ public class PageSections {
                     SkillSection skillSection = skillSectionRepository.findByUsers(user).orElse(null);
                     if (skillSection != null) {
                         map.put("type", "SKILL");
-                        map.put("details", new SkillSectionResponseModel(skillSection.getHeaderOne()));
+                        map.put("details", new SkillSectionResponseModel(skillSection.getHeaderOne(), section.getPageOrder()));
                         sectionDetails.add(map);
                     }
                 }
@@ -87,7 +87,7 @@ public class PageSections {
                     ResumeSection resumeSection = resumeSectionRepository.findByUsers(user).orElse(null);
                     if (resumeSection != null) {
                         map.put("type", "RESUME");
-                        map.put("details", new ResumeSectionResponseModel(resumeSection.getHeaderOne()));
+                        map.put("details", new ResumeSectionResponseModel(resumeSection.getHeaderOne(), section.getPageOrder()));
                         sectionDetails.add(map);
                     }
                 }
@@ -100,7 +100,7 @@ public class PageSections {
                             faqList.add(new FAQResponseModel(oneFaq.getQuestion(), oneFaq.getAnswer()));
                         }
                         map.put("type", "FAQ");
-                        map.put("details", new FAQSectionResponseModel(faqSection.getHeaderOne(), faqSection.getDescriptionOne(), faqList));
+                        map.put("details", new FAQSectionResponseModel(faqSection.getHeaderOne(), faqSection.getDescriptionOne(), faqList, section.getPageOrder()));
                         sectionDetails.add(map);
                     }
                 }
