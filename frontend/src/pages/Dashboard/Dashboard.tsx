@@ -260,6 +260,7 @@ const Dashboard: React.FC<{
                       >
                     }
                     page={"HOME"}
+                    order={section.details.order}
                   />
                 );
                 break;
@@ -279,6 +280,7 @@ const Dashboard: React.FC<{
                           React.SetStateAction<AnyPageData>
                         >
                       }
+                      order={section.details.order}
                     />
                   ) : null;
                 break;
@@ -294,6 +296,7 @@ const Dashboard: React.FC<{
                       >
                     }
                     userData={userData}
+                    order={section.details.order}
                   />
                 );
                 break;
@@ -311,6 +314,7 @@ const Dashboard: React.FC<{
                       key={index}
                       page={"HOME"}
                       details={details}
+                      order={section.details.order}
                     />
                   ) : null;
                 break;
@@ -328,6 +332,7 @@ const Dashboard: React.FC<{
                       key={index}
                       page={"HOME"}
                       details={details}
+                      order={section.details.order}
                     />
                   ) : null;
                 break;
