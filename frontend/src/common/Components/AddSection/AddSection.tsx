@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, {SetStateAction, useState} from "react";
 import { SectionType } from "Type/Section.tsx";
+import PageType from "Type/Pages.tsx";
+import {addSection} from "Components/AddSection/addsectionapi.tsx";
+import AnyPageData from "Type/AnyPageData.tsx";
 
 const AddSection: React.FC<{
   sections: SectionType[];
-}> = ({ sections }) => {
+  page: PageType;
+  setPageData: React.Dispatch<SetStateAction<AnyPageData>>;
+}> = ({ sections, page, setPageData }) => {
   console.log(sections);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +27,16 @@ const AddSection: React.FC<{
             <button
               key={index}
               className="text-normal block w-full rounded px-4 py-2 text-gray-900 transition-all hover:underline"
+              onClick={async () => {
+                  const addSectionFetch = await addSection(page, section);
+                  if (addSectionFetch) {
+                      setPageData((prev) => ({
+                          ...prev,
+                          sections: [...prev.sections, { type: section, details: addSectionFetch.data }],
+                      }));
+                  }
+                  setIsOpen(false);
+              }}
             >
               {section}
             </button>

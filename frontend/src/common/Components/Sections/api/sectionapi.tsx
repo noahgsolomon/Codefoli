@@ -14,12 +14,18 @@ const removeSection = async (page: PageType, section: SectionType) => {
       credentials: "include",
     });
 
-    if (updateFetch.ok) {
-      return await updateFetch.text();
+    const updateFetchJson = await updateFetch.json();
+
+    if (updateFetchJson.status === "OK") {
+      return updateFetchJson.data;
+    } else {
+      console.log(updateFetchJson.message);
+      return updateFetchJson.message;
     }
   } catch (e) {
     console.log(e);
   }
 };
+
 
 export { removeSection };

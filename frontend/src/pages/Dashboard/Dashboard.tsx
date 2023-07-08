@@ -11,7 +11,7 @@ import ResumeSection from "Components/Sections/ResumeSection.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import FAQSection from "Components/Sections/FAQSection.tsx";
 import ValueSection from "Components/Sections/ValueSection.tsx";
-import AddSection from "../About/AddSection/AddSection.tsx";
+import AddSection from "Components/AddSection/AddSection.tsx";
 import { SectionType } from "Type/Section.tsx";
 
 const Dashboard: React.FC<{
@@ -124,6 +124,12 @@ const Dashboard: React.FC<{
     "VALUE",
   ] as SectionType[];
 
+  const sectionList = pageData.sections.map((section) => section.type);
+
+  const availableSectionTypes = allSectionTypes.filter(
+      (t) => !sectionList.includes(t)
+  );
+
   return (
     <>
       <animated.div style={animationProps}>
@@ -234,9 +240,6 @@ const Dashboard: React.FC<{
         </div>
         {pageData.sections.map((section, index) => {
           const { type, details } = section;
-          const availableSectionTypes = allSectionTypes.filter(
-            (t) => t !== type
-          );
 
           let sectionComponent;
           switch (type) {
@@ -332,10 +335,25 @@ const Dashboard: React.FC<{
             <AddSection
               key={`add-${index}`}
               sections={availableSectionTypes}
+              page={"HOME"}
+              setPageData={
+                setPageData as React.Dispatch<
+                    React.SetStateAction<AnyPageData>
+                >
+              }
             />,
             sectionComponent,
           ];
         })}
+        <AddSection
+            setPageData={
+              setPageData as React.Dispatch<
+                  React.SetStateAction<AnyPageData>
+              >
+            }
+            sections={availableSectionTypes}
+            page={"HOME"}
+        />
       </animated.div>
       <Footer />
     </>
