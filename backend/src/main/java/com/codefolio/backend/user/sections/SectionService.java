@@ -54,6 +54,14 @@ public class SectionService {
             Users user = getAuthenticatedUser(principal);
             Optional<Section> section = sectionRepository.findByUsersAndPageAndType(user, PageType.valueOf(remove.page()), SectionType.valueOf(remove.section()));
             if (section.isPresent()) {
+                List<Section> sections = sectionRepository.findAllByUsersAndPage(user, PageType.valueOf(remove.page()));
+
+                for (Section sec : sections) {
+                    if (sec.getPageOrder() > remove.order()) {
+                        sec.setPageOrder(sec.getPageOrder() - 1);
+                        sectionRepository.save(sec);
+                    }
+                }
                 sectionRepository.delete(section.get());
                 return ResponseEntity.ok(new Response(StatusType.OK, "Section deleted successfully", null));
             } else {
@@ -68,6 +76,7 @@ public class SectionService {
 
     public ResponseEntity<Response> addSection(Principal principal, SectionModelRequest add){
         try{
+            System.out.println(add.order());
             Users user = getAuthenticatedUser(principal);
             Optional<Section> section = sectionRepository.findByUsersAndPageAndType(user, PageType.valueOf(add.page()), SectionType.valueOf(add.section()));
             if (section.isPresent()) {
@@ -83,7 +92,7 @@ public class SectionService {
                 }
             }
 
-            Section newSection = new Section(user, SectionType.valueOf(add.section()), PageType.valueOf(add.page()), 1);
+            Section newSection = new Section(user, SectionType.valueOf(add.section()), PageType.valueOf(add.page()), add.order());
             Object data = null;
             if (newSection.getType().equals(SectionType.STORY)) {
                 Optional<StorySection> storyOpt = storySectionRepository.findByUsers(user);

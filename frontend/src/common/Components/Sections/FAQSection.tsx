@@ -9,7 +9,8 @@ const FAQSection: React.FC<{
   page: PageType;
   details: FAQType;
   setPageData: React.Dispatch<React.SetStateAction<AnyPageData>>;
-}> = ({ page, details, setPageData }) => {
+  order: number;
+}> = ({ page, details, setPageData, order }) => {
   const [faqHover, setFAQHover] = useState<boolean>(false);
   const [removeFAQ, setRemoveFAQ] = useState<boolean>(false);
   console.log(faqHover);
@@ -32,14 +33,29 @@ const FAQSection: React.FC<{
           onMouseEnter={() => setRemoveFAQ(true)}
           onMouseLeave={() => setRemoveFAQ(false)}
           onClick={async () => {
-            const remove = await removeSection(page, "FAQ");
+            const remove = await removeSection(page, "FAQ", order);
             if (remove) {
-              setPageData((prev) => ({
-                ...prev,
-                sections: prev.sections.filter(
-                  (section) => section.type !== "FAQ"
-                ),
-              }));
+              setPageData((prev) => {
+                const removedSection = prev.sections.find((section) => section.type === "FAQ");
+                if (!removedSection) {
+                  return prev;
+                }
+                const removedOrder = removedSection.details.order;
+                const updatedSections = prev.sections
+                    .filter((section) => section.type !== "FAQ")
+                    .map((section) => {
+                      if (section.details.order > removedOrder) {
+                        return { ...section, details: { ...section.details, order: section.details.order - 1 } };
+                      } else {
+                        return section;
+                      }
+                    });
+
+                return {
+                  ...prev,
+                  sections: updatedSections,
+                };
+              });
             }
           }}
         >

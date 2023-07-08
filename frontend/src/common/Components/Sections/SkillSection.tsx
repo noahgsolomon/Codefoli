@@ -15,7 +15,8 @@ const SkillSection: React.FC<{
   page: PageType;
   details: SkillType;
   preview: boolean;
-}> = ({ userData, details, preview, setPageData, page }) => {
+  order: number;
+}> = ({ userData, details, preview, setPageData, page, order }) => {
   const [languageHover, setLanguageHover] = useState<boolean>(false);
   const [skillColors, setSkillColors] = useState<string[]>([]);
   const [skillHover, setSkillHover] = useState<boolean>(false);
@@ -46,14 +47,29 @@ const SkillSection: React.FC<{
         onMouseEnter={() => setRemoveSkill(true)}
         onMouseLeave={() => setRemoveSkill(false)}
         onClick={async () => {
-          const remove = await removeSection(page, "SKILL");
+          const remove = await removeSection(page, "SKILL", order);
           if (remove) {
-            setPageData((prev) => ({
-              ...prev,
-              sections: prev.sections.filter(
-                (section) => section.type !== "SKILL"
-              ),
-            }));
+            setPageData((prev) => {
+              const removedSection = prev.sections.find((section) => section.type === "SKILL");
+              if (!removedSection) {
+                return prev;
+              }
+              const removedOrder = removedSection.details.order;
+              const updatedSections = prev.sections
+                  .filter((section) => section.type !== "SKILL")
+                  .map((section) => {
+                    if (section.details.order > removedOrder) {
+                      return { ...section, details: { ...section.details, order: section.details.order - 1 } };
+                    } else {
+                      return section;
+                    }
+                  });
+
+              return {
+                ...prev,
+                sections: updatedSections,
+              };
+            });
           }
         }}
       >

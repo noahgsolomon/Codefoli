@@ -11,7 +11,8 @@ const ResumeSection: React.FC<{
   details: ResumeType;
   setPageData: React.Dispatch<SetStateAction<AnyPageData>>;
   userData: UserData;
-}> = ({ page, details, setPageData, userData }) => {
+  order: number;
+}> = ({ page, details, setPageData, userData, order }) => {
   const [resumeSectionHover, setResumeSectionHover] = useState<boolean>(false);
   const [removeResumeSection, setRemoveResumeSection] =
     useState<boolean>(false);
@@ -34,14 +35,29 @@ const ResumeSection: React.FC<{
         onMouseEnter={() => setRemoveResumeSection(true)}
         onMouseLeave={() => setRemoveResumeSection(false)}
         onClick={async () => {
-          const remove = await removeSection(page, "RESUME");
+          const remove = await removeSection(page, "RESUME", order);
           if (remove) {
-            setPageData((prev) => ({
-              ...prev,
-              sections: prev.sections.filter(
-                (section) => section.type !== "RESUME"
-              ),
-            }));
+            setPageData((prev) => {
+              const removedSection = prev.sections.find((section) => section.type === "RESUME");
+              if (!removedSection) {
+                return prev;
+              }
+              const removedOrder = removedSection.details.order;
+              const updatedSections = prev.sections
+                  .filter((section) => section.type !== "RESUME")
+                  .map((section) => {
+                    if (section.details.order > removedOrder) {
+                      return { ...section, details: { ...section.details, order: section.details.order - 1 } };
+                    } else {
+                      return section;
+                    }
+                  });
+
+              return {
+                ...prev,
+                sections: updatedSections,
+              };
+            });
           }
         }}
       >

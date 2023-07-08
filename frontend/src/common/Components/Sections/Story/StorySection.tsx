@@ -15,7 +15,8 @@ const StorySection: React.FC<{
   page: PageType;
   details: StoryType;
   setPageData: React.Dispatch<SetStateAction<AnyPageData>>;
-}> = ({ page, details, setPageData }) => {
+  order: number;
+}> = ({ page, details, setPageData, order }) => {
   const [imageOneEdit, setImageOneEdit] = useState<boolean>(false);
   const imageOneFileInput = useRef<HTMLInputElement | null>(null);
   const [descriptionOneEdit, setDescriptionOneEdit] = useState(false);
@@ -215,14 +216,29 @@ const StorySection: React.FC<{
         onMouseEnter={() => setRemoveStory(true)}
         onMouseLeave={() => setRemoveStory(false)}
         onClick={async () => {
-          const remove = await removeSection(page, "STORY");
+          const remove = await removeSection(page, "STORY", order);
           if (remove) {
-            setPageData((prev) => ({
-              ...prev,
-              sections: prev.sections.filter(
-                (section) => section.type !== "STORY"
-              ),
-            }));
+            setPageData((prev) => {
+              const removedSection = prev.sections.find((section) => section.type === "STORY");
+              if (!removedSection) {
+                return prev;
+              }
+              const removedOrder = removedSection.details.order;
+              const updatedSections = prev.sections
+                  .filter((section) => section.type !== "STORY")
+                  .map((section) => {
+                    if (section.details.order > removedOrder) {
+                      return { ...section, details: { ...section.details, order: section.details.order - 1 } };
+                    } else {
+                      return section;
+                    }
+                  });
+
+              return {
+                ...prev,
+                sections: updatedSections,
+              };
+            });
           }
         }}
       >

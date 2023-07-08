@@ -10,7 +10,8 @@ const ValueSection: React.FC<{
   page: PageType;
   details: ValueType;
   setPageData: React.Dispatch<SetStateAction<AnyPageData>>;
-}> = ({ page, details, setPageData }) => {
+  order: number;
+}> = ({ page, details, setPageData, order }) => {
   const [valueSectionHover, setValueSectionHover] = useState<boolean>(false);
   const [removeValueSection, setRemoveValueSection] = useState<boolean>(false);
 
@@ -32,14 +33,29 @@ const ValueSection: React.FC<{
         onMouseEnter={() => setRemoveValueSection(true)}
         onMouseLeave={() => setRemoveValueSection(false)}
         onClick={async () => {
-          const remove = await removeSection(page, "VALUE");
+          const remove = await removeSection(page, "VALUE", order);
           if (remove) {
-            setPageData((prev) => ({
-              ...prev,
-              sections: prev.sections.filter(
-                (section) => section.type !== "VALUE"
-              ),
-            }));
+            setPageData((prev) => {
+              const removedSection = prev.sections.find((section) => section.type === "VALUE");
+              if (!removedSection) {
+                return prev;
+              }
+              const removedOrder = removedSection.details.order;
+              const updatedSections = prev.sections
+                  .filter((section) => section.type !== "VALUE")
+                  .map((section) => {
+                    if (section.details.order > removedOrder) {
+                      return { ...section, details: { ...section.details, order: section.details.order - 1 } };
+                    } else {
+                      return section;
+                    }
+                  });
+
+              return {
+                ...prev,
+                sections: updatedSections,
+              };
+            });
           }
         }}
       >
