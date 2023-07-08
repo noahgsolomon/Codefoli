@@ -6,7 +6,7 @@ import ContactData from "Type/ContactData.tsx";
 import SkillSection from "Components/Sections/SkillSection.tsx";
 import StorySection from "Components/Sections/Story/StorySection.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
-import ResumeSection from "Components/Sections/ResumeSection.tsx";
+import ResumeSection from "Components/Sections/Resume/ResumeSection.tsx";
 import FAQSection from "Components/Sections/FAQSection.tsx";
 import UserData from "Type/UserData.tsx";
 import ValueSection from "Components/Sections/ValueSection.tsx";

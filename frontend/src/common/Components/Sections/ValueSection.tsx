@@ -16,7 +16,7 @@ const ValueSection: React.FC<{
 
   return (
     <section
-      className="services relative"
+      className="services relative mb-20 mt-20"
       onMouseEnter={() => setValueSectionHover(true)}
       onMouseLeave={() => setValueSectionHover(false)}
     >
@@ -45,7 +45,7 @@ const ValueSection: React.FC<{
       >
         -
       </button>
-      <div className="container mx-auto my-20 max-w-screen-lg px-5 py-20">
+      <div className="container mx-auto max-w-screen-lg px-5">
         <h2 className="mb-8 text-center text-3xl font-bold">
           {details.headerOne}
         </h2>

@@ -27,5 +27,4 @@ const removeSection = async (page: PageType, section: SectionType) => {
   }
 };
 
-
 export { removeSection };

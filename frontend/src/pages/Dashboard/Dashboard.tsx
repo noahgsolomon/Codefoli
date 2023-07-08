@@ -7,7 +7,7 @@ import UserData from "Type/UserData.tsx";
 import { updateDescriptionOne, updateHeaderOne } from "./dashboardapi.tsx";
 import SkillSection from "Components/Sections/SkillSection.tsx";
 import StorySection from "Components/Sections/Story/StorySection.tsx";
-import ResumeSection from "Components/Sections/ResumeSection.tsx";
+import ResumeSection from "Components/Sections/Resume/ResumeSection.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import FAQSection from "Components/Sections/FAQSection.tsx";
 import ValueSection from "Components/Sections/ValueSection.tsx";
@@ -127,7 +127,7 @@ const Dashboard: React.FC<{
   const sectionList = pageData.sections.map((section) => section.type);
 
   const availableSectionTypes = allSectionTypes.filter(
-      (t) => !sectionList.includes(t)
+    (t) => !sectionList.includes(t)
   );
 
   return (
@@ -337,22 +337,18 @@ const Dashboard: React.FC<{
               sections={availableSectionTypes}
               page={"HOME"}
               setPageData={
-                setPageData as React.Dispatch<
-                    React.SetStateAction<AnyPageData>
-                >
+                setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>
               }
             />,
             sectionComponent,
           ];
         })}
         <AddSection
-            setPageData={
-              setPageData as React.Dispatch<
-                  React.SetStateAction<AnyPageData>
-              >
-            }
-            sections={availableSectionTypes}
-            page={"HOME"}
+          setPageData={
+            setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>
+          }
+          sections={availableSectionTypes}
+          page={"HOME"}
         />
       </animated.div>
       <Footer />

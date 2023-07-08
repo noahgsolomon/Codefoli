@@ -1,5 +1,5 @@
 import React, { SetStateAction, useState } from "react";
-import JobCard from "../../../pages/About/JobCard/JobCard.tsx";
+import JobCard from "Components/Sections/Resume/JobCard/JobCard.tsx";
 import UserData from "Type/UserData.tsx";
 import PageType from "Type/Pages.tsx";
 import { ResumeType } from "Type/Section.tsx";
@@ -18,7 +18,7 @@ const ResumeSection: React.FC<{
 
   return (
     <section
-      className="resume relative"
+      className="resume relative mb-20 mt-20"
       onMouseEnter={() => setResumeSectionHover(true)}
       onMouseLeave={() => setResumeSectionHover(false)}
     >
@@ -47,7 +47,7 @@ const ResumeSection: React.FC<{
       >
         -
       </button>
-      <div className="container mx-auto my-20 max-w-screen-lg px-5 py-20">
+      <div className="container mx-auto max-w-screen-lg px-5">
         <h2 className="mb-8 text-center text-3xl font-bold">
           {details.headerOne}
         </h2>
