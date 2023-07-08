@@ -73,19 +73,29 @@ public class SectionService {
             if (section.isPresent()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(StatusType.BAD, "Section already present", null));
             }
+
+            List<Section> sections = sectionRepository.findAllByUsersAndPage(user, PageType.valueOf(add.page()));
+
+            for (Section sec : sections) {
+                if (sec.getPageOrder() >= add.order()) {
+                    sec.setPageOrder(sec.getPageOrder() + 1);
+                    sectionRepository.save(sec);
+                }
+            }
+
             Section newSection = new Section(user, SectionType.valueOf(add.section()), PageType.valueOf(add.page()), 1);
             Object data = null;
             if (newSection.getType().equals(SectionType.STORY)) {
                 Optional<StorySection> storyOpt = storySectionRepository.findByUsers(user);
                 if (storyOpt.isPresent()) {
                     StorySection story = storyOpt.get();
-                    data = new StorySectionResponseModel(story.getHeaderOne(), story.getDescriptionOne(), story.getBulletOne(), story.getBulletTwo(), story.getBulletThree(), story.getImageOne());
+                    data = new StorySectionResponseModel(story.getHeaderOne(), story.getDescriptionOne(), story.getBulletOne(), story.getBulletTwo(), story.getBulletThree(), story.getImageOne(), add.order());
                 }
             } else if (newSection.getType().equals(SectionType.RESUME)){
                 Optional<ResumeSection> resumeOpt = resumeSectionRepository.findByUsers(user);
                 if (resumeOpt.isPresent()) {
                     ResumeSection resume = resumeOpt.get();
-                    data = new ResumeSectionResponseModel(resume.getHeaderOne());
+                    data = new ResumeSectionResponseModel(resume.getHeaderOne(), add.order());
                 }
             } else if (newSection.getType().equals(SectionType.FAQ)) {
                 Optional<FAQSection> faqOpt = faqSectionRepository.findByUsers(user);
@@ -96,7 +106,7 @@ public class SectionService {
                     for (FAQ f : faqList) {
                         faqResponseModels.add(new FAQResponseModel(f.getQuestion(), f.getAnswer()));
                     }
-                    data = new FAQSectionResponseModel(faq.getHeaderOne(), faq.getDescriptionOne(), faqResponseModels);
+                    data = new FAQSectionResponseModel(faq.getHeaderOne(), faq.getDescriptionOne(), faqResponseModels, add.order());
                 }
             } else if (newSection.getType().equals(SectionType.VALUE)) {
                 Optional<ValueSection> valueSectionOpt = valueSectionRepository.findByUsers(user);
@@ -107,13 +117,13 @@ public class SectionService {
                     for (Values v : valuesList) {
                         valuesResponseModelList.add(new ValuesResponseModel(v.getValue()));
                     }
-                    data = new ValueSectionResponseModel(valueSection.getHeaderOne(), valueSection.getDescriptionOne(), valuesResponseModelList);
+                    data = new ValueSectionResponseModel(valueSection.getHeaderOne(), valueSection.getDescriptionOne(), valuesResponseModelList, add.order());
                 }
             } else if (newSection.getType().equals(SectionType.SKILL)) {
                 Optional<SkillSection> skillSectionOpt = skillSectionRepository.findByUsers(user);
                 if (skillSectionOpt.isPresent()) {
                     SkillSection skillSection = skillSectionOpt.get();
-                    data = new SkillSectionResponseModel(skillSection.getHeaderOne());
+                    data = new SkillSectionResponseModel(skillSection.getHeaderOne(), add.order());
                 }
             }
 
