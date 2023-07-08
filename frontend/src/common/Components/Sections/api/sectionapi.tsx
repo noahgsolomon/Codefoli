@@ -1,7 +1,11 @@
 import PageType from "Type/Pages.tsx";
 import { SectionType } from "Type/Section.tsx";
 
-const removeSection = async (page: PageType, section: SectionType, order: number) => {
+const removeSection = async (
+  page: PageType,
+  section: SectionType,
+  order: number
+) => {
   const model = {
     page: page,
     section: section,

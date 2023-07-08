@@ -219,20 +219,28 @@ const StorySection: React.FC<{
           const remove = await removeSection(page, "STORY", order);
           if (remove) {
             setPageData((prev) => {
-              const removedSection = prev.sections.find((section) => section.type === "STORY");
+              const removedSection = prev.sections.find(
+                (section) => section.type === "STORY"
+              );
               if (!removedSection) {
                 return prev;
               }
               const removedOrder = removedSection.details.order;
               const updatedSections = prev.sections
-                  .filter((section) => section.type !== "STORY")
-                  .map((section) => {
-                    if (section.details.order > removedOrder) {
-                      return { ...section, details: { ...section.details, order: section.details.order - 1 } };
-                    } else {
-                      return section;
-                    }
-                  });
+                .filter((section) => section.type !== "STORY")
+                .map((section) => {
+                  if (section.details.order > removedOrder) {
+                    return {
+                      ...section,
+                      details: {
+                        ...section.details,
+                        order: section.details.order - 1,
+                      },
+                    };
+                  } else {
+                    return section;
+                  }
+                });
 
               return {
                 ...prev,

@@ -38,20 +38,28 @@ const ResumeSection: React.FC<{
           const remove = await removeSection(page, "RESUME", order);
           if (remove) {
             setPageData((prev) => {
-              const removedSection = prev.sections.find((section) => section.type === "RESUME");
+              const removedSection = prev.sections.find(
+                (section) => section.type === "RESUME"
+              );
               if (!removedSection) {
                 return prev;
               }
               const removedOrder = removedSection.details.order;
               const updatedSections = prev.sections
-                  .filter((section) => section.type !== "RESUME")
-                  .map((section) => {
-                    if (section.details.order > removedOrder) {
-                      return { ...section, details: { ...section.details, order: section.details.order - 1 } };
-                    } else {
-                      return section;
-                    }
-                  });
+                .filter((section) => section.type !== "RESUME")
+                .map((section) => {
+                  if (section.details.order > removedOrder) {
+                    return {
+                      ...section,
+                      details: {
+                        ...section.details,
+                        order: section.details.order - 1,
+                      },
+                    };
+                  } else {
+                    return section;
+                  }
+                });
 
               return {
                 ...prev,
