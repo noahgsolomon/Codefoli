@@ -20,6 +20,31 @@ const userDetails = async () => {
   }
 };
 
+const updateService = async (before: string, after: string) => {
+  const model = {
+    before: before,
+    after: after,
+  };
+  try {
+    const response = await fetch("http://localhost:8080/update-service", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(model),
+      credentials: "include",
+    });
+
+    const responseJson = await response.json();
+    if (responseJson.status === "OK") {
+      return responseJson;
+    } else {
+      console.log(responseJson.message);
+      return responseJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const setupAccount = async (
   name: string,
   email: string,
@@ -53,11 +78,12 @@ const setupAccount = async (
     });
 
     const responseJson = await response.json();
+    console.log(responseJson);
     if (responseJson.status === "OK") {
-      return responseJson.data;
+      return responseJson.status;
     } else {
       console.log(responseJson.message);
-      return responseJson.message;
+      return responseJson.status;
     }
   } catch (e) {
     console.log(e);
@@ -124,4 +150,11 @@ const getContact = async () => {
   }
 };
 
-export { userDetails, setupAccount, getHome, getAbout, getContact };
+export {
+  userDetails,
+  setupAccount,
+  getHome,
+  getAbout,
+  getContact,
+  updateService,
+};
