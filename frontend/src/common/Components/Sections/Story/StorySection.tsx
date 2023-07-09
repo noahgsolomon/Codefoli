@@ -206,13 +206,13 @@ const StorySection: React.FC<{
     >
       {removeStory && (
         <div
-          className={` absolute right-0 top-0 h-full w-full bg-red-300 opacity-25 transition-all`}
+          className={` absolute inset-0 z-10 bg-red-300 opacity-25 transition-all`}
         ></div>
       )}
       <button
         className={`${
           StoryHover ? "opacity-100" : "opacity-0"
-        } absolute right-10 top-0 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
+        } absolute right-10 top-0 z-20 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onMouseEnter={() => setRemoveStory(true)}
         onMouseLeave={() => setRemoveStory(false)}
         onClick={async () => {
@@ -406,9 +406,7 @@ const StorySection: React.FC<{
         </div>
         <div className="content-right flex items-center justify-center">
           <div
-            className={`image-wrapper relative mb-5 max-w-[375px] transition-all ${
-              removeStory ? "rounded-3xl bg-red-300 opacity-25" : ""
-            }`}
+            className={`image-wrapper relative mb-5 max-w-[375px] transition-all`}
             onMouseEnter={() => setImageOneEdit(true)}
             onMouseLeave={() => setImageOneEdit(false)}
             onClick={() =>
