@@ -120,7 +120,6 @@ const MainApp: React.FC = () => {
     return <Loader />;
   }
 
-  console.log(aboutData);
 
   return (
     <>
@@ -134,6 +133,7 @@ const MainApp: React.FC = () => {
           path="/dashboard"
           element={
             <Dashboard
+              setUserData={setUserData}
               userData={userData}
               pageData={homeData}
               setPageData={setHomeData}
@@ -146,6 +146,7 @@ const MainApp: React.FC = () => {
             <Contact
               pageData={contactData}
               userData={userData}
+              setUserData={setUserData}
               setPageData={setContactData}
             />
           }
@@ -156,6 +157,7 @@ const MainApp: React.FC = () => {
             <About
               userData={userData}
               pageData={aboutData}
+              setUserData={setUserData}
               setPageData={setAboutData}
             />
           }

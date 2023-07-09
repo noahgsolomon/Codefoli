@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import { ServiceData } from "Type/Services.tsx";
+import UserData from "Type/UserData.tsx";
+import { updateService } from "api/userapi.tsx";
 
 const Card: React.FC<{
   imageUrl?: string;
@@ -6,21 +9,70 @@ const Card: React.FC<{
   description: string;
   children?: React.ReactNode;
   preview?: boolean;
-}> = ({ imageUrl, title, description, children, preview = true }) => {
-  const [hovered, setHovered] = React.useState(false);
+  setUserData?: React.Dispatch<React.SetStateAction<UserData>>;
+  userData?: UserData;
+}> = ({
+  imageUrl,
+  title,
+  description,
+  children,
+  preview = true,
+  setUserData,
+  userData,
+}) => {
+  const [hovered, setHovered] = useState(false);
+  const [removeHover, setRemoveHover] = useState(false);
+
   return (
     <div
       className="card group relative mb-5 flex max-w-[400px] cursor-pointer flex-col rounded-2xl border-2 border-black shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
+      <div
+        className={`absolute inset-0 bg-red-500 ${
+          removeHover ? "opacity-20" : "hidden"
+        }`}
+      />
       <button
         className={`${
-          hovered && !preview ? "opacity-100" : "opacity-0"
-        } absolute -right-4 -top-4 rounded-lg border-2 border-red-500 bg-white px-3 py-1 text-red-500 transition-all hover:-translate-y-0.5`}
+          hovered && !preview ? "opacity-100" : "hidden"
+        } absolute -right-3 -top-3 z-10 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
+        onMouseEnter={() => setRemoveHover(true)}
+        onMouseLeave={() => setRemoveHover(false)}
       >
-        x
+        -
       </button>
+      <button
+        className={`${
+          hovered && !preview && setUserData ? "opacity-100" : "hidden"
+        } absolute -right-3 top-12 z-10 rounded-2xl bg-blue-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
+        onClick={async () => {
+          if (setUserData && userData) {
+            const currentServices = userData.services;
+            const serviceKeys = Object.keys(ServiceData);
+            let randomKey =
+              serviceKeys[Math.floor(Math.random() * serviceKeys.length)];
+            while (currentServices.includes(randomKey)) {
+              randomKey =
+                serviceKeys[Math.floor(Math.random() * serviceKeys.length)];
+            }
+            const newServices = currentServices.map((service) =>
+              service === title.replaceAll(" ", "_") ? randomKey : service
+            );
+            const fetchData = await updateService(
+              title.replaceAll(" ", "_"),
+              randomKey
+            );
+            if (fetchData.status === "OK") {
+              setUserData((prev) => ({ ...prev, services: newServices }));
+            }
+          }
+        }}
+      >
+        ↻
+      </button>
+
       {imageUrl && (
         <div className="img-wrapper relative h-[250px] overflow-hidden rounded-t-lg">
           <img

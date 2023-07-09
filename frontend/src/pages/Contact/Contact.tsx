@@ -16,8 +16,9 @@ import { SectionType } from "Type/Section.tsx";
 const Contact: React.FC<{
   pageData: ContactData;
   setPageData: React.Dispatch<React.SetStateAction<ContactData>>;
+  setUserData: React.Dispatch<React.SetStateAction<UserData>>;
   userData: UserData;
-}> = ({ pageData, setPageData, userData }) => {
+}> = ({ pageData, setPageData, userData, setUserData }) => {
   const animationProps = useSpring({
     from: { opacity: 0, transform: "translate3d(-20px, 0, 0)" },
     to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
@@ -99,6 +100,7 @@ const Contact: React.FC<{
                 <SkillSection
                   key={index}
                   userData={userData}
+                  setUserData={setUserData}
                   preview={false}
                   details={details}
                   setPageData={

@@ -22,7 +22,8 @@ const About: React.FC<{
   userData: UserData;
   pageData: AboutData;
   setPageData: React.Dispatch<React.SetStateAction<AboutData>>;
-}> = ({ userData, pageData, setPageData }) => {
+  setUserData: React.Dispatch<React.SetStateAction<UserData>>;
+}> = ({ userData, pageData, setPageData, setUserData }) => {
   const [iconOneEdit, setIconOneEdit] = useState<boolean>(false);
   const iconOneFileInput = useRef<HTMLInputElement | null>(null);
   const [iconTwoEdit, setIconTwoEdit] = useState<boolean>(false);
@@ -366,6 +367,7 @@ const About: React.FC<{
                   <SkillSection
                     key={index}
                     userData={userData}
+                    setUserData={setUserData}
                     preview={false}
                     details={details}
                     setPageData={

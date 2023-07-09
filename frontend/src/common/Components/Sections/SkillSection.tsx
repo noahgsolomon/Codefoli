@@ -12,15 +12,26 @@ import PageType from "Type/Pages.tsx";
 const SkillSection: React.FC<{
   userData: UserData;
   setPageData: React.Dispatch<React.SetStateAction<AnyPageData>>;
+  setUserData: React.Dispatch<React.SetStateAction<UserData>>;
   page: PageType;
   details: SkillType;
   preview: boolean;
   order: number;
-}> = ({ userData, details, preview, setPageData, page, order }) => {
+}> = ({
+  userData,
+  details,
+  preview,
+  setPageData,
+  setUserData,
+  page,
+  order,
+}) => {
   const [languageHover, setLanguageHover] = useState<boolean>(false);
   const [skillColors, setSkillColors] = useState<string[]>([]);
   const [skillHover, setSkillHover] = useState<boolean>(false);
   const [removeSkill, setRemoveSkill] = useState<boolean>(false);
+  const [removeLanguagesHover, setRemoveLanguagesHover] =
+    useState<boolean>(false);
 
   useEffect(() => {
     const colors = userData?.skills.map(
@@ -37,13 +48,13 @@ const SkillSection: React.FC<{
     >
       {removeSkill && (
         <div
-          className={` absolute right-0 top-0 h-full w-full bg-red-300 opacity-25 transition-all`}
+          className={` absolute inset-0 z-10 bg-red-300 opacity-25 transition-all`}
         ></div>
       )}
       <button
         className={`${
           skillHover ? "opacity-100" : "opacity-0"
-        } absolute right-10 top-0 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
+        } absolute right-10 top-0 z-20 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onMouseEnter={() => setRemoveSkill(true)}
         onMouseLeave={() => setRemoveSkill(false)}
         onClick={async () => {
@@ -102,12 +113,19 @@ const SkillSection: React.FC<{
             setLanguageHover(false);
           }}
         >
+          <div
+            className={`absolute inset-0 bg-red-500 ${
+              removeLanguagesHover ? "opacity-20" : "hidden"
+            }`}
+          />
           <button
             className={`${
               languageHover ? "opacity-100" : "opacity-0"
-            } absolute -right-4 -top-4 rounded-lg border-2 border-red-500 bg-white px-3 py-1 text-red-500 transition-all hover:-translate-y-0.5`}
+            } absolute -right-3 -top-3 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
+            onMouseEnter={() => setRemoveLanguagesHover(true)}
+            onMouseLeave={() => setRemoveLanguagesHover(false)}
           >
-            x
+            -
           </button>
           <div
             style={{ marginBottom: (12 - userData.skills.length) * 25 + "px" }}
@@ -129,7 +147,9 @@ const SkillSection: React.FC<{
             })}
             <span
               className={`${
-                languageHover ? "opacity-100" : "opacity-0"
+                languageHover && !removeLanguagesHover
+                  ? "opacity-100"
+                  : "opacity-0"
               } inline-flex cursor-pointer items-center justify-center rounded-lg bg-gray-300 px-3 text-white transition-all hover:-translate-y-0.5 hover:bg-black hover:text-white`}
             >
               +
@@ -145,6 +165,8 @@ const SkillSection: React.FC<{
               <Card
                 key={index}
                 imageUrl={ServiceData[service]?.image}
+                setUserData={setUserData}
+                userData={userData}
                 title={service.replaceAll("_", " ")}
                 description={ServiceData[service]?.description}
                 preview={preview}

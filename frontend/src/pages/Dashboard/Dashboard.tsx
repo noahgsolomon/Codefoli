@@ -18,7 +18,8 @@ const Dashboard: React.FC<{
   pageData: HomeData;
   setPageData: React.Dispatch<SetStateAction<HomeData>>;
   userData: UserData;
-}> = ({ pageData, userData, setPageData }) => {
+  setUserData: React.Dispatch<SetStateAction<UserData>>;
+}> = ({ pageData, userData, setPageData, setUserData }) => {
   const navigate = useNavigate();
   const [headerOneEdit, setHeaderOneEdit] = useState(false);
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
@@ -252,6 +253,7 @@ const Dashboard: React.FC<{
                   <SkillSection
                     key={index}
                     userData={userData}
+                    setUserData={setUserData}
                     preview={false}
                     details={details}
                     setPageData={
