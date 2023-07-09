@@ -170,7 +170,8 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
           .toUpperCase()
       )
     );
-    if (postData) {
+
+    if (postData === "OK") {
       window.location.href = "/dashboard";
     } else {
       alert("Error");
