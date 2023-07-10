@@ -8,6 +8,8 @@ import { SkillType } from "Type/Section.tsx";
 import { removeSection } from "Components/Sections/api/sectionapi.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import PageType from "Type/Pages.tsx";
+import { addLanguage, removeLanguage } from "api/userapi.tsx";
+import { Skills } from "Type/Skills.tsx";
 
 const SkillSection: React.FC<{
   userData: UserData;
@@ -32,6 +34,12 @@ const SkillSection: React.FC<{
   const [removeSkill, setRemoveSkill] = useState<boolean>(false);
   const [removeLanguagesHover, setRemoveLanguagesHover] =
     useState<boolean>(false);
+  const [newSkill, setNewSkill] = useState<string>("");
+  const [addingSkill, setAddingSkill] = useState<boolean>(false);
+  const allSkills = Skills;
+  const [matchingSkills, setMatchingSkills] = useState<string[]>([
+    ...allSkills,
+  ]);
 
   useEffect(() => {
     const colors = userData?.skills.map(
@@ -39,6 +47,17 @@ const SkillSection: React.FC<{
     );
     setSkillColors(colors);
   }, [userData?.skills]);
+
+  const handleNewSkillChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewSkill(e.target.value);
+    const userSkills = userData.skills;
+    const matches = allSkills.filter(
+      (skill) =>
+        skill.toLowerCase().startsWith(e.target.value.toLowerCase()) &&
+        !userSkills.includes(skill.toUpperCase().replaceAll(" ", "_") as Skills)
+    );
+    setMatchingSkills(matches);
+  };
 
   return (
     <div
@@ -140,20 +159,94 @@ const SkillSection: React.FC<{
                   } ${
                     !preview ? "hover:bg-red-500 hover:line-through" : ""
                   } py-2 text-sm`}
+                  onClick={async () => {
+                    const removeLanguageFetch = await removeLanguage(skill);
+                    if (removeLanguageFetch.status === "OK") {
+                      setUserData((prev) => {
+                        const updatedSkills = prev.skills.filter(
+                          (prevSkill) => prevSkill !== skill
+                        );
+                        return {
+                          ...prev,
+                          skills: updatedSkills,
+                        };
+                      });
+                    }
+                  }}
                 >
                   {skill.replaceAll("_", " ")}
                 </span>
               );
             })}
-            <span
-              className={`${
-                languageHover && !removeLanguagesHover
-                  ? "opacity-100"
-                  : "opacity-0"
-              } inline-flex cursor-pointer items-center justify-center rounded-lg bg-gray-300 px-3 text-white transition-all hover:-translate-y-0.5 hover:bg-black hover:text-white`}
-            >
-              +
-            </span>
+            {addingSkill && (
+              <div className="relative mr-2 ">
+                <button
+                  className={` absolute -right-3 -top-3 rounded-2xl bg-red-500 px-3 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
+                  onClick={() => {
+                    setAddingSkill(false);
+                    setNewSkill("");
+                  }}
+                >
+                  -
+                </button>
+                <input
+                  type="text"
+                  value={newSkill}
+                  onChange={handleNewSkillChange}
+                  className="inline-flex items-center justify-center rounded-lg px-3 py-2 text-sm"
+                  style={{ width: "fit-content" }}
+                />
+                {newSkill && matchingSkills.length > 0 && (
+                  <div className="absolute left-0 z-10 mt-2 max-h-60 w-full overflow-y-auto overflow-x-hidden rounded border border-gray-200 bg-white pt-5">
+                    {matchingSkills.map((skill) => (
+                      <div
+                        key={skill}
+                        className="m-1 inline-block cursor-pointer rounded-full border-b border-gray-300 bg-black p-2 transition-all hover:-translate-y-0.5 hover:opacity-90"
+                        onClick={async () => {
+                          console.log();
+                          const addNewSkillFetch = await addLanguage(
+                            skill.toUpperCase().replaceAll(" ", "_")
+                          );
+                          if (addNewSkillFetch.status === "OK") {
+                            setUserData((prev) => {
+                              const updatedSkills = [
+                                ...prev.skills,
+                                skill
+                                  .toUpperCase()
+                                  .replaceAll(" ", "_") as Skills,
+                              ];
+                              return {
+                                ...prev,
+                                skills: updatedSkills,
+                              };
+                            });
+                          }
+                          setNewSkill("");
+                          setMatchingSkills([...allSkills]);
+                          setAddingSkill(false);
+                        }}
+                      >
+                        <span className="px-2 text-white">{skill}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+            {userData.skills.length < 12 && (
+              <span
+                className={`${
+                  languageHover && !removeLanguagesHover
+                    ? "opacity-100"
+                    : "opacity-0"
+                } inline-flex cursor-pointer items-center justify-center rounded-lg bg-gray-300 px-3 text-white transition-all hover:-translate-y-0.5 hover:bg-black hover:text-white`}
+                onClick={() => {
+                  setAddingSkill(true);
+                }}
+              >
+                +
+              </span>
+            )}
           </div>
           <div className="content flex-grow rounded-b-2xl bg-blue p-5">
             <h2 className="text-2xl font-bold text-white">{"</>"} Languages</h2>

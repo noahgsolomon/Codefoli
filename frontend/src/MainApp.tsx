@@ -120,7 +120,6 @@ const MainApp: React.FC = () => {
     return <Loader />;
   }
 
-
   return (
     <>
       <Header authenticated={authenticatedUser} />
