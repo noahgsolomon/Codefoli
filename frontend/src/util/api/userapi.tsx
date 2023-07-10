@@ -45,6 +45,48 @@ const updateService = async (before: string, after: string) => {
   }
 };
 
+const removeLanguage = async (skill: string) => {
+  try {
+    const response = await fetch("http://localhost:8080/remove-language", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: skill,
+      credentials: "include",
+    });
+
+    const responseJson = await response.json();
+    if (responseJson.status === "OK") {
+      return responseJson;
+    } else {
+      console.log(responseJson.message);
+      return responseJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const addLanguage = async (skill: string) => {
+  try {
+    const response = await fetch("http://localhost:8080/add-language", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: skill,
+      credentials: "include",
+    });
+
+    const responseJson = await response.json();
+    if (responseJson.status === "OK") {
+      return responseJson;
+    } else {
+      console.log(responseJson.message);
+      return responseJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const setupAccount = async (
   name: string,
   email: string,
@@ -157,4 +199,6 @@ export {
   getAbout,
   getContact,
   updateService,
+  removeLanguage,
+  addLanguage,
 };
