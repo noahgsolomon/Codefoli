@@ -79,7 +79,7 @@ const SkillSection: React.FC<{
             : section
         ),
       }));
-      setHeaderOneEditValue(updateHeader);
+      setHeaderOneEditValue(updateHeader.data);
     }
     setHeaderOneEdit(false);
   };
