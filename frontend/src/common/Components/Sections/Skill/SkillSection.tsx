@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Card from "Components/Card/Card.tsx";
 import UserData from "Type/UserData.tsx";
 import { ServiceData } from "Type/Services.tsx";
 import { Link } from "react-router-dom";
-import { COLORS } from "../../../util/colors.ts";
+import { COLORS } from "../../../../util/colors.ts";
 import { SkillType } from "Type/Section.tsx";
 import { removeSection } from "Components/Sections/api/sectionapi.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import PageType from "Type/Pages.tsx";
 import { addLanguage, removeLanguage } from "api/userapi.tsx";
 import { Skills } from "Type/Skills.tsx";
+import AddCard from "Components/Card/AddCard.tsx";
+import { updateHeaderOneSkill } from "Components/Sections/Skill/skillapi.tsx";
 
 const SkillSection: React.FC<{
   userData: UserData;
@@ -32,14 +34,16 @@ const SkillSection: React.FC<{
   const [skillColors, setSkillColors] = useState<string[]>([]);
   const [skillHover, setSkillHover] = useState<boolean>(false);
   const [removeSkill, setRemoveSkill] = useState<boolean>(false);
-  const [removeLanguagesHover, setRemoveLanguagesHover] =
-    useState<boolean>(false);
   const [newSkill, setNewSkill] = useState<string>("");
   const [addingSkill, setAddingSkill] = useState<boolean>(false);
   const allSkills = Skills;
   const [matchingSkills, setMatchingSkills] = useState<string[]>([
     ...allSkills,
   ]);
+  const [headerOneEdit, setHeaderOneEdit] = useState(false);
+  const [headerOneEditValue, setHeaderOneEditValue] = useState(
+    details.headerOne
+  );
 
   useEffect(() => {
     const colors = userData?.skills.map(
@@ -47,6 +51,8 @@ const SkillSection: React.FC<{
     );
     setSkillColors(colors);
   }, [userData?.skills]);
+
+  const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const handleNewSkillChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewSkill(e.target.value);
@@ -57,6 +63,25 @@ const SkillSection: React.FC<{
         !userSkills.includes(skill.toUpperCase().replaceAll(" ", "_") as Skills)
     );
     setMatchingSkills(matches);
+  };
+
+  const handleHeaderOneSubmit = async () => {
+    const updateHeader = await updateHeaderOneSkill(headerOneEditValue);
+    if (updateHeader.status === "OK") {
+      setPageData((prev) => ({
+        ...prev,
+        sections: prev.sections.map((section) =>
+          section.type === "SKILL"
+            ? {
+                ...section,
+                details: { ...section.details, headerOne: headerOneEditValue },
+              }
+            : section
+        ),
+      }));
+      setHeaderOneEditValue(updateHeader);
+    }
+    setHeaderOneEdit(false);
   };
 
   return (
@@ -113,9 +138,33 @@ const SkillSection: React.FC<{
       >
         -
       </button>
-      <h2 className="mb-10 cursor-pointer select-none text-center text-2xl font-bold leading-relaxed transition-all hover:opacity-50">
-        {details.headerOne}
-      </h2>
+      {headerOneEdit ? (
+        <textarea
+          ref={headerOneTextareaRef}
+          value={headerOneEditValue}
+          onChange={(e) => setHeaderOneEditValue(e.target.value)}
+          onBlur={() => {
+            setHeaderOneEditValue(details.headerOne);
+            setHeaderOneEdit(false);
+          }}
+          onKeyDown={async (e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              await handleHeaderOneSubmit();
+            }
+          }}
+          className="mb-10 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-2xl font-bold leading-relaxed outline-none focus:outline-none focus:ring-0"
+          autoFocus
+          maxLength={50}
+        />
+      ) : (
+        <h2
+          className="mb-10 cursor-pointer select-none text-center text-2xl font-bold leading-relaxed transition-all hover:opacity-50"
+          onClick={() => setHeaderOneEdit(true)}
+        >
+          {details.headerOne}
+        </h2>
+      )}
       <div className="mx-10 grid justify-center gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:mx-80">
         <div
           className="card relative mb-5 flex max-w-[400px] flex-col rounded-2xl border-2 border-black bg-white shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover"
@@ -132,20 +181,6 @@ const SkillSection: React.FC<{
             setLanguageHover(false);
           }}
         >
-          <div
-            className={`absolute inset-0 bg-red-500 ${
-              removeLanguagesHover ? "opacity-20" : "hidden"
-            }`}
-          />
-          <button
-            className={`${
-              languageHover ? "opacity-100" : "opacity-0"
-            } absolute -right-3 -top-3 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
-            onMouseEnter={() => setRemoveLanguagesHover(true)}
-            onMouseLeave={() => setRemoveLanguagesHover(false)}
-          >
-            -
-          </button>
           <div
             style={{ marginBottom: (12 - userData.skills.length) * 25 + "px" }}
             className={`min-h-64 mt-5 flex flex-wrap gap-2 rounded-tl-2xl rounded-tr-2xl bg-white px-2 py-2`}
@@ -193,7 +228,7 @@ const SkillSection: React.FC<{
                   type="text"
                   value={newSkill}
                   onChange={handleNewSkillChange}
-                  className="inline-flex items-center justify-center rounded-lg px-3 py-2 text-sm"
+                  className="inline-flex items-center justify-center rounded-lg border-2 border-black px-3 py-2 text-sm shadow-custom transition-all hover:shadow-customHover"
                   style={{ width: "fit-content" }}
                 />
                 {newSkill && matchingSkills.length > 0 && (
@@ -236,9 +271,7 @@ const SkillSection: React.FC<{
             {userData.skills.length < 12 && (
               <span
                 className={`${
-                  languageHover && !removeLanguagesHover
-                    ? "opacity-100"
-                    : "opacity-0"
+                  languageHover ? "opacity-100" : "opacity-0"
                 } inline-flex cursor-pointer items-center justify-center rounded-lg bg-gray-300 px-3 text-white transition-all hover:-translate-y-0.5 hover:bg-black hover:text-white`}
                 onClick={() => {
                   setAddingSkill(true);
@@ -266,6 +299,21 @@ const SkillSection: React.FC<{
               />
             );
           })}
+          {userData.services.length < 4 &&
+            (() => {
+              const cardCount = 4 - userData.services.length;
+              return (
+                <>
+                  {Array.from({ length: cardCount }).map((_, i) => (
+                    <AddCard
+                      key={i}
+                      setUserData={setUserData}
+                      userData={userData}
+                    />
+                  ))}
+                </>
+              );
+            })()}
         </>
         <div className="card mb-5 flex max-w-[400px] flex-col rounded-2xl bg-yellow-400 shadow-customHover transition-all">
           <img
