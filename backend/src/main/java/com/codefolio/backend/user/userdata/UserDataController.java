@@ -30,4 +30,14 @@ public class UserDataController {
         return userDataService.addLanguage(principal, skill);
     }
 
+    @DeleteMapping("remove-service")
+    public ResponseEntity<Response> removeService(Principal principal, @RequestBody String service) {
+        return userDataService.removeService(principal, service);
+    }
+
+    @PostMapping("/add-service")
+    public ResponseEntity<Response> addService(Principal principal, @RequestBody String service) {
+        return userDataService.addService(principal, service);
+    }
+
 }

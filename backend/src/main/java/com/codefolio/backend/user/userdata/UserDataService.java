@@ -94,4 +94,49 @@ public class UserDataService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
         }
     }
+
+    public ResponseEntity<Response> removeService(Principal principal, String serviceString) {
+        try {
+            Users user = getAuthenticatedUser(principal);
+            ServicesType serviceType;
+            try {
+                serviceType = ServicesType.valueOf(serviceString);
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.badRequest().body(new Response(StatusType.NOT_FOUND, "Service not found", null));
+            }
+            Optional<Services> service = servicesRepository.findByUsersAndService(user, serviceType);
+            if (service.isEmpty()){
+                return ResponseEntity.badRequest().body(new Response(StatusType.NOT_FOUND, "Service not found", null));
+            }
+            servicesRepository.delete(service.get());
+            return ResponseEntity.ok(new Response(StatusType.OK, "Service removed successfully", service.get().getService()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
+        }
+    }
+
+    public ResponseEntity<Response> addService(Principal principal, String serviceString) {
+        try {
+            Users user = getAuthenticatedUser(principal);
+            ServicesType serviceType;
+            try {
+                serviceType = ServicesType.valueOf(serviceString);
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.badRequest().body(new Response(StatusType.NOT_FOUND, "Service not found", null));
+            }
+            Optional<Services> service = servicesRepository.findByUsersAndService(user, serviceType);
+            if (service.isPresent()){
+                return ResponseEntity.badRequest().body(new Response(StatusType.NOT_FOUND, "Service already present", null));
+            }
+            Services services = new Services(serviceType, user);
+            servicesRepository.save(services);
+            return ResponseEntity.ok(new Response(StatusType.OK, "Service added successfully", services.getService()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
+        }
+    }
 }
