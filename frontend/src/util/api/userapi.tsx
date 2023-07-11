@@ -20,6 +20,27 @@ const userDetails = async () => {
   }
 };
 
+const addService = async (service: string) => {
+  try {
+    const response = await fetch("http://localhost:8080/add-service", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: service,
+      credentials: "include",
+    });
+
+    const responseJson = await response.json();
+    if (responseJson.status === "OK") {
+      return responseJson;
+    } else {
+      console.log(responseJson.message);
+      return responseJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const updateService = async (before: string, after: string) => {
   const model = {
     before: before,
@@ -30,6 +51,27 @@ const updateService = async (before: string, after: string) => {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(model),
+      credentials: "include",
+    });
+
+    const responseJson = await response.json();
+    if (responseJson.status === "OK") {
+      return responseJson;
+    } else {
+      console.log(responseJson.message);
+      return responseJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const removeService = async (service: string) => {
+  try {
+    const response = await fetch("http://localhost:8080/remove-service", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: service,
       credentials: "include",
     });
 
@@ -201,4 +243,6 @@ export {
   updateService,
   removeLanguage,
   addLanguage,
+  removeService,
+  addService,
 };
