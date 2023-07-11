@@ -266,7 +266,6 @@ const StorySection: React.FC<{
               onKeyDown={async (e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
-                  console.log("pressed");
                   await handleHeaderOneSubmit();
                 }
               }}

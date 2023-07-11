@@ -9,7 +9,7 @@ import {
   updateHeaderOneAbout,
   updateHeaderTwoAbout,
 } from "./aboutapi.tsx";
-import SkillSection from "Components/Sections/SkillSection.tsx";
+import SkillSection from "Components/Sections/Skill/SkillSection.tsx";
 import StorySection from "Components/Sections/Story/StorySection.tsx";
 import ResumeSection from "Components/Sections/Resume/ResumeSection.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";

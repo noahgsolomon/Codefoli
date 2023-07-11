@@ -3,7 +3,7 @@ import Form from "./Form/Form";
 import React from "react";
 import { useSpring, animated } from "react-spring";
 import ContactData from "Type/ContactData.tsx";
-import SkillSection from "Components/Sections/SkillSection.tsx";
+import SkillSection from "Components/Sections/Skill/SkillSection.tsx";
 import StorySection from "Components/Sections/Story/StorySection.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import ResumeSection from "Components/Sections/Resume/ResumeSection.tsx";
