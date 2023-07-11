@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ServiceData } from "Type/Services.tsx";
 import UserData from "Type/UserData.tsx";
-import { updateService } from "api/userapi.tsx";
+import { removeService, updateService } from "api/userapi.tsx";
 
 const Card: React.FC<{
   imageUrl?: string;
@@ -30,16 +30,32 @@ const Card: React.FC<{
       onMouseLeave={() => setHovered(false)}
     >
       <div
-        className={`absolute inset-0 bg-red-500 ${
+        className={`absolute inset-0 z-10 bg-red-500 ${
           removeHover ? "opacity-20" : "hidden"
         }`}
       />
+
       <button
         className={`${
           hovered && !preview ? "opacity-100" : "hidden"
-        } absolute -right-3 -top-3 z-10 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
+        } absolute -right-3 -top-3 z-20 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onMouseEnter={() => setRemoveHover(true)}
         onMouseLeave={() => setRemoveHover(false)}
+        onClick={async () => {
+          if (setUserData && userData) {
+            const removeServiceFetch = await removeService(
+              title.replaceAll(" ", "_")
+            );
+            if (removeServiceFetch.status === "OK") {
+              setUserData((prev) => ({
+                ...prev,
+                services: prev.services.filter(
+                  (service) => service !== title.replaceAll(" ", "_")
+                ),
+              }));
+            }
+          }
+        }}
       >
         -
       </button>
