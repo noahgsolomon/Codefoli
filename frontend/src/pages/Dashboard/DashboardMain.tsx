@@ -80,15 +80,16 @@ const DashboardMain: React.FC<{
         }
       );
 
-      if (!response.ok) {
+      const data = await response.json();
+
+      if (data.status !== 'OK') {
         setImageLoading(false);
         return;
       }
 
-      const data = await response.json();
       setPageData({
         ...pageData,
-        profileImage: `${data.url}?timestamp=${new Date().getTime()}`,
+        profileImage: `${data.data.url}?timestamp=${new Date().getTime()}`,
       });
       setTimeout(() => setImageLoading(false), 500);
     } catch (error) {

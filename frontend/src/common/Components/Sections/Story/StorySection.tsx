@@ -169,14 +169,13 @@ const StorySection: React.FC<{
         credentials: "include",
       });
 
-      if (!response.ok) {
+      const data = await response.json();
+
+      if (data.status !== 'OK') {
         setEdit(false);
         return;
       }
 
-      console.log([imageKey]);
-
-      const data = await response.json();
       setPageData((prev) => ({
         ...prev,
         sections: prev.sections.map((section) =>
@@ -185,7 +184,7 @@ const StorySection: React.FC<{
                 ...section,
                 details: {
                   ...section.details,
-                  [imageKey]: data.url + `?date=${new Date()}`,
+                  [imageKey]: data.data.url + `?date=${new Date()}`,
                 },
               }
             : section

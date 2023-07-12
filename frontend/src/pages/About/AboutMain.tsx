@@ -63,7 +63,7 @@ const AboutMain: React.FC<{
 
             setPageData({
                 ...pageData,
-                [imageKey]: `${data.data}?timestamp=${new Date().getTime()}`,
+                [imageKey]: `${data.data.url}?timestamp=${new Date().getTime()}`,
             });
             setTimeout(() => setEdit(false), 500);
         } catch (error) {
