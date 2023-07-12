@@ -21,8 +21,6 @@ const Dashboard: React.FC<{
     setAnimation.start({ opacity: 1, transform: "translate3d(0, 0px, 0)" });
   }, [setAnimation]);
 
-  console.log(pageData);
-
   return (
     <>
       <animated.div style={animationProps}>
