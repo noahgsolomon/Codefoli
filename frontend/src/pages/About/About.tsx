@@ -11,11 +11,14 @@ const About: React.FC<{
   setPageData: React.Dispatch<React.SetStateAction<AboutData>>;
   setUserData: React.Dispatch<React.SetStateAction<UserData>>;
 }> = ({ userData, pageData, setPageData, setUserData }) => {
-
   return (
     <>
       <main>
-        <AboutMain pageData={pageData} setPageData={setPageData} userData={userData}/>
+        <AboutMain
+          pageData={pageData}
+          setPageData={setPageData}
+          userData={userData}
+        />
         <AboutSections
           pageData={pageData}
           setPageData={setPageData}

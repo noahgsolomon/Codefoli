@@ -82,7 +82,7 @@ const DashboardMain: React.FC<{
 
       const data = await response.json();
 
-      if (data.status !== 'OK') {
+      if (data.status !== "OK") {
         setImageLoading(false);
         return;
       }

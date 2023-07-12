@@ -171,7 +171,7 @@ const StorySection: React.FC<{
 
       const data = await response.json();
 
-      if (data.status !== 'OK') {
+      if (data.status !== "OK") {
         setEdit(false);
         return;
       }
