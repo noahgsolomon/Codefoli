@@ -4,6 +4,7 @@ type Work = {
   startDate: string;
   endDate: string;
   description: string;
+  id: string;
 };
 
 export default Work;

@@ -1,21 +1,47 @@
-import React, { SetStateAction, useState } from "react";
+import React, { SetStateAction, useRef, useState } from "react";
 import JobCard from "Components/Sections/Resume/JobCard/JobCard.tsx";
 import UserData from "Type/UserData.tsx";
 import PageType from "Type/Pages.tsx";
 import { ResumeType } from "Type/Section.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import { removeSection } from "Components/Sections/api/sectionapi.tsx";
+import { updateHeaderOneResume } from "Components/Sections/Resume/resumeapi.tsx";
 
 const ResumeSection: React.FC<{
   page: PageType;
   details: ResumeType;
   setPageData: React.Dispatch<SetStateAction<AnyPageData>>;
   userData: UserData;
+  setUserData: React.Dispatch<SetStateAction<UserData>>;
   order: number;
-}> = ({ page, details, setPageData, userData, order }) => {
+}> = ({ page, details, setPageData, userData, order, setUserData }) => {
   const [resumeSectionHover, setResumeSectionHover] = useState<boolean>(false);
   const [removeResumeSection, setRemoveResumeSection] =
     useState<boolean>(false);
+  const [headerOneEdit, setHeaderOneEdit] = useState(false);
+  const [headerOneEditValue, setHeaderOneEditValue] = useState(
+    details.headerOne
+  );
+  const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const handleHeaderOneSubmit = async () => {
+    const updateHeader = await updateHeaderOneResume(headerOneEditValue);
+    if (updateHeader.status === "OK") {
+      setPageData((prev) => ({
+        ...prev,
+        sections: prev.sections.map((section) =>
+          section.type === "RESUME"
+            ? {
+                ...section,
+                details: { ...section.details, headerOne: headerOneEditValue },
+              }
+            : section
+        ),
+      }));
+      setHeaderOneEditValue(updateHeader.data);
+    }
+    setHeaderOneEdit(false);
+  };
 
   return (
     <section
@@ -72,18 +98,44 @@ const ResumeSection: React.FC<{
         -
       </button>
       <div className="container mx-auto max-w-screen-lg px-5">
-        <h2 className="mb-8 text-center text-3xl font-bold">
-          {details.headerOne}
-        </h2>
+        {headerOneEdit ? (
+          <textarea
+            ref={headerOneTextareaRef}
+            value={headerOneEditValue}
+            onChange={(e) => setHeaderOneEditValue(e.target.value)}
+            onBlur={() => {
+              setHeaderOneEditValue(details.headerOne);
+              setHeaderOneEdit(false);
+            }}
+            onKeyDown={async (e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                await handleHeaderOneSubmit();
+              }
+            }}
+            className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-3xl font-bold leading-relaxed outline-none focus:outline-none focus:ring-0"
+            autoFocus
+            maxLength={50}
+          />
+        ) : (
+          <h2
+            className="mb-8 text-center text-3xl font-bold transition-all hover:opacity-50 "
+            onClick={() => setHeaderOneEdit(true)}
+          >
+            {details.headerOne}
+          </h2>
+        )}
         <div className="resume-events">
           {userData.work.map((job, index) => (
             <JobCard
-              key={index}
+              key={job.id}
+              id={job.id}
               companyTitle={job.company}
               role={job.position}
               description={job.description}
               duration={job.startDate + " - " + job.endDate}
               active={index === 0}
+              setUserData={setUserData}
             />
           ))}
         </div>

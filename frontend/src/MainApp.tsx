@@ -67,7 +67,6 @@ const MainApp: React.FC = () => {
   useEffect(() => {
     const authenticatedCheck = async () => {
       const fetchState = await authenticated();
-      console.log(fetchState);
       if (fetchState) {
         const user: UserData = await userDetails();
         if (user.role === "NEWBIE") {
@@ -94,7 +93,6 @@ const MainApp: React.FC = () => {
           setUserData(user);
           localStorage.setItem("role", user.role);
           const path = window.location.pathname;
-          console.log(path);
           if (path === "/" || path === "/login" || path === "/register") {
             navigate("/dashboard");
           }
