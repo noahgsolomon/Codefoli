@@ -40,4 +40,9 @@ public class UserDataController {
         return userDataService.addService(principal, service);
     }
 
+    @DeleteMapping("/remove-job")
+    public ResponseEntity<Response> removeJob(Principal principal, @RequestBody String id) {
+        return userDataService.removeJob(principal, id);
+    }
+
 }

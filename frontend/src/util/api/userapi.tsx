@@ -234,6 +234,27 @@ const getContact = async () => {
   }
 };
 
+const removeJob = async (id: string) => {
+  try {
+    const response = await fetch("http://localhost:8080/remove-job", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: id,
+      credentials: "include",
+    });
+
+    const responseJson = await response.json();
+    if (responseJson.status === "OK") {
+      return responseJson;
+    } else {
+      console.log(responseJson.message);
+      return responseJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export {
   userDetails,
   setupAccount,
@@ -245,4 +266,5 @@ export {
   addLanguage,
   removeService,
   addService,
+  removeJob,
 };

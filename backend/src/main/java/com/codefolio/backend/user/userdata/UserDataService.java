@@ -7,6 +7,8 @@ import com.codefolio.backend.user.services.ServicesType;
 import com.codefolio.backend.user.skills.Skills;
 import com.codefolio.backend.user.skills.SkillsRepository;
 import com.codefolio.backend.user.skills.SkillsType;
+import com.codefolio.backend.user.workhistory.Work;
+import com.codefolio.backend.user.workhistory.WorkRepository;
 import com.codefolio.backend.util.Response;
 import com.codefolio.backend.util.StatusType;
 import lombok.AllArgsConstructor;
@@ -25,6 +27,7 @@ public class UserDataService {
 
     private final ServicesRepository servicesRepository;
     private final SkillsRepository skillsRepository;
+    private final WorkRepository workRepository;
 
     public ResponseEntity<Response> updateServices(Principal principal, UpdateServiceRequestModel updateServiceRequestModel) {
         try {
@@ -133,6 +136,28 @@ public class UserDataService {
             Services services = new Services(serviceType, user);
             servicesRepository.save(services);
             return ResponseEntity.ok(new Response(StatusType.OK, "Service added successfully", services.getService()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
+        }
+    }
+
+    public ResponseEntity<Response> removeJob(Principal principal, String id) {
+        try {
+            long jobId;
+            try{
+                jobId = Long.parseLong(id);
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().body(new Response(StatusType.NOT_FOUND, "Invalid job id", null));
+            }
+            Users user = getAuthenticatedUser(principal);
+            Optional<Work> job = workRepository.findByUsersAndId(user, jobId);
+            if (job.isEmpty()){
+                return ResponseEntity.badRequest().body(new Response(StatusType.NOT_FOUND, "Job not found", null));
+            }
+            workRepository.delete(job.get());
+            return ResponseEntity.ok(new Response(StatusType.OK, "Job removed successfully", job.get().getId()));
         } catch (Exception e) {
             e.printStackTrace();
             System.err.print(e.getMessage());
