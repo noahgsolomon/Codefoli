@@ -3,8 +3,8 @@ import SkillSection from "Components/Sections/Skill/SkillSection.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import StorySection from "Components/Sections/Story/StorySection.tsx";
 import ResumeSection from "Components/Sections/Resume/ResumeSection.tsx";
-import FAQSection from "Components/Sections/FAQSection.tsx";
-import ValueSection from "Components/Sections/ValueSection.tsx";
+import FAQSection from "Components/Sections/FAQ/FAQSection.tsx";
+import ValueSection from "Components/Sections/Value/ValueSection.tsx";
 import AddSection from "Components/AddSection/AddSection.tsx";
 import UserData from "Type/UserData.tsx";
 import HomeData from "Type/HomeData.tsx";
@@ -90,6 +90,7 @@ const DashboardSections: React.FC<{
                   }
                   userData={userData}
                   order={section.details.order}
+                  setUserData={setUserData}
                 />
               );
               break;
