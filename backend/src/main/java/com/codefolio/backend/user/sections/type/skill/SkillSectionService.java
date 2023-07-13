@@ -29,7 +29,7 @@ public class SkillSectionService {
                 skillSectionRepository.save(skillData);
                 return ResponseEntity.ok(new Response(StatusType.OK, "Header one updated successfully", skillData.getHeaderOne()));
             } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(StatusType.NOT_FOUND, "Skill data not found", null));
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(StatusType.NOT_FOUND, "No skill section data found", null));
             }
         } catch (Exception e) {
             e.printStackTrace();

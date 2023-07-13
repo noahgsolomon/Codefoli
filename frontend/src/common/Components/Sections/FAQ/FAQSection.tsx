@@ -13,7 +13,7 @@ const FAQSection: React.FC<{
 }> = ({ page, details, setPageData, order }) => {
   const [faqHover, setFAQHover] = useState<boolean>(false);
   const [removeFAQ, setRemoveFAQ] = useState<boolean>(false);
-  console.log(faqHover);
+
   return (
     <div className="relative mb-20 mt-20">
       {removeFAQ && (
