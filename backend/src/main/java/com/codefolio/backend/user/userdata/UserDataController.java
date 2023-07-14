@@ -45,4 +45,9 @@ public class UserDataController {
         return userDataService.removeJob(principal, id);
     }
 
+    @PostMapping("/add-job")
+    public ResponseEntity<Response> addJob(Principal principal, @RequestBody AddJobRequestModel addJobRequestModel) {
+        return userDataService.addJob(principal, addJobRequestModel);
+    }
+
 }

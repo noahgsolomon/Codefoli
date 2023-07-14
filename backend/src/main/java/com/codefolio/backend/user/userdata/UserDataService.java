@@ -164,4 +164,17 @@ public class UserDataService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
         }
     }
+
+    public ResponseEntity<Response> addJob(Principal principal, AddJobRequestModel addJobRequestModel) {
+        try {
+            Users user = getAuthenticatedUser(principal);
+            Work job = new Work(user, addJobRequestModel.company(), addJobRequestModel.position(), addJobRequestModel.startDate(), addJobRequestModel.endDate(), addJobRequestModel.description());
+            workRepository.save(job);
+            return ResponseEntity.ok(new Response(StatusType.OK, "Job added successfully", new AddJobResponseModel(job.getId(), job.getCompany(), job.getPosition(), job.getDescription(), job.getStartDate(), job.getEndDate())));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
+        }
+    }
 }
