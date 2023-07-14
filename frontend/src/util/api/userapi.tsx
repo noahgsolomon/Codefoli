@@ -255,6 +255,160 @@ const removeJob = async (id: string) => {
   }
 };
 
+const addJob = async (
+  company: string,
+  position: string,
+  description: string,
+  startDate: string,
+  endDate: string
+) => {
+  const model = {
+    company: company,
+    position: position,
+    description: description,
+    startDate: startDate,
+    endDate: endDate,
+  };
+  try {
+    const response = await fetch("http://localhost:8080/add-job", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(model),
+      credentials: "include",
+    });
+
+    const responseJson = await response.json();
+    if (responseJson.status === "OK") {
+      return responseJson;
+    } else {
+      console.log(responseJson.message);
+      return responseJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const updateJobCompany = async (id: string, company: string) => {
+  const model = {
+    id: id,
+    company: company,
+  };
+  try {
+    const updateFetch = await fetch("http://localhost:8080/job/company", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(model),
+      credentials: "include",
+    });
+    const updateFetchJson = await updateFetch.json();
+    if (updateFetchJson.status === "OK") {
+      return updateFetchJson;
+    } else {
+      console.log(updateFetchJson.message);
+      return updateFetchJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const updateJobDescription = async (id: string, description: string) => {
+  const model = {
+    id: id,
+    description: description,
+  };
+  try {
+    const updateFetch = await fetch("http://localhost:8080/job/description", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(model),
+      credentials: "include",
+    });
+    const updateFetchJson = await updateFetch.json();
+    if (updateFetchJson.status === "OK") {
+      return updateFetchJson;
+    } else {
+      console.log(updateFetchJson.message);
+      return updateFetchJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const updateJobRole = async (id: string, position: string) => {
+  const model = {
+    id: id,
+    position: position,
+  };
+  try {
+    const updateFetch = await fetch("http://localhost:8080/job/position", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(model),
+      credentials: "include",
+    });
+    const updateFetchJson = await updateFetch.json();
+    if (updateFetchJson.status === "OK") {
+      return updateFetchJson;
+    } else {
+      console.log(updateFetchJson.message);
+      return updateFetchJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const updateJobStartDate = async (id: string, startDate: string) => {
+  const model = {
+    id: id,
+    startDate: startDate,
+  };
+  try {
+    const updateFetch = await fetch("http://localhost:8080/job/start-date", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(model),
+      credentials: "include",
+    });
+    const updateFetchJson = await updateFetch.json();
+    if (updateFetchJson.status === "OK") {
+      return updateFetchJson;
+    } else {
+      console.log(updateFetchJson.message);
+      return updateFetchJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const updateJobEndDate = async (id: string, endDate: string) => {
+  const model = {
+    id: id,
+    endDate: endDate,
+  };
+  try {
+    const updateFetch = await fetch("http://localhost:8080/job/end-date", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(model),
+      credentials: "include",
+    });
+    const updateFetchJson = await updateFetch.json();
+    if (updateFetchJson.status === "OK") {
+      return updateFetchJson;
+    } else {
+      console.log(updateFetchJson.message);
+      return updateFetchJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export {
   userDetails,
   setupAccount,
@@ -267,4 +421,10 @@ export {
   removeService,
   addService,
   removeJob,
+  addJob,
+  updateJobCompany,
+  updateJobDescription,
+  updateJobRole,
+  updateJobStartDate,
+  updateJobEndDate,
 };
