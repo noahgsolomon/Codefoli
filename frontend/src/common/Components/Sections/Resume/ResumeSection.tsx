@@ -6,6 +6,7 @@ import { ResumeType } from "Type/Section.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import { removeSection } from "Components/Sections/api/sectionapi.tsx";
 import { updateHeaderOneResume } from "Components/Sections/Resume/resumeapi.tsx";
+import AddJobCard from "Components/Sections/Resume/JobCard/AddJobCard.tsx";
 
 const ResumeSection: React.FC<{
   page: PageType;
@@ -38,7 +39,7 @@ const ResumeSection: React.FC<{
             : section
         ),
       }));
-      setHeaderOneEditValue(updateHeader.data);
+      setHeaderOneEditValue(headerOneEditValue);
     }
     setHeaderOneEdit(false);
   };
@@ -115,11 +116,15 @@ const ResumeSection: React.FC<{
             }}
             className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-3xl font-bold leading-relaxed outline-none focus:outline-none focus:ring-0"
             autoFocus
+            rows={1}
+            onFocus={(e) => {
+              e.target.select();
+            }}
             maxLength={50}
           />
         ) : (
           <h2
-            className="mb-8 text-center text-3xl font-bold transition-all hover:opacity-50 "
+            className="mb-8 text-center text-3xl font-bold transition-all hover:cursor-pointer hover:opacity-50 "
             onClick={() => setHeaderOneEdit(true)}
           >
             {details.headerOne}
@@ -133,11 +138,13 @@ const ResumeSection: React.FC<{
               companyTitle={job.company}
               role={job.position}
               description={job.description}
-              duration={job.startDate + " - " + job.endDate}
+              startDate={job.startDate}
+              endDate={job.endDate}
               active={index === 0}
               setUserData={setUserData}
             />
           ))}
+          {userData.work.length < 8 && <AddJobCard setUserData={setUserData} />}
         </div>
       </div>
     </section>
