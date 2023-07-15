@@ -270,6 +270,9 @@ const StorySection: React.FC<{
               }}
               className="mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-4xl font-bold text-white outline-none focus:outline-none focus:ring-0 md:text-5xl md:leading-tight"
               autoFocus
+              onFocus={(e) => {
+                e.target.select();
+              }}
               maxLength={50}
             />
           ) : (
@@ -298,6 +301,9 @@ const StorySection: React.FC<{
               className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
               style={{ minHeight: "14rem" }}
               autoFocus
+              onFocus={(e) => {
+                e.target.select();
+              }}
               maxLength={250}
             />
           ) : (
@@ -329,6 +335,9 @@ const StorySection: React.FC<{
                   }}
                   className="w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
                   autoFocus
+                  onFocus={(e) => {
+                    e.target.select();
+                  }}
                   maxLength={250}
                 />
               ) : (
@@ -359,6 +368,9 @@ const StorySection: React.FC<{
                   }}
                   className="w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
                   autoFocus
+                  onFocus={(e) => {
+                    e.target.select();
+                  }}
                   maxLength={250}
                 />
               ) : (
@@ -389,6 +401,9 @@ const StorySection: React.FC<{
                   }}
                   className="w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
                   autoFocus
+                  onFocus={(e) => {
+                    e.target.select();
+                  }}
                   maxLength={250}
                 />
               ) : (

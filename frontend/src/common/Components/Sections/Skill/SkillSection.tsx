@@ -155,6 +155,9 @@ const SkillSection: React.FC<{
           }}
           className="mb-10 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-2xl font-bold leading-relaxed outline-none focus:outline-none focus:ring-0"
           autoFocus
+          onFocus={(e) => {
+            e.target.select();
+          }}
           maxLength={50}
         />
       ) : (

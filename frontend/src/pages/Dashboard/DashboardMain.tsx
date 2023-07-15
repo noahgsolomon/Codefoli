@@ -120,6 +120,9 @@ const DashboardMain: React.FC<{
                 }}
                 className="font-extra-bold w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-4xl leading-snug outline-none focus:outline-none focus:ring-0 md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal"
                 autoFocus
+                onFocus={(e) => {
+                  e.target.select();
+                }}
                 maxLength={50}
               />
             ) : (
@@ -148,6 +151,9 @@ const DashboardMain: React.FC<{
                 }}
                 className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-base opacity-60 outline-none focus:outline-none focus:ring-0 xl:max-w-[50ch] xl:text-left"
                 autoFocus
+                onFocus={(e) => {
+                  e.target.select();
+                }}
                 maxLength={250}
               />
             ) : (
