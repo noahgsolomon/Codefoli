@@ -4,7 +4,7 @@ const Github: FC = () => {
   const [isGithubRemoved, setIsGithubRemoved] = useState(
     localStorage.getItem("removeGithub") === "true"
   );
-
+  const [hover, setHover] = useState(false);
   const handleRemoveGithub = () => {
     localStorage.setItem("removeGithub", "true");
     setIsGithubRemoved(true);
@@ -16,11 +16,13 @@ const Github: FC = () => {
     <div className="flex w-full items-center justify-between bg-black px-3">
       <div></div>
       <a
-        className="mb-1 mt-1 text-base text-white transition-all hover:text-opacity-80"
+        className="relative mb-1 mt-1 text-base text-white transition-all hover:text-opacity-80"
         href={`https://github.com/noahgsolomon/codefolio`}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
       >
         ⭐ enjoying codefolio? Leave a star{" "}
-        <span className="text-white">→</span>
+        <span className={`absolute -right-4 text-white transition-all ${hover ? 'text-opacity-80 -right-6' : ''}`}>→</span>
       </a>
       <button onClick={() => handleRemoveGithub()}>
         <svg
