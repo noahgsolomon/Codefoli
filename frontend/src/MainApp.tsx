@@ -17,6 +17,7 @@ import Loader from "Components/Loader/Loader.tsx";
 import ContactData from "Type/ContactData.tsx";
 import Projects from "./pages/Projects/Projects.tsx";
 import Project from "./pages/Project/Project.tsx";
+import Github from "Components/Github/Github.tsx";
 
 const MainApp: React.FC = () => {
   const navigate = useNavigate();
@@ -120,6 +121,7 @@ const MainApp: React.FC = () => {
 
   return (
     <>
+      <Github />
       <Header authenticated={authenticatedUser} />
       <Routes>
         <Route path="/" element={<Home />} />
