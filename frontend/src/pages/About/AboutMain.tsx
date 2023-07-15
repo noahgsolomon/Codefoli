@@ -127,6 +127,7 @@ const AboutMain: React.FC<{
                 }}
                 className=" mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-5xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-7xl"
                 autoFocus
+                onFocus={(e) => e.currentTarget.select()}
                 maxLength={50}
               />
             ) : (
@@ -139,7 +140,7 @@ const AboutMain: React.FC<{
             )}
           </div>
           <div
-            className="image-wrapper relative order-2 w-full text-center md:order-1 md:self-end"
+            className="image-wrapper relative order-2 h-[150px] w-[150px] text-center md:order-1 md:self-end"
             onMouseEnter={() => setIconOneEdit(true)}
             onMouseLeave={() => setIconOneEdit(false)}
             onClick={() => {
@@ -160,11 +161,14 @@ const AboutMain: React.FC<{
                 );
               }}
             />
-            <img
-              className="inline-block max-h-[150px] max-w-[150px] rounded-full shadow-custom"
-              src={pageData.iconOne}
-              alt="portfolio"
-            />
+            <div className="h-full w-full overflow-hidden rounded-full shadow-customHover">
+              <img
+                className="h-full w-full object-cover"
+                src={pageData.iconOne}
+                alt="portfolio"
+              />
+            </div>
+
             <div
               className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-full border-8 border-dashed border-black bg-white text-xl font-bold text-black transition-all ${
                 iconOneEdit ? "opacity-50" : "opacity-0"
@@ -173,8 +177,9 @@ const AboutMain: React.FC<{
               click to upload image
             </div>
           </div>
+
           <div
-            className="image-wrapper relative w-full text-center md:order-last md:self-start"
+            className="image-wrapper relative h-[150px] w-[150px] text-center md:order-last md:self-start"
             onMouseEnter={() => setIconTwoEdit(true)}
             onMouseLeave={() => setIconTwoEdit(false)}
             onClick={() =>
@@ -195,11 +200,13 @@ const AboutMain: React.FC<{
                 );
               }}
             />
-            <img
-              className="inline-block max-w-[150px] rounded-full shadow-custom"
-              src={pageData.iconTwo}
-              alt="portfolio"
-            />
+            <div className="h-full w-full overflow-hidden rounded-full shadow-customHover">
+              <img
+                className="h-full w-full object-cover"
+                src={pageData.iconTwo}
+                alt="portfolio"
+              />
+            </div>
             <div
               className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-full border-8 border-dashed border-black bg-white text-xl font-bold text-black transition-all ${
                 iconTwoEdit ? "opacity-50" : "opacity-0"
@@ -232,6 +239,7 @@ const AboutMain: React.FC<{
                   }}
                   className="mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-4xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-left md:text-6xl md:leading-tight"
                   autoFocus
+                  onFocus={(e) => e.currentTarget.select()}
                   maxLength={25}
                 />
               ) : (
@@ -244,7 +252,7 @@ const AboutMain: React.FC<{
               )}
             </div>
             <div
-              className="image-wrapper relative mb-5 max-w-[375px] sm:mx-auto md:mx-0"
+              className="image-wrapper relative mb-5 h-[300px] w-[500px] sm:mx-auto md:mx-0"
               onMouseEnter={() => setIconThreeEdit(true)}
               onMouseLeave={() => setIconThreeEdit(false)}
               onClick={() =>
@@ -265,11 +273,13 @@ const AboutMain: React.FC<{
                   );
                 }}
               />
-              <img
-                src={pageData.iconThree}
-                alt=""
-                className="rounded-3xl shadow-custom"
-              />
+              <div className="h-full w-full overflow-hidden rounded-3xl shadow-custom">
+                <img
+                  className="h-full w-full object-cover"
+                  src={pageData.iconThree}
+                  alt="portfolio"
+                />
+              </div>
               <div
                 className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-3xl border-8 border-dashed border-black bg-white text-3xl font-bold text-black transition-all ${
                   iconThreeEdit ? "opacity-50" : "opacity-0"
@@ -298,6 +308,7 @@ const AboutMain: React.FC<{
                 className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg font-semibold leading-snug outline-none focus:outline-none focus:ring-0"
                 style={{ minHeight: "8em" }}
                 autoFocus
+                onFocus={(e) => e.currentTarget.select()}
                 maxLength={250}
               />
             ) : (

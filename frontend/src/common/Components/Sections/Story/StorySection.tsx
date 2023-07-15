@@ -419,7 +419,7 @@ const StorySection: React.FC<{
         </div>
         <div className="content-right flex items-center justify-center">
           <div
-            className={`image-wrapper relative mb-5 max-w-[375px] transition-all`}
+            className={`image-wrapper relative mb-5 h-[400px] w-[400px] transition-all`}
             onMouseEnter={() => setImageOneEdit(true)}
             onMouseLeave={() => setImageOneEdit(false)}
             onClick={() =>
@@ -440,7 +440,13 @@ const StorySection: React.FC<{
                 );
               }}
             />
-            <img src={details.imageOne} alt="" className="rounded-3xl" />
+            <div className="h-full w-full overflow-hidden rounded-3xl">
+              <img
+                src={details.imageOne}
+                alt=""
+                className="h-full w-full rounded-3xl object-cover"
+              />
+            </div>
             <div
               className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-3xl border-8 border-dashed border-black bg-white text-3xl font-bold text-black transition-all ${
                 imageOneEdit ? "opacity-50" : "opacity-0"

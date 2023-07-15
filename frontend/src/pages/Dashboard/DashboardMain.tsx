@@ -181,7 +181,7 @@ const DashboardMain: React.FC<{
           </div>
         </div>
         <div
-          className={`relative mx-auto mt-10 transition-all lg:mx-0 xl:ml-20 xl:mt-32 ${
+          className={`relative mx-auto mt-10 h-[500px] w-[500px] transition-all lg:mx-0 xl:ml-20 xl:mt-32 ${
             imageLoading ? "opacity-0" : "opacity-100"
           }`}
           onMouseEnter={() => setImageOneEdit(true)}
@@ -195,11 +195,13 @@ const DashboardMain: React.FC<{
             accept=".jpg,.png"
             onChange={handleFileUpload}
           />
-          <img
-            className="rounded-3xl shadow-customHover"
-            src={pageData.profileImage}
-            alt="pfp"
-          ></img>
+          <div className="h-full w-full overflow-hidden rounded-3xl shadow-customHover">
+            <img
+              className="h-full w-full object-cover"
+              src={pageData.profileImage}
+              alt="pfp"
+            ></img>
+          </div>
           <div
             className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-3xl border-8 border-dashed border-black bg-white p-2 text-3xl font-bold text-black transition-all ${
               imageOneEdit ? "opacity-50" : "opacity-0"
