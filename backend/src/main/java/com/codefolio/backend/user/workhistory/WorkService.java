@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Objects;
 
 import static com.codefolio.backend.user.UserService.getAuthenticatedUser;
@@ -85,6 +86,28 @@ public class WorkService {
             work.setEndDate(job.endDate());
             workRepository.save(work);
             return ResponseEntity.ok(new Response(StatusType.OK, "End date updated successfully", work.getEndDate()));
+        } catch (Exception e) {
+            return handleException(e);
+        }
+    }
+
+    public ResponseEntity<Response> changeJobOrder(Principal principal, ChangeJobOrderRequestModel job) {
+        try {
+            System.out.println(job.from() + " " + job.to());
+            Users user = getAuthenticatedUser(principal);
+            List<Work> work = workRepository.findAllByUsers(user);
+            if (job.from() < 0 || job.from() > work.size() || job.to() < 0 || job.to() > work.size()) {
+                return ResponseEntity.badRequest().body(new Response(StatusType.ERROR, "Invalid job order", null));
+            }
+            Work from = workRepository.findByUsersAndOrderId(user, job.from()).orElseThrow();
+            Work to = workRepository.findByUsersAndOrderId(user, job.to()).orElseThrow();
+            int fromOrder = from.getOrderId();
+            int toOrder = to.getOrderId();
+            from.setOrderId(toOrder);
+            to.setOrderId(fromOrder);
+            workRepository.save(from);
+            workRepository.save(to);
+            return ResponseEntity.ok(new Response(StatusType.OK, "Job moved successfully", work));
         } catch (Exception e) {
             return handleException(e);
         }

@@ -41,4 +41,9 @@ public class WorkController {
     public ResponseEntity<Response> updateJobEndDate(Principal principal, @RequestBody UpdateJobEndDateRequestModel job) {
         return workService.updateJobEndDate(principal, job);
     }
+
+    @PutMapping("/job/change-order")
+    public ResponseEntity<Response> changeJobOrder(Principal principal, @RequestBody ChangeJobOrderRequestModel job) {
+        return workService.changeJobOrder(principal, job);
+    }
 }

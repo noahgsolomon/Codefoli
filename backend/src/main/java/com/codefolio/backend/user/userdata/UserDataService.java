@@ -178,7 +178,7 @@ public class UserDataService {
             Users user = getAuthenticatedUser(principal);
             Work job = new Work(user, addJobRequestModel.company(), addJobRequestModel.position(), addJobRequestModel.startDate(), addJobRequestModel.endDate(), addJobRequestModel.description(), addJobRequestModel.orderId());
             workRepository.save(job);
-            return ResponseEntity.ok(new Response(StatusType.OK, "Job added successfully", new AddJobResponseModel(job.getId(), job.getCompany(), job.getPosition(), job.getDescription(), job.getStartDate(), job.getEndDate())));
+            return ResponseEntity.ok(new Response(StatusType.OK, "Job added successfully", new AddJobResponseModel(job.getId(), job.getCompany(), job.getPosition(), job.getDescription(), job.getStartDate(), job.getEndDate(), job.getOrderId())));
         } catch (Exception e) {
             e.printStackTrace();
             System.err.print(e.getMessage());
