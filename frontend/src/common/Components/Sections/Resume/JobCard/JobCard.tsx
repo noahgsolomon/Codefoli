@@ -184,7 +184,7 @@ const JobCard: FC<{
         work: prev.work
           .filter((prevWork) => prevWork.id !== id)
           .map((job) =>
-            job.orderId > orderId ? { ...job, order: job.orderId - 1 } : job
+            job.orderId > orderId ? { ...job, orderId: job.orderId - 1 } : job
           ),
       }));
     }
