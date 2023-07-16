@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import React, {useEffect, useMemo, useRef, useState} from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { updateDescriptionOne, updateHeaderOne } from "./dashboardapi.tsx";
 import HomeData from "Type/HomeData.tsx";
 
@@ -199,7 +199,7 @@ const DashboardMain: React.FC<{
           <div className="h-full w-full overflow-hidden rounded-3xl shadow-customHover">
             <img
               className="h-full w-full object-cover"
-              src={pageData.profileImage + '?date=' + date}
+              src={pageData.profileImage + "?date=" + date}
               alt="pfp"
             ></img>
           </div>

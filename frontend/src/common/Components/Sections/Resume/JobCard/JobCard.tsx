@@ -18,6 +18,7 @@ const JobCard: FC<{
   active?: boolean;
   setUserData: Dispatch<SetStateAction<UserData>>;
   id: string;
+  orderId: number;
 }> = ({
   id,
   companyTitle,
@@ -27,6 +28,7 @@ const JobCard: FC<{
   endDate,
   active,
   setUserData,
+  orderId,
 }) => {
   const [companyTitleValue, setCompanyTitleValue] =
     useState<string>(companyTitle);
@@ -148,6 +150,20 @@ const JobCard: FC<{
     setEndDateEdit(false);
   };
 
+  const handleJobRemove = async () => {
+    const removeJobFetch = await removeJob(id);
+    if (removeJobFetch.status === "OK") {
+      setUserData((prev) => ({
+        ...prev,
+        work: prev.work
+          .filter((prevWork) => prevWork.id !== id)
+          .map((job) =>
+            job.order > orderId ? { ...job, order: job.order - 1 } : job
+          ),
+      }));
+    }
+  };
+
   return (
     <div
       className={`relative transition-all hover:-translate-y-0.5 ${
@@ -169,15 +185,7 @@ const JobCard: FC<{
         } absolute -right-3 -top-3 z-20 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onMouseEnter={() => setRemoveJobHover(true)}
         onMouseLeave={() => setRemoveJobHover(false)}
-        onClick={async () => {
-          const removeJobFetch = await removeJob(id);
-          if (removeJobFetch.status === "OK") {
-            setUserData((prev) => ({
-              ...prev,
-              work: prev.work.filter((prevWork) => prevWork.id !== id),
-            }));
-          }
-        }}
+        onClick={async () => await handleJobRemove()}
       >
         -
       </button>

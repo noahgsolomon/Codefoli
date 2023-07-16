@@ -5,6 +5,7 @@ type Work = {
   endDate: string;
   description: string;
   id: string;
+  order: number;
 };
 
 export default Work;

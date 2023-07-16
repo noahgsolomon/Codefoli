@@ -260,7 +260,8 @@ const addJob = async (
   position: string,
   description: string,
   startDate: string,
-  endDate: string
+  endDate: string,
+  orderId: number
 ) => {
   const model = {
     company: company,
@@ -268,6 +269,7 @@ const addJob = async (
     description: description,
     startDate: startDate,
     endDate: endDate,
+    orderId: orderId,
   };
   try {
     const response = await fetch("http://localhost:8080/add-job", {

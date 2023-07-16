@@ -131,20 +131,28 @@ const ResumeSection: React.FC<{
           </h2>
         )}
         <div className="resume-events">
-          {userData.work.map((job, index) => (
-            <JobCard
-              key={job.id}
-              id={job.id}
-              companyTitle={job.company}
-              role={job.position}
-              description={job.description}
-              startDate={job.startDate}
-              endDate={job.endDate}
-              active={index === 0}
+          {userData.work
+            .sort((a, b) => a.order - b.order)
+            .map((job, index) => (
+              <JobCard
+                key={job.id}
+                id={job.id}
+                companyTitle={job.company}
+                role={job.position}
+                description={job.description}
+                startDate={job.startDate}
+                endDate={job.endDate}
+                active={index === 0}
+                orderId={job.order}
+                setUserData={setUserData}
+              />
+            ))}
+          {userData.work.length < 8 && (
+            <AddJobCard
               setUserData={setUserData}
+              orderId={userData.work.length + 1}
             />
-          ))}
-          {userData.work.length < 8 && <AddJobCard setUserData={setUserData} />}
+          )}
         </div>
       </div>
     </section>

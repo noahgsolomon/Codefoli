@@ -4,7 +4,8 @@ import UserData from "Type/UserData.tsx";
 
 const AddJobCard: FC<{
   setUserData: Dispatch<SetStateAction<UserData>>;
-}> = ({ setUserData }) => {
+  orderId: number;
+}> = ({ setUserData, orderId }) => {
   const handleAddJob = async () => {
     const company = "Company...";
     const description = "Description...";
@@ -16,7 +17,8 @@ const AddJobCard: FC<{
       position,
       description,
       startDate,
-      endDate
+      endDate,
+      orderId
     );
     if (addJobFetch.status === "OK") {
       setUserData((prev) => ({
