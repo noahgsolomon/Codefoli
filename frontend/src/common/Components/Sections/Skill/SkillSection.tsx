@@ -84,6 +84,79 @@ const SkillSection: React.FC<{
     setHeaderOneEdit(false);
   };
 
+  const handleRemoveSkill = async (skill: string) => {
+    const removeLanguageFetch = await removeLanguage(skill);
+    if (removeLanguageFetch.status === "OK") {
+      setUserData((prev) => {
+        const updatedSkills = prev.skills.filter(
+            (prevSkill) => prevSkill !== skill
+        );
+        return {
+          ...prev,
+          skills: updatedSkills,
+        };
+      });
+    }
+  };
+
+  const handleRemoveSection = async () => {
+    const remove = await removeSection(page, "SKILL", order);
+    if (remove) {
+      setPageData((prev) => {
+        const removedSection = prev.sections.find(
+            (section) => section.type === "SKILL"
+        );
+        if (!removedSection) {
+          return prev;
+        }
+        const removedOrder = removedSection.details.order;
+        const updatedSections = prev.sections
+            .filter((section) => section.type !== "SKILL")
+            .map((section) => {
+              if (section.details.order > removedOrder) {
+                return {
+                  ...section,
+                  details: {
+                    ...section.details,
+                    order: section.details.order - 1,
+                  },
+                };
+              } else {
+                return section;
+              }
+            });
+
+        return {
+          ...prev,
+          sections: updatedSections,
+        };
+      });
+    }
+  };
+
+  const handleAddSkill = async (skill: string) => {
+    const addNewSkillFetch = await addLanguage(
+        skill.toUpperCase().replaceAll(" ", "_")
+    );
+    if (addNewSkillFetch.status === "OK") {
+      setUserData((prev) => {
+        const updatedSkills = [
+          ...prev.skills,
+          skill
+              .toUpperCase()
+              .replaceAll(" ", "_") as Skills,
+        ];
+        return {
+          ...prev,
+          skills: updatedSkills,
+        };
+      });
+    }
+    setNewSkill("");
+    setMatchingSkills([...allSkills]);
+    setAddingSkill(false);
+  }
+
   return (
     <div
       className="relative mb-20 mt-20"
@@ -101,40 +174,7 @@ const SkillSection: React.FC<{
         } absolute right-10 top-0 z-20 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onMouseEnter={() => setRemoveSkill(true)}
         onMouseLeave={() => setRemoveSkill(false)}
-        onClick={async () => {
-          const remove = await removeSection(page, "SKILL", order);
-          if (remove) {
-            setPageData((prev) => {
-              const removedSection = prev.sections.find(
-                (section) => section.type === "SKILL"
-              );
-              if (!removedSection) {
-                return prev;
-              }
-              const removedOrder = removedSection.details.order;
-              const updatedSections = prev.sections
-                .filter((section) => section.type !== "SKILL")
-                .map((section) => {
-                  if (section.details.order > removedOrder) {
-                    return {
-                      ...section,
-                      details: {
-                        ...section.details,
-                        order: section.details.order - 1,
-                      },
-                    };
-                  } else {
-                    return section;
-                  }
-                });
-
-              return {
-                ...prev,
-                sections: updatedSections,
-              };
-            });
-          }
-        }}
+        onClick={async () => await handleRemoveSection()}
       >
         -
       </button>
@@ -197,20 +237,7 @@ const SkillSection: React.FC<{
                   } ${
                     !preview ? "hover:bg-red-500 hover:line-through" : ""
                   } py-2 text-sm`}
-                  onClick={async () => {
-                    const removeLanguageFetch = await removeLanguage(skill);
-                    if (removeLanguageFetch.status === "OK") {
-                      setUserData((prev) => {
-                        const updatedSkills = prev.skills.filter(
-                          (prevSkill) => prevSkill !== skill
-                        );
-                        return {
-                          ...prev,
-                          skills: updatedSkills,
-                        };
-                      });
-                    }
-                  }}
+                  onClick={async () => await handleRemoveSkill(skill)}
                 >
                   {skill.replaceAll("_", " ")}
                 </span>
@@ -240,29 +267,7 @@ const SkillSection: React.FC<{
                       <div
                         key={skill}
                         className="m-1 inline-block cursor-pointer rounded-full border-b border-gray-300 bg-black p-2 transition-all hover:-translate-y-0.5 hover:opacity-90"
-                        onClick={async () => {
-                          console.log();
-                          const addNewSkillFetch = await addLanguage(
-                            skill.toUpperCase().replaceAll(" ", "_")
-                          );
-                          if (addNewSkillFetch.status === "OK") {
-                            setUserData((prev) => {
-                              const updatedSkills = [
-                                ...prev.skills,
-                                skill
-                                  .toUpperCase()
-                                  .replaceAll(" ", "_") as Skills,
-                              ];
-                              return {
-                                ...prev,
-                                skills: updatedSkills,
-                              };
-                            });
-                          }
-                          setNewSkill("");
-                          setMatchingSkills([...allSkills]);
-                          setAddingSkill(false);
-                        }}
+                        onClick={async () => await handleAddSkill(skill)}
                       >
                         <span className="px-2 text-white">{skill}</span>
                       </div>
@@ -276,9 +281,7 @@ const SkillSection: React.FC<{
                 className={`${
                   languageHover ? "opacity-100" : "opacity-0"
                 } inline-flex cursor-pointer items-center justify-center rounded-lg bg-gray-300 px-3 text-white transition-all hover:-translate-y-0.5 hover:bg-black hover:text-white`}
-                onClick={() => {
-                  setAddingSkill(true);
-                }}
+                onClick={() => setAddingSkill(true)}
               >
                 +
               </span>
