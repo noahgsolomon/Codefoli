@@ -46,6 +46,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @AllArgsConstructor
@@ -142,11 +143,12 @@ public class UserService {
                 skillsRepository.save(newSkill);
             });
 
+            AtomicInteger jobOrder = new AtomicInteger(1);
+
             userProfile.work().forEach(work -> {
-                Work newWork = new Work(user, work.getCompany(), work.getPosition(), work.getStartDate(), work.getEndDate(), work.getDescription());
+                Work newWork = new Work(user, work.getCompany(), work.getPosition(), work.getStartDate(), work.getEndDate(), work.getDescription(), jobOrder.getAndIncrement());
                 workRepository.save(newWork);
             });
-
             userProfile.services().forEach(service -> {
                 Services newService = new Services(ServicesType.valueOf(service), user);
                 servicesRepository.save(newService);

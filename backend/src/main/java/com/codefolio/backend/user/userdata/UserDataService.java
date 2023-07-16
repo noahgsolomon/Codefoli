@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static com.codefolio.backend.user.UserService.getAuthenticatedUser;
@@ -157,6 +159,13 @@ public class UserDataService {
                 return ResponseEntity.badRequest().body(new Response(StatusType.NOT_FOUND, "Job not found", null));
             }
             workRepository.delete(job.get());
+            List<Work> workList = workRepository.findAllByUsers(user);
+            for (Work work: workList){
+                if (work.getOrderId() > job.get().getOrderId()){
+                    work.setOrderId(work.getOrderId() - 1);
+                    workRepository.save(work);
+                }
+            }
             return ResponseEntity.ok(new Response(StatusType.OK, "Job removed successfully", job.get().getId()));
         } catch (Exception e) {
             e.printStackTrace();
@@ -168,7 +177,7 @@ public class UserDataService {
     public ResponseEntity<Response> addJob(Principal principal, AddJobRequestModel addJobRequestModel) {
         try {
             Users user = getAuthenticatedUser(principal);
-            Work job = new Work(user, addJobRequestModel.company(), addJobRequestModel.position(), addJobRequestModel.startDate(), addJobRequestModel.endDate(), addJobRequestModel.description());
+            Work job = new Work(user, addJobRequestModel.company(), addJobRequestModel.position(), addJobRequestModel.startDate(), addJobRequestModel.endDate(), addJobRequestModel.description(), addJobRequestModel.orderId());
             workRepository.save(job);
             return ResponseEntity.ok(new Response(StatusType.OK, "Job added successfully", new AddJobResponseModel(job.getId(), job.getCompany(), job.getPosition(), job.getDescription(), job.getStartDate(), job.getEndDate())));
         } catch (Exception e) {

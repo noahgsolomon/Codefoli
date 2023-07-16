@@ -25,13 +25,15 @@ public class Work {
     private String startDate;
     private String endDate;
     private String description;
+    private int orderId;
 
-    public Work(Users users, String company, String position, String startDate, String endDate, String description) {
+    public Work(Users users, String company, String position, String startDate, String endDate, String description, int orderId) {
         this.users = users;
         this.company = company;
         this.position = position;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
+        this.orderId = orderId;
     }
 }
