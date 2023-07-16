@@ -1,4 +1,4 @@
-import React, { SetStateAction, useRef, useState } from "react";
+import React, {SetStateAction, useMemo, useRef, useState} from "react";
 import { StoryType } from "Type/Section.tsx";
 import {
   updateBulletOneStory,
@@ -47,6 +47,7 @@ const StorySection: React.FC<{
 
   const [StoryHover, setStoryHover] = useState<boolean>(false);
   const [removeStory, setRemoveStory] = useState<boolean>(false);
+  const date = useMemo(() => Date.now(), []);
 
   const handleDescriptionOneSubmit = async () => {
     const updateDescription = await updateDescriptionOneStory(
@@ -442,7 +443,7 @@ const StorySection: React.FC<{
             />
             <div className="h-full w-full overflow-hidden rounded-3xl">
               <img
-                src={details.imageOne}
+                src={details.imageOne + '?date=' + date}
                 alt=""
                 className="h-full w-full rounded-3xl object-cover"
               />

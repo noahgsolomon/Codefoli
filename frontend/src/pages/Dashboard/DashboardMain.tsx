@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import React, { useEffect, useRef, useState } from "react";
+import React, {useEffect, useMemo, useRef, useState} from "react";
 import { updateDescriptionOne, updateHeaderOne } from "./dashboardapi.tsx";
 import HomeData from "Type/HomeData.tsx";
 
@@ -20,6 +20,7 @@ const DashboardMain: React.FC<{
 
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const date = useMemo(() => Date.now(), []);
 
   useEffect(() => {
     if (headerOneEdit && headerOneTextareaRef.current) {
@@ -198,7 +199,7 @@ const DashboardMain: React.FC<{
           <div className="h-full w-full overflow-hidden rounded-3xl shadow-customHover">
             <img
               className="h-full w-full object-cover"
-              src={pageData.profileImage}
+              src={pageData.profileImage + '?date=' + date}
               alt="pfp"
             ></img>
           </div>

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, {useMemo, useRef, useState} from "react";
 import AboutData from "Type/AboutData.tsx";
 import {
   updateDescriptionOneAbout,
@@ -37,6 +37,7 @@ const AboutMain: React.FC<{
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const headerTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const date = useMemo(() => Date.now(), []);
 
   const handleFileUpload = async (
     path: string,
@@ -164,7 +165,7 @@ const AboutMain: React.FC<{
             <div className="h-full w-full overflow-hidden rounded-full shadow-customHover">
               <img
                 className="h-full w-full object-cover"
-                src={pageData.iconOne}
+                src={pageData.iconOne + '?date=' + date}
                 alt="portfolio"
               />
             </div>
@@ -203,7 +204,7 @@ const AboutMain: React.FC<{
             <div className="h-full w-full overflow-hidden rounded-full shadow-customHover">
               <img
                 className="h-full w-full object-cover"
-                src={pageData.iconTwo}
+                src={pageData.iconTwo + '?date=' + date}
                 alt="portfolio"
               />
             </div>
@@ -276,7 +277,7 @@ const AboutMain: React.FC<{
               <div className="h-full w-full overflow-hidden rounded-3xl shadow-custom">
                 <img
                   className="h-full w-full object-cover"
-                  src={pageData.iconThree}
+                  src={pageData.iconThree + '?date=' + date}
                   alt="portfolio"
                 />
               </div>
