@@ -209,7 +209,7 @@ const JobCard: FC<{
         className={` ${
           orderId > 1 ? (hover ? "opacity-100" : "opacity-0") : "hidden"
         } absolute -top-3 left-0 right-0 z-30 mx-auto w-8 cursor-pointer rounded-full border-2 border-black bg-green-300 px-2 text-center text-xl shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover`}
-        onClick={() => handleJobOrderChange(orderId, orderId - 1)}
+        onClick={async () => await handleJobOrderChange(orderId, orderId - 1)}
       >
         ↑
       </div>
@@ -221,7 +221,7 @@ const JobCard: FC<{
               : "opacity-0"
             : "hidden"
         } absolute -bottom-3 left-0 right-0 z-30 mx-auto w-8 cursor-pointer rounded-full border-2 border-black bg-red-400 px-2 text-center text-xl shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover`}
-        onClick={() => handleJobOrderChange(orderId, orderId + 1)}
+        onClick={async () => await handleJobOrderChange(orderId, orderId + 1)}
       >
         ↓
       </div>

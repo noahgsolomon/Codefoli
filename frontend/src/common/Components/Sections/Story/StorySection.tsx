@@ -198,6 +198,41 @@ const StorySection: React.FC<{
     }
   };
 
+  const handleRemoveStorySection = async () => {
+    const remove = await removeSection(page, "STORY", order);
+    if (remove) {
+      setPageData((prev) => {
+        const removedSection = prev.sections.find(
+            (section) => section.type === "STORY"
+        );
+        if (!removedSection) {
+          return prev;
+        }
+        const removedOrder = removedSection.details.order;
+        const updatedSections = prev.sections
+            .filter((section) => section.type !== "STORY")
+            .map((section) => {
+              if (section.details.order > removedOrder) {
+                return {
+                  ...section,
+                  details: {
+                    ...section.details,
+                    order: section.details.order - 1,
+                  },
+                };
+              } else {
+                return section;
+              }
+            });
+
+        return {
+          ...prev,
+          sections: updatedSections,
+        };
+      });
+    }
+  }
+
   return (
     <section
       className="story relative mb-20 mt-20 bg-black transition-all"
@@ -215,40 +250,7 @@ const StorySection: React.FC<{
         } absolute right-10 top-0 z-20 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onMouseEnter={() => setRemoveStory(true)}
         onMouseLeave={() => setRemoveStory(false)}
-        onClick={async () => {
-          const remove = await removeSection(page, "STORY", order);
-          if (remove) {
-            setPageData((prev) => {
-              const removedSection = prev.sections.find(
-                (section) => section.type === "STORY"
-              );
-              if (!removedSection) {
-                return prev;
-              }
-              const removedOrder = removedSection.details.order;
-              const updatedSections = prev.sections
-                .filter((section) => section.type !== "STORY")
-                .map((section) => {
-                  if (section.details.order > removedOrder) {
-                    return {
-                      ...section,
-                      details: {
-                        ...section.details,
-                        order: section.details.order - 1,
-                      },
-                    };
-                  } else {
-                    return section;
-                  }
-                });
-
-              return {
-                ...prev,
-                sections: updatedSections,
-              };
-            });
-          }
-        }}
+        onClick={async () => await handleRemoveStorySection()}
       >
         -
       </button>
@@ -423,9 +425,7 @@ const StorySection: React.FC<{
             className={`image-wrapper relative mb-5 h-[400px] w-[400px] transition-all`}
             onMouseEnter={() => setImageOneEdit(true)}
             onMouseLeave={() => setImageOneEdit(false)}
-            onClick={() =>
-              imageOneFileInput.current && imageOneFileInput.current.click()
-            }
+            onClick={() => imageOneFileInput.current && imageOneFileInput.current.click()}
           >
             <input
               type="file"
