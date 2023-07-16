@@ -14,6 +14,41 @@ const FAQSection: React.FC<{
   const [faqHover, setFAQHover] = useState<boolean>(false);
   const [removeFAQ, setRemoveFAQ] = useState<boolean>(false);
 
+  const handleRemoveSection = async () => {
+    const remove = await removeSection(page, "FAQ", order);
+    if (remove) {
+      setPageData((prev) => {
+        const removedSection = prev.sections.find(
+            (section) => section.type === "FAQ"
+        );
+        if (!removedSection) {
+          return prev;
+        }
+        const removedOrder = removedSection.details.order;
+        const updatedSections = prev.sections
+            .filter((section) => section.type !== "FAQ")
+            .map((section) => {
+              if (section.details.order > removedOrder) {
+                return {
+                  ...section,
+                  details: {
+                    ...section.details,
+                    order: section.details.order - 1,
+                  },
+                };
+              } else {
+                return section;
+              }
+            });
+
+        return {
+          ...prev,
+          sections: updatedSections,
+        };
+      });
+    }
+  }
+
   return (
     <div className="relative mb-20 mt-20">
       {removeFAQ && (
@@ -32,40 +67,7 @@ const FAQSection: React.FC<{
           } absolute right-10 top-0 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
           onMouseEnter={() => setRemoveFAQ(true)}
           onMouseLeave={() => setRemoveFAQ(false)}
-          onClick={async () => {
-            const remove = await removeSection(page, "FAQ", order);
-            if (remove) {
-              setPageData((prev) => {
-                const removedSection = prev.sections.find(
-                  (section) => section.type === "FAQ"
-                );
-                if (!removedSection) {
-                  return prev;
-                }
-                const removedOrder = removedSection.details.order;
-                const updatedSections = prev.sections
-                  .filter((section) => section.type !== "FAQ")
-                  .map((section) => {
-                    if (section.details.order > removedOrder) {
-                      return {
-                        ...section,
-                        details: {
-                          ...section.details,
-                          order: section.details.order - 1,
-                        },
-                      };
-                    } else {
-                      return section;
-                    }
-                  });
-
-                return {
-                  ...prev,
-                  sections: updatedSections,
-                };
-              });
-            }
-          }}
+          onClick={async () => handleRemoveSection()}
         >
           -
         </button>

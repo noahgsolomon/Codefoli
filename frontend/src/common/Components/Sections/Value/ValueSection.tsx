@@ -15,6 +15,41 @@ const ValueSection: React.FC<{
   const [valueSectionHover, setValueSectionHover] = useState<boolean>(false);
   const [removeValueSection, setRemoveValueSection] = useState<boolean>(false);
 
+  const handleSectionRemove = async () => {
+    const remove = await removeSection(page, "VALUE", order);
+    if (remove) {
+      setPageData((prev) => {
+        const removedSection = prev.sections.find(
+            (section) => section.type === "VALUE"
+        );
+        if (!removedSection) {
+          return prev;
+        }
+        const removedOrder = removedSection.details.order;
+        const updatedSections = prev.sections
+            .filter((section) => section.type !== "VALUE")
+            .map((section) => {
+              if (section.details.order > removedOrder) {
+                return {
+                  ...section,
+                  details: {
+                    ...section.details,
+                    order: section.details.order - 1,
+                  },
+                };
+              } else {
+                return section;
+              }
+            });
+
+        return {
+          ...prev,
+          sections: updatedSections,
+        };
+      });
+    }
+  }
+
   return (
     <section
       className="services relative mb-20 mt-20"
@@ -22,50 +57,17 @@ const ValueSection: React.FC<{
       onMouseLeave={() => setValueSectionHover(false)}
     >
       {removeValueSection && (
-        <div
-          className={` absolute right-0 top-0 h-full w-full bg-red-300 opacity-25 transition-all`}
-        ></div>
+          <div
+              className={`absolute inset-0 z-10 bg-red-300 opacity-25 transition-all`}
+          ></div>
       )}
       <button
         className={`${
           valueSectionHover ? "opacity-100" : "opacity-0"
-        } absolute right-10 top-0 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
+        } absolute right-10 z-20 top-0 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onMouseEnter={() => setRemoveValueSection(true)}
         onMouseLeave={() => setRemoveValueSection(false)}
-        onClick={async () => {
-          const remove = await removeSection(page, "VALUE", order);
-          if (remove) {
-            setPageData((prev) => {
-              const removedSection = prev.sections.find(
-                (section) => section.type === "VALUE"
-              );
-              if (!removedSection) {
-                return prev;
-              }
-              const removedOrder = removedSection.details.order;
-              const updatedSections = prev.sections
-                .filter((section) => section.type !== "VALUE")
-                .map((section) => {
-                  if (section.details.order > removedOrder) {
-                    return {
-                      ...section,
-                      details: {
-                        ...section.details,
-                        order: section.details.order - 1,
-                      },
-                    };
-                  } else {
-                    return section;
-                  }
-                });
-
-              return {
-                ...prev,
-                sections: updatedSections,
-              };
-            });
-          }
-        }}
+        onClick={async () => await handleSectionRemove()}
       >
         -
       </button>
