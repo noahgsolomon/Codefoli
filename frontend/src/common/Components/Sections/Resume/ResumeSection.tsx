@@ -132,7 +132,7 @@ const ResumeSection: React.FC<{
         )}
         <div className="resume-events">
           {userData.work
-            .sort((a, b) => a.order - b.order)
+            .sort((a, b) => a.orderId - b.orderId)
             .map((job, index) => (
               <JobCard
                 key={job.id}
@@ -143,8 +143,9 @@ const ResumeSection: React.FC<{
                 startDate={job.startDate}
                 endDate={job.endDate}
                 active={index === 0}
-                orderId={job.order}
+                orderId={job.orderId}
                 setUserData={setUserData}
+                userData={userData}
               />
             ))}
           {userData.work.length < 8 && (

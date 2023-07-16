@@ -5,7 +5,7 @@ type Work = {
   endDate: string;
   description: string;
   id: string;
-  order: number;
+  orderId: number;
 };
 
 export default Work;

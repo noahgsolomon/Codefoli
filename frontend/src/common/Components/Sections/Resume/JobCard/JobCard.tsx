@@ -1,6 +1,7 @@
 import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
 import UserData from "Type/UserData.tsx";
 import {
+  jobOrderChange,
   removeJob,
   updateJobCompany,
   updateJobDescription,
@@ -8,7 +9,6 @@ import {
   updateJobRole,
   updateJobStartDate,
 } from "api/userapi.tsx";
-
 const JobCard: FC<{
   companyTitle: string;
   role: string;
@@ -17,6 +17,7 @@ const JobCard: FC<{
   endDate: string;
   active?: boolean;
   setUserData: Dispatch<SetStateAction<UserData>>;
+  userData: UserData;
   id: string;
   orderId: number;
 }> = ({
@@ -28,6 +29,7 @@ const JobCard: FC<{
   endDate,
   active,
   setUserData,
+  userData,
   orderId,
 }) => {
   const [companyTitleValue, setCompanyTitleValue] =
@@ -56,6 +58,30 @@ const JobCard: FC<{
   const [endDateValue, setEndDateValue] = useState<string>(endDate);
   const startDateTextareaRef = useRef<HTMLTextAreaElement>(null);
   const endDateTextareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleJobOrderChange = async (from: number, to: number) => {
+    const jobOrderChangeFetch = await jobOrderChange(from, to);
+    console.log("Before update:", userData.work);
+    if (jobOrderChangeFetch.status === "OK") {
+      setHover(false);
+      console.log(jobOrderChangeFetch.data);
+      setUserData((prev) => {
+        console.log("Updating state...");
+        return {
+          ...prev,
+          work: prev.work.map((work) => {
+            if (work.orderId === from) {
+              return { ...work, orderId: to };
+            } else if (work.orderId === to) {
+              return { ...work, orderId: from };
+            } else {
+              return work;
+            }
+          }),
+        };
+      });
+    }
+  };
 
   const handleCompanyTitleSubmit = async () => {
     const updateCompanyTitleFetch = await updateJobCompany(
@@ -158,7 +184,7 @@ const JobCard: FC<{
         work: prev.work
           .filter((prevWork) => prevWork.id !== id)
           .map((job) =>
-            job.order > orderId ? { ...job, order: job.order - 1 } : job
+            job.orderId > orderId ? { ...job, order: job.orderId - 1 } : job
           ),
       }));
     }
@@ -179,6 +205,26 @@ const JobCard: FC<{
           className={`absolute inset-0 z-10 bg-red-300 opacity-25 transition-all`}
         ></div>
       )}
+      <div
+        className={` ${
+          orderId > 1 ? (hover ? "opacity-100" : "opacity-0") : "hidden"
+        } absolute -top-3 left-0 right-0 z-30 mx-auto w-8 cursor-pointer rounded-full border-2 border-black bg-green-300 px-2 text-center text-xl shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover`}
+        onClick={() => handleJobOrderChange(orderId, orderId - 1)}
+      >
+        ↑
+      </div>
+      <div
+        className={` ${
+          orderId < userData.work.length
+            ? hover
+              ? "opacity-100"
+              : "opacity-0"
+            : "hidden"
+        } absolute -bottom-3 left-0 right-0 z-30 mx-auto w-8 cursor-pointer rounded-full border-2 border-black bg-red-400 px-2 text-center text-xl shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover`}
+        onClick={() => handleJobOrderChange(orderId, orderId + 1)}
+      >
+        ↓
+      </div>
       <button
         className={`${
           hover ? "opacity-100" : "hidden"

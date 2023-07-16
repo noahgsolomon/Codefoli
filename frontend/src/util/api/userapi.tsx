@@ -1,5 +1,6 @@
 import Work from "Type/Work.tsx";
 import Project from "Type/Project.tsx";
+
 const userDetails = async () => {
   try {
     const response = await fetch("http://localhost:8080/user", {
@@ -411,6 +412,30 @@ const updateJobEndDate = async (id: string, endDate: string) => {
   }
 };
 
+const jobOrderChange = async (from: number, to: number) => {
+  const model = {
+    from: from,
+    to: to,
+  };
+  try {
+    const updateFetch = await fetch("http://localhost:8080/job/change-order", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(model),
+      credentials: "include",
+    });
+    const updateFetchJson = await updateFetch.json();
+    if (updateFetchJson.status === "OK") {
+      return updateFetchJson;
+    } else {
+      console.log(updateFetchJson.message);
+      return updateFetchJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export {
   userDetails,
   setupAccount,
@@ -429,4 +454,5 @@ export {
   updateJobRole,
   updateJobStartDate,
   updateJobEndDate,
+  jobOrderChange,
 };

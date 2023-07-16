@@ -11,5 +11,7 @@ import java.util.Optional;
 
 public interface WorkRepository extends JpaRepository<Work, Long> {
     List<Work> findAllByUsers(Users users);
+
+    Optional<Work> findByUsersAndOrderId(Users users, int orderId);
     Optional<Work> findByUsersAndId(Users users, Long id);
 }
