@@ -89,7 +89,7 @@ const SkillSection: React.FC<{
     if (removeLanguageFetch.status === "OK") {
       setUserData((prev) => {
         const updatedSkills = prev.skills.filter(
-            (prevSkill) => prevSkill !== skill
+          (prevSkill) => prevSkill !== skill
         );
         return {
           ...prev,
@@ -104,27 +104,27 @@ const SkillSection: React.FC<{
     if (remove) {
       setPageData((prev) => {
         const removedSection = prev.sections.find(
-            (section) => section.type === "SKILL"
+          (section) => section.type === "SKILL"
         );
         if (!removedSection) {
           return prev;
         }
         const removedOrder = removedSection.details.order;
         const updatedSections = prev.sections
-            .filter((section) => section.type !== "SKILL")
-            .map((section) => {
-              if (section.details.order > removedOrder) {
-                return {
-                  ...section,
-                  details: {
-                    ...section.details,
-                    order: section.details.order - 1,
-                  },
-                };
-              } else {
-                return section;
-              }
-            });
+          .filter((section) => section.type !== "SKILL")
+          .map((section) => {
+            if (section.details.order > removedOrder) {
+              return {
+                ...section,
+                details: {
+                  ...section.details,
+                  order: section.details.order - 1,
+                },
+              };
+            } else {
+              return section;
+            }
+          });
 
         return {
           ...prev,
@@ -136,15 +136,13 @@ const SkillSection: React.FC<{
 
   const handleAddSkill = async (skill: string) => {
     const addNewSkillFetch = await addLanguage(
-        skill.toUpperCase().replaceAll(" ", "_")
+      skill.toUpperCase().replaceAll(" ", "_")
     );
     if (addNewSkillFetch.status === "OK") {
       setUserData((prev) => {
         const updatedSkills = [
           ...prev.skills,
-          skill
-              .toUpperCase()
-              .replaceAll(" ", "_") as Skills,
+          skill.toUpperCase().replaceAll(" ", "_") as Skills,
         ];
         return {
           ...prev,
@@ -155,7 +153,7 @@ const SkillSection: React.FC<{
     setNewSkill("");
     setMatchingSkills([...allSkills]);
     setAddingSkill(false);
-  }
+  };
 
   return (
     <div

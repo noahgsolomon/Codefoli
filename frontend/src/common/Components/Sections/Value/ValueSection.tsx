@@ -20,27 +20,27 @@ const ValueSection: React.FC<{
     if (remove) {
       setPageData((prev) => {
         const removedSection = prev.sections.find(
-            (section) => section.type === "VALUE"
+          (section) => section.type === "VALUE"
         );
         if (!removedSection) {
           return prev;
         }
         const removedOrder = removedSection.details.order;
         const updatedSections = prev.sections
-            .filter((section) => section.type !== "VALUE")
-            .map((section) => {
-              if (section.details.order > removedOrder) {
-                return {
-                  ...section,
-                  details: {
-                    ...section.details,
-                    order: section.details.order - 1,
-                  },
-                };
-              } else {
-                return section;
-              }
-            });
+          .filter((section) => section.type !== "VALUE")
+          .map((section) => {
+            if (section.details.order > removedOrder) {
+              return {
+                ...section,
+                details: {
+                  ...section.details,
+                  order: section.details.order - 1,
+                },
+              };
+            } else {
+              return section;
+            }
+          });
 
         return {
           ...prev,
@@ -48,7 +48,7 @@ const ValueSection: React.FC<{
         };
       });
     }
-  }
+  };
 
   return (
     <section
@@ -57,14 +57,14 @@ const ValueSection: React.FC<{
       onMouseLeave={() => setValueSectionHover(false)}
     >
       {removeValueSection && (
-          <div
-              className={`absolute inset-0 z-10 bg-red-300 opacity-25 transition-all`}
-          ></div>
+        <div
+          className={`absolute inset-0 z-10 bg-red-300 opacity-25 transition-all`}
+        ></div>
       )}
       <button
         className={`${
           valueSectionHover ? "opacity-100" : "opacity-0"
-        } absolute right-10 z-20 top-0 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
+        } absolute right-10 top-0 z-20 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onMouseEnter={() => setRemoveValueSection(true)}
         onMouseLeave={() => setRemoveValueSection(false)}
         onClick={async () => await handleSectionRemove()}

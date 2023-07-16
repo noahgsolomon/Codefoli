@@ -842,7 +842,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                     setWork([
                       ...work,
                       {
-                        work: addWork,
+                        work: { ...addWork, orderId: 1, id: "", image: "" },
                         color:
                           colors[Math.floor(Math.random() * colors.length)],
                       },

@@ -6,6 +6,7 @@ type Work = {
   description: string;
   id: string;
   orderId: number;
+  image: string;
 };
 
 export default Work;

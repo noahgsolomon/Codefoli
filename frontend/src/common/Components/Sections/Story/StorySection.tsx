@@ -203,27 +203,27 @@ const StorySection: React.FC<{
     if (remove) {
       setPageData((prev) => {
         const removedSection = prev.sections.find(
-            (section) => section.type === "STORY"
+          (section) => section.type === "STORY"
         );
         if (!removedSection) {
           return prev;
         }
         const removedOrder = removedSection.details.order;
         const updatedSections = prev.sections
-            .filter((section) => section.type !== "STORY")
-            .map((section) => {
-              if (section.details.order > removedOrder) {
-                return {
-                  ...section,
-                  details: {
-                    ...section.details,
-                    order: section.details.order - 1,
-                  },
-                };
-              } else {
-                return section;
-              }
-            });
+          .filter((section) => section.type !== "STORY")
+          .map((section) => {
+            if (section.details.order > removedOrder) {
+              return {
+                ...section,
+                details: {
+                  ...section.details,
+                  order: section.details.order - 1,
+                },
+              };
+            } else {
+              return section;
+            }
+          });
 
         return {
           ...prev,
@@ -231,7 +231,7 @@ const StorySection: React.FC<{
         };
       });
     }
-  }
+  };
 
   return (
     <section
@@ -425,7 +425,9 @@ const StorySection: React.FC<{
             className={`image-wrapper relative mb-5 h-[400px] w-[400px] transition-all`}
             onMouseEnter={() => setImageOneEdit(true)}
             onMouseLeave={() => setImageOneEdit(false)}
-            onClick={() => imageOneFileInput.current && imageOneFileInput.current.click()}
+            onClick={() =>
+              imageOneFileInput.current && imageOneFileInput.current.click()
+            }
           >
             <input
               type="file"

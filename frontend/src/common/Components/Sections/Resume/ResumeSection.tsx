@@ -137,6 +137,7 @@ const ResumeSection: React.FC<{
               <JobCard
                 key={job.id}
                 id={job.id}
+                image={job.image}
                 companyTitle={job.company}
                 role={job.position}
                 description={job.description}

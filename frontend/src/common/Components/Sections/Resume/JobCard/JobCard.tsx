@@ -1,4 +1,11 @@
-import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
+import React, {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import UserData from "Type/UserData.tsx";
 import {
   jobOrderChange,
@@ -9,6 +16,7 @@ import {
   updateJobRole,
   updateJobStartDate,
 } from "api/userapi.tsx";
+import Work from "Type/Work.tsx";
 const JobCard: FC<{
   companyTitle: string;
   role: string;
@@ -20,6 +28,7 @@ const JobCard: FC<{
   userData: UserData;
   id: string;
   orderId: number;
+  image: string;
 }> = ({
   id,
   companyTitle,
@@ -31,6 +40,7 @@ const JobCard: FC<{
   setUserData,
   userData,
   orderId,
+  image,
 }) => {
   const [companyTitleValue, setCompanyTitleValue] =
     useState<string>(companyTitle);
@@ -58,6 +68,9 @@ const JobCard: FC<{
   const [endDateValue, setEndDateValue] = useState<string>(endDate);
   const startDateTextareaRef = useRef<HTMLTextAreaElement>(null);
   const endDateTextareaRef = useRef<HTMLTextAreaElement>(null);
+  const imageFileInput = useRef<HTMLInputElement | null>(null);
+  const [imageEdit, setImageEdit] = useState<boolean>(false);
+  const date = useMemo(() => Date.now(), []);
 
   const handleJobOrderChange = async (from: number, to: number) => {
     const jobOrderChangeFetch = await jobOrderChange(from, to);
@@ -80,6 +93,47 @@ const JobCard: FC<{
           }),
         };
       });
+    }
+  };
+
+  const handleFileUpload = async (
+    path: string,
+    setEdit: React.Dispatch<React.SetStateAction<boolean>>,
+    imageKey: keyof Work,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (!e.target.files) return;
+    setEdit(true);
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("id", id);
+    try {
+      const response = await fetch(`http://localhost:8080/${path}`, {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
+
+      const data = await response.json();
+
+      if (data.status !== "OK") {
+        setEdit(false);
+        return;
+      }
+
+      setUserData((prev) => ({
+        ...prev,
+        work: prev.work.map((job) =>
+          job.id === id
+            ? { ...job, [imageKey]: data.data.url + `?date=${new Date()}` }
+            : job
+        ),
+      }));
+      setTimeout(() => setEdit(false), 500);
+    } catch (error) {
+      setEdit(false);
+      console.error("Error uploading file: ", error);
     }
   };
 
@@ -235,101 +289,143 @@ const JobCard: FC<{
       >
         -
       </button>
-      {companyTitleEdit ? (
-        <textarea
-          ref={companyTitleTextareaRef}
-          value={companyTitleEditValue}
-          onChange={(e) => setCompanyTitleEditValue(e.target.value)}
-          onBlur={() => {
-            setCompanyTitleEditValue(companyTitleValue);
-            setCompanyTitleEdit(false);
-          }}
-          onKeyDown={async (e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              if (companyTitleEditValue.length > 0) {
-                await handleCompanyTitleSubmit();
-              }
-            }
-          }}
-          className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent px-5 pt-5 text-3xl font-bold leading-relaxed outline-none focus:outline-none focus:ring-0"
-          autoFocus
-          onFocus={(e) => e.target.select()}
-          rows={1}
-          maxLength={25}
-        />
-      ) : (
-        <h2
-          className="px-5 pt-5 text-3xl font-bold transition-all hover:cursor-pointer hover:opacity-50"
-          onClick={() => setCompanyTitleEdit(true)}
+      <div className="flex justify-between">
+        <div>
+          {companyTitleEdit ? (
+            <textarea
+              ref={companyTitleTextareaRef}
+              value={companyTitleEditValue}
+              onChange={(e) => setCompanyTitleEditValue(e.target.value)}
+              onBlur={() => {
+                setCompanyTitleEditValue(companyTitleValue);
+                setCompanyTitleEdit(false);
+              }}
+              onKeyDown={async (e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  if (companyTitleEditValue.length > 0) {
+                    await handleCompanyTitleSubmit();
+                  }
+                }
+              }}
+              className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent px-5 pt-5 text-3xl font-bold leading-relaxed outline-none focus:outline-none focus:ring-0"
+              autoFocus
+              onFocus={(e) => e.target.select()}
+              rows={1}
+              maxLength={25}
+            />
+          ) : (
+            <h2
+              className="px-5 pt-5 text-3xl font-bold transition-all hover:cursor-pointer hover:opacity-50"
+              onClick={() => setCompanyTitleEdit(true)}
+            >
+              {companyTitleValue}
+            </h2>
+          )}
+          <div className="about p-5">
+            {roleEdit ? (
+              <textarea
+                ref={roleTextareaRef}
+                value={roleEditValue}
+                onChange={(e) => setRoleEditValue(e.target.value)}
+                onBlur={() => {
+                  setRoleEditValue(roleValue);
+                  setRoleEdit(false);
+                }}
+                onKeyDown={async (e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    if (roleEditValue.length > 0) {
+                      await handleRoleSubmit();
+                    }
+                  }
+                }}
+                className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent font-bold leading-relaxed outline-none focus:outline-none focus:ring-0"
+                autoFocus
+                onFocus={(e) => e.target.select()}
+                rows={1}
+                maxLength={25}
+              />
+            ) : (
+              <h2
+                className="font-bold transition-all hover:cursor-pointer hover:opacity-50"
+                onClick={() => setRoleEdit(true)}
+              >
+                {roleValue}
+              </h2>
+            )}
+            {descriptionEdit ? (
+              <textarea
+                ref={descriptionTextareaRef}
+                value={descriptionEditValue}
+                onChange={(e) => setDescriptionEditValue(e.target.value)}
+                onBlur={() => {
+                  setDescriptionEditValue(descriptionValue);
+                  setDescriptionEdit(false);
+                }}
+                onKeyDown={async (e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    if (descriptionEditValue.length > 0) {
+                      await handleDescriptionSubmit();
+                    }
+                  }
+                }}
+                className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg leading-loose outline-none focus:outline-none focus:ring-0"
+                autoFocus
+                onFocus={(e) => e.target.select()}
+                rows={4}
+                maxLength={255}
+              />
+            ) : (
+              <p
+                className="transition-all hover:cursor-pointer hover:opacity-50"
+                onClick={() => setDescriptionEdit(true)}
+              >
+                {descriptionValue}
+              </p>
+            )}
+          </div>
+        </div>
+        <div
+          className={
+            "relative mr-5 mt-5 h-[100px] w-[100px] rounded-full border-2 border-black"
+          }
+          onMouseEnter={() => setImageEdit(true)}
+          onMouseLeave={() => setImageEdit(false)}
+          onClick={() =>
+            imageFileInput.current && imageFileInput.current.click()
+          }
         >
-          {companyTitleValue}
-        </h2>
-      )}
-      <div className="about p-5">
-        {roleEdit ? (
-          <textarea
-            ref={roleTextareaRef}
-            value={roleEditValue}
-            onChange={(e) => setRoleEditValue(e.target.value)}
-            onBlur={() => {
-              setRoleEditValue(roleValue);
-              setRoleEdit(false);
+          <input
+            type="file"
+            ref={imageFileInput}
+            className="hidden"
+            accept=".jpg,.png"
+            onChange={async (e) => {
+              await handleFileUpload(
+                "job-image-upload",
+                setImageEdit,
+                "image",
+                e
+              );
             }}
-            onKeyDown={async (e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                if (roleEditValue.length > 0) {
-                  await handleRoleSubmit();
-                }
-              }
-            }}
-            className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent font-bold leading-relaxed outline-none focus:outline-none focus:ring-0"
-            autoFocus
-            onFocus={(e) => e.target.select()}
-            rows={1}
-            maxLength={25}
           />
-        ) : (
-          <h2
-            className="font-bold transition-all hover:cursor-pointer hover:opacity-50"
-            onClick={() => setRoleEdit(true)}
-          >
-            {roleValue}
-          </h2>
-        )}
-        {descriptionEdit ? (
-          <textarea
-            ref={descriptionTextareaRef}
-            value={descriptionEditValue}
-            onChange={(e) => setDescriptionEditValue(e.target.value)}
-            onBlur={() => {
-              setDescriptionEditValue(descriptionValue);
-              setDescriptionEdit(false);
-            }}
-            onKeyDown={async (e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                if (descriptionEditValue.length > 0) {
-                  await handleDescriptionSubmit();
-                }
-              }
-            }}
-            className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg leading-loose outline-none focus:outline-none focus:ring-0"
-            autoFocus
-            onFocus={(e) => e.target.select()}
-            rows={4}
-            maxLength={255}
+          <img
+            className={"h-full w-full rounded-full object-cover"}
+            src={image + "?date=" + date}
+            alt={"job photo"}
           />
-        ) : (
-          <p
-            className="transition-all hover:cursor-pointer hover:opacity-50"
-            onClick={() => setDescriptionEdit(true)}
+          <div
+            className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-full border-4 border-dashed border-black bg-white text-center text-base font-bold text-black transition-all ${
+              imageEdit ? "opacity-50" : "opacity-0"
+            }`}
           >
-            {descriptionValue}
-          </p>
-        )}
+            click to upload image
+          </div>
+        </div>
       </div>
+
       <div
         className={`flew-row flex ${
           active
