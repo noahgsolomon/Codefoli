@@ -3,6 +3,7 @@ package com.codefolio.backend.user.uploadimage;
 import com.codefolio.backend.util.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,5 +39,10 @@ public class UploadImageController {
     @PostMapping("/about-image-one-upload")
     public ResponseEntity<Response> uploadImageOneAbout(@RequestParam("file") MultipartFile file, Principal principal) {
         return uploadImageService.uploadImageOneAbout(file, principal);
+    }
+
+    @PostMapping("/job-image-upload")
+    public ResponseEntity<Response> uploadJobImage(@RequestParam("file") MultipartFile file, Principal principal, @RequestParam("id") long id) {
+        return uploadImageService.uploadJobImage(file, principal, id);
     }
 }

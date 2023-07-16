@@ -10,6 +10,8 @@ import com.codefolio.backend.user.pages.homepage.Home;
 import com.codefolio.backend.user.pages.homepage.HomeRepository;
 import com.codefolio.backend.user.sections.type.story.StorySection;
 import com.codefolio.backend.user.sections.type.story.StorySectionRepository;
+import com.codefolio.backend.user.workhistory.Work;
+import com.codefolio.backend.user.workhistory.WorkRepository;
 import com.codefolio.backend.util.Response;
 import com.codefolio.backend.util.StatusType;
 import lombok.AllArgsConstructor;
@@ -32,6 +34,7 @@ public class UploadImageService {
     private final HomeRepository homeRepository;
     private final AboutRepository aboutRepository;
     private final StorySectionRepository storySectionRepository;
+    private final WorkRepository workRepository;
 
     public ResponseEntity<Response> uploadProfileImage(MultipartFile file, Principal principal) {
         try {
@@ -132,4 +135,23 @@ public class UploadImageService {
         }
     }
 
+    public ResponseEntity<Response> uploadJobImage(MultipartFile file, Principal principal, long id) {
+        try {
+            Users user = getAuthenticatedUser(principal);
+            ImageResponse imageResponse = uploadImage(file, user.getId() + "-job-" + id, "codefolioimagebucket");
+            Optional<Work> optionalJob = workRepository.findByUsersAndId(user, id);
+            if (optionalJob.isPresent()) {
+                Work job = optionalJob.get();
+                job.setImage(imageResponse.url());
+                workRepository.save(job);
+                return ResponseEntity.ok(new Response(StatusType.OK, "Image uploaded successfully", imageResponse));
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(StatusType.BAD, "Job not found", null));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
+        }
+    }
 }

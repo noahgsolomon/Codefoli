@@ -26,6 +26,7 @@ public class Work {
     private String endDate;
     private String description;
     private int orderId;
+    private String image;
 
     public Work(Users users, String company, String position, String startDate, String endDate, String description, int orderId) {
         this.users = users;
