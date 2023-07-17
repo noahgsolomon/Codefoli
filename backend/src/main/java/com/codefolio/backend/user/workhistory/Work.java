@@ -28,7 +28,7 @@ public class Work {
     private int orderId;
     private String image;
 
-    public Work(Users users, String company, String position, String startDate, String endDate, String description, int orderId) {
+    public Work(Users users, String company, String position, String startDate, String endDate, String description, int orderId, String image) {
         this.users = users;
         this.company = company;
         this.position = position;
@@ -36,5 +36,6 @@ public class Work {
         this.endDate = endDate;
         this.description = description;
         this.orderId = orderId;
+        this.image = image;
     }
 }

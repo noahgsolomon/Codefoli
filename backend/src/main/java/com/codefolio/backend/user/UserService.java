@@ -146,7 +146,7 @@ public class UserService {
             AtomicInteger jobOrder = new AtomicInteger(1);
 
             userProfile.work().forEach(work -> {
-                Work newWork = new Work(user, work.getCompany(), work.getPosition(), work.getStartDate(), work.getEndDate(), work.getDescription(), jobOrder.getAndIncrement());
+                Work newWork = new Work(user, work.getCompany(), work.getPosition(), work.getStartDate(), work.getEndDate(), work.getDescription(), jobOrder.getAndIncrement(), "https://picsum.photos/100/100");
                 workRepository.save(newWork);
             });
             userProfile.services().forEach(service -> {

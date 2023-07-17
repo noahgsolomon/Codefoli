@@ -176,9 +176,9 @@ public class UserDataService {
     public ResponseEntity<Response> addJob(Principal principal, AddJobRequestModel addJobRequestModel) {
         try {
             Users user = getAuthenticatedUser(principal);
-            Work job = new Work(user, addJobRequestModel.company(), addJobRequestModel.position(), addJobRequestModel.startDate(), addJobRequestModel.endDate(), addJobRequestModel.description(), addJobRequestModel.orderId());
+            Work job = new Work(user, addJobRequestModel.company(), addJobRequestModel.position(), addJobRequestModel.startDate(), addJobRequestModel.endDate(), addJobRequestModel.description(), addJobRequestModel.orderId(), "https://picsum.photos/100/100");
             workRepository.save(job);
-            return ResponseEntity.ok(new Response(StatusType.OK, "Job added successfully", new AddJobResponseModel(job.getId(), job.getCompany(), job.getPosition(), job.getDescription(), job.getStartDate(), job.getEndDate(), job.getOrderId())));
+            return ResponseEntity.ok(new Response(StatusType.OK, "Job added successfully", new AddJobResponseModel(job.getId(), job.getCompany(), job.getPosition(), job.getDescription(), job.getStartDate(), job.getEndDate(), job.getOrderId(), job.getImage())));
         } catch (Exception e) {
             e.printStackTrace();
             System.err.print(e.getMessage());
