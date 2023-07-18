@@ -1,19 +1,34 @@
-import React, { SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useRef, useState } from "react";
 import PageType from "Type/Pages.tsx";
 import { ValueType } from "Type/Section.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import Card from "Components/Card/Card.tsx";
 import { ValuesData } from "Type/Values.tsx";
 import { removeSection } from "Components/Sections/api/sectionapi.tsx";
+import {
+  updateDescriptionOneValue,
+  updateHeaderOneValue,
+} from "Components/Sections/Value/valueapi.tsx";
 
 const ValueSection: React.FC<{
   page: PageType;
   details: ValueType;
-  setPageData: React.Dispatch<SetStateAction<AnyPageData>>;
+  setPageData: Dispatch<SetStateAction<AnyPageData>>;
   order: number;
 }> = ({ page, details, setPageData, order }) => {
   const [valueSectionHover, setValueSectionHover] = useState<boolean>(false);
   const [removeValueSection, setRemoveValueSection] = useState<boolean>(false);
+  const [headerOneEdit, setHeaderOneEdit] = useState(false);
+  const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [headerOneEditValue, setHeaderOneEditValue] = useState(
+    details.headerOne
+  );
+
+  const [descriptionOneEdit, setDescriptionEdit] = useState(false);
+  const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(
+    details.descriptionOne
+  );
 
   const handleSectionRemove = async () => {
     const remove = await removeSection(page, "VALUE", order);
@@ -50,6 +65,49 @@ const ValueSection: React.FC<{
     }
   };
 
+  const handleHeaderOneSubmit = async () => {
+    const updateHeader = await updateHeaderOneValue(headerOneEditValue);
+    if (updateHeader.status === "OK") {
+      setPageData((prev) => ({
+        ...prev,
+        sections: prev.sections.map((section) =>
+          section.type === "VALUE"
+            ? {
+                ...section,
+                details: { ...section.details, headerOne: headerOneEditValue },
+              }
+            : section
+        ),
+      }));
+      setHeaderOneEditValue(updateHeader.data);
+    }
+    setHeaderOneEdit(false);
+  };
+
+  const handleDescriptionOneSubmit = async () => {
+    const updateDescription = await updateDescriptionOneValue(
+      descriptionOneEditValue
+    );
+    if (updateDescription.status === "OK") {
+      setPageData((prev) => ({
+        ...prev,
+        sections: prev.sections.map((section) =>
+          section.type === "VALUE"
+            ? {
+                ...section,
+                details: {
+                  ...section.details,
+                  descriptionOne: descriptionOneEditValue,
+                },
+              }
+            : section
+        ),
+      }));
+      setDescriptionOneEditValue(updateDescription.data);
+    }
+    setDescriptionEdit(false);
+  };
+
   return (
     <section
       className="services relative mb-20 mt-20"
@@ -72,12 +130,68 @@ const ValueSection: React.FC<{
         -
       </button>
       <div className="container mx-auto max-w-screen-lg px-5">
-        <h2 className="mb-8 text-center text-3xl font-bold">
-          {details.headerOne}
-        </h2>
-        <p className="desciption mb-8 text-center text-lg font-semibold">
-          {details.descriptionOne}
-        </p>
+        {headerOneEdit ? (
+          <textarea
+            ref={headerOneTextareaRef}
+            value={headerOneEditValue}
+            onChange={(e) => setHeaderOneEditValue(e.target.value)}
+            onBlur={() => {
+              setHeaderOneEditValue(details.headerOne);
+              setHeaderOneEdit(false);
+            }}
+            onKeyDown={async (e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                await handleHeaderOneSubmit();
+              }
+            }}
+            className="mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-3xl font-bold leading-relaxed outline-none focus:outline-none focus:ring-0"
+            autoFocus
+            onFocus={(e) => {
+              e.target.select();
+            }}
+            maxLength={50}
+          />
+        ) : (
+          <h2
+            className="mb-8 cursor-pointer select-none text-center text-3xl font-bold transition-all hover:opacity-50"
+            onClick={() => setHeaderOneEdit(true)}
+          >
+            {details.headerOne}
+          </h2>
+        )}
+        {descriptionOneEdit ? (
+          <textarea
+            ref={descriptionOneTextareaRef}
+            value={descriptionOneEditValue}
+            onChange={(e) => setDescriptionOneEditValue(e.target.value)}
+            onBlur={() => {
+              setDescriptionOneEditValue(details.descriptionOne);
+              setDescriptionEdit(false);
+            }}
+            onKeyDown={async (e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                await handleDescriptionOneSubmit();
+              }
+            }}
+            className="mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-lg font-semibold leading-relaxed outline-none focus:outline-none focus:ring-0"
+            autoFocus
+            onFocus={(e) => {
+              e.target.select();
+            }}
+            maxLength={250}
+            rows={3}
+          />
+        ) : (
+          <p
+            className="mb-8 cursor-pointer text-center text-lg font-semibold transition-all hover:opacity-50"
+            onClick={() => setDescriptionEdit(true)}
+          >
+            {details.descriptionOne}
+          </p>
+        )}
+
         <div className="cards-wrapper flex flex-wrap justify-center gap-5 lg:justify-between">
           {details.values.map((value, index) => (
             <Card
