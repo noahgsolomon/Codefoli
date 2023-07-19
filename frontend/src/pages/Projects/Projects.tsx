@@ -1,5 +1,5 @@
 import React from "react";
-import ServiceCard from "Components/Card/ServiceCard.tsx";
+import ServiceCard from "Components/Sections/Skill/ServiceCard.tsx";
 import Footer from "Components/Footer/Footer";
 import ArrowRight from "assets/icons/arrow-right.svg";
 import { COLORS } from "../../util/colors.ts";
