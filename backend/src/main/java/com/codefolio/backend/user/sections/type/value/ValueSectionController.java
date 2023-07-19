@@ -2,9 +2,7 @@ package com.codefolio.backend.user.sections.type.value;
 
 import com.codefolio.backend.util.Response;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -25,6 +23,16 @@ public class ValueSectionController {
     @PutMapping("/value/description-one")
     public ResponseEntity<Response> updateDescriptionOne(Principal principal, @RequestBody String descriptionOne) {
         return valueSectionService.updateDescriptionOne(principal, descriptionOne);
+    }
+
+    @PutMapping("/value/update-value")
+    public ResponseEntity<Response> updateValue(Principal principal, @RequestBody UpdateValueRequestModel updateValueRequestModel) {
+        return valueSectionService.updateValue(principal, updateValueRequestModel);
+    }
+
+    @DeleteMapping("/value/remove-value")
+    public ResponseEntity<Response> removeValue(Principal principal, @RequestBody String value) {
+        return valueSectionService.removeValue(principal, value);
     }
 
 }
