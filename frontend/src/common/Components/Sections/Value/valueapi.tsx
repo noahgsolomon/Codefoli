@@ -87,9 +87,31 @@ const updateValue = async (before: string, after: string) => {
   }
 };
 
+const addValue = async (value: string) => {
+  try {
+    const response = await fetch("http://localhost:8080/value/add-value", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: value,
+      credentials: "include",
+    });
+
+    const responseJson = await response.json();
+    if (responseJson.status === "OK") {
+      return responseJson;
+    } else {
+      console.log(responseJson.message);
+      return responseJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export {
   updateHeaderOneValue,
   updateDescriptionOneValue,
   removeValue,
   updateValue,
+  addValue,
 };
