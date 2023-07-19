@@ -52,13 +52,13 @@ const ResumeSection: React.FC<{
     >
       {removeResumeSection && (
         <div
-          className={` absolute right-0 top-0 h-full w-full bg-red-300 opacity-25 transition-all`}
+          className={`absolute right-0 top-0 z-10 h-full w-full bg-red-300 opacity-25 transition-all`}
         ></div>
       )}
       <button
         className={`${
           resumeSectionHover ? "opacity-100" : "opacity-0"
-        } absolute right-10 top-0 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
+        } absolute right-10 top-0 z-20 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onMouseEnter={() => setRemoveResumeSection(true)}
         onMouseLeave={() => setRemoveResumeSection(false)}
         onClick={async () => {
