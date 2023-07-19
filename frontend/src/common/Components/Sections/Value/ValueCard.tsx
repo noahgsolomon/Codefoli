@@ -16,6 +16,66 @@ const ValueCard: FC<{
   const [hovered, setHovered] = useState(false);
   const [removeHover, setRemoveHover] = useState(false);
 
+  const handleRandomizeValue = async () => {
+    const currentValues = details.values.map(
+      (valueObject) => valueObject.value
+    );
+    const valueKeys = Object.keys(ValuesData);
+    let randomKey = valueKeys[Math.floor(Math.random() * valueKeys.length)];
+    while (currentValues.includes(randomKey as ValuesFormatted)) {
+      randomKey = valueKeys[Math.floor(Math.random() * valueKeys.length)];
+    }
+    const fetchData = await updateValue(title.replaceAll(" ", "_"), randomKey);
+    if (fetchData.status === "OK") {
+      setPageData((prev) => ({
+        ...prev,
+        sections: prev.sections.map((section) =>
+          section.type === "VALUE" && "values" in section.details
+            ? {
+                ...section,
+                details: {
+                  ...section.details,
+                  values: [
+                    ...section.details.values.filter(
+                      (valueObject) =>
+                        valueObject.value !==
+                        title.toUpperCase().replaceAll(" ", "_")
+                    ),
+                    { value: fetchData.data as ValuesFormatted },
+                  ],
+                },
+              }
+            : section
+        ),
+      }));
+    }
+  };
+
+  const handleRemoveValue = async () => {
+    const removeValueFetch = await removeValue(
+      title.replaceAll(" ", "_").toUpperCase()
+    );
+    if (removeValueFetch.status === "OK") {
+      setPageData((prev) => ({
+        ...prev,
+        sections: prev.sections.map((section) =>
+          section.type === "VALUE" && "values" in section.details
+            ? {
+                ...section,
+                details: {
+                  ...section.details,
+                  values: section.details.values.filter(
+                    (value) =>
+                      value.value !== title.toUpperCase().replaceAll(" ", "_")
+                  ),
+                },
+              }
+            : section
+        ),
+      }));
+    }
+  };
+
   return (
     <div
       className="card group relative mb-5 flex max-w-[400px] cursor-pointer flex-col rounded-2xl border-2 border-black shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover"
@@ -34,31 +94,7 @@ const ValueCard: FC<{
         } absolute -right-3 -top-3 z-20 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onMouseEnter={() => setRemoveHover(true)}
         onMouseLeave={() => setRemoveHover(false)}
-        onClick={async () => {
-          const removeValueFetch = await removeValue(
-            title.replaceAll(" ", "_").toUpperCase()
-          );
-          if (removeValueFetch.status === "OK") {
-            setPageData((prev) => ({
-              ...prev,
-              sections: prev.sections.map((section) =>
-                section.type === "VALUE" && "values" in section.details
-                  ? {
-                      ...section,
-                      details: {
-                        ...section.details,
-                        values: section.details.values.filter(
-                          (value) =>
-                            value.value !==
-                            title.toUpperCase().replaceAll(" ", "_")
-                        ),
-                      },
-                    }
-                  : section
-              ),
-            }));
-          }
-        }}
+        onClick={async () => await handleRemoveValue()}
       >
         -
       </button>
@@ -66,44 +102,7 @@ const ValueCard: FC<{
         className={`${
           hovered ? "opacity-100" : "hidden"
         } absolute -right-3 top-12 z-10 rounded-2xl bg-blue-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
-        onClick={async () => {
-          const currentValues = details.values.map(
-            (valueObject) => valueObject.value
-          );
-          const valueKeys = Object.keys(ValuesData);
-          let randomKey =
-            valueKeys[Math.floor(Math.random() * valueKeys.length)];
-          while (currentValues.includes(randomKey as ValuesFormatted)) {
-            randomKey = valueKeys[Math.floor(Math.random() * valueKeys.length)];
-          }
-          const fetchData = await updateValue(
-            title.replaceAll(" ", "_"),
-            randomKey
-          );
-          if (fetchData.status === "OK") {
-            setPageData((prev) => ({
-              ...prev,
-              sections: prev.sections.map((section) =>
-                section.type === "VALUE" && "values" in section.details
-                  ? {
-                      ...section,
-                      details: {
-                        ...section.details,
-                        values: [
-                          ...section.details.values.filter(
-                            (valueObject) =>
-                              valueObject.value !==
-                              title.toUpperCase().replaceAll(" ", "_")
-                          ),
-                          { value: fetchData.data as ValuesFormatted },
-                        ],
-                      },
-                    }
-                  : section
-              ),
-            }));
-          }
-        }}
+        onClick={async () => await handleRandomizeValue()}
       >
         ↻
       </button>
