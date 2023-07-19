@@ -41,4 +41,55 @@ const updateDescriptionOneValue = async (descriptionOne: string) => {
   }
 };
 
-export { updateHeaderOneValue, updateDescriptionOneValue };
+const removeValue = async (value: string) => {
+  try {
+    const response = await fetch("http://localhost:8080/value/remove-value", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: value,
+      credentials: "include",
+    });
+
+    const responseJson = await response.json();
+    if (responseJson.status === "OK") {
+      return responseJson;
+    } else {
+      console.log(responseJson.message);
+      return responseJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const updateValue = async (before: string, after: string) => {
+  const model = {
+    before: before,
+    after: after,
+  };
+  try {
+    const response = await fetch("http://localhost:8080/value/update-value", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(model),
+      credentials: "include",
+    });
+
+    const responseJson = await response.json();
+    if (responseJson.status === "OK") {
+      return responseJson;
+    } else {
+      console.log(responseJson.message);
+      return responseJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export {
+  updateHeaderOneValue,
+  updateDescriptionOneValue,
+  removeValue,
+  updateValue,
+};
