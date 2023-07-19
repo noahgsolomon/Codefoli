@@ -35,4 +35,9 @@ public class ValueSectionController {
         return valueSectionService.removeValue(principal, value);
     }
 
+    @PostMapping("/value/add-value")
+    public ResponseEntity<Response> addValue(Principal principal, @RequestBody String value) {
+        return valueSectionService.addValue(principal, value);
+    }
+
 }

@@ -107,4 +107,29 @@ public class ValueSectionService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
         }
     }
+
+    public ResponseEntity<Response> addValue(Principal principal, String valueString) {
+
+        try {
+            Users user = getAuthenticatedUser(principal);
+            ValuesType valueType;
+            try {
+                valueType = ValuesType.valueOf(valueString);
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.badRequest().body(new Response(StatusType.NOT_FOUND, "Value not found", null));
+            }
+            Optional<Values> service = valuesRepository.findByUsersAndValue(user, valueType);
+            if (service.isPresent()){
+                return ResponseEntity.badRequest().body(new Response(StatusType.NOT_FOUND, "Value already present", null));
+            }
+            Values values = new Values(user, valueType);
+            valuesRepository.save(values);
+            return ResponseEntity.ok(new Response(StatusType.OK, "Value added successfully", values.getValue()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
+        }
+
+    }
 }
