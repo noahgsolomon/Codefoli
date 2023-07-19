@@ -8,7 +8,8 @@ import {
   updateDescriptionOneValue,
   updateHeaderOneValue,
 } from "Components/Sections/Value/valueapi.tsx";
-import ValueCard from "Components/Card/ValueCard.tsx";
+import ValueCard from "Components/Sections/Value/ValueCard.tsx";
+import AddValueCard from "Components/Sections/Value/AddValueCard.tsx";
 
 const ValueSection: React.FC<{
   page: PageType;
@@ -203,6 +204,21 @@ const ValueSection: React.FC<{
               details={details}
             />
           ))}
+          {details.values.length < 4 &&
+            (() => {
+              const cardCount = 4 - details.values.length;
+              return (
+                <>
+                  {Array.from({ length: cardCount }).map((_, i) => (
+                    <AddValueCard
+                      key={i}
+                      setPageData={setPageData}
+                      details={details}
+                    />
+                  ))}
+                </>
+              );
+            })()}
         </div>
       </div>
     </section>
