@@ -13,11 +13,9 @@ type StoryType = {
 type ValueType = {
   headerOne: string;
   descriptionOne: string;
-  values: [
-    {
-      value: ValuesFormatted;
-    }
-  ];
+  values: {
+    value: ValuesFormatted;
+  }[];
   order: number;
 };
 

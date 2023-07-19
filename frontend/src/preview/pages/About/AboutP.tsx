@@ -1,7 +1,7 @@
 import React from "react";
 // import JobCard from "../../../pages/About/JobCard/JobCard.tsx";
 // import Marquee from "Components/Marquee/Marquee.tsx";
-// import Card from "Components/Card/Card.tsx";
+// import ServiceCard from "Components/ServiceCard/ServiceCard.tsx";
 // import { Link } from "react-router-dom";
 // import UserData from "Type/UserData.tsx";
 // import AboutData from "Type/AboutData.tsx";
@@ -137,7 +137,7 @@ const AboutP: React.FC = () => {
       {/*      </p>*/}
       {/*      <div className="cards-wrapper flex flex-wrap justify-center gap-5 lg:justify-between">*/}
       {/*        {pageData.values.map((value, index) => (*/}
-      {/*          <Card*/}
+      {/*          <ServiceCard*/}
       {/*            key={index}*/}
       {/*            title={value.value.replaceAll("_", " ")}*/}
       {/*            description={ValuesData[value.value].description}*/}

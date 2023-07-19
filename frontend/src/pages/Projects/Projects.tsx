@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "Components/Card/Card";
+import ServiceCard from "Components/Card/ServiceCard.tsx";
 import Footer from "Components/Footer/Footer";
 import ArrowRight from "assets/icons/arrow-right.svg";
 import { COLORS } from "../../util/colors.ts";
@@ -31,7 +31,7 @@ const Projects: React.FC<{ userData: UserData }> = ({ userData }) => {
             {userData.projects.map(
               ({ name, description, language, imageUrl = "" }) => {
                 return (
-                  <Card
+                  <ServiceCard
                     title={name}
                     description={description}
                     imageUrl={imageUrl}
@@ -57,7 +57,7 @@ const Projects: React.FC<{ userData: UserData }> = ({ userData }) => {
                         {language}
                       </span>
                     </div>
-                  </Card>
+                  </ServiceCard>
                 );
               }
             )}

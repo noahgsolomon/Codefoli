@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import UserData from "Type/UserData.tsx";
 import { Services } from "Type/Services.tsx";
-import { addService } from "api/userapi.tsx";
+
+import { addService } from "Components/Sections/Skill/skillapi.tsx";
 
 const AddServiceCard: React.FC<{
   setUserData: React.Dispatch<React.SetStateAction<UserData>>;

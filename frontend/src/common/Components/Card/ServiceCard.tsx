@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { ServiceData } from "Type/Services.tsx";
 import UserData from "Type/UserData.tsx";
-import { removeService, updateService } from "api/userapi.tsx";
 
-const Card: React.FC<{
+import {
+  removeService,
+  updateService,
+} from "Components/Sections/Skill/skillapi.tsx";
+
+const ServiceCard: React.FC<{
   imageUrl?: string;
   title: string;
   description: string;
@@ -110,4 +114,4 @@ const Card: React.FC<{
   );
 };
 
-export default Card;
+export default ServiceCard;
