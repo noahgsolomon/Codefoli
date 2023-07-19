@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import Card from "Components/Card/Card.tsx";
+import ServiceCard from "Components/Card/ServiceCard.tsx";
 import UserData from "Type/UserData.tsx";
 import { ServiceData } from "Type/Services.tsx";
 import { Link } from "react-router-dom";
@@ -8,10 +8,13 @@ import { SkillType } from "Type/Section.tsx";
 import { removeSection } from "Components/Sections/api/sectionapi.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import PageType from "Type/Pages.tsx";
-import { addLanguage, removeLanguage } from "api/userapi.tsx";
 import { Skills } from "Type/Skills.tsx";
-import AddCard from "Components/Card/AddCard.tsx";
-import { updateHeaderOneSkill } from "Components/Sections/Skill/skillapi.tsx";
+import AddCard from "Components/Card/AddServiceCard.tsx";
+import {
+  addLanguage,
+  removeLanguage,
+  updateHeaderOneSkill,
+} from "Components/Sections/Skill/skillapi.tsx";
 
 const SkillSection: React.FC<{
   userData: UserData;
@@ -292,7 +295,7 @@ const SkillSection: React.FC<{
         <>
           {userData.services.map((service, index) => {
             return (
-              <Card
+              <ServiceCard
                 key={index}
                 imageUrl={ServiceData[service]?.image}
                 setUserData={setUserData}

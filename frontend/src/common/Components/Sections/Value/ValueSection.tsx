@@ -2,13 +2,13 @@ import React, { Dispatch, SetStateAction, useRef, useState } from "react";
 import PageType from "Type/Pages.tsx";
 import { ValueType } from "Type/Section.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
-import Card from "Components/Card/Card.tsx";
 import { ValuesData } from "Type/Values.tsx";
 import { removeSection } from "Components/Sections/api/sectionapi.tsx";
 import {
   updateDescriptionOneValue,
   updateHeaderOneValue,
 } from "Components/Sections/Value/valueapi.tsx";
+import ValueCard from "Components/Card/ValueCard.tsx";
 
 const ValueSection: React.FC<{
   page: PageType;
@@ -110,7 +110,7 @@ const ValueSection: React.FC<{
 
   return (
     <section
-      className="services relative mb-20 mt-20"
+      className="relative mb-20 mt-20"
       onMouseEnter={() => setValueSectionHover(true)}
       onMouseLeave={() => setValueSectionHover(false)}
     >
@@ -194,11 +194,13 @@ const ValueSection: React.FC<{
 
         <div className="cards-wrapper flex flex-wrap justify-center gap-5 lg:justify-between">
           {details.values.map((value, index) => (
-            <Card
+            <ValueCard
               key={index}
               title={value.value.replaceAll("_", " ")}
               description={ValuesData[value.value].description}
               imageUrl={ValuesData[value.value].image}
+              setPageData={setPageData}
+              details={details}
             />
           ))}
         </div>
