@@ -1,6 +1,6 @@
 package com.codefolio.backend.user.sections.type.value;
 
-import com.codefolio.backend.user.pages.aboutpage.values.ValuesResponseModel;
+import com.codefolio.backend.user.values.ValuesResponseModel;
 
 import java.util.List;
 

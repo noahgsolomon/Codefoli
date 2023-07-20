@@ -1,9 +1,9 @@
 package com.codefolio.backend.user.sections.type.value;
 
 import com.codefolio.backend.user.Users;
-import com.codefolio.backend.user.pages.aboutpage.values.Values;
-import com.codefolio.backend.user.pages.aboutpage.values.ValuesRepository;
-import com.codefolio.backend.user.pages.aboutpage.values.ValuesType;
+import com.codefolio.backend.user.values.Values;
+import com.codefolio.backend.user.values.ValuesRepository;
+import com.codefolio.backend.user.values.ValuesType;
 import com.codefolio.backend.util.Response;
 import com.codefolio.backend.util.StatusType;
 import lombok.AllArgsConstructor;

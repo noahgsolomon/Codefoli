@@ -1,12 +1,12 @@
 package com.codefolio.backend.util;
 
 import com.codefolio.backend.user.Users;
-import com.codefolio.backend.user.pages.aboutpage.values.Values;
-import com.codefolio.backend.user.pages.aboutpage.values.ValuesRepository;
-import com.codefolio.backend.user.pages.aboutpage.values.ValuesResponseModel;
-import com.codefolio.backend.user.pages.contactpage.faq.FAQ;
-import com.codefolio.backend.user.pages.contactpage.faq.FAQRepository;
-import com.codefolio.backend.user.pages.contactpage.faq.FAQResponseModel;
+import com.codefolio.backend.user.values.Values;
+import com.codefolio.backend.user.values.ValuesRepository;
+import com.codefolio.backend.user.values.ValuesResponseModel;
+import com.codefolio.backend.user.faq.FAQ;
+import com.codefolio.backend.user.faq.FAQRepository;
+import com.codefolio.backend.user.faq.FAQResponseModel;
 import com.codefolio.backend.user.sections.PageType;
 import com.codefolio.backend.user.sections.Section;
 import com.codefolio.backend.user.sections.SectionRepository;
@@ -97,7 +97,7 @@ public class PageSections {
                         List<FAQ> faq = faqRepository.findAllByUsers(user);
                         List<FAQResponseModel> faqList = new ArrayList<>();
                         for(FAQ oneFaq : faq) {
-                            faqList.add(new FAQResponseModel(oneFaq.getQuestion(), oneFaq.getAnswer()));
+                            faqList.add(new FAQResponseModel(oneFaq.getQuestion(), oneFaq.getAnswer(), oneFaq.getId()));
                         }
                         map.put("type", "FAQ");
                         map.put("details", new FAQSectionResponseModel(faqSection.getHeaderOne(), faqSection.getDescriptionOne(), faqList, section.getPageOrder()));

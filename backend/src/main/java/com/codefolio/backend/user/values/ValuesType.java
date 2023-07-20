@@ -1,5 +1,5 @@
 
-package com.codefolio.backend.user.pages.aboutpage.values;
+package com.codefolio.backend.user.values;
 
 public enum ValuesType {
     INTEGRITY,

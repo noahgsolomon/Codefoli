@@ -1,4 +1,4 @@
-package com.codefolio.backend.user.pages.contactpage.faq;
+package com.codefolio.backend.user.faq;
 
 import com.codefolio.backend.user.Users;
 import jakarta.persistence.*;

@@ -1,12 +1,12 @@
 package com.codefolio.backend.user.sections;
 
 import com.codefolio.backend.user.Users;
-import com.codefolio.backend.user.pages.aboutpage.values.Values;
-import com.codefolio.backend.user.pages.aboutpage.values.ValuesRepository;
-import com.codefolio.backend.user.pages.aboutpage.values.ValuesResponseModel;
-import com.codefolio.backend.user.pages.contactpage.faq.FAQ;
-import com.codefolio.backend.user.pages.contactpage.faq.FAQRepository;
-import com.codefolio.backend.user.pages.contactpage.faq.FAQResponseModel;
+import com.codefolio.backend.user.values.Values;
+import com.codefolio.backend.user.values.ValuesRepository;
+import com.codefolio.backend.user.values.ValuesResponseModel;
+import com.codefolio.backend.user.faq.FAQ;
+import com.codefolio.backend.user.faq.FAQRepository;
+import com.codefolio.backend.user.faq.FAQResponseModel;
 import com.codefolio.backend.user.sections.type.faq.FAQSection;
 import com.codefolio.backend.user.sections.type.faq.FAQSectionRepository;
 import com.codefolio.backend.user.sections.type.faq.FAQSectionResponseModel;
@@ -113,7 +113,7 @@ public class SectionService {
                     List<FAQ> faqList = faqRepository.findAllByUsers(user);
                     List<FAQResponseModel> faqResponseModels = new ArrayList<>();
                     for (FAQ f : faqList) {
-                        faqResponseModels.add(new FAQResponseModel(f.getQuestion(), f.getAnswer()));
+                        faqResponseModels.add(new FAQResponseModel(f.getQuestion(), f.getAnswer(), f.getId()));
                     }
                     data = new FAQSectionResponseModel(faq.getHeaderOne(), faq.getDescriptionOne(), faqResponseModels, add.order());
                 }

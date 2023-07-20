@@ -1,7 +1,6 @@
 package com.codefolio.backend.user.sections.type.faq;
 
 import com.codefolio.backend.user.Users;
-import com.codefolio.backend.user.pages.contactpage.faq.FAQRepository;
 import com.codefolio.backend.util.Response;
 import com.codefolio.backend.util.StatusType;
 import lombok.AllArgsConstructor;
@@ -19,8 +18,6 @@ import static com.codefolio.backend.user.UserService.getAuthenticatedUser;
 public class FAQSectionService {
 
     private final FAQSectionRepository faqSectionRepository;
-    private final FAQRepository faqRepository;
-
 
     public ResponseEntity<Response> updateHeaderOne(Principal principal, String headerOne) {
         try {
