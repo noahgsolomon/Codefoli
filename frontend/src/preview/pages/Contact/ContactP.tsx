@@ -1,7 +1,6 @@
 import React from "react";
 import { animated, useSpring } from "react-spring";
 import Form from "../../../pages/Contact/Form/Form.tsx";
-import Accordion from "Components/Accordion/Accordion.tsx";
 import UserData from "Type/UserData.tsx";
 import ContactData from "Type/ContactData.tsx";
 
@@ -15,12 +14,6 @@ const ContactP: React.FC<{ userData: UserData; pageData: ContactData }> = ({
     from: { opacity: 0, transform: "translate3d(-20px, 0, 0)" },
     to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
     delay: 100,
-  });
-
-  const faqAnimationProps = useSpring({
-    from: { opacity: 0, transform: "translate3d(0, 20px, 0)" },
-    to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
-    delay: 200,
   });
 
   return (
@@ -71,25 +64,6 @@ const ContactP: React.FC<{ userData: UserData; pageData: ContactData }> = ({
             <Form />
           </div>
         </div>
-
-        {/* FAQs */}
-        <animated.section style={faqAnimationProps} className="px-5">
-          <div className="header mx-auto mb-5 max-w-[647px]">
-            <h2 className="text-center text-2xl font-bold md:text-5xl">
-              {pageData.headerTwo}
-            </h2>
-            <p className="text-center">{pageData.descriptionTwo}</p>
-          </div>
-          <div className="accordion-wrapper mx-auto max-w-[800px]">
-            {pageData.faq.map((faq, index) => (
-              <Accordion
-                key={index}
-                title={faq.question}
-                content={faq.answer}
-              />
-            ))}
-          </div>
-        </animated.section>
       </main>
     </>
   );
