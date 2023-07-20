@@ -1,18 +1,74 @@
-import React, { useState } from "react";
+import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
 import Accordion from "Components/Accordion/Accordion.tsx";
 import { FAQType } from "Type/Section.tsx";
 import PageType from "Type/Pages.tsx";
 import { removeSection } from "Components/Sections/api/sectionapi.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
+import {
+  updateDescriptionOneFaq,
+  updateHeaderOneFaq,
+} from "Components/Sections/FAQ/faqapi.tsx";
 
-const FAQSection: React.FC<{
+const FAQSection: FC<{
   page: PageType;
   details: FAQType;
-  setPageData: React.Dispatch<React.SetStateAction<AnyPageData>>;
+  setPageData: Dispatch<SetStateAction<AnyPageData>>;
   order: number;
 }> = ({ page, details, setPageData, order }) => {
   const [faqHover, setFAQHover] = useState<boolean>(false);
   const [removeFAQ, setRemoveFAQ] = useState<boolean>(false);
+  const [headerOneEdit, setHeaderOneEdit] = useState(false);
+  const [headerOneEditValue, setHeaderOneEditValue] = useState(
+    details.headerOne
+  );
+  const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [descriptionOneEdit, setDescriptionEdit] = useState(false);
+  const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(
+    details.descriptionOne
+  );
+  const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const handleHeaderOneSubmit = async () => {
+    const updateHeader = await updateHeaderOneFaq(headerOneEditValue);
+    if (updateHeader.status === "OK") {
+      setPageData((prev) => ({
+        ...prev,
+        sections: prev.sections.map((section) =>
+          section.type === "FAQ"
+            ? {
+                ...section,
+                details: { ...section.details, headerOne: headerOneEditValue },
+              }
+            : section
+        ),
+      }));
+      setHeaderOneEditValue(updateHeader.data);
+    }
+    setHeaderOneEdit(false);
+  };
+
+  const handleDescriptionOneSubmit = async () => {
+    const updateDescription = await updateDescriptionOneFaq(
+      descriptionOneEditValue
+    );
+    if (updateDescription.status === "OK") {
+      setPageData((prev) => ({
+        ...prev,
+        sections: prev.sections.map((section) =>
+          section.type === "FAQ"
+            ? {
+                ...section,
+                details: {
+                  ...section.details,
+                  descriptionOne: descriptionOneEditValue,
+                },
+              }
+            : section
+        ),
+      }));
+      setDescriptionOneEditValue(updateDescription.data);
+    }
+    setDescriptionEdit(false);
+  };
 
   const handleRemoveSection = async () => {
     const remove = await removeSection(page, "FAQ", order);
@@ -72,10 +128,67 @@ const FAQSection: React.FC<{
           -
         </button>
         <div className="header mx-auto mb-5 max-w-[647px]">
-          <h2 className="text-center text-2xl font-bold md:text-5xl">
-            {details.headerOne}
-          </h2>
-          <p className="text-center">{details.descriptionOne}</p>
+          {headerOneEdit ? (
+            <textarea
+              ref={headerOneTextareaRef}
+              value={headerOneEditValue}
+              onChange={(e) => setHeaderOneEditValue(e.target.value)}
+              onBlur={() => {
+                setHeaderOneEditValue(details.headerOne);
+                setHeaderOneEdit(false);
+              }}
+              onKeyDown={async (e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  await handleHeaderOneSubmit();
+                }
+              }}
+              className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-2xl font-bold leading-relaxed outline-none focus:outline-none focus:ring-0 md:text-5xl"
+              autoFocus
+              onFocus={(e) => {
+                e.target.select();
+              }}
+              maxLength={50}
+            />
+          ) : (
+            <h2
+              className="cursor-pointer select-none text-center text-2xl font-bold transition-all hover:opacity-50 md:text-5xl"
+              onClick={() => setHeaderOneEdit(true)}
+            >
+              {details.headerOne}
+            </h2>
+          )}
+          {descriptionOneEdit ? (
+            <textarea
+              ref={descriptionOneTextareaRef}
+              value={descriptionOneEditValue}
+              onChange={(e) => setDescriptionOneEditValue(e.target.value)}
+              onBlur={() => {
+                setDescriptionOneEditValue(details.descriptionOne);
+                setDescriptionEdit(false);
+              }}
+              onKeyDown={async (e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  await handleDescriptionOneSubmit();
+                }
+              }}
+              className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center leading-relaxed outline-none focus:outline-none focus:ring-0"
+              autoFocus
+              onFocus={(e) => {
+                e.target.select();
+              }}
+              maxLength={250}
+              rows={3}
+            />
+          ) : (
+            <p
+              className="cursor-pointer text-center transition-all hover:opacity-50"
+              onClick={() => setDescriptionEdit(true)}
+            >
+              {details.descriptionOne}
+            </p>
+          )}
         </div>
         <div className="accordion-wrapper mx-auto max-w-[800px]">
           {details.faq.map((faq, index) => (
