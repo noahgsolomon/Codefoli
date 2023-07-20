@@ -208,7 +208,7 @@ const DashboardMain: React.FC<{
               imageOneEdit ? "opacity-50" : "opacity-0"
             }`}
           >
-            Drag or click to upload image
+            Click to upload image
           </div>
         </div>
       </div>

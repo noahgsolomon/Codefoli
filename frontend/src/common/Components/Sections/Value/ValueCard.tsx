@@ -27,27 +27,34 @@ const ValueCard: FC<{
     }
     const fetchData = await updateValue(title.replaceAll(" ", "_"), randomKey);
     if (fetchData.status === "OK") {
-      setPageData((prev) => ({
-        ...prev,
-        sections: prev.sections.map((section) =>
-          section.type === "VALUE" && "values" in section.details
-            ? {
-                ...section,
-                details: {
-                  ...section.details,
-                  values: [
-                    ...section.details.values.filter(
-                      (valueObject) =>
-                        valueObject.value !==
-                        title.toUpperCase().replaceAll(" ", "_")
-                    ),
-                    { value: fetchData.data as ValuesFormatted },
-                  ],
-                },
+      setPageData((prev) => {
+        const updatedSections = prev.sections.map((section) => {
+          if (section.type === "VALUE" && "values" in section.details) {
+            const updatedValues = section.details.values.map((valueObject) => {
+              if (
+                valueObject.value === title.toUpperCase().replaceAll(" ", "_")
+              ) {
+                return { value: fetchData.data as ValuesFormatted };
+              } else {
+                return valueObject;
               }
-            : section
-        ),
-      }));
+            });
+            return {
+              ...section,
+              details: {
+                ...section.details,
+                values: updatedValues,
+              },
+            };
+          } else {
+            return section;
+          }
+        });
+        return {
+          ...prev,
+          sections: updatedSections,
+        };
+      });
     }
   };
 
