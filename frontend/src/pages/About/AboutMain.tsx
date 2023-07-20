@@ -290,7 +290,7 @@ const AboutMain: React.FC<{
               </div>
             </div>
           </div>
-          <div className="content-right">
+          <div className="content-right ml-5">
             {descriptionOneEdit ? (
               <textarea
                 ref={descriptionOneTextareaRef}

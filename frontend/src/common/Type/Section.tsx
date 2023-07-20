@@ -36,6 +36,7 @@ type FAQType = {
     {
       question: string;
       answer: string;
+      id: string;
     }
   ];
   order: number;

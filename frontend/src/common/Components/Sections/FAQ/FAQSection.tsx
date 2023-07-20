@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
-import Accordion from "Components/Accordion/Accordion.tsx";
+import FaqAccordion from "Components/Sections/FAQ/FaqAccordion.tsx";
 import { FAQType } from "Type/Section.tsx";
 import PageType from "Type/Pages.tsx";
 import { removeSection } from "Components/Sections/api/sectionapi.tsx";
@@ -8,6 +8,7 @@ import {
   updateDescriptionOneFaq,
   updateHeaderOneFaq,
 } from "Components/Sections/FAQ/faqapi.tsx";
+import AddFaq from "Components/Sections/FAQ/AddFaq.tsx";
 
 const FAQSection: FC<{
   page: PageType;
@@ -192,8 +193,15 @@ const FAQSection: FC<{
         </div>
         <div className="accordion-wrapper mx-auto max-w-[800px]">
           {details.faq.map((faq, index) => (
-            <Accordion key={index} title={faq.question} content={faq.answer} />
+            <FaqAccordion
+              key={index}
+              title={faq.question}
+              content={faq.answer}
+              setPageData={setPageData}
+              id={faq.id}
+            />
           ))}
+          {details.faq.length < 8 && <AddFaq setPageData={setPageData} />}
         </div>
       </section>
     </div>
