@@ -19,9 +19,6 @@ const FaqAccordion: FC<AccordionProps> = ({
   id,
   setPageData,
 }) => {
-  console.log(title);
-  console.log(content);
-
   const [isOpened, setOpened] = useState<boolean>(false);
   const [height, setHeight] = useState<string>("0px");
   const contentElement = useRef(null);

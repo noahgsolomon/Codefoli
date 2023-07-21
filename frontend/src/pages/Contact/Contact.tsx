@@ -13,7 +13,7 @@ const Contact: React.FC<{
 }> = ({ pageData, setPageData, userData, setUserData }) => {
   return (
     <>
-      <ContactMain pageData={pageData} />
+      <ContactMain pageData={pageData} setPageData={setPageData} />
       <ContactSections
         pageData={pageData}
         setPageData={setPageData}
