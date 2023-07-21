@@ -55,4 +55,38 @@ public class ContactService {
                     .body(new Response(StatusType.ERROR, "Internal server error", null));
         }
     }
+
+    public ResponseEntity<Response> updateHeaderOne(Principal principal, String headerOne) {
+        try {
+            Users user = getAuthenticatedUser(principal);
+            Contact contactData = contactRepository.findByUsers(user);
+            if (contactData == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(StatusType.NOT_FOUND, "Contact data not found", null));
+            }
+            contactData.setHeaderOne(headerOne);
+            contactRepository.save(contactData);
+            return ResponseEntity.ok(new Response(StatusType.OK, "Header one updated successfully", headerOne));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
+        }
+    }
+
+    public ResponseEntity<Response> updateDescriptionOne(Principal principal, String descriptionOne) {
+        try {
+            Users user = getAuthenticatedUser(principal);
+            Contact contactData = contactRepository.findByUsers(user);
+            if (contactData == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(StatusType.NOT_FOUND, "Contact data not found", null));
+            }
+            contactData.setDescriptionOne(descriptionOne);
+            contactRepository.save(contactData);
+            return ResponseEntity.ok(new Response(StatusType.OK, "Description one updated successfully", descriptionOne));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
+        }
+    }
 }
