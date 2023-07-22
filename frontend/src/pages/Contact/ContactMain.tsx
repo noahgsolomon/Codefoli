@@ -6,11 +6,14 @@ import {
   updateDescriptionOneContact,
   updateHeaderOneContact,
 } from "./contactapi.tsx";
+import UserData from "Type/UserData.tsx";
 
 const ContactMain: FC<{
   pageData: ContactData;
   setPageData: Dispatch<SetStateAction<ContactData>>;
-}> = ({ setPageData, pageData }) => {
+  userData: UserData;
+  setUserData: Dispatch<SetStateAction<UserData>>;
+}> = ({ setPageData, pageData, userData, setUserData }) => {
   const animationProps = useSpring({
     from: { opacity: 0, transform: "translate3d(-20px, 0, 0)" },
     to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
@@ -118,7 +121,7 @@ const ContactMain: FC<{
             <div className="mb-5">
               <div className="card contact-card rounded-lg border-2 border-black p-5">
                 <a
-                  href={`mailto:${pageData.email}`}
+                  href={`mailto:${userData.email}`}
                   className="mb-8 inline-block"
                 >
                   <div className="flex items-center justify-center gap-4">
@@ -127,18 +130,18 @@ const ContactMain: FC<{
                       loading="eager"
                       alt="envelope icon"
                     />
-                    <div className="contact-link">{pageData.email}</div>
+                    <div className="contact-link">{userData.email}</div>
                   </div>
                 </a>
 
-                <a href={`tel:${pageData.phone}`} className="">
+                <a href={`tel:${userData.phone}`} className="">
                   <div className="flex items-center gap-4">
                     <img
                       src="https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633d9a5fec957e53ae8857ce_phone-icon-large-paperfolio-webflow-template.svg"
                       loading="eager"
                       alt="phone icon"
                     />
-                    <div className="contact-link">{pageData.phone}</div>
+                    <div className="contact-link">{userData.phone}</div>
                   </div>
                 </a>
               </div>

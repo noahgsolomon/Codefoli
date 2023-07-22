@@ -27,6 +27,7 @@ const MainApp: React.FC = () => {
   const [userData, setUserData] = useState<UserData>({
     name: "",
     email: "",
+    phone: "",
     company: "",
     location: "",
     profession: "",
@@ -60,8 +61,6 @@ const MainApp: React.FC = () => {
   const [contactData, setContactData] = useState<ContactData>({
     headerOne: "",
     descriptionOne: "",
-    email: "",
-    phone: "",
     sections: [],
   });
 

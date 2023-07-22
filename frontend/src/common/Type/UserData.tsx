@@ -6,6 +6,7 @@ import { Services } from "Type/Services.tsx";
 type UserData = {
   name: string;
   email: string;
+  phone: string;
   company: string;
   location: string;
   profession: string;

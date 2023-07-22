@@ -1,4 +1,4 @@
-import React from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import SkillSection from "Components/Sections/Skill/SkillSection.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import StorySection from "Components/Sections/Story/StorySection.tsx";
@@ -10,11 +10,11 @@ import ContactData from "Type/ContactData.tsx";
 import UserData from "Type/UserData.tsx";
 import { SectionType } from "Type/Section.tsx";
 
-const ContactSections: React.FC<{
+const ContactSections: FC<{
   pageData: ContactData;
-  setPageData: React.Dispatch<React.SetStateAction<ContactData>>;
+  setPageData: Dispatch<SetStateAction<ContactData>>;
   userData: UserData;
-  setUserData: React.Dispatch<React.SetStateAction<UserData>>;
+  setUserData: Dispatch<SetStateAction<UserData>>;
 }> = ({ pageData, setPageData, userData, setUserData }) => {
   const allSectionTypes: SectionType[] = [
     "STORY",
@@ -48,9 +48,7 @@ const ContactSections: React.FC<{
                   preview={false}
                   details={details}
                   setPageData={
-                    setPageData as React.Dispatch<
-                      React.SetStateAction<AnyPageData>
-                    >
+                    setPageData as Dispatch<SetStateAction<AnyPageData>>
                   }
                   page={"CONTACT"}
                   order={section.details.order}
@@ -69,9 +67,7 @@ const ContactSections: React.FC<{
                     key={index}
                     details={details}
                     setPageData={
-                      setPageData as React.Dispatch<
-                        React.SetStateAction<AnyPageData>
-                      >
+                      setPageData as Dispatch<SetStateAction<AnyPageData>>
                     }
                     order={section.details.order}
                   />
@@ -84,9 +80,7 @@ const ContactSections: React.FC<{
                   page={"CONTACT"}
                   details={details}
                   setPageData={
-                    setPageData as React.Dispatch<
-                      React.SetStateAction<AnyPageData>
-                    >
+                    setPageData as Dispatch<SetStateAction<AnyPageData>>
                   }
                   userData={userData}
                   order={section.details.order}
@@ -101,9 +95,7 @@ const ContactSections: React.FC<{
                 "faq" in details ? (
                   <FAQSection
                     setPageData={
-                      setPageData as React.Dispatch<
-                        React.SetStateAction<AnyPageData>
-                      >
+                      setPageData as Dispatch<SetStateAction<AnyPageData>>
                     }
                     key={index}
                     page={"CONTACT"}
@@ -119,9 +111,7 @@ const ContactSections: React.FC<{
                 "values" in details ? (
                   <ValueSection
                     setPageData={
-                      setPageData as React.Dispatch<
-                        React.SetStateAction<AnyPageData>
-                      >
+                      setPageData as Dispatch<SetStateAction<AnyPageData>>
                     }
                     key={index}
                     page={"CONTACT"}
@@ -139,18 +129,14 @@ const ContactSections: React.FC<{
               key={`add-${index}`}
               sections={availableSectionTypes}
               page={"CONTACT"}
-              setPageData={
-                setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>
-              }
+              setPageData={setPageData as Dispatch<SetStateAction<AnyPageData>>}
               order={section.details.order}
             />,
             sectionComponent,
           ];
         })}
       <AddSection
-        setPageData={
-          setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>
-        }
+        setPageData={setPageData as Dispatch<SetStateAction<AnyPageData>>}
         sections={availableSectionTypes}
         page={"CONTACT"}
         order={pageData.sections.length + 1}
