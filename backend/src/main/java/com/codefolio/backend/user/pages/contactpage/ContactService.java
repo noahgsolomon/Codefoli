@@ -41,8 +41,6 @@ public class ContactService {
             ContactModel contactModel = new ContactModel(
                     contact.getHeaderOne(),
                     contact.getDescriptionOne(),
-                    contact.getEmail(),
-                    contact.getPhone(),
                     sectionDetails
                     );
 

@@ -8,6 +8,7 @@ import com.codefolio.backend.user.workhistory.Work;
 public record UserHomeResponseModel(
         String name,
         String email,
+        String phone,
         String company,
         String location,
         String about,

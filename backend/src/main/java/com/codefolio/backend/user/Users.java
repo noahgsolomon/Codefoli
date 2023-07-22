@@ -25,7 +25,7 @@ public class Users {
     private String about;
     private String profession;
     private String gitHubId;
-
+    private String phone;
     @Enumerated(EnumType.STRING)
     private RoleType role;
 
@@ -44,5 +44,6 @@ public class Users {
         this.location = location;
         this.about = about;
         this.role = RoleType.NEWBIE;
+        this.phone = "1234567890";
     }
 }

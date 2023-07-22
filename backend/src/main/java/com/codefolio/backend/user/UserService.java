@@ -100,6 +100,7 @@ public class UserService {
             UserHomeResponseModel userHomeResponseModel = new UserHomeResponseModel(
                     user.getName(),
                     user.getEmail(),
+                    user.getPhone(),
                     user.getCompany(),
                     user.getLocation(),
                     user.getAbout(),
@@ -191,9 +192,7 @@ public class UserService {
 
             String contactHeaderOne = "Contact me";
             String contactDescriptionOne = "Don't hesitate to get in touch! Whether you're looking for a design consult, interested in a collaboration, or just want to say hello, I'd be delighted to hear from you. I strive to respond promptly and look forward to our potential correspondence!";
-            String contactEmail = user.getEmail();
-            String contactPhone = "(123) 456 - 7890";
-            Contact contact = new Contact(user, contactHeaderOne, contactDescriptionOne, contactEmail, contactPhone);
+            Contact contact = new Contact(user, contactHeaderOne, contactDescriptionOne);
             contactRepository.save(contact);
 
             String StoryHeaderOne = "Designing since I was ? years old";

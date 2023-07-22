@@ -22,14 +22,10 @@ public class Contact {
 
     private String headerOne;
     private String descriptionOne;
-    private String email;
-    private String phone;
 
-    public Contact(Users users, String headerOne, String descriptionOne, String email, String phone) {
+    public Contact(Users users, String headerOne, String descriptionOne) {
         this.users = users;
         this.headerOne = headerOne;
         this.descriptionOne = descriptionOne;
-        this.email = email;
-        this.phone = phone;
     }
 }
