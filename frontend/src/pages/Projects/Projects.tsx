@@ -1,24 +1,27 @@
-import React from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import ServiceCard from "Components/Sections/Skill/ServiceCard.tsx";
 import Footer from "Components/Footer/Footer";
 import ArrowRight from "assets/icons/arrow-right.svg";
 import { COLORS } from "../../util/colors.ts";
 import UserData from "Type/UserData.tsx";
 import { Link } from "react-router-dom";
+import ProjectsPageData from "Type/ProjectsPageData.tsx";
 
-const Projects: React.FC<{ userData: UserData }> = ({ userData }) => {
+const Projects: FC<{
+  userData: UserData;
+  pageData: ProjectsPageData;
+  setPageData: Dispatch<SetStateAction<ProjectsPageData>>;
+}> = ({ userData, pageData }) => {
   return (
     <>
       <main>
         <div className="container mx-auto my-20 max-w-screen-lg px-5">
           <section>
             <h1 className="mb-5 text-center text-3xl font-bold md:text-5xl lg:text-6xl">
-              Projects
+              {pageData.headerOne}
             </h1>
             <p className="text-center font-semibold">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem
-              obcaecati porro officia consequatur? Consectetur dolorem
-              necessitatibus rem? Quis, officia velit?
+              {pageData.descriptionOne}
             </p>
           </section>
         </div>

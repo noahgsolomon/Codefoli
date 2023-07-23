@@ -3,8 +3,10 @@ import Form from "./Form/Form.tsx";
 import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
 import ContactData from "Type/ContactData.tsx";
 import {
-  updateDescriptionOneContact, updateEmailContact,
-  updateHeaderOneContact, updatePhoneContact,
+  updateDescriptionOneContact,
+  updateEmailContact,
+  updateHeaderOneContact,
+  updatePhoneContact,
 } from "./contactapi.tsx";
 import UserData from "Type/UserData.tsx";
 
@@ -73,17 +75,17 @@ const ContactMain: FC<{
     setEmailEdit(false);
   };
 
-    const handlePhoneSubmit = async () => {
-      const updatePhone = await updatePhoneContact(phoneEditValue);
-        if (updatePhone) {
-            setUserData((prev) => ({
-                ...prev,
-                phone: phoneEditValue,
-            }));
-            setPhoneEditValue(updatePhone.data);
-        }
-        setPhoneEdit(false);
-    };
+  const handlePhoneSubmit = async () => {
+    const updatePhone = await updatePhoneContact(phoneEditValue);
+    if (updatePhone) {
+      setUserData((prev) => ({
+        ...prev,
+        phone: phoneEditValue,
+      }));
+      setPhoneEditValue(updatePhone.data);
+    }
+    setPhoneEdit(false);
+  };
 
   return (
     <main>
@@ -152,9 +154,7 @@ const ContactMain: FC<{
             )}
             <div className="mb-5">
               <div className="card contact-card rounded-lg border-2 border-black p-5">
-                <div
-                  className="mb-8 inline-block w-full"
-                >
+                <div className="mb-8 inline-block w-full">
                   <div className="flex items-center justify-center gap-4">
                     <img
                       src="https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633d9a460fc6857e260d0f2b_envelope-icon-large-paperfolio-webflow-template.svg"
@@ -162,71 +162,71 @@ const ContactMain: FC<{
                       alt="envelope icon"
                     />
                     {emailEdit ? (
-                        <textarea
-                            ref={emailTextareaRef}
-                            value={emailEditValue}
-                            onChange={(e) => setEmailEditValue(e.target.value)}
-                            onBlur={() => {
-                              setEmailEditValue(userData.email);
-                              setEmailEdit(false);
-                            }}
-                            onKeyDown={async (e) => {
-                              if (e.key === "Enter") {
-                                e.preventDefault();
-                                await handleEmailSubmit();
-                              }
-                            }}
-                            className="p-0 w-full resize-none appearance-none overflow-hidden border-none text-lg bg-transparent leading-snug outline-none focus:outline-none focus:ring-0"
-                            autoFocus
-                            onFocus={(e) => e.currentTarget.select()}
-                            maxLength={30}
-                            rows={1}
-                        />
+                      <textarea
+                        ref={emailTextareaRef}
+                        value={emailEditValue}
+                        onChange={(e) => setEmailEditValue(e.target.value)}
+                        onBlur={() => {
+                          setEmailEditValue(userData.email);
+                          setEmailEdit(false);
+                        }}
+                        onKeyDown={async (e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            await handleEmailSubmit();
+                          }
+                        }}
+                        className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-lg leading-snug outline-none focus:outline-none focus:ring-0"
+                        autoFocus
+                        onFocus={(e) => e.currentTarget.select()}
+                        maxLength={30}
+                        rows={1}
+                      />
                     ) : (
-                        <p
-                            className="w-full cursor-pointer select-none transition-all hover:opacity-50"
-                            onClick={() => setEmailEdit(true)}
-                        >
-                          {userData.email}
-                        </p>
+                      <p
+                        className="w-full cursor-pointer select-none transition-all hover:opacity-50"
+                        onClick={() => setEmailEdit(true)}
+                      >
+                        {userData.email}
+                      </p>
                     )}
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <img
-                      src="https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633d9a5fec957e53ae8857ce_phone-icon-large-paperfolio-webflow-template.svg"
-                      loading="eager"
-                      alt="phone icon"
-                    />
+                  <img
+                    src="https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633d9a5fec957e53ae8857ce_phone-icon-large-paperfolio-webflow-template.svg"
+                    loading="eager"
+                    alt="phone icon"
+                  />
                   {phoneEdit ? (
-                      <textarea
-                          ref={phoneTextareaRef}
-                          value={phoneEditValue}
-                          onChange={(e) => setPhoneEditValue(e.target.value)}
-                          onBlur={() => {
-                            setPhoneEditValue(userData.phone);
-                            setPhoneEdit(false);
-                          }}
-                          onKeyDown={async (e) => {
-                            if (e.key === "Enter") {
-                              e.preventDefault();
-                              await handlePhoneSubmit();
-                            }
-                          }}
-                          className="p-0 w-full resize-none appearance-none overflow-hidden border-none text-lg bg-transparent leading-snug outline-none focus:outline-none focus:ring-0"
-                          autoFocus
-                          onFocus={(e) => e.currentTarget.select()}
-                          maxLength={30}
-                          rows={1}
-                      />
+                    <textarea
+                      ref={phoneTextareaRef}
+                      value={phoneEditValue}
+                      onChange={(e) => setPhoneEditValue(e.target.value)}
+                      onBlur={() => {
+                        setPhoneEditValue(userData.phone);
+                        setPhoneEdit(false);
+                      }}
+                      onKeyDown={async (e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          await handlePhoneSubmit();
+                        }
+                      }}
+                      className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-lg leading-snug outline-none focus:outline-none focus:ring-0"
+                      autoFocus
+                      onFocus={(e) => e.currentTarget.select()}
+                      maxLength={30}
+                      rows={1}
+                    />
                   ) : (
-                      <p
-                          className="w-full cursor-pointer select-none transition-all hover:opacity-50"
-                          onClick={() => setPhoneEdit(true)}
-                      >
-                        {userData.phone}
-                      </p>
+                    <p
+                      className="w-full cursor-pointer select-none transition-all hover:opacity-50"
+                      onClick={() => setPhoneEdit(true)}
+                    >
+                      {userData.phone}
+                    </p>
                   )}
                 </div>
               </div>

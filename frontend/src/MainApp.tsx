@@ -10,7 +10,13 @@ import Contact from "./pages/Contact/Contact.tsx";
 import About from "./pages/About/About.tsx";
 import UserData from "Type/UserData.tsx";
 import { authenticated } from "api/authenticateapi.tsx";
-import { getAbout, getContact, getHome, userDetails } from "api/userapi.tsx";
+import {
+  getAbout,
+  getContact,
+  getHome,
+  getProjectsPage,
+  userDetails,
+} from "api/userapi.tsx";
 import HomeData from "Type/HomeData.tsx";
 import AboutData from "Type/AboutData.tsx";
 import Loader from "Components/Loader/Loader.tsx";
@@ -18,6 +24,7 @@ import ContactData from "Type/ContactData.tsx";
 import Projects from "./pages/Projects/Projects.tsx";
 import Project from "./pages/Project/Project.tsx";
 import Github from "Components/Github/Github.tsx";
+import ProjectsPageData from "Type/ProjectsPageData.tsx";
 
 const MainApp: React.FC = () => {
   const navigate = useNavigate();
@@ -64,6 +71,11 @@ const MainApp: React.FC = () => {
     sections: [],
   });
 
+  const [projectsPageData, setProjectsPageData] = useState<ProjectsPageData>({
+    headerOne: "",
+    descriptionOne: "",
+  });
+
   useEffect(() => {
     const authenticatedCheck = async () => {
       const fetchState = await authenticated();
@@ -89,6 +101,10 @@ const MainApp: React.FC = () => {
           const contactFetch = await getContact();
           if (contactFetch) {
             setContactData(contactFetch);
+          }
+          const projectsPageFetch = await getProjectsPage();
+          if (projectsPageFetch) {
+            setProjectsPageData(projectsPageFetch);
           }
           setUserData(user);
           localStorage.setItem("role", user.role);
@@ -162,7 +178,16 @@ const MainApp: React.FC = () => {
             />
           }
         />
-        <Route path="/projects" element={<Projects userData={userData} />} />
+        <Route
+          path="/projects"
+          element={
+            <Projects
+              userData={userData}
+              pageData={projectsPageData}
+              setPageData={setProjectsPageData}
+            />
+          }
+        />
         <Route path="/project" element={<Project />} />
       </Routes>
     </>

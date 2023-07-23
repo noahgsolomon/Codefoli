@@ -126,6 +126,26 @@ const getContact = async () => {
   }
 };
 
+const getProjectsPage = async () => {
+  try {
+    const response = await fetch("http://localhost:8080/projects-page", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+
+    const responseJson = await response.json();
+    if (responseJson.status === "OK") {
+      return responseJson.data;
+    } else {
+      console.log(responseJson.message);
+      return responseJson.message;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const removeJob = async (id: string) => {
   try {
     const response = await fetch("http://localhost:8080/remove-job", {
@@ -333,6 +353,7 @@ export {
   getHome,
   getAbout,
   getContact,
+  getProjectsPage,
   removeJob,
   addJob,
   updateJobCompany,
