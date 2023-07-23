@@ -87,4 +87,28 @@ public class ContactService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
         }
     }
+
+    public ResponseEntity<Response> updateEmail(Principal principal, String email) {
+        try {
+            Users user = getAuthenticatedUser(principal);
+            user.setEmail(email);
+            return ResponseEntity.ok(new Response(StatusType.OK, "Email updated successfully", email));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
+        }
+    }
+
+    public ResponseEntity<Response> updatePhone(Principal principal, String phone) {
+        try {
+            Users user = getAuthenticatedUser(principal);
+            user.setPhone(phone);
+            return ResponseEntity.ok(new Response(StatusType.OK, "Phone updated successfully", phone));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
+        }
+    }
 }

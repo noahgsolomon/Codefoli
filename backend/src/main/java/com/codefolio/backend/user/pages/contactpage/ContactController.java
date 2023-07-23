@@ -31,4 +31,14 @@ public class ContactController {
     public ResponseEntity<Response> updateDescriptionOne(Principal principal, @RequestBody String descriptionOne) {
         return contactService.updateDescriptionOne(principal, descriptionOne);
     }
+
+    @PutMapping("/contact/email")
+    public ResponseEntity<Response> updateEmail(Principal principal, @RequestBody String email) {
+        return contactService.updateEmail(principal, email);
+    }
+
+    @PutMapping("/contact/phone")
+    public ResponseEntity<Response> updatePhone(Principal principal, @RequestBody String phone) {
+        return contactService.updatePhone(principal, phone);
+    }
 }
