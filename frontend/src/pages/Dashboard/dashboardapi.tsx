@@ -1,4 +1,4 @@
-const updateHeaderOne = async (headerOne: string) => {
+const updateHeaderOneHome = async (headerOne: string) => {
   try {
     const updateFetch = await fetch("http://localhost:8080/home/headerOne", {
       method: "PUT",
@@ -18,7 +18,7 @@ const updateHeaderOne = async (headerOne: string) => {
   }
 };
 
-const updateDescriptionOne = async (descriptionOne: string) => {
+const updateDescriptionOneHome = async (descriptionOne: string) => {
   try {
     const updateFetch = await fetch(
       "http://localhost:8080/home/descriptionOne",
@@ -41,4 +41,4 @@ const updateDescriptionOne = async (descriptionOne: string) => {
   }
 };
 
-export { updateHeaderOne, updateDescriptionOne };
+export { updateHeaderOneHome, updateDescriptionOneHome };

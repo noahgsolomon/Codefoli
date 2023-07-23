@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { updateDescriptionOne, updateHeaderOne } from "./dashboardapi.tsx";
+import {
+  updateDescriptionOneHome,
+  updateHeaderOneHome,
+} from "./dashboardapi.tsx";
 import HomeData from "Type/HomeData.tsx";
 
 const DashboardMain: React.FC<{
@@ -40,7 +43,7 @@ const DashboardMain: React.FC<{
   ]);
 
   const handleHeaderOneSubmit = async () => {
-    const updateHeader = await updateHeaderOne(headerOneEditValue);
+    const updateHeader = await updateHeaderOneHome(headerOneEditValue);
     if (updateHeader) {
       setPageData((prev) => ({ ...prev, headerOne: headerOneEditValue }));
       setHeaderOneEditValue(updateHeader);
@@ -49,7 +52,7 @@ const DashboardMain: React.FC<{
   };
 
   const handleDescriptionOneSubmit = async () => {
-    const updateDescription = await updateDescriptionOne(
+    const updateDescription = await updateDescriptionOneHome(
       descriptionOneEditValue
     );
     if (updateDescription) {
