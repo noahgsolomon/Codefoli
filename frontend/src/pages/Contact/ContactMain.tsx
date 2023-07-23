@@ -82,6 +82,7 @@ const ContactMain: FC<{
             }));
             setPhoneEditValue(updatePhone.data);
         }
+        setPhoneEdit(false);
     };
 
   return (
