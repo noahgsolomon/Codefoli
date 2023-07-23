@@ -4,6 +4,8 @@ import com.codefolio.backend.user.githubrepo.ProjectsRepository;
 import com.codefolio.backend.user.githubrepo.Projects;
 import com.codefolio.backend.user.pages.aboutpage.About;
 import com.codefolio.backend.user.pages.aboutpage.AboutRepository;
+import com.codefolio.backend.user.pages.projectspage.ProjectsPage;
+import com.codefolio.backend.user.pages.projectspage.ProjectsPageRepository;
 import com.codefolio.backend.user.values.Values;
 import com.codefolio.backend.user.values.ValuesRepository;
 import com.codefolio.backend.user.values.ValuesType;
@@ -68,6 +70,7 @@ public class UserService {
     private final SkillSectionRepository skillSectionRepository;
     private final ValueSectionRepository valueSectionRepository;
     private final FAQSectionRepository faqSectionRepository;
+    private final ProjectsPageRepository projectsPageRepository;
 
 
     public static Users getAuthenticatedUser(Principal principal) {
@@ -194,6 +197,12 @@ public class UserService {
             String contactDescriptionOne = "Don't hesitate to get in touch! Whether you're looking for a design consult, interested in a collaboration, or just want to say hello, I'd be delighted to hear from you. I strive to respond promptly and look forward to our potential correspondence!";
             Contact contact = new Contact(user, contactHeaderOne, contactDescriptionOne);
             contactRepository.save(contact);
+
+            ProjectsPage projectsPage = new ProjectsPage(user,
+                    "Projects",
+                    "Here are some of my recent projects. I've worked on a wide range of projects, from website and app design to branding and graphic design. Each project brings its own unique challenges and opportunities.");
+
+            projectsPageRepository.save(projectsPage);
 
             String StoryHeaderOne = "Designing since I was ? years old";
             String StoryDescriptionOne = "I started designing when I was ? years old. My first designs were for my school projects. I was fascinated by the idea of creating something that people can interact with. I studied design for 5 years in college and have been working as a designer for 3 years.";
