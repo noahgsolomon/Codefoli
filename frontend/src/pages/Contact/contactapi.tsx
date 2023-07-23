@@ -44,4 +44,50 @@ const updateDescriptionOneContact = async (descriptionOne: string) => {
   }
 };
 
-export { updateHeaderOneContact, updateDescriptionOneContact };
+const updateEmailContact = async (email: string) => {
+    try {
+        const updateFetch = await fetch(
+            "http://localhost:8080/contact/email",
+            {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: email,
+                credentials: "include",
+            }
+        );
+        const updateFetchJson = await updateFetch.json();
+        if (updateFetchJson.status === "OK") {
+            return updateFetchJson;
+        } else {
+            console.log(updateFetchJson.message);
+            return updateFetchJson;
+        }
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+const updatePhoneContact = async (phone: string) => {
+    try {
+        const updateFetch = await fetch(
+            "http://localhost:8080/contact/phone",
+            {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: phone,
+                credentials: "include",
+            }
+        );
+        const updateFetchJson = await updateFetch.json();
+        if (updateFetchJson.status === "OK") {
+            return updateFetchJson;
+        } else {
+            console.log(updateFetchJson.message);
+            return updateFetchJson;
+        }
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+export { updateHeaderOneContact, updateDescriptionOneContact, updateEmailContact, updatePhoneContact };

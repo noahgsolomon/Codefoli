@@ -3,8 +3,8 @@ import Form from "./Form/Form.tsx";
 import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
 import ContactData from "Type/ContactData.tsx";
 import {
-  updateDescriptionOneContact,
-  updateHeaderOneContact,
+  updateDescriptionOneContact, updateEmailContact,
+  updateHeaderOneContact, updatePhoneContact,
 } from "./contactapi.tsx";
 import UserData from "Type/UserData.tsx";
 
@@ -30,6 +30,14 @@ const ContactMain: FC<{
     pageData.descriptionOne
   );
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [emailEdit, setEmailEdit] = useState(false);
+  const [emailEditValue, setEmailEditValue] = useState(userData.email);
+  const emailTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const [phoneEdit, setPhoneEdit] = useState(false);
+  const [phoneEditValue, setPhoneEditValue] = useState(userData.phone);
+  const phoneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+
   const handleHeaderOneSubmit = async () => {
     const updateHeader = await updateHeaderOneContact(headerOneEditValue);
     if (updateHeader) {
@@ -52,6 +60,29 @@ const ContactMain: FC<{
     }
     setDescriptionOneEdit(false);
   };
+
+  const handleEmailSubmit = async () => {
+    const updateEmail = await updateEmailContact(emailEditValue);
+    if (updateEmail) {
+      setUserData((prev) => ({
+        ...prev,
+        email: emailEditValue,
+      }));
+      setEmailEditValue(updateEmail.data);
+    }
+    setEmailEdit(false);
+  };
+
+    const handlePhoneSubmit = async () => {
+      const updatePhone = await updatePhoneContact(phoneEditValue);
+        if (updatePhone) {
+            setUserData((prev) => ({
+                ...prev,
+                phone: phoneEditValue,
+            }));
+            setPhoneEditValue(updatePhone.data);
+        }
+    };
 
   return (
     <main>
@@ -120,9 +151,8 @@ const ContactMain: FC<{
             )}
             <div className="mb-5">
               <div className="card contact-card rounded-lg border-2 border-black p-5">
-                <a
-                  href={`mailto:${userData.email}`}
-                  className="mb-8 inline-block"
+                <div
+                  className="mb-8 inline-block w-full"
                 >
                   <div className="flex items-center justify-center gap-4">
                     <img
@@ -130,20 +160,74 @@ const ContactMain: FC<{
                       loading="eager"
                       alt="envelope icon"
                     />
-                    <div className="contact-link">{userData.email}</div>
+                    {emailEdit ? (
+                        <textarea
+                            ref={emailTextareaRef}
+                            value={emailEditValue}
+                            onChange={(e) => setEmailEditValue(e.target.value)}
+                            onBlur={() => {
+                              setEmailEditValue(userData.email);
+                              setEmailEdit(false);
+                            }}
+                            onKeyDown={async (e) => {
+                              if (e.key === "Enter") {
+                                e.preventDefault();
+                                await handleEmailSubmit();
+                              }
+                            }}
+                            className="p-0 w-full resize-none appearance-none overflow-hidden border-none text-lg bg-transparent leading-snug outline-none focus:outline-none focus:ring-0"
+                            autoFocus
+                            onFocus={(e) => e.currentTarget.select()}
+                            maxLength={30}
+                            rows={1}
+                        />
+                    ) : (
+                        <p
+                            className="w-full cursor-pointer select-none transition-all hover:opacity-50"
+                            onClick={() => setEmailEdit(true)}
+                        >
+                          {userData.email}
+                        </p>
+                    )}
                   </div>
-                </a>
+                </div>
 
-                <a href={`tel:${userData.phone}`} className="">
-                  <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4">
                     <img
                       src="https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633d9a5fec957e53ae8857ce_phone-icon-large-paperfolio-webflow-template.svg"
                       loading="eager"
                       alt="phone icon"
                     />
-                    <div className="contact-link">{userData.phone}</div>
-                  </div>
-                </a>
+                  {phoneEdit ? (
+                      <textarea
+                          ref={phoneTextareaRef}
+                          value={phoneEditValue}
+                          onChange={(e) => setPhoneEditValue(e.target.value)}
+                          onBlur={() => {
+                            setPhoneEditValue(userData.phone);
+                            setPhoneEdit(false);
+                          }}
+                          onKeyDown={async (e) => {
+                            if (e.key === "Enter") {
+                              e.preventDefault();
+                              await handlePhoneSubmit();
+                            }
+                          }}
+                          className="p-0 w-full resize-none appearance-none overflow-hidden border-none text-lg bg-transparent leading-snug outline-none focus:outline-none focus:ring-0"
+                          autoFocus
+                          onFocus={(e) => e.currentTarget.select()}
+                          maxLength={30}
+                          rows={1}
+                      />
+                  ) : (
+                      <p
+                          className="w-full cursor-pointer select-none transition-all hover:opacity-50"
+                          onClick={() => setPhoneEdit(true)}
+                      >
+                        {userData.phone}
+                      </p>
+                  )}
+                </div>
               </div>
             </div>
           </animated.div>
