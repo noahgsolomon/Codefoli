@@ -1,4 +1,4 @@
-package com.codefolio.backend.user.githubrepo;
+package com.codefolio.backend.user.Projects;
 
 import com.codefolio.backend.user.Users;
 import jakarta.persistence.*;
@@ -22,6 +22,7 @@ public class Projects {
     private Users users;
 
     private String name;
+    private String image;
     private String language;
     private String description;
     private String updatedAt;
@@ -34,5 +35,6 @@ public class Projects {
         this.description = description;
         this.updatedAt = updatedAt;
         this.owner = owner;
+        this.image = "https://picsum.photos/300/300";
     }
 }
