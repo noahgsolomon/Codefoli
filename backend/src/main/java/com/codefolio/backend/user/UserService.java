@@ -1,7 +1,7 @@
 package com.codefolio.backend.user;
 
-import com.codefolio.backend.user.githubrepo.ProjectsRepository;
-import com.codefolio.backend.user.githubrepo.Projects;
+import com.codefolio.backend.user.Projects.ProjectsRepository;
+import com.codefolio.backend.user.Projects.Projects;
 import com.codefolio.backend.user.pages.aboutpage.About;
 import com.codefolio.backend.user.pages.aboutpage.AboutRepository;
 import com.codefolio.backend.user.pages.projectspage.ProjectsPage;

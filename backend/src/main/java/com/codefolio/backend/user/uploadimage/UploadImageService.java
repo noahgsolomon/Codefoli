@@ -3,6 +3,8 @@ package com.codefolio.backend.user.uploadimage;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.codefolio.backend.user.Projects.Projects;
+import com.codefolio.backend.user.Projects.ProjectsRepository;
 import com.codefolio.backend.user.Users;
 import com.codefolio.backend.user.pages.aboutpage.About;
 import com.codefolio.backend.user.pages.aboutpage.AboutRepository;
@@ -35,6 +37,7 @@ public class UploadImageService {
     private final AboutRepository aboutRepository;
     private final StorySectionRepository storySectionRepository;
     private final WorkRepository workRepository;
+    private final ProjectsRepository projectsRepository;
 
     public ResponseEntity<Response> uploadProfileImage(MultipartFile file, Principal principal) {
         try {
@@ -147,6 +150,26 @@ public class UploadImageService {
                 return ResponseEntity.ok(new Response(StatusType.OK, "Image uploaded successfully", imageResponse));
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(StatusType.BAD, "Job not found", null));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
+        }
+    }
+
+    public ResponseEntity<Response> uploadProjectImage(MultipartFile file, Principal principal, long id) {
+        try {
+            Users user = getAuthenticatedUser(principal);
+            ImageResponse imageResponse = uploadImage(file, user.getId() + "-project-" + id, "codefolioimagebucket");
+            Optional<Projects> optionalProject = projectsRepository.findByUsersAndId(user, id);
+            if (optionalProject.isPresent()) {
+                Projects project = optionalProject.get();
+                project.setImage(imageResponse.url());
+                projectsRepository.save(project);
+                return ResponseEntity.ok(new Response(StatusType.OK, "Image uploaded successfully", imageResponse));
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(StatusType.BAD, "Project not found", null));
             }
         } catch (Exception e) {
             e.printStackTrace();
