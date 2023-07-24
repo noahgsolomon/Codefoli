@@ -185,6 +185,7 @@ const MainApp: React.FC = () => {
               userData={userData}
               pageData={projectsPageData}
               setPageData={setProjectsPageData}
+              setUserData={setUserData}
             />
           }
         />

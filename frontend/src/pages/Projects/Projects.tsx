@@ -1,5 +1,4 @@
 import { Dispatch, FC, SetStateAction, useMemo, useRef, useState } from "react";
-import ServiceCard from "Components/Sections/Skill/ServiceCard.tsx";
 import Footer from "Components/Footer/Footer";
 import ArrowRight from "assets/icons/arrow-right.svg";
 import { COLORS } from "../../util/colors.ts";
@@ -10,12 +9,14 @@ import {
   updateDescriptionOneProjects,
   updateHeaderOneProjects,
 } from "./projectspageapi.tsx";
+import ProjectCard from "./ProjectCard.tsx";
 
 const Projects: FC<{
-  userData: UserData;
   pageData: ProjectsPageData;
   setPageData: Dispatch<SetStateAction<ProjectsPageData>>;
-}> = ({ userData, pageData, setPageData }) => {
+  userData: UserData;
+  setUserData: Dispatch<SetStateAction<UserData>>;
+}> = ({ userData, setUserData, pageData, setPageData }) => {
   const [headerOneEdit, setHeaderOneEdit] = useState(false);
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
     pageData.headerOne
@@ -132,13 +133,15 @@ const Projects: FC<{
         <div className="container mx-auto mb-5 px-5">
           <div className="projects grid grid-cols-1 justify-items-center gap-5 md:grid-cols-2 lg:grid-cols-3">
             {userData.projects.map(
-              ({ name, description, language, imageUrl = "" }, index) => {
+              ({ name, description, id, language, image }, index) => {
                 return (
-                  <ServiceCard
+                  <ProjectCard
                     title={name}
                     description={description}
-                    imageUrl={imageUrl}
-                    key={Math.random().toString()}
+                    setUserData={setUserData}
+                    image={image}
+                    id={id}
+                    key={id}
                   >
                     <Link
                       to="/project"
@@ -158,7 +161,7 @@ const Projects: FC<{
                         {language}
                       </span>
                     </div>
-                  </ServiceCard>
+                  </ProjectCard>
                 );
               }
             )}
