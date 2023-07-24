@@ -44,4 +44,25 @@ const updateDescriptionOneProjects = async (descriptionOne: string) => {
   }
 };
 
-export { updateHeaderOneProjects, updateDescriptionOneProjects };
+const removeProject = async (id: string) => {
+  try {
+    const response = await fetch("http://localhost:8080/project/remove", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: id,
+      credentials: "include",
+    });
+
+    const responseJson = await response.json();
+    if (responseJson.status === "OK") {
+      return responseJson;
+    } else {
+      console.log(responseJson.message);
+      return responseJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export { updateHeaderOneProjects, updateDescriptionOneProjects, removeProject };
