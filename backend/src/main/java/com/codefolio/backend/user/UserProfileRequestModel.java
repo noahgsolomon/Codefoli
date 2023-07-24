@@ -1,6 +1,6 @@
 package com.codefolio.backend.user;
 
-import com.codefolio.backend.user.githubrepo.Projects;
+import com.codefolio.backend.user.Projects.Projects;
 import com.codefolio.backend.user.workhistory.Work;
 
 import java.util.List;
