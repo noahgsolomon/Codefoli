@@ -322,7 +322,7 @@ const AboutMain: React.FC<{
             )}
             <div className="story-control text-center md:text-left">
               <Link
-                to="/preview/contact"
+                to="/contact"
                 className="mb-4 mr-2 inline-block w-full rounded-xl border-2 border-transparent bg-black px-4 py-2 font-bold text-white transition ease-in hover:-translate-y-1 hover:bg-blue-500 md:w-auto"
               >
                 Get in touch
