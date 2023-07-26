@@ -4,6 +4,8 @@ import com.codefolio.backend.user.Users;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+
 @Table
 @Entity
 @Getter
@@ -37,4 +39,15 @@ public class Projects {
         this.owner = owner;
         this.image = "https://picsum.photos/300/300";
     }
+
+    public Projects(Users users, String name, String language, String description, String owner) {
+        this.users = users;
+        this.name = name;
+        this.language = language;
+        this.description = description;
+        this.updatedAt = new Date().toString();
+        this.owner = owner;
+        this.image = "https://picsum.photos/300/300";
+    }
+
 }

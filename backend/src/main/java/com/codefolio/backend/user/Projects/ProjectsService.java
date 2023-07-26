@@ -1,6 +1,7 @@
 package com.codefolio.backend.user.Projects;
 
 import com.codefolio.backend.user.Users;
+import com.codefolio.backend.user.skills.SkillsType;
 import com.codefolio.backend.util.Response;
 import com.codefolio.backend.util.StatusType;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,20 @@ public class ProjectsService {
             }
             projectsRepository.delete(project.get());
             return ResponseEntity.ok(new Response(StatusType.OK, "Project deleted successfully", null));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
+        }
+    }
+
+    public ResponseEntity<Response> addProject(Principal principal, AddProjectRequestModel project) {
+        try {
+            Users user = getAuthenticatedUser(principal);
+            SkillsType.valueOf(project.language());
+            Projects newProject = new Projects(user, project.title(), project.language(), project.description(), user.getName());
+            projectsRepository.save(newProject);
+            return ResponseEntity.ok(new Response(StatusType.OK, "Project added successfully", new AddProjectResponseModel(newProject.getName(), newProject.getDescription(), newProject.getLanguage(), newProject.getUpdatedAt(), newProject.getImage(), newProject.getId().toString())));
         } catch (Exception e) {
             e.printStackTrace();
             System.err.print(e.getMessage());
