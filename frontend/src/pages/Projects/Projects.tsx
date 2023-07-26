@@ -10,6 +10,7 @@ import {
   updateHeaderOneProjects,
 } from "./projectspageapi.tsx";
 import ProjectCard from "./ProjectCard.tsx";
+import AddProjectCard from "./AddProjectCard.tsx";
 
 const Projects: FC<{
   pageData: ProjectsPageData;
@@ -164,6 +165,9 @@ const Projects: FC<{
                   </ProjectCard>
                 );
               }
+            )}
+            {userData.projects.length < 8 && (
+              <AddProjectCard setUserData={setUserData} />
             )}
           </div>
         </div>
