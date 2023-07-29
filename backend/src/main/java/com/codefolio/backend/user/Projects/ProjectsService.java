@@ -47,4 +47,38 @@ public class ProjectsService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
         }
     }
+
+    public ResponseEntity<Response> updateProjectTitle(Principal principal, UpdateProjectTitleRequestModel project) {
+        try {
+            Users user = getAuthenticatedUser(principal);
+            Optional<Projects> projectToUpdate = projectsRepository.findByUsersAndId(user, Long.parseLong(project.id()));
+            if (projectToUpdate.isEmpty()){
+                return ResponseEntity.badRequest().body(new Response(StatusType.ERROR, "Project not found", null));
+            }
+            projectToUpdate.get().setName(project.title());
+            projectsRepository.save(projectToUpdate.get());
+            return ResponseEntity.ok(new Response(StatusType.OK, "Project title updated successfully", projectToUpdate.get().getName()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
+        }
+    }
+
+    public ResponseEntity<Response> updateProjectDescription(Principal principal, UpdateProjectDescriptionRequestModel project) {
+        try {
+            Users user = getAuthenticatedUser(principal);
+            Optional<Projects> projectToUpdate = projectsRepository.findByUsersAndId(user, Long.parseLong(project.id()));
+            if (projectToUpdate.isEmpty()){
+                return ResponseEntity.badRequest().body(new Response(StatusType.ERROR, "Project not found", null));
+            }
+            projectToUpdate.get().setDescription(project.description());
+            projectsRepository.save(projectToUpdate.get());
+            return ResponseEntity.ok(new Response(StatusType.OK, "Project description updated successfully", projectToUpdate.get().getDescription()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
+        }
+    }
 }

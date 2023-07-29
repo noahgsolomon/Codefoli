@@ -2,12 +2,9 @@ package com.codefolio.backend.user.Projects;
 
 import com.codefolio.backend.util.Response;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import java.security.Principal;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import java.security.Principal;
 
 @RestController
 public class ProjectsController {
@@ -26,6 +23,16 @@ public class ProjectsController {
     @PostMapping("/project/add")
     public ResponseEntity<Response> addProject(Principal principal, @RequestBody AddProjectRequestModel project){
         return projectsService.addProject(principal, project);
+    }
+
+    @PutMapping("/project/title")
+    public ResponseEntity<Response> updateProjectTitle(Principal principal, @RequestBody UpdateProjectTitleRequestModel project){
+        return projectsService.updateProjectTitle(principal, project);
+    }
+
+    @PutMapping("/project/description")
+    public ResponseEntity<Response> updateProjectDescription(Principal principal, @RequestBody UpdateProjectDescriptionRequestModel project){
+        return projectsService.updateProjectDescription(principal, project);
     }
 
 }
