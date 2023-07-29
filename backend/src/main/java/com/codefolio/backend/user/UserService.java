@@ -2,6 +2,8 @@ package com.codefolio.backend.user;
 
 import com.codefolio.backend.user.Projects.ProjectsRepository;
 import com.codefolio.backend.user.Projects.Projects;
+import com.codefolio.backend.user.Projects.languages.Languages;
+import com.codefolio.backend.user.Projects.languages.LanguagesRepository;
 import com.codefolio.backend.user.pages.aboutpage.About;
 import com.codefolio.backend.user.pages.aboutpage.AboutRepository;
 import com.codefolio.backend.user.pages.projectspage.ProjectsPage;
@@ -47,6 +49,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -71,6 +74,7 @@ public class UserService {
     private final ValueSectionRepository valueSectionRepository;
     private final FAQSectionRepository faqSectionRepository;
     private final ProjectsPageRepository projectsPageRepository;
+    private final LanguagesRepository languagesRepository;
 
 
     public static Users getAuthenticatedUser(Principal principal) {
@@ -88,7 +92,20 @@ public class UserService {
         try {
             Users user = getAuthenticatedUser(principal);
             List<Work> userWorks = workRepository.findAllByUsers(user);
-            List<Projects> userProjects = projectsRepository.findAllByUsers(user);
+            List<Projects> projects = projectsRepository.findAllByUsers(user);
+            List<ProjectsResponseModel> userProjects = new ArrayList<>();
+            for (Projects project : projects) {
+                List<Languages> languages = languagesRepository.findAllByProjectAndUsers(project, user);
+                List<String> languagesString = languages.stream().map(Languages::getLanguage).toList();
+                userProjects.add(new ProjectsResponseModel(
+                        project.getName(),
+                        project.getDescription(),
+                        languagesString,
+                        project.getUpdatedAt(),
+                        project.getImage(),
+                        project.getId().toString()
+                ));
+            }
             List<Skills> userSkills = skillsRepository.findAllByUsers(user);
             List<Services> userServices = servicesRepository.findAllByUsers(user);
 
@@ -108,7 +125,7 @@ public class UserService {
                     user.getLocation(),
                     user.getAbout(),
                     userSkillsTypes,
-                    userProjects.toArray(new Projects[0]),
+                    userProjects.toArray(new ProjectsResponseModel[0]),
                     userWorks.toArray(new Work[0]),
                     user.getRole().toString(),
                     user.getProfession(),
@@ -164,9 +181,12 @@ public class UserService {
             }
 
             userProfile.projects().forEach(project -> {
-                System.out.println(project.getName());
-                Projects newProject = new Projects(user, project.getName(), project.getLanguage(), project.getDescription(), project.getUpdatedAt(), user.getName());
+                System.out.println(project.name());
+                Projects newProject = new Projects(user, project.name(), project.description(), project.updatedAt(), user.getName());
                 projectsRepository.save(newProject);
+                for (int i = 0; i < project.languages().size(); i++) {
+                    languagesRepository.save(new Languages(user, newProject, project.languages().get(i)));
+                }
             });
 
             faqRepository.save(new FAQ(user, "What is your design process?", "My design process starts with understanding the client's needs, then moving onto research, ideation, prototyping, and finally, implementation."));
