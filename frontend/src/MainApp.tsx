@@ -130,8 +130,6 @@ const MainApp: React.FC = () => {
     authenticatedCheck();
   }, [navigate]);
 
-  console.log(userData);
-
   if (loading) {
     return <Loader />;
   }

@@ -1,7 +1,7 @@
 type Project = {
   name: string;
   description: string;
-  language: string;
+  languages: string[];
   updatedAt: string;
   image: string;
   id: string;
