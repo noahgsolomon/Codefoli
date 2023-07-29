@@ -1,8 +1,6 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import UserData from "Type/UserData.tsx";
 import { addProject } from "./projectspageapi.tsx";
-import EnumSkillToString from "Type/EnumSkillToString.tsx";
-
 const AddProjectCard: FC<{
   setUserData: Dispatch<SetStateAction<UserData>>;
 }> = ({ setUserData }) => {
@@ -14,7 +12,6 @@ const AddProjectCard: FC<{
     );
     if (addProjectFetch.status === "OK") {
       const projectData = addProjectFetch.data;
-      projectData.language = EnumSkillToString(projectData.language);
       setUserData((prev) => ({
         ...prev,
         projects: [...prev.projects, projectData],

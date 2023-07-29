@@ -1,7 +1,6 @@
 package com.codefolio.backend.user.Projects;
 
 import com.codefolio.backend.user.Users;
-import com.codefolio.backend.user.skills.SkillsType;
 import com.codefolio.backend.util.Response;
 import com.codefolio.backend.util.StatusType;
 import lombok.AllArgsConstructor;
@@ -39,7 +38,6 @@ public class ProjectsService {
     public ResponseEntity<Response> addProject(Principal principal, AddProjectRequestModel project) {
         try {
             Users user = getAuthenticatedUser(principal);
-            SkillsType.valueOf(project.language());
             Projects newProject = new Projects(user, project.title(), project.language(), project.description(), user.getName());
             projectsRepository.save(newProject);
             return ResponseEntity.ok(new Response(StatusType.OK, "Project added successfully", new AddProjectResponseModel(newProject.getName(), newProject.getDescription(), newProject.getLanguage(), newProject.getUpdatedAt(), newProject.getImage(), newProject.getId().toString())));
