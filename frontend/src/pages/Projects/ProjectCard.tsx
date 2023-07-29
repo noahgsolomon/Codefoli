@@ -1,8 +1,20 @@
-import {ChangeEvent, Dispatch, FC, SetStateAction, useMemo, useRef, useState,} from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  FC,
+  SetStateAction,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import UserData from "Type/UserData.tsx";
-import {removeProject, updateProjectDescription, updateProjectTitle} from "./projectspageapi.tsx";
+import {
+  removeProject,
+  updateProjectDescription,
+  updateProjectTitle,
+} from "./projectspageapi.tsx";
 import Project from "Type/Project.tsx";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import ArrowRight from "assets/icons/arrow-right.svg";
 
 const ProjectCard: FC<{
@@ -11,9 +23,9 @@ const ProjectCard: FC<{
   image: string;
   setUserData: Dispatch<SetStateAction<UserData>>;
   id: string;
-  language: string;
-  color: string;
-}> = ({ title, description, image, setUserData, language, color, id }) => {
+  languages: string[];
+  colors: string[];
+}> = ({ title, description, image, setUserData, languages, colors, id }) => {
   const [hovered, setHovered] = useState(false);
   const [removeHover, setRemoveHover] = useState(false);
   const imageFileInput = useRef<HTMLInputElement | null>(null);
@@ -84,9 +96,7 @@ const ProjectCard: FC<{
       setUserData((prev) => ({
         ...prev,
         projects: prev.projects.map((project) =>
-          project.id === id
-            ? { ...project, title: titleEditValue }
-            : project
+          project.id === id ? { ...project, title: titleEditValue } : project
         ),
       }));
       setTitleValue(titleEditValue);
@@ -95,7 +105,10 @@ const ProjectCard: FC<{
   };
 
   const handleDescriptionSubmit = async () => {
-    const updateDescriptionFetch = await updateProjectDescription(id, descriptionEditValue);
+    const updateDescriptionFetch = await updateProjectDescription(
+      id,
+      descriptionEditValue
+    );
     if (updateDescriptionFetch.status === "OK") {
       setUserData((prev) => ({
         ...prev,
@@ -108,7 +121,7 @@ const ProjectCard: FC<{
       setDescriptionValue(descriptionEditValue);
       setDescriptionEdit(false);
     }
-  }
+  };
 
   return (
     <div
@@ -169,37 +182,37 @@ const ProjectCard: FC<{
       </div>
       <div className="content rounded-2xl bg-white p-5">
         {titleEdit ? (
-            <textarea
-                ref={titleTextareaRef}
-                value={titleEditValue}
-                onChange={(e) => setTitleEditValue(e.target.value)}
-                onBlur={() => {
-                  setTitleEditValue(titleValue);
-                  setTitleEdit(false);
-                }}
-                onKeyDown={async (e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    await handleTitleSubmit();
-                  }
-                }}
-                className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-2xl font-bold leading-snug outline-none focus:outline-none focus:ring-0"
-                autoFocus
-                onFocus={(e) => {
-                  e.target.select();
-                }}
-                maxLength={25}
-            />
+          <textarea
+            ref={titleTextareaRef}
+            value={titleEditValue}
+            onChange={(e) => setTitleEditValue(e.target.value)}
+            onBlur={() => {
+              setTitleEditValue(titleValue);
+              setTitleEdit(false);
+            }}
+            onKeyDown={async (e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                await handleTitleSubmit();
+              }
+            }}
+            className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-2xl font-bold leading-snug outline-none focus:outline-none focus:ring-0"
+            autoFocus
+            onFocus={(e) => {
+              e.target.select();
+            }}
+            maxLength={25}
+          />
         ) : (
-            <h2
-                className="mb-5 cursor-pointer select-none text-2xl font-bold leading-snug transition-all hover:opacity-50"
-                onClick={() => setTitleEdit(true)}
-            >
-              {titleValue}
-            </h2>
+          <h2
+            className="mb-5 cursor-pointer select-none text-2xl font-bold leading-snug transition-all hover:opacity-50"
+            onClick={() => setTitleEdit(true)}
+          >
+            {titleValue}
+          </h2>
         )}
         {descriptionEdit ? (
-        <textarea
+          <textarea
             ref={descriptionTextareaRef}
             value={descriptionEditValue}
             onChange={(e) => setDescriptionEditValue(e.target.value)}
@@ -218,33 +231,37 @@ const ProjectCard: FC<{
             onFocus={(e) => e.currentTarget.select()}
             maxLength={250}
             rows={3}
-        />
+          />
         ) : (
-        <p
+          <p
             className="cursor-pointer select-none text-base transition-all hover:opacity-50"
             onClick={() => setDescriptionEdit(true)}
-        >
-          {descriptionValue}
-        </p>
+          >
+            {descriptionValue}
+          </p>
         )}
       </div>
       <Link
-          to="/project"
-          className="inline-block bg-white px-5 py-2 text-sm font-bold"
+        to="/project"
+        className="inline-block bg-white px-5 py-2 text-sm font-bold"
       >
         Learn more{" "}
         <img
-            src={ArrowRight}
-            alt=""
-            className={`${hovered ? 'translate-x-1' : ''} inline-block transition-all`}
+          src={ArrowRight}
+          alt=""
+          className={`${
+            hovered ? "translate-x-1" : ""
+          } inline-block transition-all`}
         />
       </Link>
       <div className={`rounded-b-lg bg-white px-5 py-2`}>
-                      <span
-                          className={`mb-2 mr-2 inline-block cursor-pointer rounded-lg px-3 text-white transition-all hover:-translate-y-0.5 ${color} py-2 text-sm`}
-                      >
-                        {language}
-                      </span>
+        {languages.map((language, index) => (
+          <span
+            className={`mb-2 mr-2 inline-block cursor-pointer rounded-lg px-3 text-white transition-all hover:-translate-y-0.5 ${colors[index]} py-2 text-sm`}
+          >
+            {language}
+          </span>
+        ))}
       </div>
       <div className=" flex-grow rounded-2xl bg-white"></div>
     </div>
