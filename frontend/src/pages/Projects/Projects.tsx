@@ -132,7 +132,12 @@ const Projects: FC<{
         <div className="container mx-auto mb-5 px-5">
           <div className="projects grid grid-cols-1 justify-items-center gap-5 md:grid-cols-2 lg:grid-cols-3">
             {userData.projects.map(
-              ({ name, description, id, language, image }, index) => {
+              ({ name, description, id, languages, image }) => {
+                const colors = languages.map(() => {
+                  return projectColors[
+                    Math.floor(Math.random() * projectColors.length)
+                  ];
+                });
                 return (
                   <ProjectCard
                     title={name}
@@ -141,8 +146,8 @@ const Projects: FC<{
                     image={image}
                     id={id}
                     key={id}
-                    language={language}
-                    color={projectColors[index]}
+                    languages={languages}
+                    colors={colors}
                   />
                 );
               }
