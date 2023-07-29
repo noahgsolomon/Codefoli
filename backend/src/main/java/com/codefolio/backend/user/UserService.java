@@ -41,6 +41,7 @@ import com.codefolio.backend.user.workhistory.Work;
 import com.codefolio.backend.user.workhistory.WorkRepository;
 import com.codefolio.backend.util.Response;
 import com.codefolio.backend.util.StatusType;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -140,6 +141,7 @@ public class UserService {
         }
     }
 
+    @Transactional
     public ResponseEntity<Response> setup(UserProfileRequestModel userProfile, Principal principal) {
         try {
             if (!(principal instanceof Authentication)) {
@@ -185,6 +187,7 @@ public class UserService {
                 Projects newProject = new Projects(user, project.name(), project.description(), project.updatedAt(), user.getName());
                 projectsRepository.save(newProject);
                 for (int i = 0; i < project.languages().size(); i++) {
+                    System.out.println(project.languages().get(i));
                     languagesRepository.save(new Languages(user, newProject, project.languages().get(i)));
                 }
             });
