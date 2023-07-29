@@ -1,9 +1,7 @@
 import { Dispatch, FC, SetStateAction, useMemo, useRef, useState } from "react";
 import Footer from "Components/Footer/Footer";
-import ArrowRight from "assets/icons/arrow-right.svg";
 import { COLORS } from "../../util/colors.ts";
 import UserData from "Type/UserData.tsx";
-import { Link } from "react-router-dom";
 import ProjectsPageData from "Type/ProjectsPageData.tsx";
 import {
   updateDescriptionOneProjects,
@@ -143,26 +141,9 @@ const Projects: FC<{
                     image={image}
                     id={id}
                     key={id}
-                  >
-                    <Link
-                      to="/project"
-                      className="inline-block bg-white px-5 py-2 text-sm font-bold"
-                    >
-                      Learn more{" "}
-                      <img
-                        src={ArrowRight}
-                        alt=""
-                        className="inline-block transition ease-in group-hover:translate-x-1"
-                      />
-                    </Link>
-                    <div className={`rounded-b-lg bg-white px-5 py-2`}>
-                      <span
-                        className={`mb-2 mr-2 inline-block cursor-pointer rounded-lg px-3 text-white transition-all hover:-translate-y-0.5 ${projectColors[index]} py-2 text-sm`}
-                      >
-                        {language}
-                      </span>
-                    </div>
-                  </ProjectCard>
+                    language={language}
+                    color={projectColors[index]}
+                  />
                 );
               }
             )}

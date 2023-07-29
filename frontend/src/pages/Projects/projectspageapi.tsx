@@ -22,6 +22,60 @@ const updateHeaderOneProjects = async (headerOne: string) => {
   }
 };
 
+const updateProjectTitle = async (id: string, title: string) => {
+  const model = {
+    title: title,
+    id: id,
+  }
+  try {
+    const updateFetch = await fetch(
+        "http://localhost:8080/project/title",
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(model),
+          credentials: "include",
+        }
+    );
+    const updateFetchJson = await updateFetch.json();
+    if (updateFetchJson.status === "OK") {
+      return updateFetchJson;
+    } else {
+      console.log(updateFetchJson.message);
+      return updateFetchJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const updateProjectDescription = async (id: string, description: string) => {
+    const model = {
+        description: description,
+        id: id,
+    }
+    try {
+        const updateFetch = await fetch(
+            "http://localhost:8080/project/description",
+            {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(model),
+            credentials: "include",
+            }
+        );
+        const updateFetchJson = await updateFetch.json();
+        if (updateFetchJson.status === "OK") {
+        return updateFetchJson;
+        } else {
+        console.log(updateFetchJson.message);
+        return updateFetchJson;
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 const updateDescriptionOneProjects = async (descriptionOne: string) => {
   try {
     const updateFetch = await fetch(
@@ -101,4 +155,6 @@ export {
   updateDescriptionOneProjects,
   removeProject,
   addProject,
+  updateProjectTitle,
+  updateProjectDescription
 };
