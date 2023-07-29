@@ -52,7 +52,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
   const [addProject, setAddProject] = useState({
     name: "",
     description: "",
-    language: "",
+    languages: [""],
     updatedAt: "",
     id: "",
     image: "",
@@ -131,7 +131,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                 id: project.id,
                 name: project.name,
                 description: project.description || "",
-                language: project.language,
+                languages: project.languages || [],
                 updatedAt: project.updatedAt,
                 image: project.image || "",
               },
@@ -967,7 +967,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                   </div>
                 </div>
                 <p className="font-bold underline">
-                  Language: {project.project.language}
+                  Language: {project.project.languages[0]}
                 </p>
                 <p>
                   {project.project.updatedAt.toLowerCase() !== "current"
@@ -1018,7 +1018,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                     type="text"
                     id="language"
                     placeholder="// Mojo"
-                    value={addProject.language}
+                    value={addProject.languages[0]}
                     className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 
                     ${noProjectLanguageError ? "border-red-500" : ""}`}
                     onChange={(e) => {
@@ -1027,7 +1027,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                       }
                       setAddProject({
                         ...addProject,
-                        language: e.target.value,
+                        languages: [e.target.value],
                       });
                     }}
                   />
@@ -1088,7 +1088,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                       setAddingProject(false);
                       setAddProject({
                         name: "",
-                        language: "",
+                        languages: [""],
                         updatedAt: "",
                         description: "",
                         id: "",
@@ -1102,7 +1102,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                     className={
                       "mt-3 flex cursor-pointer items-center justify-center rounded-2xl px-8 py-3 text-base font-bold transition-all " +
                       (addProject.name &&
-                      addProject.language &&
+                      addProject.languages &&
                       addProject.updatedAt &&
                       addProject.description
                         ? "cursor-pointer bg-black text-white hover:-translate-y-0.5 hover:bg-green-500 active:translate-y-0.5"
@@ -1111,12 +1111,12 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                     onClick={() => {
                       if (
                         !addProject.name ||
-                        !addProject.language ||
+                        !addProject.languages ||
                         !addProject.updatedAt ||
                         !addProject.description
                       ) {
                         setNoProjectNameError(!addProject.name);
-                        setNoProjectLanguageError(!addProject.language);
+                        setNoProjectLanguageError(!addProject.languages);
                         setNoProjectDateError(!addProject.updatedAt);
                         setNoProjectDescriptionError(!addProject.description);
                         return;
@@ -1139,7 +1139,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                       setAddingProject(false);
                       setAddProject({
                         name: "",
-                        language: "",
+                        languages: [""],
                         updatedAt: "",
                         description: "",
                         id: "",
@@ -1189,12 +1189,12 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                 Back
               </button>
               <button
-                onClick={() => {
+                onClick={async () => {
                   if (projects.length < 1) {
                     setNoProjectError(true);
                     return;
                   }
-                  submitSetup();
+                  await submitSetup();
                 }}
                 className={
                   "mt-3 flex cursor-pointer items-center justify-center rounded-2xl px-8 py-3 text-base font-bold transition-all " +
