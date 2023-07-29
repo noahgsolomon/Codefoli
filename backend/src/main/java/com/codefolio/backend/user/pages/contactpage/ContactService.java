@@ -1,5 +1,6 @@
 package com.codefolio.backend.user.pages.contactpage;
 
+import com.codefolio.backend.user.UserRepository;
 import com.codefolio.backend.user.Users;
 import com.codefolio.backend.user.sections.PageType;
 import com.codefolio.backend.util.PageSections;
@@ -21,6 +22,7 @@ public class ContactService {
 
     private final ContactRepository contactRepository;
     private final PageSections pageSections;
+    private final UserRepository userRepository;
 
     public ResponseEntity<Response> getContact(Principal principal) {
         try {
@@ -92,6 +94,7 @@ public class ContactService {
         try {
             Users user = getAuthenticatedUser(principal);
             user.setEmail(email);
+            userRepository.save(user);
             return ResponseEntity.ok(new Response(StatusType.OK, "Email updated successfully", email));
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,6 +107,7 @@ public class ContactService {
         try {
             Users user = getAuthenticatedUser(principal);
             user.setPhone(phone);
+            userRepository.save(user);
             return ResponseEntity.ok(new Response(StatusType.OK, "Phone updated successfully", phone));
         } catch (Exception e) {
             e.printStackTrace();
