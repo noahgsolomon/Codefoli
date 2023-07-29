@@ -1,5 +1,7 @@
 package com.codefolio.backend.config;
 
+import com.codefolio.backend.user.Projects.languages.Languages;
+import com.codefolio.backend.user.Projects.languages.LanguagesRepository;
 import com.codefolio.backend.user.UserRepository;
 import com.codefolio.backend.user.session.UserSession;
 import com.codefolio.backend.user.session.UserSessionRepository;
@@ -40,6 +42,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final OAuth2AuthorizedClientService authorizedClientService;
     private final ProjectsRepository projectsRepository;
+    private final LanguagesRepository languagesRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -96,8 +99,10 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                     System.out.println("Language: " + repo.getLanguage());
                     System.out.println("Last updated: " + repo.getUpdatedAt());
                     System.out.println("Description: " + repo.getDescription());
-                    Projects project = new Projects(user, repo.getName(), repo.getLanguage(), repo.getDescription(), repo.getUpdatedAt(), repo.getOwner().getLogin());
+                    Projects project = new Projects(user, repo.getName(), repo.getDescription(), repo.getUpdatedAt(), repo.getOwner().getLogin());
                     projectsRepository.save(project);
+                    Languages language = new Languages(user, project, repo.getLanguage());
+                    languagesRepository.save(language);
                 }
 
             } catch (IOException | InterruptedException e) {
