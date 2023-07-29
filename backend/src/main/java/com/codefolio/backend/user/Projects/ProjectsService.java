@@ -1,5 +1,7 @@
 package com.codefolio.backend.user.Projects;
 
+import com.codefolio.backend.user.Projects.languages.Languages;
+import com.codefolio.backend.user.Projects.languages.LanguagesRepository;
 import com.codefolio.backend.user.Users;
 import com.codefolio.backend.util.Response;
 import com.codefolio.backend.util.StatusType;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 import static com.codefolio.backend.user.UserService.getAuthenticatedUser;
@@ -18,6 +21,7 @@ import static com.codefolio.backend.user.UserService.getAuthenticatedUser;
 public class ProjectsService {
 
     private final ProjectsRepository projectsRepository;
+    private final LanguagesRepository languagesRepository;
 
     public ResponseEntity<Response> removeProject(Principal principal, String id) {
         try {
@@ -38,9 +42,13 @@ public class ProjectsService {
     public ResponseEntity<Response> addProject(Principal principal, AddProjectRequestModel project) {
         try {
             Users user = getAuthenticatedUser(principal);
-            Projects newProject = new Projects(user, project.title(), project.language(), project.description(), user.getName());
+            Projects newProject = new Projects(user, project.title(), project.description(), user.getName());
             projectsRepository.save(newProject);
-            return ResponseEntity.ok(new Response(StatusType.OK, "Project added successfully", new AddProjectResponseModel(newProject.getName(), newProject.getDescription(), newProject.getLanguage(), newProject.getUpdatedAt(), newProject.getImage(), newProject.getId().toString())));
+            Languages newLanguage = new Languages(user, newProject, project.language());
+            languagesRepository.save(newLanguage);
+            List<Languages> languages = languagesRepository.findAllByProjectAndUsers(newProject, user);
+            List<String> languagesList = languages.stream().map(Languages::getLanguage).toList();
+            return ResponseEntity.ok(new Response(StatusType.OK, "Project added successfully", new AddProjectResponseModel(newProject.getName(), newProject.getDescription(), languagesList, newProject.getUpdatedAt(), newProject.getImage(), newProject.getId().toString())));
         } catch (Exception e) {
             e.printStackTrace();
             System.err.print(e.getMessage());
