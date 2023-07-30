@@ -28,6 +28,7 @@ public class Projects {
     private String description;
     private String updatedAt;
     private String owner;
+    private String slug;
 
     public Projects(Users users, String name, String description, String updatedAt, String owner) {
         this.users = users;
@@ -36,6 +37,7 @@ public class Projects {
         this.updatedAt = updatedAt;
         this.owner = owner;
         this.image = "https://picsum.photos/300/300";
+        this.slug = createSlug(name);
     }
 
     public Projects(Users users, String name, String description, String owner) {
@@ -45,6 +47,16 @@ public class Projects {
         this.updatedAt = new Date().toString();
         this.owner = owner;
         this.image = "https://picsum.photos/300/300";
+        this.slug = createSlug(name);
     }
 
+    private String createSlug(String name) {
+        return name.toLowerCase()
+                .replaceAll("[':;/.,!@#$%^&*()_+=]", "")
+                .replaceAll("\\s+", "-")
+                .replaceAll("--+", "-");
+    }
+
+
 }
+
