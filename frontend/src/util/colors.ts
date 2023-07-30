@@ -37,4 +37,3 @@ export const COLORS = [
   "bg-[#33FFA1]",
   "bg-[#8333FF]",
 ];
-
