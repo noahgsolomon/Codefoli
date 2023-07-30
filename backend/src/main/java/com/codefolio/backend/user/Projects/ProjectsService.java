@@ -5,6 +5,7 @@ import com.codefolio.backend.user.Projects.languages.LanguagesRepository;
 import com.codefolio.backend.user.Users;
 import com.codefolio.backend.util.Response;
 import com.codefolio.backend.util.StatusType;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class ProjectsService {
     private final ProjectsRepository projectsRepository;
     private final LanguagesRepository languagesRepository;
 
+    @Transactional
     public ResponseEntity<Response> removeProject(Principal principal, String id) {
         try {
             Users user = getAuthenticatedUser(principal);
@@ -30,6 +32,8 @@ public class ProjectsService {
             if (project.isEmpty()){
                 return ResponseEntity.badRequest().body(new Response(StatusType.ERROR, "Project not found", null));
             }
+            List<Languages> languages = languagesRepository.findAllByProjectAndUsers(project.get(), user);
+            languagesRepository.deleteAll(languages);
             projectsRepository.delete(project.get());
             return ResponseEntity.ok(new Response(StatusType.OK, "Project deleted successfully", null));
         } catch (Exception e) {
@@ -48,7 +52,7 @@ public class ProjectsService {
             languagesRepository.save(newLanguage);
             List<Languages> languages = languagesRepository.findAllByProjectAndUsers(newProject, user);
             List<String> languagesList = languages.stream().map(Languages::getLanguage).toList();
-            return ResponseEntity.ok(new Response(StatusType.OK, "Project added successfully", new AddProjectResponseModel(newProject.getName(), newProject.getDescription(), languagesList, newProject.getUpdatedAt(), newProject.getImage(), newProject.getId().toString())));
+            return ResponseEntity.ok(new Response(StatusType.OK, "Project added successfully", new AddProjectResponseModel(newProject.getName(), newProject.getDescription(), languagesList, newProject.getUpdatedAt(), newProject.getImage(), newProject.getId().toString(), newProject.getSlug())));
         } catch (Exception e) {
             e.printStackTrace();
             System.err.print(e.getMessage());
