@@ -95,6 +95,7 @@ public class UserService {
             List<Work> userWorks = workRepository.findAllByUsers(user);
             List<Projects> projects = projectsRepository.findAllByUsers(user);
             List<ProjectsResponseModel> userProjects = new ArrayList<>();
+            List<String> slugList = new ArrayList<>();
             for (Projects project : projects) {
                 List<Languages> languages = languagesRepository.findAllByProjectAndUsers(project, user);
                 List<String> languagesString = languages.stream().map(Languages::getLanguage).toList();
@@ -104,8 +105,10 @@ public class UserService {
                         languagesString,
                         project.getUpdatedAt(),
                         project.getImage(),
-                        project.getId().toString()
+                        project.getId().toString(),
+                        project.getSlug()
                 ));
+                slugList.add(project.getSlug());
             }
             List<Skills> userSkills = skillsRepository.findAllByUsers(user);
             List<Services> userServices = servicesRepository.findAllByUsers(user);
@@ -130,7 +133,8 @@ public class UserService {
                     userWorks.toArray(new Work[0]),
                     user.getRole().toString(),
                     user.getProfession(),
-                    userServicesTypes
+                    userServicesTypes,
+                    slugList
             );
 
             return ResponseEntity.ok(new Response(StatusType.OK, "User details fetched successfully", userHomeResponseModel));
@@ -151,7 +155,6 @@ public class UserService {
             if (!(principalUser instanceof Users user)) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Response(StatusType.ERROR, "User not authenticated", null));
             }
-
             user.setName(userProfile.name());
             user.setEmail(userProfile.email());
             user.setCompany(userProfile.company());
