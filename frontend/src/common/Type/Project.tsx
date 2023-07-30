@@ -5,6 +5,7 @@ type Project = {
   updatedAt: string;
   image: string;
   id: string;
+  slug: string;
 };
 
 export default Project;

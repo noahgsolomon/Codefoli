@@ -4,6 +4,8 @@ import com.codefolio.backend.user.services.ServicesType;
 import com.codefolio.backend.user.skills.SkillsType;
 import com.codefolio.backend.user.workhistory.Work;
 
+import java.util.List;
+
 public record UserHomeResponseModel(
         String name,
         String email,
@@ -16,6 +18,7 @@ public record UserHomeResponseModel(
         Work[] work,
         String role,
         String profession,
-        ServicesType[] services
+        ServicesType[] services,
+        List<String> slugs
 ) {
 }

@@ -56,6 +56,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
     updatedAt: "",
     id: "",
     image: "",
+    slug: "",
   });
   const allSkills = Skills;
   const allServices = Services;
@@ -134,6 +135,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                 languages: project.languages || [],
                 updatedAt: project.updatedAt,
                 image: project.image || "",
+                slug: project.slug || "",
               },
               color: colors[Math.floor(Math.random() * colors.length)],
             }))
@@ -1093,6 +1095,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                         description: "",
                         id: "",
                         image: "",
+                        slug: "",
                       });
                     }}
                   >
@@ -1144,6 +1147,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                         description: "",
                         id: "",
                         image: "",
+                        slug: "",
                       });
                     }}
                   >

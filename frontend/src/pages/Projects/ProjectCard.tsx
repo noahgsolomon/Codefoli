@@ -14,8 +14,8 @@ import {
   updateProjectTitle,
 } from "./projectspageapi.tsx";
 import Project from "Type/Project.tsx";
-import { useNavigate } from "react-router-dom";
 import ArrowRight from "assets/icons/arrow-right.svg";
+import { Link } from "react-router-dom";
 
 const ProjectCard: FC<{
   title: string;
@@ -25,7 +25,17 @@ const ProjectCard: FC<{
   id: string;
   languages: string[];
   colors: string[];
-}> = ({ title, description, image, setUserData, languages, colors, id }) => {
+  slug: string;
+}> = ({
+  title,
+  description,
+  image,
+  setUserData,
+  languages,
+  colors,
+  id,
+  slug,
+}) => {
   const [hovered, setHovered] = useState(false);
   const [removeHover, setRemoveHover] = useState(false);
   const imageFileInput = useRef<HTMLInputElement | null>(null);
@@ -40,14 +50,13 @@ const ProjectCard: FC<{
   const titleTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const date = useMemo(() => Date.now(), []);
 
-  const navigate = useNavigate();
-
   const handleRemoveProject = async () => {
     const removeProjectFetch = await removeProject(id);
     if (removeProjectFetch.status === "OK") {
       setUserData((prev) => ({
         ...prev,
         projects: prev.projects.filter((project) => project.id !== id),
+        slugs: prev.slugs.filter((slug) => slug !== slug),
       }));
     }
   };
@@ -131,7 +140,6 @@ const ProjectCard: FC<{
       className="relative mb-5 flex max-w-[400px] cursor-pointer flex-col rounded-2xl border-2 border-black shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onClick={() => navigate(`/project`)}
     >
       <div
         className={`absolute inset-0 z-10 bg-red-500 ${
@@ -145,8 +153,7 @@ const ProjectCard: FC<{
         } absolute -right-3 -top-3 z-20 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onMouseEnter={() => setRemoveHover(true)}
         onMouseLeave={() => setRemoveHover(false)}
-        onClick={async (e) => {
-          e.stopPropagation();
+        onClick={async () => {
           await handleRemoveProject();
         }}
       >
@@ -156,8 +163,7 @@ const ProjectCard: FC<{
         className={`image-wrapper relative h-[400px] overflow-hidden rounded-t-lg transition-all`}
         onMouseEnter={() => setImageEdit(true)}
         onMouseLeave={() => setImageEdit(false)}
-        onClick={(e) => {
-          e.stopPropagation();
+        onClick={() => {
           imageFileInput.current && imageFileInput.current.click();
         }}
       >
@@ -216,8 +222,7 @@ const ProjectCard: FC<{
         ) : (
           <h2
             className="mb-5 cursor-pointer select-none text-2xl font-bold leading-snug transition-all hover:opacity-50"
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={() => {
               setTitleEdit(true);
             }}
           >
@@ -248,8 +253,7 @@ const ProjectCard: FC<{
         ) : (
           <p
             className="cursor-pointer select-none text-base transition-all hover:opacity-50"
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={() => {
               setDescriptionEdit(true);
             }}
           >
@@ -257,7 +261,10 @@ const ProjectCard: FC<{
           </p>
         )}
       </div>
-      <div className="inline-block bg-white px-5 py-2 text-sm font-bold">
+      <Link
+        to={`/${slug}`}
+        className="inline-block bg-white px-5 py-2 text-sm font-bold"
+      >
         Learn more{" "}
         <img
           src={ArrowRight}
@@ -266,7 +273,7 @@ const ProjectCard: FC<{
             hovered ? "translate-x-1" : ""
           } inline-block transition-all`}
         />
-      </div>
+      </Link>
       <div className={`rounded-b-lg bg-white px-5 py-2`}>
         {languages.map((language, index) => (
           <span

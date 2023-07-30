@@ -16,6 +16,7 @@ type UserData = {
   work: Work[];
   role: "NEWBIE" | "USER" | "ADMIN";
   about: string;
+  slugs: string[];
 };
 
 export default UserData;
