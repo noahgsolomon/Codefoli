@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "Components/Header/Header.tsx";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import Home from "./pages/Home/Home.tsx";
 import Login from "./pages/Login/Login.tsx";
 import Register from "./pages/Register/Register.tsx";
@@ -25,6 +25,7 @@ import Projects from "./pages/Projects/Projects.tsx";
 import Project from "./pages/Project/Project.tsx";
 import Github from "Components/Github/Github.tsx";
 import ProjectsPageData from "Type/ProjectsPageData.tsx";
+import NotFound from "./NotFound.tsx";
 
 const MainApp: React.FC = () => {
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ const MainApp: React.FC = () => {
     role: "NEWBIE",
     about: "",
     services: [],
+    slugs: [],
   });
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -130,6 +132,17 @@ const MainApp: React.FC = () => {
     authenticatedCheck();
   }, [navigate]);
 
+  const ProjectOr404 = () => {
+    const { slug } = useParams();
+    const slugs = userData.slugs;
+
+    if (slug && slugs.includes(slug)) {
+      return <Project />;
+    } else {
+      return <NotFound />;
+    }
+  };
+
   if (loading) {
     return <Loader />;
   }
@@ -187,7 +200,7 @@ const MainApp: React.FC = () => {
             />
           }
         />
-        <Route path="/project" element={<Project />} />
+        <Route path="/:slug" element={<ProjectOr404 />} />
       </Routes>
     </>
   );
