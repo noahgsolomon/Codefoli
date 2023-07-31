@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.codefolio.backend.user.UserService.getAuthenticatedUser;
@@ -68,8 +69,9 @@ public class ProjectsService {
                 return ResponseEntity.badRequest().body(new Response(StatusType.ERROR, "Project not found", null));
             }
             projectToUpdate.get().setName(project.title());
+            projectToUpdate.get().setSlug(createSlug(project.title()));
             projectsRepository.save(projectToUpdate.get());
-            return ResponseEntity.ok(new Response(StatusType.OK, "Project title updated successfully", projectToUpdate.get().getName()));
+            return ResponseEntity.ok(new Response(StatusType.OK, "Project title updated successfully", projectToUpdate.get().getSlug()));
         } catch (Exception e) {
             e.printStackTrace();
             System.err.print(e.getMessage());
@@ -92,5 +94,32 @@ public class ProjectsService {
             System.err.print(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
         }
+    }
+
+    public ResponseEntity<Response> removeLanguage(Principal principal, RemoveProjectLanguageRequestModel language) {
+        try {
+            Users user = getAuthenticatedUser(principal);
+            Projects project = projectsRepository.findById(Long.parseLong(language.id())).orElseThrow();
+            if (!Objects.equals(project.getUsers().getId(), user.getId())){
+                return ResponseEntity.badRequest().body(new Response(StatusType.ERROR, "Project not found", null));
+            }
+            Optional<Languages> languageToRemove = languagesRepository.findByLanguageAndProject(language.language(), project);
+            if (languageToRemove.isEmpty()){
+                return ResponseEntity.badRequest().body(new Response(StatusType.ERROR, "Language not found", null));
+            }
+            languagesRepository.delete(languageToRemove.get());
+            return ResponseEntity.ok(new Response(StatusType.OK, "Language removed successfully", null));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
+        }
+    }
+
+    private String createSlug(String name) {
+        return name.toLowerCase()
+                .replaceAll("[':;/.,!@#$%^&*()_+=]", "")
+                .replaceAll("\\s+", "-")
+                .replaceAll("--+", "-");
     }
 }
