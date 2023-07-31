@@ -35,4 +35,9 @@ public class ProjectsController {
         return projectsService.updateProjectDescription(principal, project);
     }
 
+    @DeleteMapping("/project/remove-language")
+    public ResponseEntity<Response> removeLanguage(Principal principal, @RequestBody RemoveProjectLanguageRequestModel language){
+        return projectsService.removeLanguage(principal, language);
+    }
+
 }
