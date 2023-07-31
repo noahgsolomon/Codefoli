@@ -96,7 +96,7 @@ public class ProjectsService {
         }
     }
 
-    public ResponseEntity<Response> removeLanguage(Principal principal, RemoveProjectLanguageRequestModel language) {
+    public ResponseEntity<Response> removeLanguage(Principal principal, ProjectLanguageRequestModel language) {
         try {
             Users user = getAuthenticatedUser(principal);
             Projects project = projectsRepository.findById(Long.parseLong(language.id())).orElseThrow();
@@ -109,6 +109,23 @@ public class ProjectsService {
             }
             languagesRepository.delete(languageToRemove.get());
             return ResponseEntity.ok(new Response(StatusType.OK, "Language removed successfully", null));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
+        }
+    }
+
+    public ResponseEntity<Response> addLanguage(Principal principal, ProjectLanguageRequestModel language) {
+        try {
+            Users user = getAuthenticatedUser(principal);
+            Projects project = projectsRepository.findById(Long.parseLong(language.id())).orElseThrow();
+            if (!Objects.equals(project.getUsers().getId(), user.getId())){
+                return ResponseEntity.badRequest().body(new Response(StatusType.ERROR, "Project not found", null));
+            }
+            Languages newLanguage = new Languages(user, project, language.language());
+            languagesRepository.save(newLanguage);
+            return ResponseEntity.ok(new Response(StatusType.OK, "Language added successfully", null));
         } catch (Exception e) {
             e.printStackTrace();
             System.err.print(e.getMessage());

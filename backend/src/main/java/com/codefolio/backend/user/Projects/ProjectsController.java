@@ -36,8 +36,13 @@ public class ProjectsController {
     }
 
     @DeleteMapping("/project/remove-language")
-    public ResponseEntity<Response> removeLanguage(Principal principal, @RequestBody RemoveProjectLanguageRequestModel language){
+    public ResponseEntity<Response> removeLanguage(Principal principal, @RequestBody ProjectLanguageRequestModel language){
         return projectsService.removeLanguage(principal, language);
+    }
+
+    @PostMapping("/project/add-language")
+    public ResponseEntity<Response> addLanguage(Principal principal, @RequestBody ProjectLanguageRequestModel language){
+        return projectsService.addLanguage(principal, language);
     }
 
 }
