@@ -9,7 +9,9 @@ import {
 } from "react";
 import UserData from "Type/UserData.tsx";
 import {
-  removeProject, removeProjectLanguage,
+  addProjectLanguage,
+  removeProject,
+  removeProjectLanguage,
   updateProjectDescription,
   updateProjectTitle,
 } from "./projectspageapi.tsx";
@@ -50,6 +52,8 @@ const ProjectCard: FC<{
   const titleTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const date = useMemo(() => Date.now(), []);
   const [languageHover, setLanguageHover] = useState(-1);
+  const [addProjectLanguageState, setAddProjectLanguageState] = useState(false);
+  const [languageAddValue, setLanguageAddValue] = useState("");
 
   const handleRemoveProject = async () => {
     const removeProjectFetch = await removeProject(id);
@@ -109,7 +113,9 @@ const ProjectCard: FC<{
       setUserData((prev) => ({
         ...prev,
         projects: prev.projects.map((project) =>
-          project.id === id ? { ...project, title: titleEditValue, slug: updateTitleFetch.data } : project
+          project.id === id
+            ? { ...project, title: titleEditValue, slug: updateTitleFetch.data }
+            : project
         ),
       }));
       setTitleValue(titleEditValue);
@@ -143,12 +149,33 @@ const ProjectCard: FC<{
         ...prev,
         projects: prev.projects.map((project) =>
           project.id === id
-            ? { ...project, languages: project.languages.filter((lang) => lang !== language) }
+            ? {
+                ...project,
+                languages: project.languages.filter(
+                  (lang) => lang !== language
+                ),
+              }
             : project
         ),
       }));
     }
-  }
+  };
+
+  const handleAddLanguage = async (language: string) => {
+    const updateLanguageFetch = await addProjectLanguage(id, language);
+    if (updateLanguageFetch.status === "OK") {
+      setUserData((prev) => ({
+        ...prev,
+        projects: prev.projects.map((project) =>
+          project.id === id
+            ? { ...project, languages: [...project.languages, language] }
+            : project
+        ),
+      }));
+      setLanguageAddValue("");
+      setAddProjectLanguageState(false);
+    }
+  };
 
   return (
     <div
@@ -292,7 +319,11 @@ const ProjectCard: FC<{
       <div className={`rounded-b-lg bg-white px-5 py-2`}>
         {languages.map((language, index) => (
           <span
-            className={`mb-2 mr-2 inline-block cursor-pointer rounded-lg px-3 text-white transition-all hover:-translate-y-0.5 ${languageHover === index ? 'bg-red-500 line-through' : colors[index]} py-2 text-sm`}
+            className={`mb-2 mr-2 inline-block cursor-pointer rounded-lg px-3 text-white transition-all hover:-translate-y-0.5 ${
+              languageHover === index
+                ? "bg-red-500 line-through"
+                : colors[index]
+            } py-2 text-sm`}
             onMouseEnter={() => setLanguageHover(index)}
             onMouseLeave={() => setLanguageHover(-1)}
             onClick={async () => handleRemoveLanguage(language)}
@@ -300,6 +331,36 @@ const ProjectCard: FC<{
             {language}
           </span>
         ))}
+        {hovered && languages.length < 8 && !addProjectLanguageState && (
+          <div
+            className={`mb-2 mr-2 inline-block cursor-pointer rounded-lg bg-gray-300 px-3 py-2 text-sm text-white transition-all hover:-translate-y-0.5`}
+            onClick={() => setAddProjectLanguageState(true)}
+          >
+            +
+          </div>
+        )}
+        {addProjectLanguageState && (
+          <input
+            type="text"
+            className="mb-2 mr-2 inline-block cursor-pointer rounded-lg px-3 py-2 text-sm shadow-custom transition-all hover:-translate-y-0.5 focus:outline-none"
+            value={languageAddValue}
+            onChange={(e) => setLanguageAddValue(e.target.value)}
+            onBlur={() => {
+              setAddProjectLanguageState(false);
+              setLanguageAddValue("");
+            }}
+            autoFocus
+            onFocus={(e) => e.currentTarget.select()}
+            maxLength={25}
+            onKeyDown={async (e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                await handleAddLanguage(languageAddValue);
+                setLanguageAddValue("");
+              }
+            }}
+          />
+        )}
       </div>
       <div className=" flex-grow rounded-2xl bg-white"></div>
     </div>
