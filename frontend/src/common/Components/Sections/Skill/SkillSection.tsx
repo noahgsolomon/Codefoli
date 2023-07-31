@@ -1,4 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import ServiceCard from "Components/Sections/Skill/ServiceCard.tsx";
 import UserData from "Type/UserData.tsx";
 import { ServiceData } from "Type/Services.tsx";
@@ -16,10 +24,10 @@ import {
 } from "Components/Sections/Skill/skillapi.tsx";
 import AddServiceCard from "Components/Sections/Skill/AddServiceCard.tsx";
 
-const SkillSection: React.FC<{
+const SkillSection: FC<{
   userData: UserData;
-  setPageData: React.Dispatch<React.SetStateAction<AnyPageData>>;
-  setUserData: React.Dispatch<React.SetStateAction<UserData>>;
+  setPageData: Dispatch<SetStateAction<AnyPageData>>;
+  setUserData: Dispatch<SetStateAction<UserData>>;
   page: PageType;
   details: SkillType;
   preview: boolean;
@@ -57,7 +65,7 @@ const SkillSection: React.FC<{
 
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const handleNewSkillChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNewSkillChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNewSkill(e.target.value);
     const userSkills = userData.skills;
     const matches = allSkills.filter(
@@ -246,20 +254,16 @@ const SkillSection: React.FC<{
             })}
             {addingSkill && (
               <div className="relative mr-2 ">
-                <button
-                  className={` absolute -right-3 -top-3 rounded-2xl bg-red-500 px-3 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
-                  onClick={() => {
+                <input
+                  autoFocus={true}
+                  type="text"
+                  value={newSkill}
+                  onBlur={() => {
                     setAddingSkill(false);
                     setNewSkill("");
                   }}
-                >
-                  -
-                </button>
-                <input
-                  type="text"
-                  value={newSkill}
                   onChange={handleNewSkillChange}
-                  className="inline-flex items-center justify-center rounded-lg border-2 border-black px-3 py-2 text-sm shadow-custom transition-all hover:shadow-customHover"
+                  className="inline-flex items-center justify-center rounded-lg px-3 py-2 text-sm shadow-custom transition-all hover:shadow-customHover"
                   style={{ width: "fit-content" }}
                 />
                 {newSkill && matchingSkills.length > 0 && (
@@ -268,7 +272,10 @@ const SkillSection: React.FC<{
                       <div
                         key={skill}
                         className="m-1 inline-block cursor-pointer rounded-full border-b border-gray-300 bg-black p-2 transition-all hover:-translate-y-0.5 hover:opacity-90"
-                        onClick={async () => await handleAddSkill(skill)}
+                        onMouseDown={async (e) => {
+                          e.preventDefault();
+                          await handleAddSkill(skill);
+                        }}
                       >
                         <span className="px-2 text-white">{skill}</span>
                       </div>
