@@ -146,6 +146,31 @@ const addProject = async (
   }
 };
 
+const removeProjectLanguage = async (id: string, language: string) => {
+    const model = {
+        id: id,
+        language: language
+    }
+    try {
+        const response = await fetch("http://localhost:8080/project/remove-language", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(model),
+            credentials: "include",
+        });
+
+        const responseJson = await response.json();
+        if (responseJson.status === "OK") {
+        return responseJson;
+        } else {
+        console.log(responseJson.message);
+        return responseJson;
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 export {
   updateHeaderOneProjects,
   updateDescriptionOneProjects,
@@ -153,4 +178,5 @@ export {
   addProject,
   updateProjectTitle,
   updateProjectDescription,
+  removeProjectLanguage
 };

@@ -9,7 +9,7 @@ import {
 } from "react";
 import UserData from "Type/UserData.tsx";
 import {
-  removeProject,
+  removeProject, removeProjectLanguage,
   updateProjectDescription,
   updateProjectTitle,
 } from "./projectspageapi.tsx";
@@ -49,6 +49,7 @@ const ProjectCard: FC<{
   const descriptionTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const titleTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const date = useMemo(() => Date.now(), []);
+  const [languageHover, setLanguageHover] = useState(-1);
 
   const handleRemoveProject = async () => {
     const removeProjectFetch = await removeProject(id);
@@ -108,7 +109,7 @@ const ProjectCard: FC<{
       setUserData((prev) => ({
         ...prev,
         projects: prev.projects.map((project) =>
-          project.id === id ? { ...project, title: titleEditValue } : project
+          project.id === id ? { ...project, title: titleEditValue, slug: updateTitleFetch.data } : project
         ),
       }));
       setTitleValue(titleEditValue);
@@ -134,6 +135,20 @@ const ProjectCard: FC<{
       setDescriptionEdit(false);
     }
   };
+
+  const handleRemoveLanguage = async (language: string) => {
+    const updateLanguageFetch = await removeProjectLanguage(id, language);
+    if (updateLanguageFetch.status === "OK") {
+      setUserData((prev) => ({
+        ...prev,
+        projects: prev.projects.map((project) =>
+          project.id === id
+            ? { ...project, languages: project.languages.filter((lang) => lang !== language) }
+            : project
+        ),
+      }));
+    }
+  }
 
   return (
     <div
@@ -277,7 +292,10 @@ const ProjectCard: FC<{
       <div className={`rounded-b-lg bg-white px-5 py-2`}>
         {languages.map((language, index) => (
           <span
-            className={`mb-2 mr-2 inline-block cursor-pointer rounded-lg px-3 text-white transition-all hover:-translate-y-0.5 ${colors[index]} py-2 text-sm`}
+            className={`mb-2 mr-2 inline-block cursor-pointer rounded-lg px-3 text-white transition-all hover:-translate-y-0.5 ${languageHover === index ? 'bg-red-500 line-through' : colors[index]} py-2 text-sm`}
+            onMouseEnter={() => setLanguageHover(index)}
+            onMouseLeave={() => setLanguageHover(-1)}
+            onClick={async () => handleRemoveLanguage(language)}
           >
             {language}
           </span>
