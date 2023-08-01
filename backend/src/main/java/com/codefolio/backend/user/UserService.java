@@ -4,6 +4,8 @@ import com.codefolio.backend.user.Projects.ProjectsRepository;
 import com.codefolio.backend.user.Projects.Projects;
 import com.codefolio.backend.user.Projects.languages.Languages;
 import com.codefolio.backend.user.Projects.languages.LanguagesRepository;
+import com.codefolio.backend.user.Projects.projectcontent.ProjectContent;
+import com.codefolio.backend.user.Projects.projectcontent.ProjectContentRepository;
 import com.codefolio.backend.user.pages.aboutpage.About;
 import com.codefolio.backend.user.pages.aboutpage.AboutRepository;
 import com.codefolio.backend.user.pages.projectspage.ProjectsPage;
@@ -52,6 +54,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -76,6 +79,7 @@ public class UserService {
     private final FAQSectionRepository faqSectionRepository;
     private final ProjectsPageRepository projectsPageRepository;
     private final LanguagesRepository languagesRepository;
+    private final ProjectContentRepository projectContentRepository;
 
 
     public static Users getAuthenticatedUser(Principal principal) {
@@ -95,10 +99,15 @@ public class UserService {
             List<Work> userWorks = workRepository.findAllByUsers(user);
             List<Projects> projects = projectsRepository.findAllByUsers(user);
             List<ProjectsResponseModel> userProjects = new ArrayList<>();
-            List<String> slugList = new ArrayList<>();
+            List<SlugUserDetailsResponseModel> slugList = new ArrayList<>();
             for (Projects project : projects) {
                 List<Languages> languages = languagesRepository.findAllByProjectAndUsers(project, user);
                 List<String> languagesString = languages.stream().map(Languages::getLanguage).toList();
+                Optional<ProjectContent> optionalProjectContent = projectContentRepository.findByProjectAndUsers(project, user);
+                if (optionalProjectContent.isEmpty()){
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(StatusType.ERROR, "Project content not found", null));
+                }
+                ProjectContent projectContent = optionalProjectContent.get();
                 userProjects.add(new ProjectsResponseModel(
                         project.getName(),
                         project.getDescription(),
@@ -108,7 +117,7 @@ public class UserService {
                         project.getId().toString(),
                         project.getSlug()
                 ));
-                slugList.add(project.getSlug());
+                slugList.add(new SlugUserDetailsResponseModel(project.getSlug(), projectContent.getHeader(), projectContent.getDescription(), projectContent.getAbout(), projectContent.getImage(), projectContent.getOverview(), projectContent.getPlatforms()));
             }
             List<Skills> userSkills = skillsRepository.findAllByUsers(user);
             List<Services> userServices = servicesRepository.findAllByUsers(user);
@@ -186,11 +195,24 @@ public class UserService {
             }
 
             userProfile.projects().forEach(project -> {
-                System.out.println(project.name());
                 Projects newProject = new Projects(user, project.name(), project.description(), project.updatedAt(), user.getName());
                 projectsRepository.save(newProject);
+                ProjectContent projectContent = new ProjectContent(
+                        user,
+                        newProject,
+                        project.name(),
+                        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere ex similique fuga beatae officia nam unde, velit accusantium et inventore.",
+                        "Overview",
+                        """
+                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum dolore unde saepe qui sint. Neque aliquid quam corrupti voluptas nam magni sed, temporibus delectus suscipit illum repellendus modi! Fuga, nemo.
+
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae cupiditate vitae vel tempore, nobis odit quos ipsum accusantium doloremque atque nihil molestias deleniti obcaecati expedita earum commodi doloribus ex delectus culpa magni id. Ab culpa nam, optio fugiat libero quia illum nihil vitae, placeat, eligendi est a blanditiis nemo\s
+                                 iusto.""",
+                        "https://picsum.photos/2000",
+                        "Web, Android, iOS"
+                );
+                projectContentRepository.save(projectContent);
                 for (int i = 0; i < project.languages().size(); i++) {
-                    System.out.println(project.languages().get(i));
                     languagesRepository.save(new Languages(user, newProject, project.languages().get(i)));
                 }
             });
