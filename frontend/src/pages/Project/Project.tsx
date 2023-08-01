@@ -1,24 +1,44 @@
 import LinkIcon from "assets/icons/arrow-up-right.svg";
 import Footer from "Components/Footer/Footer";
 import { COLORS } from "../../util/colors.ts";
+import { Dispatch, FC, SetStateAction, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import UserData from "Type/UserData.tsx";
 
-const Project = () => {
+const Project: FC<{
+  userData: UserData;
+  setUserData: Dispatch<SetStateAction<UserData>>;
+}> = ({ userData, setUserData }) => {
+  const { slug } = useParams<{ slug: string }>();
+
+  const navigate = useNavigate();
+
+  const [projectDetails, setProjectDetails] = useState(
+    userData.slugs.find((s) => s.slug === slug)
+  );
+  const [projectData, setProjectData] = useState(
+    userData.projects.find((p) => p.slug === slug)
+  );
+
+  if (!projectDetails) {
+    navigate("/404");
+    return null;
+  }
+
   return (
     <>
       <main>
         <div className="container mx-auto my-20 max-w-screen-lg px-5">
           <section className="hero mb-8">
             <h1 className="mb-5 text-center text-4xl font-bold">
-              Lorem ipsum dolor sit amet
+              {projectDetails.header}
             </h1>
             <p className="mb-5 text-center font-semibold">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere
-              ex similique fuga beatae officia nam unde, velit accusantium et
-              inventore.
+              {projectDetails.about}
             </p>
             <div className="image-wrapper overflow-hidden rounded-lg border-2 border-black bg-white p-2 shadow-custom lg:h-[600px]">
               <img
-                src="https://picsum.photos/2000"
+                src={projectDetails.image}
                 alt=""
                 className="block h-full w-full rounded-lg object-cover"
               />
@@ -26,32 +46,19 @@ const Project = () => {
           </section>
           <section className="mb-5 grid grid-cols-1 gap-5 lg:grid-cols-6">
             <div className="content-wrapper lg:col-span-4">
-              <h2 className="text-3xl font-bold">Project Overview</h2>
-              <p className="mb-2">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum
-                dolore unde saepe qui sint. Neque aliquid quam corrupti voluptas
-                nam magni sed, temporibus delectus suscipit illum repellendus
-                modi! Fuga, nemo.
-              </p>
-              <p className="mb-2">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Repudiandae cupiditate vitae vel tempore, nobis odit quos ipsum
-                accusantium doloremque atque nihil molestias deleniti obcaecati
-                expedita earum commodi doloribus ex delectus culpa magni id. Ab
-                culpa nam, optio fugiat libero quia illum nihil vitae, placeat,
-                eligendi est a blanditiis nemo iusto.
-              </p>
+              <h2 className="text-3xl font-bold">{projectDetails.overview}</h2>
+              <p className="mb-2">{projectDetails.description}</p>
             </div>
             <div className="card grid gap-2 rounded-lg border-2 border-black bg-white p-2 shadow-custom lg:col-span-2">
               <h2 className="text-2xl font-bold">Information</h2>
               <ul className="list-disc pl-5">
                 <div className="li-wrapper">
                   <li className="font-bold">Platform</li>
-                  <p className="font-normal">Web, Android, iOS</p>
+                  <p className="font-normal">{projectDetails.platforms}</p>
                 </div>
                 <div className="li-wrapper">
                   <li className="font-bold">Tech Stack</li>
-                  {["java", "javascript", "redis", "gcp"].map((tech, index) => {
+                  {projectData?.languages.map((tech, index) => {
                     return (
                       <span
                         key={index}
