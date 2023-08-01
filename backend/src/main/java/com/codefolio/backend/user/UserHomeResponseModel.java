@@ -19,6 +19,6 @@ public record UserHomeResponseModel(
         String role,
         String profession,
         ServicesType[] services,
-        List<String> slugs
+        List<SlugUserDetailsResponseModel> slugs
 ) {
 }

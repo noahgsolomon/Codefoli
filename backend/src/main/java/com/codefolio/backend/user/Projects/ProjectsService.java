@@ -2,6 +2,8 @@ package com.codefolio.backend.user.Projects;
 
 import com.codefolio.backend.user.Projects.languages.Languages;
 import com.codefolio.backend.user.Projects.languages.LanguagesRepository;
+import com.codefolio.backend.user.Projects.projectcontent.ProjectContent;
+import com.codefolio.backend.user.Projects.projectcontent.ProjectContentRepository;
 import com.codefolio.backend.user.Users;
 import com.codefolio.backend.util.Response;
 import com.codefolio.backend.util.StatusType;
@@ -24,6 +26,7 @@ public class ProjectsService {
 
     private final ProjectsRepository projectsRepository;
     private final LanguagesRepository languagesRepository;
+    private final ProjectContentRepository projectContentRepository;
 
     @Transactional
     public ResponseEntity<Response> removeProject(Principal principal, String id) {
@@ -35,6 +38,8 @@ public class ProjectsService {
             }
             List<Languages> languages = languagesRepository.findAllByProjectAndUsers(project.get(), user);
             languagesRepository.deleteAll(languages);
+            Optional<ProjectContent> projectContent = projectContentRepository.findByProjectAndUsers(project.get(), user);
+            projectContent.ifPresent(projectContentRepository::delete);
             projectsRepository.delete(project.get());
             return ResponseEntity.ok(new Response(StatusType.OK, "Project deleted successfully", null));
         } catch (Exception e) {
@@ -44,6 +49,7 @@ public class ProjectsService {
         }
     }
 
+    @Transactional
     public ResponseEntity<Response> addProject(Principal principal, AddProjectRequestModel project) {
         try {
             Users user = getAuthenticatedUser(principal);
@@ -53,6 +59,21 @@ public class ProjectsService {
             languagesRepository.save(newLanguage);
             List<Languages> languages = languagesRepository.findAllByProjectAndUsers(newProject, user);
             List<String> languagesList = languages.stream().map(Languages::getLanguage).toList();
+            ProjectContent projectContent = new ProjectContent(
+                    user,
+                    newProject,
+                    project.title(),
+                    "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere ex similique fuga beatae officia nam unde, velit accusantium et inventore.",
+                    "Overview",
+                    """
+                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum dolore unde saepe qui sint. Neque aliquid quam corrupti voluptas nam magni sed, temporibus delectus suscipit illum repellendus modi! Fuga, nemo.
+
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae cupiditate vitae vel tempore, nobis odit quos ipsum accusantium doloremque atque nihil molestias deleniti obcaecati expedita earum commodi doloribus ex delectus culpa magni id. Ab culpa nam, optio fugiat libero quia illum nihil vitae, placeat, eligendi est a blanditiis nemo\s
+                             iusto.""",
+                    "https://picsum.photos/2000",
+                        "Web, Android, iOS"
+                    );
+            projectContentRepository.save(projectContent);
             return ResponseEntity.ok(new Response(StatusType.OK, "Project added successfully", new AddProjectResponseModel(newProject.getName(), newProject.getDescription(), languagesList, newProject.getUpdatedAt(), newProject.getImage(), newProject.getId().toString(), newProject.getSlug())));
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,6 +92,11 @@ public class ProjectsService {
             projectToUpdate.get().setName(project.title());
             projectToUpdate.get().setSlug(createSlug(project.title()));
             projectsRepository.save(projectToUpdate.get());
+            Optional<ProjectContent> projectContent = projectContentRepository.findByProjectAndUsers(projectToUpdate.get(), user);
+            projectContent.ifPresent(value -> {
+                value.setHeader(project.title());
+                projectContentRepository.save(value);
+            });
             return ResponseEntity.ok(new Response(StatusType.OK, "Project title updated successfully", projectToUpdate.get().getSlug()));
         } catch (Exception e) {
             e.printStackTrace();
