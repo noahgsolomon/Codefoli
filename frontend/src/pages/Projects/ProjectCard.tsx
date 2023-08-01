@@ -61,7 +61,7 @@ const ProjectCard: FC<{
       setUserData((prev) => ({
         ...prev,
         projects: prev.projects.filter((project) => project.id !== id),
-        slugs: prev.slugs.filter((slug) => slug !== slug),
+        slugs: prev.slugs.filter((slugs) => slugs.slug !== slug),
       }));
     }
   };
@@ -327,6 +327,7 @@ const ProjectCard: FC<{
             onMouseEnter={() => setLanguageHover(index)}
             onMouseLeave={() => setLanguageHover(-1)}
             onClick={async () => handleRemoveLanguage(language)}
+            key={index}
           >
             {language}
           </span>
