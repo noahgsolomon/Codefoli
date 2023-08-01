@@ -20,22 +20,24 @@ public class ProjectContent {
 
     @ManyToOne
     @JoinColumn(name = "project_id")
-    private Projects projects;
+    private Projects project;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users users;
 
     private String header;
+    @Column(columnDefinition = "TEXT")
     private String about;
     private String overview;
+    @Column(columnDefinition = "TEXT")
     private String description;
     private String image;
     private String platforms;
 
-    public ProjectContent(Users users, Projects projects, String header, String about, String overview, String description, String image, String platforms) {
+    public ProjectContent(Users users, Projects project, String header, String about, String overview, String description, String image, String platforms) {
         this.users = users;
-        this.projects = projects;
+        this.project = project;
         this.header = header;
         this.about = about;
         this.overview = overview;
