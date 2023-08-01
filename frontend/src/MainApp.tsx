@@ -45,7 +45,17 @@ const MainApp: React.FC = () => {
     role: "NEWBIE",
     about: "",
     services: [],
-    slugs: [],
+    slugs: [
+      {
+        slug: "",
+        header: "",
+        description: "",
+        about: "",
+        image: "",
+        overview: "",
+        platforms: "",
+      },
+    ],
   });
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -132,12 +142,13 @@ const MainApp: React.FC = () => {
     authenticatedCheck();
   }, [navigate]);
 
+  console.log(userData);
+
   const ProjectOr404 = () => {
     const { slug } = useParams();
-    const slugs = userData.slugs;
 
-    if (slug && slugs.includes(slug)) {
-      return <Project />;
+    if (slug && userData.slugs.some((s) => s.slug === slug)) {
+      return <Project userData={userData} setUserData={setUserData} />;
     } else {
       return <NotFound />;
     }
@@ -200,6 +211,7 @@ const MainApp: React.FC = () => {
             />
           }
         />
+        <Route path="/404" element={<NotFound />} />
         <Route path="/:slug" element={<ProjectOr404 />} />
       </Routes>
     </>
