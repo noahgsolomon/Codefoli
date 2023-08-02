@@ -162,7 +162,7 @@ const AboutMain: React.FC<{
                 );
               }}
             />
-            <div className="h-full w-full overflow-hidden rounded-full shadow-customHover">
+            <div className="h-full w-full overflow-hidden rounded-full">
               <img
                 className="h-full w-full object-cover"
                 src={pageData.iconOne + "?date=" + date}
@@ -201,7 +201,7 @@ const AboutMain: React.FC<{
                 );
               }}
             />
-            <div className="h-full w-full overflow-hidden rounded-full shadow-customHover">
+            <div className="h-full w-full overflow-hidden rounded-full">
               <img
                 className="h-full w-full object-cover"
                 src={pageData.iconTwo + "?date=" + date}
@@ -274,7 +274,7 @@ const AboutMain: React.FC<{
                   );
                 }}
               />
-              <div className="h-full w-full overflow-hidden rounded-3xl shadow-custom">
+              <div className="h-full w-full overflow-hidden rounded-3xl border-2 border-black">
                 <img
                   className="h-full w-full object-cover"
                   src={pageData.iconThree + "?date=" + date}
