@@ -18,6 +18,7 @@ import {
 import Project from "Type/Project.tsx";
 import ArrowRight from "assets/icons/arrow-right.svg";
 import { Link } from "react-router-dom";
+import { COLORS } from "../../util/colors.ts";
 
 const ProjectCard: FC<{
   title: string;
@@ -26,18 +27,8 @@ const ProjectCard: FC<{
   setUserData: Dispatch<SetStateAction<UserData>>;
   id: string;
   languages: string[];
-  colors: string[];
   slug: string;
-}> = ({
-  title,
-  description,
-  image,
-  setUserData,
-  languages,
-  colors,
-  id,
-  slug,
-}) => {
+}> = ({ title, description, image, setUserData, languages, id, slug }) => {
   const [hovered, setHovered] = useState(false);
   const [removeHover, setRemoveHover] = useState(false);
   const imageFileInput = useRef<HTMLInputElement | null>(null);
@@ -162,6 +153,13 @@ const ProjectCard: FC<{
   };
 
   const handleAddLanguage = async (language: string) => {
+    if (
+      languages.some((lang) => language.toLowerCase() === lang.toLowerCase())
+    ) {
+      setLanguageAddValue("");
+      setAddProjectLanguageState(false);
+      return;
+    }
     const updateLanguageFetch = await addProjectLanguage(id, language);
     if (updateLanguageFetch.status === "OK") {
       setUserData((prev) => ({
@@ -322,7 +320,7 @@ const ProjectCard: FC<{
             className={`mb-2 mr-2 inline-block cursor-pointer rounded-lg px-3 text-white transition-all hover:-translate-y-0.5 ${
               languageHover === index
                 ? "bg-red-500 line-through"
-                : colors[index]
+                : COLORS[index]
             } py-2 text-sm`}
             onMouseEnter={() => setLanguageHover(index)}
             onMouseLeave={() => setLanguageHover(-1)}

@@ -151,7 +151,7 @@ public class ProjectsService {
             }
             Languages newLanguage = new Languages(user, project, language.language());
             languagesRepository.save(newLanguage);
-            return ResponseEntity.ok(new Response(StatusType.OK, "Language added successfully", null));
+            return ResponseEntity.ok(new Response(StatusType.OK, "Language added successfully", newLanguage.getLanguage()));
         } catch (Exception e) {
             e.printStackTrace();
             System.err.print(e.getMessage());

@@ -1,6 +1,5 @@
-import { Dispatch, FC, SetStateAction, useMemo, useRef, useState } from "react";
+import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
 import Footer from "Components/Footer/Footer";
-import { COLORS } from "../../util/colors.ts";
 import UserData from "Type/UserData.tsx";
 import ProjectsPageData from "Type/ProjectsPageData.tsx";
 import {
@@ -26,18 +25,6 @@ const Projects: FC<{
     pageData.descriptionOne
   );
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const projectColors = useMemo(() => {
-    let availableColors = [...COLORS];
-    return userData.projects.map(() => {
-      if (availableColors.length === 0) {
-        availableColors = [...COLORS];
-      }
-      const randomIndex = Math.floor(Math.random() * availableColors.length);
-      const selectedColor = availableColors[randomIndex];
-      availableColors.splice(randomIndex, 1);
-      return selectedColor;
-    });
-  }, [userData.projects]);
   const handleHeaderOneSubmit = async () => {
     const updateHeader = await updateHeaderOneProjects(headerOneEditValue);
     if (updateHeader) {
@@ -133,12 +120,6 @@ const Projects: FC<{
           <div className="projects grid grid-cols-1 justify-items-center gap-5 md:grid-cols-2 lg:grid-cols-3">
             {userData.projects.map(
               ({ name, description, id, languages, image, slug }) => {
-                console.log(languages);
-                const colors = languages.map(() => {
-                  return projectColors[
-                    Math.floor(Math.random() * projectColors.length)
-                  ];
-                });
                 return (
                   <ProjectCard
                     title={name}
@@ -148,7 +129,6 @@ const Projects: FC<{
                     id={id}
                     key={id}
                     languages={languages}
-                    colors={colors}
                     slug={slug}
                   />
                 );
