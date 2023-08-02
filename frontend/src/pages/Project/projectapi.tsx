@@ -1,7 +1,7 @@
 const updateProjectHeader = async (slug: string, header: string) => {
   const model = {
     slug: slug,
-    header: header,
+    content: header,
   };
   try {
     const response = await fetch(
@@ -29,7 +29,7 @@ const updateProjectHeader = async (slug: string, header: string) => {
 const updateProjectAbout = async (slug: string, about: string) => {
   const model = {
     slug: slug,
-    about: about,
+    content: about,
   };
   try {
     const response = await fetch(
@@ -57,7 +57,7 @@ const updateProjectAbout = async (slug: string, about: string) => {
 const updateProjectOverview = async (slug: string, overview: string) => {
   const model = {
     slug: slug,
-    overview: overview,
+    content: overview,
   };
   try {
     const response = await fetch(
@@ -85,7 +85,7 @@ const updateProjectOverview = async (slug: string, overview: string) => {
 const updateProjectDescription = async (slug: string, description: string) => {
   const model = {
     slug: slug,
-    description: description,
+    content: description,
   };
   try {
     const response = await fetch(
@@ -113,7 +113,7 @@ const updateProjectDescription = async (slug: string, description: string) => {
 const updateProjectPlatforms = async (slug: string, platforms: string) => {
   const model = {
     slug: slug,
-    platforms: platforms,
+    content: platforms,
   };
   try {
     const response = await fetch(
