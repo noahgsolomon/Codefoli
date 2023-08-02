@@ -237,20 +237,19 @@ const Project: FC<{
       });
 
       const data = await response.json();
-
+      console.log(data);
       if (data.status !== "OK") {
         setEdit(false);
         return;
       }
 
-      setUserData((prev) => ({
-        ...prev,
-        projects: prev.projects.map((project) =>
-          project.id === projectData.id
-            ? { ...project, [imageKey]: data.data.url + `?date=${new Date()}` }
-            : project
-        ),
-      }));
+      setProjectDetails((prev) => {
+        if (!prev) return undefined;
+        return {
+          ...prev,
+          [imageKey]: data.data.url + `?date=${new Date()}`,
+        };
+      });
       setTimeout(() => setEdit(false), 500);
     } catch (error) {
       setEdit(false);
