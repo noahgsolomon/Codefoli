@@ -4,6 +4,7 @@ import {
   updateDescriptionOneHome,
   updateHeaderOneHome,
 } from "./dashboardapi.tsx";
+import { useSpring, animated } from "react-spring";
 import HomeData from "Type/HomeData.tsx";
 
 const DashboardMain: React.FC<{
@@ -67,6 +68,18 @@ const DashboardMain: React.FC<{
 
   const fileInput = useRef<HTMLInputElement | null>(null);
 
+  const headerAnimation = useSpring({
+    from: { opacity: 0, transform: "translate3d(0, -20px, 0)" },
+    to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
+    delay: 100,
+  });
+
+  const imageAnimation = useSpring({
+    from: { opacity: 0, transform: "translate3d(-20px, 0, 0)" },
+    to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
+    delay: 200,
+  });
+
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     setImageLoading(true);
@@ -105,7 +118,7 @@ const DashboardMain: React.FC<{
   return (
     <div className="container mx-auto px-6">
       <div className="flex flex-col lg:flex-row xl:mx-auto xl:justify-center">
-        <div>
+        <animated.div style={headerAnimation}>
           <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center justify-center font-bold xl:mt-32">
             {headerOneEdit ? (
               <textarea
@@ -183,37 +196,39 @@ const DashboardMain: React.FC<{
               View Projects
             </Link>
           </div>
-        </div>
-        <div
-          className={`relative mx-auto mt-10 h-[300px] w-[300px] transition-all md:h-[500px] md:w-[500px] lg:mx-0 xl:ml-20 xl:mt-32 ${
-            imageLoading ? "opacity-0" : "opacity-100"
-          }`}
-          onMouseEnter={() => setImageOneEdit(true)}
-          onMouseLeave={() => setImageOneEdit(false)}
-          onClick={() => fileInput.current && fileInput.current.click()}
-        >
-          <input
-            type="file"
-            ref={fileInput}
-            className="hidden"
-            accept=".jpg,.png"
-            onChange={handleFileUpload}
-          />
-          <div className="h-full w-full overflow-hidden rounded-3xl shadow-customHover">
-            <img
-              className="h-full w-full object-cover"
-              src={pageData.profileImage + "?date=" + date}
-              alt="pfp"
-            ></img>
-          </div>
+        </animated.div>
+        <animated.div style={imageAnimation}>
           <div
-            className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-3xl border-8 border-dashed border-black bg-white p-2 text-3xl font-bold text-black transition-all ${
-              imageOneEdit ? "opacity-50" : "opacity-0"
+            className={`relative mx-auto mt-10 h-[300px] w-[300px] transition-all md:h-[500px] md:w-[500px] lg:mx-0 xl:ml-20 xl:mt-32 ${
+              imageLoading ? "opacity-0" : "opacity-100"
             }`}
+            onMouseEnter={() => setImageOneEdit(true)}
+            onMouseLeave={() => setImageOneEdit(false)}
+            onClick={() => fileInput.current && fileInput.current.click()}
           >
-            Click to upload image
+            <input
+              type="file"
+              ref={fileInput}
+              className="hidden"
+              accept=".jpg,.png"
+              onChange={handleFileUpload}
+            />
+            <div className="h-full w-full overflow-hidden rounded-3xl shadow-customHover">
+              <img
+                className="h-full w-full object-cover"
+                src={pageData.profileImage + "?date=" + date}
+                alt="pfp"
+              ></img>
+            </div>
+            <div
+              className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-3xl border-8 border-dashed border-black bg-white p-2 text-3xl font-bold text-black transition-all ${
+                imageOneEdit ? "opacity-50" : "opacity-0"
+              }`}
+            >
+              Click to upload image
+            </div>
           </div>
-        </div>
+        </animated.div>
       </div>
     </div>
   );
