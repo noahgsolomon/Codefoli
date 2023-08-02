@@ -1,5 +1,5 @@
 import Footer from "Components/Footer/Footer";
-import { Dispatch, FC, SetStateAction } from "react";
+import { Dispatch, FC, SetStateAction, useEffect } from "react";
 import ContactData from "Type/ContactData.tsx";
 import UserData from "Type/UserData.tsx";
 import ContactSections from "./ContactSections.tsx";
@@ -11,6 +11,10 @@ const Contact: FC<{
   setUserData: Dispatch<SetStateAction<UserData>>;
   userData: UserData;
 }> = ({ pageData, setPageData, userData, setUserData }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <ContactMain
