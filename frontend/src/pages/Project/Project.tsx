@@ -5,6 +5,7 @@ import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import UserData from "Type/UserData.tsx";
 import {
+  updateProjectAbout,
   updateProjectDescription,
   updateProjectHeader,
 } from "./projectapi.tsx";
@@ -40,6 +41,11 @@ const Project: FC<{
     projectDetails?.description || ""
   );
   const descriptionTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [aboutEdit, setAboutEdit] = useState(false);
+  const [aboutEditValue, setAboutEditValue] = useState(
+    projectDetails?.about || ""
+  );
+  const aboutTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   if (!projectDetails || !slug || !projectData) {
     navigate("/404");
@@ -59,7 +65,6 @@ const Project: FC<{
       }));
 
       setProjectDetails(updatedSlugs.find((s) => s.slug === slug));
-      setHeaderEditValue(updateHeader.data);
     }
     setHeaderEdit(false);
   };
@@ -129,9 +134,25 @@ const Project: FC<{
       }));
 
       setProjectDetails(updatedSlugs.find((s) => s.slug === slug));
-      setDescriptionEditValue(updateDescription.data);
     }
     setDescriptionEdit(false);
+  };
+
+  const handleAboutSubmit = async () => {
+    const updateAbout = await updateProjectAbout(slug, aboutEditValue);
+    if (updateAbout) {
+      const updatedSlugs = userData.slugs.map((s) =>
+        s.slug === slug ? { ...s, about: aboutEditValue } : s
+      );
+
+      setUserData((prev) => ({
+        ...prev,
+        slugs: updatedSlugs,
+      }));
+
+      setProjectDetails(updatedSlugs.find((s) => s.slug === slug));
+    }
+    setAboutEdit(false);
   };
 
   return (
@@ -171,9 +192,35 @@ const Project: FC<{
                 {projectDetails.header}
               </h1>
             )}
-            <p className="mb-5 text-center font-semibold">
-              {projectDetails.about}
-            </p>
+            {aboutEdit ? (
+              <textarea
+                ref={aboutTextareaRef}
+                value={aboutEditValue}
+                onChange={(e) => setAboutEditValue(e.target.value)}
+                onBlur={() => {
+                  setAboutEditValue(projectDetails.about);
+                  setAboutEdit(false);
+                }}
+                onKeyDown={async (e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    await handleAboutSubmit();
+                  }
+                }}
+                className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-lg font-semibold leading-loose outline-none focus:outline-none focus:ring-0"
+                autoFocus
+                onFocus={(e) => e.currentTarget.select()}
+                maxLength={500}
+                rows={4}
+              />
+            ) : (
+              <p
+                className="mb-5 cursor-pointer select-none text-center font-semibold transition-all hover:opacity-50"
+                onClick={() => setAboutEdit(true)}
+              >
+                {projectDetails.about}
+              </p>
+            )}
             <div className="image-wrapper overflow-hidden rounded-lg border-2 border-black bg-white p-2 shadow-custom lg:h-[600px]">
               <img
                 src={projectDetails.image}
