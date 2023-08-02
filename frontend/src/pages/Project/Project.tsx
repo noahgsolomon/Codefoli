@@ -4,7 +4,10 @@ import { COLORS } from "../../util/colors.ts";
 import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import UserData from "Type/UserData.tsx";
-import { updateProjectHeader } from "./projectapi.tsx";
+import {
+  updateProjectDescription,
+  updateProjectHeader,
+} from "./projectapi.tsx";
 import {
   addProjectLanguage,
   removeProjectLanguage,
@@ -32,6 +35,11 @@ const Project: FC<{
   const [languageHover, setLanguageHover] = useState(-1);
   const [addProjectLanguageState, setAddProjectLanguageState] = useState(false);
   const [languageAddValue, setLanguageAddValue] = useState("");
+  const [descriptionEdit, setDescriptionEdit] = useState(false);
+  const [descriptionEditValue, setDescriptionEditValue] = useState(
+    projectDetails?.description || ""
+  );
+  const descriptionTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   if (!projectDetails || !slug || !projectData) {
     navigate("/404");
@@ -105,6 +113,27 @@ const Project: FC<{
     }
   };
 
+  const handleDescriptionSubmit = async () => {
+    const updateDescription = await updateProjectDescription(
+      slug,
+      descriptionEditValue
+    );
+    if (updateDescription) {
+      const updatedSlugs = userData.slugs.map((s) =>
+        s.slug === slug ? { ...s, description: descriptionEditValue } : s
+      );
+
+      setUserData((prev) => ({
+        ...prev,
+        slugs: updatedSlugs,
+      }));
+
+      setProjectDetails(updatedSlugs.find((s) => s.slug === slug));
+      setDescriptionEditValue(updateDescription.data);
+    }
+    setDescriptionEdit(false);
+  };
+
   return (
     <>
       <main>
@@ -125,7 +154,7 @@ const Project: FC<{
                     await handleHeaderSubmit();
                   }
                 }}
-                className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-4xl font-bold leading-snug outline-none focus:outline-none focus:ring-0"
+                className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-4xl font-bold leading-snug outline-none focus:outline-none focus:ring-0"
                 autoFocus
                 onFocus={(e) => {
                   e.target.select();
@@ -156,7 +185,35 @@ const Project: FC<{
           <section className="mb-5 grid grid-cols-1 gap-5 lg:grid-cols-6">
             <div className="content-wrapper lg:col-span-4">
               <h2 className="text-3xl font-bold">{projectDetails.overview}</h2>
-              <p className="mb-2">{projectDetails.description}</p>
+              {descriptionEdit ? (
+                <textarea
+                  ref={descriptionTextareaRef}
+                  value={descriptionEditValue}
+                  onChange={(e) => setDescriptionEditValue(e.target.value)}
+                  onBlur={() => {
+                    setDescriptionEditValue(projectDetails.description);
+                    setDescriptionEdit(false);
+                  }}
+                  onKeyDown={async (e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      await handleDescriptionSubmit();
+                    }
+                  }}
+                  className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-lg font-semibold leading-loose outline-none focus:outline-none focus:ring-0"
+                  autoFocus
+                  onFocus={(e) => e.currentTarget.select()}
+                  maxLength={2000}
+                  rows={15}
+                />
+              ) : (
+                <p
+                  className="mb-2 cursor-pointer select-none font-semibold transition-all hover:opacity-50"
+                  onClick={() => setDescriptionEdit(true)}
+                >
+                  {projectDetails.description}
+                </p>
+              )}
             </div>
             <div className="card grid gap-2 rounded-lg border-2 border-black bg-white p-2 shadow-custom lg:col-span-2">
               <h2 className="text-2xl font-bold">Information</h2>
