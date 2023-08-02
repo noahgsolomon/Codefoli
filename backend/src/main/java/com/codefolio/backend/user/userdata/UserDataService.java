@@ -1,5 +1,6 @@
 package com.codefolio.backend.user.userdata;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.codefolio.backend.user.Users;
 import com.codefolio.backend.user.services.Services;
 import com.codefolio.backend.user.services.ServicesRepository;
@@ -29,6 +30,7 @@ public class UserDataService {
     private final ServicesRepository servicesRepository;
     private final SkillsRepository skillsRepository;
     private final WorkRepository workRepository;
+    private final AmazonS3 s3Client;
 
     public ResponseEntity<Response> updateServices(Principal principal, UpdateServiceRequestModel updateServiceRequestModel) {
         try {
@@ -157,6 +159,11 @@ public class UserDataService {
             if (job.isEmpty()){
                 return ResponseEntity.badRequest().body(new Response(StatusType.NOT_FOUND, "Job not found", null));
             }
+
+            String key = user.getId() + "-job-" + jobId;
+            String bucketName = "codefolioimagebucket";
+            s3Client.deleteObject(bucketName, key);
+
             workRepository.delete(job.get());
             List<Work> workList = workRepository.findAllByUsers(user);
             for (Work work: workList){

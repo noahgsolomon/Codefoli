@@ -1,5 +1,6 @@
 package com.codefolio.backend.user.Projects;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.codefolio.backend.user.Projects.languages.Languages;
 import com.codefolio.backend.user.Projects.languages.LanguagesRepository;
 import com.codefolio.backend.user.Projects.projectcontent.ProjectContent;
@@ -27,6 +28,7 @@ public class ProjectsService {
     private final ProjectsRepository projectsRepository;
     private final LanguagesRepository languagesRepository;
     private final ProjectContentRepository projectContentRepository;
+    private final AmazonS3 s3Client;
 
     @Transactional
     public ResponseEntity<Response> removeProject(Principal principal, String id) {
@@ -39,7 +41,17 @@ public class ProjectsService {
             List<Languages> languages = languagesRepository.findAllByProjectAndUsers(project.get(), user);
             languagesRepository.deleteAll(languages);
             Optional<ProjectContent> projectContent = projectContentRepository.findByProjectAndUsers(project.get(), user);
-            projectContent.ifPresent(projectContentRepository::delete);
+            if (projectContent.isPresent()){
+                String key = user.getId() + "-project-content-" + projectContent.get().getId();
+                projectContentRepository.delete(projectContent.get());
+                String projectContentBucketName = "codefolioimagebucket";
+                s3Client.deleteObject(projectContentBucketName, key);
+            }
+
+            String key = user.getId() +  "-project-" + id;
+            String projectBucketName = "codefolioimagebucket";
+            s3Client.deleteObject(projectBucketName, key);
+
             projectsRepository.delete(project.get());
             return ResponseEntity.ok(new Response(StatusType.OK, "Project deleted successfully", null));
         } catch (Exception e) {
