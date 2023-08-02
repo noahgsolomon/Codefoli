@@ -1,7 +1,15 @@
 import LinkIcon from "assets/icons/arrow-up-right.svg";
 import Footer from "Components/Footer/Footer";
 import { COLORS } from "../../util/colors.ts";
-import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  FC,
+  SetStateAction,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import UserData from "Type/UserData.tsx";
 import {
@@ -15,6 +23,7 @@ import {
   addProjectLanguage,
   removeProjectLanguage,
 } from "../Projects/projectspageapi.tsx";
+import Project from "Type/Project.tsx";
 
 const Project: FC<{
   userData: UserData;
@@ -58,6 +67,10 @@ const Project: FC<{
     projectDetails?.platforms || ""
   );
   const platformsTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [imageEdit, setImageEdit] = useState(false);
+  const imageFileInput = useRef<HTMLInputElement | null>(null);
+  const date = useMemo(() => Date.now(), []);
+  const [imageHover, setImageHover] = useState(false);
 
   if (!projectDetails || !slug || !projectData) {
     navigate("/404");
@@ -203,6 +216,48 @@ const Project: FC<{
     }
     setPlatformsEdit(false);
   };
+
+  const handleFileUpload = async (
+    path: string,
+    setEdit: Dispatch<SetStateAction<boolean>>,
+    imageKey: keyof Project,
+    e: ChangeEvent<HTMLInputElement>
+  ) => {
+    if (!e.target.files) return;
+    setEdit(true);
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("id", projectData.id);
+    try {
+      const response = await fetch(`http://localhost:8080/${path}`, {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
+
+      const data = await response.json();
+
+      if (data.status !== "OK") {
+        setEdit(false);
+        return;
+      }
+
+      setUserData((prev) => ({
+        ...prev,
+        projects: prev.projects.map((project) =>
+          project.id === projectData.id
+            ? { ...project, [imageKey]: data.data.url + `?date=${new Date()}` }
+            : project
+        ),
+      }));
+      setTimeout(() => setEdit(false), 500);
+    } catch (error) {
+      setEdit(false);
+      console.error("Error uploading file: ", error);
+    }
+  };
+
   return (
     <>
       <main>
@@ -269,12 +324,48 @@ const Project: FC<{
                 {projectDetails.about}
               </p>
             )}
-            <div className="image-wrapper overflow-hidden rounded-lg border-2 border-black bg-white p-2 shadow-custom lg:h-[600px]">
-              <img
-                src={projectDetails.image}
-                alt=""
-                className="block h-full w-full rounded-lg object-cover"
+            <div
+              className={`relative overflow-hidden rounded-lg border-2 border-black bg-white p-2 shadow-custom transition-all lg:h-[600px]`}
+              onMouseEnter={() => {
+                setImageEdit(true);
+                setImageHover(true);
+              }}
+              onMouseLeave={() => {
+                setImageEdit(false);
+                setImageHover(false);
+              }}
+              onClick={() => {
+                imageFileInput.current && imageFileInput.current.click();
+              }}
+            >
+              <input
+                type="file"
+                ref={imageFileInput}
+                className="hidden"
+                accept=".jpg,.png"
+                onChange={async (e) => {
+                  await handleFileUpload(
+                    "project-content-image-upload?id=" + projectData.id,
+                    setImageEdit,
+                    "image",
+                    e
+                  );
+                }}
               />
+              <img
+                src={projectDetails.image + "?date=" + date}
+                alt=""
+                className={`block h-full w-full rounded-lg object-cover transition-all ${
+                  imageHover ? "scale-105" : ""
+                }`}
+              />
+              <div
+                className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-t-lg border-8 border-dashed border-black bg-white text-3xl font-bold text-black transition-all ${
+                  imageEdit ? "opacity-50" : "opacity-0"
+                }`}
+              >
+                click to upload image
+              </div>
             </div>
           </section>
           <section className="mb-5 grid grid-cols-1 gap-5 lg:grid-cols-6">
