@@ -26,6 +26,7 @@ import {
 } from "../Projects/projectspageapi.tsx";
 import Project from "Type/Project.tsx";
 import { useSpring, animated } from "react-spring";
+import GoToPreview from "../../GoToPreview.tsx";
 
 const Project: FC<{
   userData: UserData;
@@ -561,6 +562,7 @@ const Project: FC<{
           </animated.section>
         </div>
       </main>
+      <GoToPreview />
       <Footer />
     </>
   );

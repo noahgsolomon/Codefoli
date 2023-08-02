@@ -4,6 +4,7 @@ import UserData from "Type/UserData.tsx";
 import AboutData from "Type/AboutData.tsx";
 import AboutSections from "./AboutSections.tsx";
 import AboutMain from "./AboutMain.tsx";
+import GoToPreview from "../../GoToPreview.tsx";
 
 const About: React.FC<{
   userData: UserData;
@@ -26,6 +27,7 @@ const About: React.FC<{
           setUserData={setUserData}
         />
       </main>
+      <GoToPreview />
       <Footer />
     </>
   );

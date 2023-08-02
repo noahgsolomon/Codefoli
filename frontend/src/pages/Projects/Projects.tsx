@@ -9,6 +9,7 @@ import {
 import ProjectCard from "./ProjectCard.tsx";
 import AddProjectCard from "./AddProjectCard.tsx";
 import { useSpring, animated } from "react-spring";
+import GoToPreview from "../../GoToPreview.tsx";
 
 const Projects: FC<{
   pageData: ProjectsPageData;
@@ -159,6 +160,7 @@ const Projects: FC<{
           </div>
         </animated.div>
       </section>
+      <GoToPreview />
       <Footer />
     </>
   );
