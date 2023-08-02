@@ -8,6 +8,8 @@ import {
   updateProjectAbout,
   updateProjectDescription,
   updateProjectHeader,
+  updateProjectOverview,
+  updateProjectPlatforms,
 } from "./projectapi.tsx";
 import {
   addProjectLanguage,
@@ -46,6 +48,16 @@ const Project: FC<{
     projectDetails?.about || ""
   );
   const aboutTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [overviewEdit, setOverviewEdit] = useState(false);
+  const [overviewEditValue, setOverviewEditValue] = useState(
+    projectDetails?.overview || ""
+  );
+  const overviewTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [platformsEdit, setPlatformsEdit] = useState(false);
+  const [platformsEditValue, setPlatformsEditValue] = useState(
+    projectDetails?.platforms || ""
+  );
+  const platformsTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   if (!projectDetails || !slug || !projectData) {
     navigate("/404");
@@ -155,6 +167,42 @@ const Project: FC<{
     setAboutEdit(false);
   };
 
+  const handleOverviewSubmit = async () => {
+    const updateOverview = await updateProjectOverview(slug, overviewEditValue);
+    if (updateOverview) {
+      const updatedSlugs = userData.slugs.map((s) =>
+        s.slug === slug ? { ...s, overview: overviewEditValue } : s
+      );
+
+      setUserData((prev) => ({
+        ...prev,
+        slugs: updatedSlugs,
+      }));
+
+      setProjectDetails(updatedSlugs.find((s) => s.slug === slug));
+    }
+    setOverviewEdit(false);
+  };
+
+  const handlePlatformsSubmit = async () => {
+    const updatePlatforms = await updateProjectPlatforms(
+      slug,
+      platformsEditValue
+    );
+    if (updatePlatforms) {
+      const updatedSlugs = userData.slugs.map((s) =>
+        s.slug === slug ? { ...s, platforms: platformsEditValue } : s
+      );
+
+      setUserData((prev) => ({
+        ...prev,
+        slugs: updatedSlugs,
+      }));
+
+      setProjectDetails(updatedSlugs.find((s) => s.slug === slug));
+    }
+    setPlatformsEdit(false);
+  };
   return (
     <>
       <main>
@@ -231,7 +279,35 @@ const Project: FC<{
           </section>
           <section className="mb-5 grid grid-cols-1 gap-5 lg:grid-cols-6">
             <div className="content-wrapper lg:col-span-4">
-              <h2 className="text-3xl font-bold">{projectDetails.overview}</h2>
+              {overviewEdit ? (
+                <textarea
+                  ref={overviewTextareaRef}
+                  value={overviewEditValue}
+                  onChange={(e) => setOverviewEditValue(e.target.value)}
+                  onBlur={() => {
+                    setOverviewEditValue(projectDetails.overview);
+                    setOverviewEdit(false);
+                  }}
+                  onKeyDown={async (e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      await handleOverviewSubmit();
+                    }
+                  }}
+                  className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-3xl font-bold leading-loose outline-none focus:outline-none focus:ring-0"
+                  autoFocus
+                  onFocus={(e) => e.currentTarget.select()}
+                  maxLength={25}
+                  rows={1}
+                />
+              ) : (
+                <h2
+                  className="cursor-pointer select-none text-3xl font-bold transition-all hover:opacity-50"
+                  onClick={() => setOverviewEdit(true)}
+                >
+                  {projectDetails.overview}
+                </h2>
+              )}
               {descriptionEdit ? (
                 <textarea
                   ref={descriptionTextareaRef}
@@ -267,7 +343,35 @@ const Project: FC<{
               <ul className="list-disc pl-5">
                 <div className="li-wrapper">
                   <li className="font-bold">Platform</li>
-                  <p className="font-normal">{projectDetails.platforms}</p>
+                  {platformsEdit ? (
+                    <textarea
+                      ref={platformsTextareaRef}
+                      value={platformsEditValue}
+                      onChange={(e) => setPlatformsEditValue(e.target.value)}
+                      onBlur={() => {
+                        setPlatformsEditValue(projectDetails.platforms);
+                        setPlatformsEdit(false);
+                      }}
+                      onKeyDown={async (e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          await handlePlatformsSubmit();
+                        }
+                      }}
+                      className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-lg font-normal leading-loose outline-none focus:outline-none focus:ring-0"
+                      autoFocus
+                      onFocus={(e) => e.currentTarget.select()}
+                      maxLength={50}
+                      rows={1}
+                    />
+                  ) : (
+                    <p
+                      className="cursor-pointer select-none font-normal transition-all hover:opacity-50"
+                      onClick={() => setPlatformsEdit(true)}
+                    >
+                      {projectDetails.platforms}
+                    </p>
+                  )}
                 </div>
                 <div className="li-wrapper">
                   <li className="font-bold">Tech Stack</li>
