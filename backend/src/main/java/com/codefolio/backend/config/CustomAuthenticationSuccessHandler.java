@@ -2,6 +2,8 @@ package com.codefolio.backend.config;
 
 import com.codefolio.backend.user.Projects.languages.Languages;
 import com.codefolio.backend.user.Projects.languages.LanguagesRepository;
+import com.codefolio.backend.user.Projects.projectcontent.ProjectContent;
+import com.codefolio.backend.user.Projects.projectcontent.ProjectContentRepository;
 import com.codefolio.backend.user.UserRepository;
 import com.codefolio.backend.user.session.UserSession;
 import com.codefolio.backend.user.session.UserSessionRepository;
@@ -43,6 +45,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     private final OAuth2AuthorizedClientService authorizedClientService;
     private final ProjectsRepository projectsRepository;
     private final LanguagesRepository languagesRepository;
+    private final ProjectContentRepository projectContentRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -94,15 +97,25 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                 List<GithubRepo> repos = gson.fromJson(repoResponse.body(), repoListType);
 
                 for(GithubRepo repo : repos) {
-                    System.out.println("Repository name: " + repo.getName());
-                    System.out.println("Owner's login: " + repo.getOwner().getLogin());
-                    System.out.println("Language: " + repo.getLanguage());
-                    System.out.println("Last updated: " + repo.getUpdatedAt());
-                    System.out.println("Description: " + repo.getDescription());
                     Projects project = new Projects(user, repo.getName(), repo.getDescription(), repo.getUpdatedAt(), repo.getOwner().getLogin());
                     projectsRepository.save(project);
                     Languages language = new Languages(user, project, repo.getLanguage());
                     languagesRepository.save(language);
+                    ProjectContent projectContent = new ProjectContent(
+                            user,
+                            project,
+                            project.getName(),
+                            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere ex similique fuga beatae officia nam unde, velit accusantium et inventore.",
+                            "Overview",
+                            """
+                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum dolore unde saepe qui sint. Neque aliquid quam corrupti voluptas nam magni sed, temporibus delectus suscipit illum repellendus modi! Fuga, nemo.
+    
+                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae cupiditate vitae vel tempore, nobis odit quos ipsum accusantium doloremque atque nihil molestias deleniti obcaecati expedita earum commodi doloribus ex delectus culpa magni id. Ab culpa nam, optio fugiat libero quia illum nihil vitae, placeat, eligendi est a blanditiis nemo\s
+                                     iusto.""",
+                            "https://picsum.photos/2000",
+                            "Web, Android, iOS"
+                    );
+                    projectContentRepository.save(projectContent);
                 }
 
             } catch (IOException | InterruptedException e) {
