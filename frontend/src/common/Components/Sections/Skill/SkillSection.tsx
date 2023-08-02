@@ -3,7 +3,6 @@ import {
   Dispatch,
   FC,
   SetStateAction,
-  useEffect,
   useRef,
   useState,
 } from "react";
@@ -42,7 +41,6 @@ const SkillSection: FC<{
   order,
 }) => {
   const [languageHover, setLanguageHover] = useState<boolean>(false);
-  const [skillColors, setSkillColors] = useState<string[]>([]);
   const [skillHover, setSkillHover] = useState<boolean>(false);
   const [removeSkill, setRemoveSkill] = useState<boolean>(false);
   const [newSkill, setNewSkill] = useState<string>("");
@@ -55,13 +53,6 @@ const SkillSection: FC<{
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
     details.headerOne
   );
-
-  useEffect(() => {
-    const colors = userData?.skills.map(
-      () => COLORS[Math.floor(Math.random() * COLORS.length)]
-    );
-    setSkillColors(colors);
-  }, [userData?.skills]);
 
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -242,7 +233,7 @@ const SkillSection: FC<{
                 <span
                   key={index}
                   className={`inline-flex cursor-pointer items-center justify-center rounded-lg px-3 text-white transition-all hover:-translate-y-0.5 ${
-                    skillColors[index]
+                    COLORS[index]
                   } ${
                     !preview ? "hover:bg-red-500 hover:line-through" : ""
                   } py-2 text-sm`}
