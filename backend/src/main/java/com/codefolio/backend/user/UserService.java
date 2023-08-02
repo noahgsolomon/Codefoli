@@ -191,6 +191,12 @@ public class UserService {
 
             List<Projects> userProjects = projectsRepository.findAllByUsers(user);
             for (Projects userProject : userProjects) {
+                List<Languages> userLanguages = languagesRepository.findAllByProjectAndUsers(userProject, user);
+                for (Languages userLanguage : userLanguages) {
+                    languagesRepository.deleteById(userLanguage.getId());
+                }
+                Optional<ProjectContent> projectContent = projectContentRepository.findByProjectAndUsers(userProject, user);
+                projectContent.ifPresent(content -> projectContentRepository.deleteById(content.getId()));
                 projectsRepository.deleteById(userProject.getId());
             }
 
