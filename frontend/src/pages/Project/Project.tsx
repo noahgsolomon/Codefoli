@@ -6,6 +6,7 @@ import {
   Dispatch,
   FC,
   SetStateAction,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -24,6 +25,7 @@ import {
   removeProjectLanguage,
 } from "../Projects/projectspageapi.tsx";
 import Project from "Type/Project.tsx";
+import { useSpring, animated } from "react-spring";
 
 const Project: FC<{
   userData: UserData;
@@ -32,6 +34,10 @@ const Project: FC<{
   const { slug } = useParams<{ slug: string }>();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const [projectDetails, setProjectDetails] = useState(
     userData.slugs.find((s) => s.slug === slug)
@@ -71,6 +77,24 @@ const Project: FC<{
   const imageFileInput = useRef<HTMLInputElement | null>(null);
   const date = useMemo(() => Date.now(), []);
   const [imageHover, setImageHover] = useState(false);
+
+  const headerAnimation = useSpring({
+    from: { opacity: 0, transform: "translate3d(0, -20px, 0)" },
+    to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
+    delay: 100,
+  });
+
+  const imageAnimation = useSpring({
+    from: { transform: "translate3d(-20px, 0, 0)", opacity: 0 },
+    to: { transform: "translate3d(0, 0, 0)", opacity: 1 },
+    delay: 300,
+  });
+
+  const bottomProjectAnimation = useSpring({
+    from: { transform: "translate3d(0, 0, 0)", opacity: 0 },
+    to: { transform: "translate3d(0, 0, 0)", opacity: 1 },
+    delay: 400,
+  });
 
   if (!projectDetails || !slug || !projectData) {
     navigate("/404");
@@ -262,112 +286,119 @@ const Project: FC<{
       <main>
         <div className="container mx-auto my-20 max-w-screen-lg px-5">
           <section className="hero mb-8">
-            {headerEdit ? (
-              <textarea
-                ref={headerTextareaRef}
-                value={headerEditValue}
-                onChange={(e) => setHeaderEditValue(e.target.value)}
-                onBlur={() => {
-                  setHeaderEditValue(projectDetails.header);
-                  setHeaderEdit(false);
-                }}
-                onKeyDown={async (e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    await handleHeaderSubmit();
-                  }
-                }}
-                className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-4xl font-bold leading-snug outline-none focus:outline-none focus:ring-0"
-                autoFocus
-                onFocus={(e) => {
-                  e.target.select();
-                }}
-                maxLength={25}
-              />
-            ) : (
-              <h1
-                className="mb-5 cursor-pointer select-none text-center text-4xl font-bold leading-snug transition-all hover:opacity-50"
-                onClick={() => {
-                  setHeaderEdit(true);
-                }}
-              >
-                {projectDetails.header}
-              </h1>
-            )}
-            {aboutEdit ? (
-              <textarea
-                ref={aboutTextareaRef}
-                value={aboutEditValue}
-                onChange={(e) => setAboutEditValue(e.target.value)}
-                onBlur={() => {
-                  setAboutEditValue(projectDetails.about);
-                  setAboutEdit(false);
-                }}
-                onKeyDown={async (e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    await handleAboutSubmit();
-                  }
-                }}
-                className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-lg font-semibold leading-loose outline-none focus:outline-none focus:ring-0"
-                autoFocus
-                onFocus={(e) => e.currentTarget.select()}
-                maxLength={500}
-                rows={4}
-              />
-            ) : (
-              <p
-                className="mb-5 cursor-pointer select-none text-center font-semibold transition-all hover:opacity-50"
-                onClick={() => setAboutEdit(true)}
-              >
-                {projectDetails.about}
-              </p>
-            )}
-            <div
-              className={`relative overflow-hidden rounded-lg border-2 border-black bg-white p-2 shadow-custom transition-all lg:h-[600px]`}
-              onMouseEnter={() => {
-                setImageEdit(true);
-                setImageHover(true);
-              }}
-              onMouseLeave={() => {
-                setImageEdit(false);
-                setImageHover(false);
-              }}
-              onClick={() => {
-                imageFileInput.current && imageFileInput.current.click();
-              }}
-            >
-              <input
-                type="file"
-                ref={imageFileInput}
-                className="hidden"
-                accept=".jpg,.png"
-                onChange={async (e) => {
-                  await handleFileUpload(
-                    "project-content-image-upload?id=" + projectData.id,
-                    setImageEdit,
-                    "image",
-                    e
-                  );
-                }}
-              />
-              <img
-                src={projectDetails.image + "?date=" + date}
-                alt=""
-                className={`block h-full w-full rounded-lg object-cover transition-all ${
-                  imageHover ? "scale-105" : ""
-                }`}
-              />
+            <animated.div style={headerAnimation}>
+              {headerEdit ? (
+                <textarea
+                  ref={headerTextareaRef}
+                  value={headerEditValue}
+                  onChange={(e) => setHeaderEditValue(e.target.value)}
+                  onBlur={() => {
+                    setHeaderEditValue(projectDetails.header);
+                    setHeaderEdit(false);
+                  }}
+                  onKeyDown={async (e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      await handleHeaderSubmit();
+                    }
+                  }}
+                  className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-4xl font-bold leading-snug outline-none focus:outline-none focus:ring-0"
+                  autoFocus
+                  onFocus={(e) => {
+                    e.target.select();
+                  }}
+                  maxLength={25}
+                />
+              ) : (
+                <h1
+                  className="mb-5 cursor-pointer select-none text-center text-4xl font-bold leading-snug transition-all hover:opacity-50"
+                  onClick={() => {
+                    setHeaderEdit(true);
+                  }}
+                >
+                  {projectDetails.header}
+                </h1>
+              )}
+              {aboutEdit ? (
+                <textarea
+                  ref={aboutTextareaRef}
+                  value={aboutEditValue}
+                  onChange={(e) => setAboutEditValue(e.target.value)}
+                  onBlur={() => {
+                    setAboutEditValue(projectDetails.about);
+                    setAboutEdit(false);
+                  }}
+                  onKeyDown={async (e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      await handleAboutSubmit();
+                    }
+                  }}
+                  className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-lg font-semibold leading-loose outline-none focus:outline-none focus:ring-0"
+                  autoFocus
+                  onFocus={(e) => e.currentTarget.select()}
+                  maxLength={500}
+                  rows={4}
+                />
+              ) : (
+                <p
+                  className="mb-5 cursor-pointer select-none text-center font-semibold transition-all hover:opacity-50"
+                  onClick={() => setAboutEdit(true)}
+                >
+                  {projectDetails.about}
+                </p>
+              )}
+            </animated.div>
+            <animated.div style={imageAnimation}>
               <div
-                className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-t-lg border-8 border-dashed border-black bg-white text-3xl font-bold text-black transition-all ${
-                  imageEdit ? "opacity-50" : "opacity-0"
-                }`}
+                className={`relative overflow-hidden rounded-lg border-2 border-black bg-white p-2 shadow-custom transition-all lg:h-[600px]`}
+                onMouseEnter={() => {
+                  setImageEdit(true);
+                  setImageHover(true);
+                }}
+                onMouseLeave={() => {
+                  setImageEdit(false);
+                  setImageHover(false);
+                }}
+                onClick={() => {
+                  imageFileInput.current && imageFileInput.current.click();
+                }}
               >
-                click to upload image
+                <input
+                  type="file"
+                  ref={imageFileInput}
+                  className="hidden"
+                  accept=".jpg,.png"
+                  onChange={async (e) => {
+                    await handleFileUpload(
+                      "project-content-image-upload?id=" + projectData.id,
+                      setImageEdit,
+                      "image",
+                      e
+                    );
+                  }}
+                />
+                <img
+                  src={projectDetails.image + "?date=" + date}
+                  alt=""
+                  className={`block h-full w-full rounded-lg object-cover transition-all ${
+                    imageHover ? "scale-105" : ""
+                  }`}
+                />
+                <div
+                  className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-t-lg border-8 border-dashed border-black bg-white text-3xl font-bold text-black transition-all ${
+                    imageEdit ? "opacity-50" : "opacity-0"
+                  }`}
+                >
+                  click to upload image
+                </div>
               </div>
-            </div>
+            </animated.div>
           </section>
-          <section className="mb-5 grid grid-cols-1 gap-5 lg:grid-cols-6">
+          <animated.section
+            style={bottomProjectAnimation}
+            className="mb-5 grid grid-cols-1 gap-5 lg:grid-cols-6"
+          >
             <div className="content-wrapper lg:col-span-4">
               {overviewEdit ? (
                 <textarea
@@ -527,7 +558,7 @@ const Project: FC<{
                 />
               </a>
             </div>
-          </section>
+          </animated.section>
         </div>
       </main>
       <Footer />
