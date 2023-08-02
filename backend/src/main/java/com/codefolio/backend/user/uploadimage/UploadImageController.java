@@ -49,4 +49,9 @@ public class UploadImageController {
     public ResponseEntity<Response> uploadProjectImage(@RequestParam("file") MultipartFile file, Principal principal, @RequestParam("id") long id) {
         return uploadImageService.uploadProjectImage(file, principal, id);
     }
+
+    @PostMapping("/project-content-image-upload")
+    public ResponseEntity<Response> uploadProjectContentImage(@RequestParam("file") MultipartFile file, Principal principal, @RequestParam("id") long id) {
+        return uploadImageService.uploadProjectContentImage(file, principal, id);
+    }
 }

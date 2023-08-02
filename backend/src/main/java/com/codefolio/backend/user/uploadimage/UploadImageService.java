@@ -5,6 +5,8 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.codefolio.backend.user.Projects.Projects;
 import com.codefolio.backend.user.Projects.ProjectsRepository;
+import com.codefolio.backend.user.Projects.projectcontent.ProjectContent;
+import com.codefolio.backend.user.Projects.projectcontent.ProjectContentRepository;
 import com.codefolio.backend.user.Users;
 import com.codefolio.backend.user.pages.aboutpage.About;
 import com.codefolio.backend.user.pages.aboutpage.AboutRepository;
@@ -38,6 +40,7 @@ public class UploadImageService {
     private final StorySectionRepository storySectionRepository;
     private final WorkRepository workRepository;
     private final ProjectsRepository projectsRepository;
+    private final ProjectContentRepository projectContentRepository;
 
     public ResponseEntity<Response> uploadProfileImage(MultipartFile file, Principal principal) {
         try {
@@ -171,6 +174,29 @@ public class UploadImageService {
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(StatusType.BAD, "Project not found", null));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
+        }
+    }
+
+    public ResponseEntity<Response> uploadProjectContentImage(MultipartFile file, Principal principal, long id) {
+        try {
+            Users user = getAuthenticatedUser(principal);
+            Optional<Projects> projectsOptional = projectsRepository.findById(id);
+            if (projectsOptional.isEmpty()){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(StatusType.BAD, "Project not found", null));
+            }
+            Optional<ProjectContent> projectContentOptional = projectContentRepository.findByProjectAndUsers(projectsOptional.get(), user);
+            if (projectContentOptional.isEmpty()){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(StatusType.BAD, "Project content not found", null));
+            }
+            ProjectContent projectContent = projectContentOptional.get();
+            ImageResponse imageResponse = uploadImage(file, user.getId() + "-project-content-" + projectContent.getId(), "codefolioimagebucket");
+                projectContent.setImage(imageResponse.url());
+                projectContentRepository.save(projectContent);
+                return ResponseEntity.ok(new Response(StatusType.OK, "Image uploaded successfully", imageResponse));
         } catch (Exception e) {
             e.printStackTrace();
             System.err.print(e.getMessage());
