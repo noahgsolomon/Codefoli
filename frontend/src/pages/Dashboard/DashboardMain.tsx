@@ -185,7 +185,7 @@ const DashboardMain: React.FC<{
           </div>
         </div>
         <div
-          className={`relative mx-auto mt-10 h-[500px] w-[500px] transition-all lg:mx-0 xl:ml-20 xl:mt-32 ${
+          className={`relative mx-auto mt-10 h-[300px] w-[300px] transition-all md:h-[500px] md:w-[500px] lg:mx-0 xl:ml-20 xl:mt-32 ${
             imageLoading ? "opacity-0" : "opacity-100"
           }`}
           onMouseEnter={() => setImageOneEdit(true)}

@@ -8,6 +8,7 @@ import {
 import { Link } from "react-router-dom";
 import Marquee from "Components/Marquee/Marquee.tsx";
 import UserData from "Type/UserData.tsx";
+import { useSpring, animated } from "react-spring";
 
 const AboutMain: React.FC<{
   userData: UserData;
@@ -38,6 +39,24 @@ const AboutMain: React.FC<{
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const headerTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const date = useMemo(() => Date.now(), []);
+
+  const headerAnimation = useSpring({
+    from: { opacity: 0, transform: "translate3d(-20px, 0, 0)" },
+    to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
+    delay: 100,
+  });
+
+  const imageAnimation = useSpring({
+    from: { opacity: 0, transform: "translate3d(0, 20px, 0)" },
+    to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
+    delay: 300,
+  });
+
+  const descriptionAnimation = useSpring({
+    from: { opacity: 0, transform: "translate3d(20px, 0, 0)" },
+    to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
+    delay: 100,
+  });
 
   const handleFileUpload = async (
     path: string,
@@ -108,9 +127,11 @@ const AboutMain: React.FC<{
   return (
     <>
       <div className="container mx-auto my-20 max-w-screen-lg px-5">
-        {/* about */}
         <section className="about mb-20 grid grid-cols-2 justify-center gap-10 md:h-[400px] md:grid-cols-5">
-          <div className="content-wrapper col-span-2 flex justify-center  md:order-2 md:col-span-3">
+          <animated.div
+            style={headerAnimation}
+            className="content-wrapper col-span-2 flex justify-center  md:order-2 md:col-span-3"
+          >
             {headerOneEdit ? (
               <textarea
                 ref={headerOneTextareaRef}
@@ -139,8 +160,9 @@ const AboutMain: React.FC<{
                 {pageData.headerOne}
               </h2>
             )}
-          </div>
-          <div
+          </animated.div>
+          <animated.div
+            style={imageAnimation}
             className="image-wrapper relative order-2 h-[150px] w-[150px] text-center md:order-1 md:self-end"
             onMouseEnter={() => setIconOneEdit(true)}
             onMouseLeave={() => setIconOneEdit(false)}
@@ -177,9 +199,10 @@ const AboutMain: React.FC<{
             >
               click to upload image
             </div>
-          </div>
+          </animated.div>
 
-          <div
+          <animated.div
+            style={imageAnimation}
             className="image-wrapper relative h-[150px] w-[150px] text-center md:order-last md:self-start"
             onMouseEnter={() => setIconTwoEdit(true)}
             onMouseLeave={() => setIconTwoEdit(false)}
@@ -215,14 +238,13 @@ const AboutMain: React.FC<{
             >
               click to upload image
             </div>
-          </div>
+          </animated.div>
         </section>
       </div>
-      {/* Story */}
-      <section className="story mb-20">
+      <animated.section style={descriptionAnimation} className="story mb-20">
         <div className="container mx-auto my-20 max-w-screen-lg gap-5 px-5 md:grid md:grid-cols-2 md:items-start md:justify-between">
           <div className="content-left">
-            <div className="flex">
+            <div className="flex justify-center md:justify-between">
               {headerTwoEdit ? (
                 <textarea
                   ref={headerTwoTextareaRef}
@@ -238,14 +260,14 @@ const AboutMain: React.FC<{
                       await handleHeaderTwoSubmit();
                     }
                   }}
-                  className="mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-4xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-left md:text-6xl md:leading-tight"
+                  className="mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-4xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 lg:text-left lg:text-6xl lg:leading-tight"
                   autoFocus
                   onFocus={(e) => e.currentTarget.select()}
                   maxLength={25}
                 />
               ) : (
                 <h2
-                  className="mb-8 cursor-pointer select-none text-center text-4xl font-bold transition-all hover:opacity-50 md:text-left md:text-6xl md:leading-tight"
+                  className="mb-8 cursor-pointer select-none text-center text-4xl font-bold transition-all hover:opacity-50 lg:text-left lg:text-6xl lg:leading-tight"
                   onClick={() => setHeaderTwoEdit(true)}
                 >
                   {pageData.headerTwo}
@@ -253,7 +275,7 @@ const AboutMain: React.FC<{
               )}
             </div>
             <div
-              className="image-wrapper relative mb-5 h-[300px] w-[500px] sm:mx-auto md:mx-0"
+              className="image-wrapper relative mb-5 h-60 w-full sm:mx-auto sm:h-[200px] sm:w-[300px] md:mx-0 md:h-[200px] md:w-[400px] lg:h-72 lg:w-[500px]"
               onMouseEnter={() => setIconThreeEdit(true)}
               onMouseLeave={() => setIconThreeEdit(false)}
               onClick={() =>
@@ -330,7 +352,7 @@ const AboutMain: React.FC<{
             </div>
           </div>
         </div>
-      </section>
+      </animated.section>
       <Marquee
         items={userData.services.map((service) => {
           return service
