@@ -142,8 +142,6 @@ const MainApp: React.FC = () => {
     authenticatedCheck();
   }, [navigate]);
 
-  console.log(userData);
-
   const ProjectOr404 = () => {
     const { slug } = useParams();
 
