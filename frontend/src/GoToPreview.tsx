@@ -44,7 +44,7 @@ const GoToPreview: FC = () => {
       style={animation}
       className="fixed bottom-10 left-0 right-0 flex justify-center"
     >
-      <button className="flex h-12 w-40 justify-center rounded-3xl border-2 border-black bg-green-400 text-white shadow-custom">
+      <button className="flex h-12 w-40 justify-center rounded-3xl transition-all hover:-translate-y-0.5 border-2 border-black bg-green-400 text-white shadow-custom">
         Preview
       </button>
     </animated.div>
