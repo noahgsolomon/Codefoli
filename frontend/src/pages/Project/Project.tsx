@@ -16,7 +16,8 @@ import UserData from "Type/UserData.tsx";
 import {
   updateProjectAbout,
   updateProjectDescription,
-  updateProjectHeader, updateProjectLink,
+  updateProjectHeader,
+  updateProjectLink,
   updateProjectOverview,
   updateProjectPlatforms,
 } from "./projectapi.tsx";
@@ -228,7 +229,7 @@ const Project: FC<{
       slug,
       platformsEditValue
     );
-    if (updatePlatforms.status === 'OK') {
+    if (updatePlatforms.status === "OK") {
       const updatedSlugs = userData.slugs.map((s) =>
         s.slug === slug ? { ...s, platforms: platformsEditValue } : s
       );
@@ -244,20 +245,18 @@ const Project: FC<{
   };
 
   const handleLinkSubmit = async () => {
-    const updateLink = await updateProjectLink(
-        slug,
-        linkValue
-    );
-    if (updateLink.status === 'OK') {
+    const updateLink = await updateProjectLink(slug, linkValue);
+    if (updateLink.status === "OK") {
       const updatedSlugs = userData.slugs.map((s) =>
-          s.slug === slug ? { ...s, link: linkValue } : s
+        s.slug === slug ? { ...s, link: linkValue } : s
       );
 
       setUserData((prev) => ({
         ...prev,
         slugs: prev.slugs.map((s) =>
-            s.slug === slug ? { ...s, link: linkValue } : s
-      )}));
+          s.slug === slug ? { ...s, link: linkValue } : s
+        ),
+      }));
 
       setProjectDetails(updatedSlugs.find((s) => s.slug === slug));
     }
@@ -568,7 +567,9 @@ const Project: FC<{
                   )}
                 </div>
               </ul>
-              <p className={'text-gray-500 text-sm break-all'}>/*link: {projectDetails.link}*/ ↓</p>
+              <p className={"break-all text-sm text-gray-500"}>
+                /*link: {projectDetails.link}*/ ↓
+              </p>
               <a
                 href={projectDetails.link}
                 target="_blank"
@@ -582,20 +583,20 @@ const Project: FC<{
                 />
               </a>
               <input
-                  type="text"
-                  className="mb-2 mr-2 inline-block rounded-lg px-3 py-2 text-sm shadow-custom transition-all hover:-translate-y-0.5 focus:outline-none"
-                  value={linkValue}
-                  placeholder={'change link'}
-                  onChange={(e) => setLinkValue(e.target.value)}
-                  onFocus={(e) => e.currentTarget.select()}
-                  maxLength={100}
-                  onKeyDown={async (e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      await handleLinkSubmit();
-                      setLinkValue("");
-                    }
-                  }}
+                type="text"
+                className="mb-2 mr-2 inline-block rounded-lg px-3 py-2 text-sm shadow-custom transition-all hover:-translate-y-0.5 focus:outline-none"
+                value={linkValue}
+                placeholder={"change link"}
+                onChange={(e) => setLinkValue(e.target.value)}
+                onFocus={(e) => e.currentTarget.select()}
+                maxLength={100}
+                onKeyDown={async (e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    await handleLinkSubmit();
+                    setLinkValue("");
+                  }
+                }}
               />
             </div>
           </animated.section>

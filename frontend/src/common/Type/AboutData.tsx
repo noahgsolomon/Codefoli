@@ -7,6 +7,7 @@ type AboutData = {
   headerTwo: string;
   iconThree: string;
   descriptionOne: string;
+  descriptionTwo: string;
   sections: Section[];
 };
 

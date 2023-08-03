@@ -61,8 +61,32 @@ const updateDescriptionOneAbout = async (descriptionOne: string) => {
   }
 };
 
+const updateDescriptionTwoAbout = async (descriptionTwo: string) => {
+  try {
+    const updateFetch = await fetch(
+      "http://localhost:8080/about/description-two",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: descriptionTwo,
+        credentials: "include",
+      }
+    );
+    const updateFetchJson = await updateFetch.json();
+    if (updateFetchJson.status === "OK") {
+      return updateFetchJson.data;
+    } else {
+      console.log(updateFetchJson.message);
+      return updateFetchJson.message;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export {
   updateHeaderOneAbout,
   updateHeaderTwoAbout,
   updateDescriptionOneAbout,
+  updateDescriptionTwoAbout,
 };

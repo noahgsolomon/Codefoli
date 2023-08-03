@@ -2,6 +2,7 @@ import React, { useMemo, useRef, useState } from "react";
 import AboutData from "Type/AboutData.tsx";
 import {
   updateDescriptionOneAbout,
+  updateDescriptionTwoAbout,
   updateHeaderOneAbout,
   updateHeaderTwoAbout,
 } from "./aboutapi.tsx";
@@ -34,6 +35,11 @@ const AboutMain: React.FC<{
   const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(
     pageData.descriptionOne
   );
+  const [descriptionTwoEdit, setDescriptionTwoEdit] = useState(false);
+  const [descriptionTwoEditValue, setDescriptionTwoEditValue] = useState(
+    pageData.descriptionTwo
+  );
+  const descriptionTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -124,42 +130,98 @@ const AboutMain: React.FC<{
     }
     setDescriptionOneEdit(false);
   };
+
+  const handleDescriptionTwoSubmit = async () => {
+    const updateHeader = await updateDescriptionTwoAbout(
+      descriptionTwoEditValue
+    );
+    if (updateHeader) {
+      setPageData((prev) => ({
+        ...prev,
+        descriptionTwo: descriptionTwoEditValue,
+      }));
+      setDescriptionTwoEditValue(updateHeader);
+    }
+    setDescriptionTwoEdit(false);
+  };
+
   return (
     <>
       <div className="container mx-auto my-20 max-w-screen-lg px-5">
         <section className="about mb-20 grid grid-cols-2 justify-center gap-10 md:h-[400px] md:grid-cols-5">
           <animated.div
             style={headerAnimation}
-            className="content-wrapper col-span-2 flex justify-center  md:order-2 md:col-span-3"
+            className="col-span-2 flex flex-col justify-center md:order-2 md:col-span-3"
           >
-            {headerOneEdit ? (
-              <textarea
-                ref={headerOneTextareaRef}
-                value={headerOneEditValue}
-                onChange={(e) => setHeaderOneEditValue(e.target.value)}
-                onBlur={() => {
-                  setHeaderOneEditValue(pageData.headerOne);
-                  setHeaderOneEdit(false);
-                }}
-                onKeyDown={async (e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    await handleHeaderOneSubmit();
-                  }
-                }}
-                className=" mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-5xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-7xl"
-                autoFocus
-                onFocus={(e) => e.currentTarget.select()}
-                maxLength={50}
-              />
-            ) : (
-              <h2
-                className="mb-5 cursor-pointer select-none text-center text-5xl font-bold transition-all hover:opacity-50 md:text-7xl"
-                onClick={() => setHeaderOneEdit(true)}
+            <div>
+              {headerOneEdit ? (
+                <textarea
+                  ref={headerOneTextareaRef}
+                  value={headerOneEditValue}
+                  onChange={(e) => setHeaderOneEditValue(e.target.value)}
+                  onBlur={() => {
+                    setHeaderOneEditValue(pageData.headerOne);
+                    setHeaderOneEdit(false);
+                  }}
+                  onKeyDown={async (e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      await handleHeaderOneSubmit();
+                    }
+                  }}
+                  className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-5xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-7xl"
+                  autoFocus
+                  onFocus={(e) => e.currentTarget.select()}
+                  maxLength={50}
+                />
+              ) : (
+                <h2
+                  className="mb-5 cursor-pointer select-none text-center text-5xl font-bold transition-all hover:opacity-50 md:text-7xl"
+                  onClick={() => setHeaderOneEdit(true)}
+                >
+                  {pageData.headerOne}
+                </h2>
+              )}
+            </div>
+            <div className="ml-5">
+              {descriptionOneEdit ? (
+                <textarea
+                  ref={descriptionOneTextareaRef}
+                  value={descriptionOneEditValue}
+                  onChange={(e) => setDescriptionOneEditValue(e.target.value)}
+                  onBlur={() => {
+                    setDescriptionOneEditValue(pageData.descriptionOne);
+                    setDescriptionOneEdit(false);
+                  }}
+                  onKeyDown={async (e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      await handleDescriptionOneSubmit();
+                    }
+                  }}
+                  className="mb-5 resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-2xl font-semibold leading-snug outline-none focus:outline-none focus:ring-0"
+                  style={{ minHeight: "8em" }}
+                  autoFocus
+                  onFocus={(e) => e.currentTarget.select()}
+                  maxLength={250}
+                />
+              ) : (
+                <p
+                  className="mb-5 cursor-pointer select-none text-center text-2xl font-semibold transition-all hover:opacity-50"
+                  onClick={() => setDescriptionOneEdit(true)}
+                >
+                  {pageData.descriptionOne}
+                </p>
+              )}
+            </div>
+            <div className="flex justify-center text-center">
+              <Link
+                to="/contact"
+                className="mb-4 inline-block rounded-xl border-2 border-transparent bg-black px-4 py-2 font-bold text-white transition-all hover:-translate-y-1 hover:bg-blue-500"
               >
-                {pageData.headerOne}
-              </h2>
-            )}
+                Get in touch
+              </Link>
+            </div>
           </animated.div>
           <animated.div
             style={imageAnimation}
@@ -203,7 +265,7 @@ const AboutMain: React.FC<{
 
           <animated.div
             style={imageAnimation}
-            className="image-wrapper relative h-[150px] w-[150px] text-center md:order-last md:self-start"
+            className="image-wrapper relative order-last h-[150px] w-[150px] text-center md:self-start"
             onMouseEnter={() => setIconTwoEdit(true)}
             onMouseLeave={() => setIconTwoEdit(false)}
             onClick={() =>
@@ -311,24 +373,22 @@ const AboutMain: React.FC<{
                 click to upload image
               </div>
             </div>
-          </div>
-          <div className="content-right ml-5">
-            {descriptionOneEdit ? (
+            {descriptionTwoEdit ? (
               <textarea
-                ref={descriptionOneTextareaRef}
-                value={descriptionOneEditValue}
-                onChange={(e) => setDescriptionOneEditValue(e.target.value)}
+                ref={descriptionTwoTextareaRef}
+                value={descriptionTwoEditValue}
+                onChange={(e) => setDescriptionTwoEditValue(e.target.value)}
                 onBlur={() => {
-                  setDescriptionOneEditValue(pageData.descriptionOne);
-                  setDescriptionOneEdit(false);
+                  setDescriptionTwoEditValue(pageData.descriptionTwo);
+                  setDescriptionTwoEdit(false);
                 }}
                 onKeyDown={async (e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
-                    await handleDescriptionOneSubmit();
+                    await handleDescriptionTwoSubmit();
                   }
                 }}
-                className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg font-semibold leading-snug outline-none focus:outline-none focus:ring-0"
+                className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-2xl font-semibold leading-snug outline-none focus:outline-none focus:ring-0"
                 style={{ minHeight: "8em" }}
                 autoFocus
                 onFocus={(e) => e.currentTarget.select()}
@@ -336,20 +396,12 @@ const AboutMain: React.FC<{
               />
             ) : (
               <p
-                className="description mb-5 cursor-pointer select-none text-lg font-semibold transition-all hover:opacity-50"
-                onClick={() => setDescriptionOneEdit(true)}
+                className="mb-5 cursor-pointer select-none text-2xl font-semibold transition-all hover:opacity-50"
+                onClick={() => setDescriptionTwoEdit(true)}
               >
-                {pageData.descriptionOne}
+                {pageData.descriptionTwo}
               </p>
             )}
-            <div className="story-control text-center md:text-left">
-              <Link
-                to="/contact"
-                className="mb-4 mr-2 inline-block w-full rounded-xl border-2 border-transparent bg-black px-4 py-2 font-bold text-white transition ease-in hover:-translate-y-1 hover:bg-blue-500 md:w-auto"
-              >
-                Get in touch
-              </Link>
-            </div>
           </div>
         </div>
       </animated.section>

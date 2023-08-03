@@ -144,15 +144,12 @@ const updateProjectLink = async (slug: string, link: string) => {
     content: link,
   };
   try {
-    const response = await fetch(
-        `http://localhost:8080/project-content/link`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(model),
-          credentials: "include",
-        }
-    );
+    const response = await fetch(`http://localhost:8080/project-content/link`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(model),
+      credentials: "include",
+    });
 
     const responseJson = await response.json();
     if (responseJson.status === "OK") {
@@ -172,5 +169,5 @@ export {
   updateProjectOverview,
   updateProjectDescription,
   updateProjectPlatforms,
-  updateProjectLink
+  updateProjectLink,
 };

@@ -75,6 +75,7 @@ const MainApp: React.FC = () => {
     headerTwo: "",
     iconThree: "",
     descriptionOne: "",
+    descriptionTwo: "",
     sections: [],
   });
 
