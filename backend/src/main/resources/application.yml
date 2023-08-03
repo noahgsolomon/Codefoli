@@ -31,6 +31,10 @@ spring:
             redirect-uri: http://localhost:8080/login/oauth2/code/github
   main:
     web-application-type: servlet
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
 
 #logging:
 #  level:
