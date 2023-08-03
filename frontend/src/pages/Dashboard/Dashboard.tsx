@@ -4,7 +4,7 @@ import HomeData from "Type/HomeData.tsx";
 import UserData from "Type/UserData.tsx";
 import DashboardSections from "./DashboardSections.tsx";
 import DashboardMain from "./DashboardMain.tsx";
-import GoToPreview from "../../GoToPreview.tsx";
+import ModeButtons from "../../ModeButtons.tsx";
 
 const Dashboard: React.FC<{
   pageData: HomeData;
@@ -21,7 +21,7 @@ const Dashboard: React.FC<{
         pageData={pageData}
         setPageData={setPageData}
       />
-      <GoToPreview />
+      <ModeButtons />
       <Footer />
     </>
   );

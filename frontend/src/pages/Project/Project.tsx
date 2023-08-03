@@ -26,7 +26,7 @@ import {
 } from "../Projects/projectspageapi.tsx";
 import Project from "Type/Project.tsx";
 import { useSpring, animated } from "react-spring";
-import GoToPreview from "../../GoToPreview.tsx";
+import ModeButtons from "../../ModeButtons.tsx";
 
 const Project: FC<{
   userData: UserData;
@@ -562,7 +562,7 @@ const Project: FC<{
           </animated.section>
         </div>
       </main>
-      <GoToPreview />
+      <ModeButtons />
       <Footer />
     </>
   );

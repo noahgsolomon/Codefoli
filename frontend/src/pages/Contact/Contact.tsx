@@ -4,7 +4,7 @@ import ContactData from "Type/ContactData.tsx";
 import UserData from "Type/UserData.tsx";
 import ContactSections from "./ContactSections.tsx";
 import ContactMain from "./ContactMain.tsx";
-import GoToPreview from "../../GoToPreview.tsx";
+import ModeButtons from "../../ModeButtons.tsx";
 
 const Contact: FC<{
   pageData: ContactData;
@@ -30,7 +30,7 @@ const Contact: FC<{
         userData={userData}
         setUserData={setUserData}
       />
-      <GoToPreview />
+      <ModeButtons />
       <Footer />
     </>
   );
