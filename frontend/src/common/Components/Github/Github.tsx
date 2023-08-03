@@ -18,6 +18,7 @@ const Github: FC = () => {
       <a
         className="relative mb-1 mt-1 text-base text-white transition-all hover:text-opacity-80"
         href={`https://github.com/noahgsolomon/codefolio`}
+        target="_blank"
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
