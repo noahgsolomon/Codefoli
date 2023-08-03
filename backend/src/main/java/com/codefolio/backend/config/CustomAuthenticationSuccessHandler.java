@@ -101,6 +101,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                     projectsRepository.save(project);
                     Languages language = new Languages(user, project, repo.getLanguage());
                     languagesRepository.save(language);
+                    String projectLink = repo.getHtmlUrl();
                     ProjectContent projectContent = new ProjectContent(
                             user,
                             project,
@@ -113,7 +114,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae cupiditate vitae vel tempore, nobis odit quos ipsum accusantium doloremque atque nihil molestias deleniti obcaecati expedita earum commodi doloribus ex delectus culpa magni id. Ab culpa nam, optio fugiat libero quia illum nihil vitae, placeat, eligendi est a blanditiis nemo\s
                                      iusto.""",
                             "https://picsum.photos/2000",
-                            "Web, Android, iOS"
+                            "Web, Android, iOS",
+                            projectLink
                     );
                     projectContentRepository.save(projectContent);
                 }

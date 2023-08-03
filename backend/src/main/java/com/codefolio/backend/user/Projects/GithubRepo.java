@@ -15,6 +15,8 @@ public class GithubRepo {
     @SerializedName("updated_at")
     private String updatedAt;
     private String description;
+    @SerializedName("html_url")
+    private String htmlUrl;
 
     @Getter
     @Setter

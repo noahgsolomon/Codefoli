@@ -52,9 +52,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -117,7 +115,7 @@ public class UserService {
                         project.getId().toString(),
                         project.getSlug()
                 ));
-                slugList.add(new SlugUserDetailsResponseModel(project.getSlug(), projectContent.getHeader(), projectContent.getDescription(), projectContent.getAbout(), projectContent.getImage(), projectContent.getOverview(), projectContent.getPlatforms()));
+                slugList.add(new SlugUserDetailsResponseModel(project.getSlug(), projectContent.getHeader(), projectContent.getDescription(), projectContent.getAbout(), projectContent.getImage(), projectContent.getOverview(), projectContent.getPlatforms(), projectContent.getLink()));
             }
             List<Skills> userSkills = skillsRepository.findAllByUsers(user);
             List<Services> userServices = servicesRepository.findAllByUsers(user);
@@ -190,6 +188,17 @@ public class UserService {
             });
 
             List<Projects> userProjects = projectsRepository.findAllByUsers(user);
+
+            Map<String, String> projectLinks = new HashMap<>();
+            for (Projects userProject : userProjects) {
+                Optional<ProjectContent> projectContent = projectContentRepository.findByProjectAndUsers(userProject, user);
+                if (projectContent.isPresent()){
+                    String link = projectContent.get().getLink();
+                    projectLinks.put(userProject.getName().toLowerCase(), link);
+                }
+
+            }
+
             for (Projects userProject : userProjects) {
                 List<Languages> userLanguages = languagesRepository.findAllByProjectAndUsers(userProject, user);
                 for (Languages userLanguage : userLanguages) {
@@ -201,23 +210,45 @@ public class UserService {
             }
 
             userProfile.projects().forEach(project -> {
+                String link = projectLinks.get(project.name().toLowerCase());
                 Projects newProject = new Projects(user, project.name(), project.description(), project.updatedAt(), user.getName());
                 projectsRepository.save(newProject);
-                ProjectContent projectContent = new ProjectContent(
-                        user,
-                        newProject,
-                        project.name(),
-                        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere ex similique fuga beatae officia nam unde, velit accusantium et inventore.",
-                        "Overview",
-                        """
-                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum dolore unde saepe qui sint. Neque aliquid quam corrupti voluptas nam magni sed, temporibus delectus suscipit illum repellendus modi! Fuga, nemo.
-
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae cupiditate vitae vel tempore, nobis odit quos ipsum accusantium doloremque atque nihil molestias deleniti obcaecati expedita earum commodi doloribus ex delectus culpa magni id. Ab culpa nam, optio fugiat libero quia illum nihil vitae, placeat, eligendi est a blanditiis nemo\s
-                                 iusto.""",
-                        "https://picsum.photos/2000",
-                        "Web, Android, iOS"
-                );
+                ProjectContent projectContent;
+                if (link != null){
+                    projectContent = new ProjectContent(
+                            user,
+                            newProject,
+                            project.name(),
+                            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere ex similique fuga beatae officia nam unde, velit accusantium et inventore.",
+                            "Overview",
+                            """
+                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum dolore unde saepe qui sint. Neque aliquid quam corrupti voluptas nam magni sed, temporibus delectus suscipit illum repellendus modi! Fuga, nemo.
+                                        
+                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae cupiditate vitae vel tempore, nobis odit quos ipsum accusantium doloremque atque nihil molestias deleniti obcaecati expedita earum commodi doloribus ex delectus culpa magni id. Ab culpa nam, optio fugiat libero quia illum nihil vitae, placeat, eligendi est a blanditiis nemo\s
+                                     iusto.""",
+                            "https://picsum.photos/2000",
+                            "Web, Android, iOS",
+                            link
+                    );
+                }
+                else {
+                    projectContent = new ProjectContent(
+                            user,
+                            newProject,
+                            project.name(),
+                            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere ex similique fuga beatae officia nam unde, velit accusantium et inventore.",
+                            "Overview",
+                            """
+                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum dolore unde saepe qui sint. Neque aliquid quam corrupti voluptas nam magni sed, temporibus delectus suscipit illum repellendus modi! Fuga, nemo.
+                                        
+                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae cupiditate vitae vel tempore, nobis odit quos ipsum accusantium doloremque atque nihil molestias deleniti obcaecati expedita earum commodi doloribus ex delectus culpa magni id. Ab culpa nam, optio fugiat libero quia illum nihil vitae, placeat, eligendi est a blanditiis nemo\s
+                                     iusto.""",
+                            "https://picsum.photos/2000",
+                            "Web, Android, iOS"
+                    );
+                }
                 projectContentRepository.save(projectContent);
+
                 for (int i = 0; i < project.languages().size(); i++) {
                     languagesRepository.save(new Languages(user, newProject, project.languages().get(i)));
                 }
