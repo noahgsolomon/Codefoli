@@ -50,8 +50,7 @@ const ModeButtons: FC = () => {
         }
       >
         <a href="/preview">
-          <button
-              className="mr-2 flex h-12 w-40 justify-center rounded-3xl border-2 border-black bg-green-400 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom">
+          <button className="mr-2 flex h-12 w-40 justify-center rounded-3xl border-2 border-black bg-green-400 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom">
             Preview ↗
           </button>
         </a>

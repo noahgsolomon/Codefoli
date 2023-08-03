@@ -1,4 +1,4 @@
-import {FC} from "react";
+import { FC } from "react";
 import UserData from "Type/UserData.tsx";
 import HomeData from "Type/HomeData.tsx";
 import HomeMainP from "./HomeMainP.tsx";
@@ -9,16 +9,12 @@ const HomeP: FC<{
   userData: UserData;
   pageData: HomeData;
 }> = ({ userData, pageData }) => {
-
   return (
-      <>
-        <HomeMainP pageData={pageData} />
-        <SectionsP
-            userData={userData}
-            pageData={pageData}
-        />
-        <ModeButtonsP />
-      </>
+    <>
+      <HomeMainP pageData={pageData} />
+      <SectionsP userData={userData} pageData={pageData} />
+      <ModeButtonsP />
+    </>
   );
 };
 

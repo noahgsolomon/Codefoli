@@ -14,17 +14,11 @@ const ContactP: FC<{
   }, []);
 
   return (
-      <>
-        <ContactMainP
-            pageData={pageData}
-            userData={userData}
-        />
-        <SectionsP
-            userData={userData}
-            pageData={pageData}
-        />
-        <ModeButtonsP />
-      </>
+    <>
+      <ContactMainP pageData={pageData} userData={userData} />
+      <SectionsP userData={userData} pageData={pageData} />
+      <ModeButtonsP />
+    </>
   );
 };
 

@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import HomeP from "./preview/pages/Home/HomeP.tsx";
 import HeaderP from "./preview/common/Components/Header/HeaderP.tsx";
 import UserData from "Type/UserData.tsx";
 import { authenticated } from "api/authenticateapi.tsx";
-import {getAbout, getContact, getHome, getProjectsPage, userDetails} from "api/userapi.tsx";
+import {
+  getAbout,
+  getContact,
+  getHome,
+  getProjectsPage,
+  userDetails,
+} from "api/userapi.tsx";
 import HomeData from "Type/HomeData.tsx";
 import AboutData from "Type/AboutData.tsx";
 import Loader from "Components/Loader/Loader.tsx";
@@ -12,6 +18,8 @@ import ContactData from "Type/ContactData.tsx";
 import ProjectsPageData from "Type/ProjectsPageData.tsx";
 import ContactP from "./preview/pages/Contact/ContactP.tsx";
 import ProjectsP from "./preview/pages/Projects/ProjectsP.tsx";
+import NotFound from "./NotFound.tsx";
+import ProjectP from "./preview/pages/Project/ProjectP.tsx";
 
 const PreviewApp: React.FC = () => {
   const [userData, setUserData] = useState<UserData>({
@@ -72,6 +80,16 @@ const PreviewApp: React.FC = () => {
     descriptionOne: "",
   });
 
+  const ProjectOr404 = () => {
+    const { slug } = useParams();
+
+    if (slug && userData.slugs.some((s) => s.slug === slug)) {
+      return <ProjectP userData={userData} />;
+    } else {
+      return <NotFound />;
+    }
+  };
+
   useEffect(() => {
     const authenticatedCheck = async () => {
       const fetchState = await authenticated();
@@ -119,11 +137,17 @@ const PreviewApp: React.FC = () => {
           path="/contact"
           element={<ContactP userData={userData} pageData={contactData} />}
         />
-        <Route path="/projects" element={<ProjectsP  userData={userData} pageData={projectsPageData}/>} />
+        <Route
+          path="/projects"
+          element={
+            <ProjectsP userData={userData} pageData={projectsPageData} />
+          }
+        />
         {/*<Route*/}
         {/*  path="/about"*/}
         {/*  element={<AboutP />}*/}
         {/*/>*/}
+        <Route path="/:slug" element={<ProjectOr404 />} />
       </Routes>
     </>
   );
