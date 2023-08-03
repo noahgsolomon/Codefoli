@@ -28,6 +28,7 @@ import {
 import Project from "Type/Project.tsx";
 import { useSpring, animated } from "react-spring";
 import ModeButtons from "Components/ModeButtons/ModeButtons.tsx";
+import ErrorStatus from "Components/ErrorStatus/ErrorStatus.tsx";
 
 const Project: FC<{
   userData: UserData;
@@ -80,6 +81,10 @@ const Project: FC<{
   const date = useMemo(() => Date.now(), []);
   const [imageHover, setImageHover] = useState(false);
   const [linkValue, setLinkValue] = useState("");
+  const [showError, setShowError] = useState<{
+    visible: boolean;
+    message: string;
+  }>({ visible: false, message: "" });
 
   const headerAnimation = useSpring({
     from: { opacity: 0, transform: "translate3d(0, -20px, 0)" },
@@ -285,6 +290,11 @@ const Project: FC<{
       console.log(data);
       if (data.status !== "OK") {
         setEdit(false);
+        if (data.status === "ERROR") {
+          setShowError({ visible: true, message: data.message });
+          setTimeout(() => setShowError({ visible: false, message: "" }), 3000);
+          return;
+        }
         return;
       }
 
@@ -305,6 +315,7 @@ const Project: FC<{
   return (
     <>
       <main>
+        {showError.visible && <ErrorStatus message={showError.message} />}
         <div className="container mx-auto my-20 max-w-screen-lg px-5">
           <section className="hero mb-8">
             <animated.div style={headerAnimation}>

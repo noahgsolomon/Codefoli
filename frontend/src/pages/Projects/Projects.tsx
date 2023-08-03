@@ -10,6 +10,7 @@ import ProjectCard from "./ProjectCard.tsx";
 import AddProjectCard from "./AddProjectCard.tsx";
 import { useSpring, animated } from "react-spring";
 import ModeButtons from "Components/ModeButtons/ModeButtons.tsx";
+import ErrorStatus from "Components/ErrorStatus/ErrorStatus.tsx";
 
 const Projects: FC<{
   pageData: ProjectsPageData;
@@ -27,6 +28,10 @@ const Projects: FC<{
     pageData.descriptionOne
   );
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [showError, setShowError] = useState<{
+    visible: boolean;
+    message: string;
+  }>({ visible: false, message: "" });
 
   const headerAnimation = useSpring({
     from: { opacity: 0, transform: "translate3d(20px, 0, 0)" },
@@ -66,6 +71,7 @@ const Projects: FC<{
   return (
     <>
       <main>
+        {showError.visible && <ErrorStatus message={showError.message} />}
         <div className="container mx-auto my-20 max-w-screen-lg px-5">
           <section>
             <animated.div style={headerAnimation}>
@@ -150,6 +156,7 @@ const Projects: FC<{
                     key={id}
                     languages={languages}
                     slug={slug}
+                    setShowError={setShowError}
                   />
                 );
               }

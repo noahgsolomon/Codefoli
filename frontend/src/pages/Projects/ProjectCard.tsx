@@ -28,7 +28,17 @@ const ProjectCard: FC<{
   id: string;
   languages: string[];
   slug: string;
-}> = ({ title, description, image, setUserData, languages, id, slug }) => {
+  setShowError: Dispatch<SetStateAction<{ visible: boolean; message: string }>>;
+}> = ({
+  title,
+  description,
+  image,
+  setUserData,
+  languages,
+  id,
+  slug,
+  setShowError,
+}) => {
   const [hovered, setHovered] = useState(false);
   const [removeHover, setRemoveHover] = useState(false);
   const imageFileInput = useRef<HTMLInputElement | null>(null);
@@ -80,6 +90,11 @@ const ProjectCard: FC<{
 
       if (data.status !== "OK") {
         setEdit(false);
+        if (data.status === "ERROR") {
+          setShowError({ visible: true, message: data.message });
+          setTimeout(() => setShowError({ visible: false, message: "" }), 3000);
+          return;
+        }
         return;
       }
 

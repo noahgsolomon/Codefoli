@@ -10,6 +10,7 @@ import {
 import PageType from "Type/Pages.tsx";
 import { removeSection } from "Components/Sections/api/sectionapi.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
+import ErrorStatus from "Components/ErrorStatus/ErrorStatus.tsx";
 
 const StorySection: React.FC<{
   page: PageType;
@@ -48,6 +49,10 @@ const StorySection: React.FC<{
   const [StoryHover, setStoryHover] = useState<boolean>(false);
   const [removeStory, setRemoveStory] = useState<boolean>(false);
   const date = useMemo(() => Date.now(), []);
+  const [showError, setShowError] = useState<{
+    visible: boolean;
+    message: string;
+  }>({ visible: false, message: "" });
 
   const handleDescriptionOneSubmit = async () => {
     const updateDescription = await updateDescriptionOneStory(
@@ -174,6 +179,11 @@ const StorySection: React.FC<{
 
       if (data.status !== "OK") {
         setEdit(false);
+        if (data.status === "ERROR") {
+          setShowError({ visible: true, message: data.message });
+          setTimeout(() => setShowError({ visible: false, message: "" }), 3000);
+          return;
+        }
         return;
       }
 
@@ -239,6 +249,7 @@ const StorySection: React.FC<{
       onMouseEnter={() => setStoryHover(true)}
       onMouseLeave={() => setStoryHover(false)}
     >
+      {showError.visible && <ErrorStatus message={showError.message} />}
       {removeStory && (
         <div
           className={` absolute inset-0 z-10 bg-red-300 opacity-25 transition-all`}

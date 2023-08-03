@@ -17,6 +17,7 @@ import {
   updateJobStartDate,
 } from "api/userapi.tsx";
 import Work from "Type/Work.tsx";
+import ErrorStatus from "Components/ErrorStatus/ErrorStatus.tsx";
 const JobCard: FC<{
   companyTitle: string;
   role: string;
@@ -71,6 +72,10 @@ const JobCard: FC<{
   const imageFileInput = useRef<HTMLInputElement | null>(null);
   const [imageEdit, setImageEdit] = useState<boolean>(false);
   const date = useMemo(() => Date.now(), []);
+  const [showError, setShowError] = useState<{
+    visible: boolean;
+    message: string;
+  }>({ visible: false, message: "" });
 
   const handleJobOrderChange = async (from: number, to: number) => {
     const jobOrderChangeFetch = await jobOrderChange(from, to);
@@ -119,6 +124,11 @@ const JobCard: FC<{
 
       if (data.status !== "OK") {
         setEdit(false);
+        if (data.status === "ERROR") {
+          setShowError({ visible: true, message: data.message });
+          setTimeout(() => setShowError({ visible: false, message: "" }), 3000);
+          return;
+        }
         return;
       }
 
@@ -254,6 +264,7 @@ const JobCard: FC<{
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
+      {showError.visible && <ErrorStatus message={showError.message} />}
       {removeJobHover && (
         <div
           className={`absolute inset-0 z-10 bg-red-300 opacity-25 transition-all`}

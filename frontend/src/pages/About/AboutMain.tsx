@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import Marquee from "Components/Marquee/Marquee.tsx";
 import UserData from "Type/UserData.tsx";
 import { useSpring, animated } from "react-spring";
+import ErrorStatus from "Components/ErrorStatus/ErrorStatus.tsx";
 
 const AboutMain: React.FC<{
   userData: UserData;
@@ -45,6 +46,10 @@ const AboutMain: React.FC<{
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const headerTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const date = useMemo(() => Date.now(), []);
+  const [showError, setShowError] = useState<{
+    visible: boolean;
+    message: string;
+  }>({ visible: false, message: "" });
 
   const headerAnimation = useSpring({
     from: { opacity: 0, transform: "translate3d(-20px, 0, 0)" },
@@ -86,6 +91,11 @@ const AboutMain: React.FC<{
 
       if (data.status !== "OK") {
         setEdit(false);
+        if (data.status === "ERROR") {
+          setShowError({ visible: true, message: data.message });
+          setTimeout(() => setShowError({ visible: false, message: "" }), 3000);
+          return;
+        }
         return;
       }
 
@@ -148,6 +158,7 @@ const AboutMain: React.FC<{
   return (
     <>
       <div className="container mx-auto my-20 max-w-screen-lg px-5">
+        {showError.visible && <ErrorStatus message={showError.message} />}
         <section className="about mb-20 grid grid-cols-2 justify-center gap-10 md:h-[400px] md:grid-cols-5">
           <animated.div
             style={headerAnimation}

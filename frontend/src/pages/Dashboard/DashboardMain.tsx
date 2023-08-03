@@ -6,6 +6,7 @@ import {
 } from "./dashboardapi.tsx";
 import { useSpring, animated } from "react-spring";
 import HomeData from "Type/HomeData.tsx";
+import ErrorStatus from "Components/ErrorStatus/ErrorStatus.tsx";
 
 const DashboardMain: React.FC<{
   pageData: HomeData;
@@ -25,6 +26,10 @@ const DashboardMain: React.FC<{
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const date = useMemo(() => Date.now(), []);
+  const [showError, setShowError] = useState<{
+    visible: boolean;
+    message: string;
+  }>({ visible: false, message: "" });
 
   useEffect(() => {
     if (headerOneEdit && headerOneTextareaRef.current) {
@@ -101,6 +106,11 @@ const DashboardMain: React.FC<{
 
       if (data.status !== "OK") {
         setImageLoading(false);
+        if (data.status === "ERROR") {
+          setShowError({ visible: true, message: data.message });
+          setTimeout(() => setShowError({ visible: false, message: "" }), 3000);
+          return;
+        }
         return;
       }
 
@@ -117,6 +127,7 @@ const DashboardMain: React.FC<{
 
   return (
     <div className="container mx-auto px-6">
+      {showError.visible && <ErrorStatus message={showError.message} />}
       <div className="flex flex-col lg:flex-row xl:mx-auto xl:justify-center">
         <animated.div style={headerAnimation}>
           <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center justify-center font-bold xl:mt-32">
