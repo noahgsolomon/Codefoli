@@ -14,7 +14,7 @@ const StorySectionP: FC<{
                     <h2 className="mb-8 text-4xl font-bold text-white transition-all md:text-5xl md:leading-tight">
                         {details.headerOne}
                     </h2>
-                    <p className=" text-lg font-semibold text-white transition-all hover:opacity-50">
+                    <p className=" text-lg font-semibold text-white transition-all">
                         {details.descriptionOne}
                     </p>
                     <div className="my-5">

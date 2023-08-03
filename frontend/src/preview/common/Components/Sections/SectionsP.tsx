@@ -1,15 +1,15 @@
 import {FC} from "react";
-import HomeData from "Type/HomeData.tsx";
 import UserData from "Type/UserData.tsx";
-import SkillSectionP from "../../common/Components/Sections/Skills/SkillSectionP.tsx";
-import StorySectionP from "../../common/Components/Sections/Story/StorySectionP.tsx";
-import ResumeSectionP from "../../common/Components/Sections/Resume/ResumeSectionP.tsx";
-import FAQSectionP from "../../common/Components/Sections/FAQ/FaqSectionP.tsx";
-import ValueSectionP from "../../common/Components/Sections/Value/ValueSectionP.tsx";
+import SkillSectionP from "./Skills/SkillSectionP.tsx";
+import StorySectionP from "./Story/StorySectionP.tsx";
+import ResumeSectionP from "./Resume/ResumeSectionP.tsx";
+import FAQSectionP from "./FAQ/FaqSectionP.tsx";
+import ValueSectionP from "./Value/ValueSectionP.tsx";
+import AnyPageData from "Type/AnyPageData.tsx";
 
 
-const HomeSectionsP: FC<{
-    pageData: HomeData;
+const SectionsP: FC<{
+    pageData: AnyPageData;
     userData: UserData;
 }> = ({pageData, userData}) => {
 
@@ -83,4 +83,4 @@ const HomeSectionsP: FC<{
     );
 };
 
-export default HomeSectionsP;
+export default SectionsP;

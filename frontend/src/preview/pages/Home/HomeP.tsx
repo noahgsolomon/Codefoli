@@ -2,8 +2,8 @@ import {FC} from "react";
 import UserData from "Type/UserData.tsx";
 import HomeData from "Type/HomeData.tsx";
 import HomeMainP from "./HomeMainP.tsx";
-import HomeSectionsP from "./HomeSectionsP.tsx";
 import ModeButtonsP from "../../common/Components/ModeButtons/ModeButtonsP.tsx";
+import SectionsP from "../../common/Components/Sections/SectionsP.tsx";
 
 const HomeP: FC<{
   userData: UserData;
@@ -13,7 +13,7 @@ const HomeP: FC<{
   return (
       <>
         <HomeMainP pageData={pageData} />
-        <HomeSectionsP
+        <SectionsP
             userData={userData}
             pageData={pageData}
         />
