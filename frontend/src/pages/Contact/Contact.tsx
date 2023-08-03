@@ -4,7 +4,7 @@ import ContactData from "Type/ContactData.tsx";
 import UserData from "Type/UserData.tsx";
 import ContactSections from "./ContactSections.tsx";
 import ContactMain from "./ContactMain.tsx";
-import ModeButtons from "../../ModeButtons.tsx";
+import ModeButtons from "Components/ModeButtons/ModeButtons.tsx";
 
 const Contact: FC<{
   pageData: ContactData;

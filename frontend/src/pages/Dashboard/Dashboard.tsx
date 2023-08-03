@@ -4,7 +4,7 @@ import HomeData from "Type/HomeData.tsx";
 import UserData from "Type/UserData.tsx";
 import DashboardSections from "./DashboardSections.tsx";
 import DashboardMain from "./DashboardMain.tsx";
-import ModeButtons from "../../ModeButtons.tsx";
+import ModeButtons from "Components/ModeButtons/ModeButtons.tsx";
 
 const Dashboard: React.FC<{
   pageData: HomeData;

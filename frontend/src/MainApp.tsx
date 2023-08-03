@@ -54,6 +54,7 @@ const MainApp: React.FC = () => {
         image: "",
         overview: "",
         platforms: "",
+        link: "",
       },
     ],
   });

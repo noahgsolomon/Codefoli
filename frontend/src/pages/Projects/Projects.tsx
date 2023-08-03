@@ -9,7 +9,7 @@ import {
 import ProjectCard from "./ProjectCard.tsx";
 import AddProjectCard from "./AddProjectCard.tsx";
 import { useSpring, animated } from "react-spring";
-import ModeButtons from "../../ModeButtons.tsx";
+import ModeButtons from "Components/ModeButtons/ModeButtons.tsx";
 
 const Projects: FC<{
   pageData: ProjectsPageData;

@@ -138,10 +138,39 @@ const updateProjectPlatforms = async (slug: string, platforms: string) => {
   }
 };
 
+const updateProjectLink = async (slug: string, link: string) => {
+  const model = {
+    slug: slug,
+    content: link,
+  };
+  try {
+    const response = await fetch(
+        `http://localhost:8080/project-content/link`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(model),
+          credentials: "include",
+        }
+    );
+
+    const responseJson = await response.json();
+    if (responseJson.status === "OK") {
+      return responseJson;
+    } else {
+      console.log(responseJson.message);
+      return responseJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export {
   updateProjectHeader,
   updateProjectAbout,
   updateProjectOverview,
   updateProjectDescription,
   updateProjectPlatforms,
+  updateProjectLink
 };
