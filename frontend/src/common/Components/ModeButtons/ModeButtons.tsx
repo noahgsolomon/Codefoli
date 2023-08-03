@@ -49,9 +49,12 @@ const ModeButtons: FC = () => {
           "flex flex-row rounded-3xl border-2 border-black bg-white px-4 py-3 shadow-custom"
         }
       >
-        <button className="mr-2 flex h-12 w-40 justify-center rounded-3xl border-2 border-black bg-green-400 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom">
-          Preview ↗
-        </button>
+        <a href="/preview">
+          <button
+              className="mr-2 flex h-12 w-40 justify-center rounded-3xl border-2 border-black bg-green-400 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom">
+            Preview ↗
+          </button>
+        </a>
         <button className="flex h-12 w-40 justify-center rounded-3xl border-2 border-black bg-blue-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom">
           Deploy <span className={"text-2xl text-white"}>&nbsp; ✈</span>
         </button>
