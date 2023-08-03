@@ -4,7 +4,7 @@ import UserData from "Type/UserData.tsx";
 import AboutData from "Type/AboutData.tsx";
 import AboutSections from "./AboutSections.tsx";
 import AboutMain from "./AboutMain.tsx";
-import ModeButtons from "../../ModeButtons.tsx";
+import ModeButtons from "Components/ModeButtons/ModeButtons.tsx";
 
 const About: React.FC<{
   userData: UserData;

@@ -34,6 +34,7 @@ public class ProjectContent {
     private String description;
     private String image;
     private String platforms;
+    private String link;
 
     public ProjectContent(Users users, Projects project, String header, String about, String overview, String description, String image, String platforms) {
         this.users = users;
@@ -44,5 +45,18 @@ public class ProjectContent {
         this.description = description;
         this.image = image;
         this.platforms = platforms;
+        this.link = "https://github.com/noahgsolomon/Codefolio";
+    }
+
+    public ProjectContent(Users users, Projects project, String header, String about, String overview, String description, String image, String platforms, String link) {
+        this.users = users;
+        this.project = project;
+        this.header = header;
+        this.about = about;
+        this.overview = overview;
+        this.description = description;
+        this.image = image;
+        this.platforms = platforms;
+        this.link = link;
     }
 }

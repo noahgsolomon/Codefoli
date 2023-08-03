@@ -40,4 +40,9 @@ public class ProjectContentController {
     public ResponseEntity<Response> updatePlatforms(Principal principal, @RequestBody ProjectContentUpdateRequestModel content) {
         return projectContentService.updatePlatforms(principal, content);
     }
+
+    @PutMapping("/project-content/link")
+    public ResponseEntity<Response> updateLink(Principal principal, @RequestBody ProjectContentUpdateRequestModel content) {
+        return projectContentService.updateLink(principal, content);
+    }
 }

@@ -127,4 +127,25 @@ public class ProjectContentService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
         }
     }
+
+    public ResponseEntity<Response> updateLink(Principal principal, ProjectContentUpdateRequestModel content) {
+        try {
+            Users user = getAuthenticatedUser(principal);
+            Optional<Projects> project = projectsRepository.findByUsersAndSlug(user, content.slug());
+            if (project.isEmpty()){
+                return ResponseEntity.badRequest().body(new Response(StatusType.ERROR, "Project not found", null));
+            }
+            Optional<ProjectContent> projectContent = projectContentRepository.findByProjectAndUsers(project.get(), user);
+            if (projectContent.isEmpty()){
+                return ResponseEntity.badRequest().body(new Response(StatusType.ERROR, "Project not found", null));
+            }
+            projectContent.get().setLink(content.content());
+            projectContentRepository.save(projectContent.get());
+            return ResponseEntity.ok(new Response(StatusType.OK, "Project link updated successfully", null));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
+        }
+    }
 }
