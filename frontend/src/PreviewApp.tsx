@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import HomeP from "./preview/pages/Home/HomeP.tsx";
-import ContactP from "./preview/pages/Contact/ContactP.tsx";
-import ProjectsP from "./preview/pages/Projects/ProjectsP.tsx";
-import AboutP from "./preview/pages/About/AboutP.tsx";
 import HeaderP from "./preview/common/Components/Header/HeaderP.tsx";
 import UserData from "Type/UserData.tsx";
 import { authenticated } from "api/authenticateapi.tsx";
@@ -12,11 +9,13 @@ import HomeData from "Type/HomeData.tsx";
 import AboutData from "Type/AboutData.tsx";
 import Loader from "Components/Loader/Loader.tsx";
 import ContactData from "Type/ContactData.tsx";
+import ProjectsPageData from "Type/ProjectsPageData.tsx";
 
 const PreviewApp: React.FC = () => {
   const [userData, setUserData] = useState<UserData>({
     name: "",
     email: "",
+    phone: "",
     company: "",
     location: "",
     profession: "",
@@ -26,7 +25,20 @@ const PreviewApp: React.FC = () => {
     role: "NEWBIE",
     about: "",
     services: [],
+    slugs: [
+      {
+        slug: "",
+        header: "",
+        description: "",
+        about: "",
+        image: "",
+        overview: "",
+        platforms: "",
+        link: "",
+      },
+    ],
   });
+
   const [loading, setLoading] = useState<boolean>(true);
   const [homeData, setHomeData] = useState<HomeData>({
     headerOne: "",
@@ -43,27 +55,28 @@ const PreviewApp: React.FC = () => {
     headerTwo: "",
     iconThree: "",
     descriptionOne: "",
+    descriptionTwo: "",
+    sections: [],
   });
 
   const [contactData, setContactData] = useState<ContactData>({
     headerOne: "",
     descriptionOne: "",
-    email: "",
-    phone: "",
-    headerTwo: "",
-    descriptionTwo: "",
-    faq: [
-      {
-        question: "",
-        answer: "",
-      },
-    ],
+    sections: [],
+  });
+
+  const [projectsPageData, setProjectsPageData] = useState<ProjectsPageData>({
+    headerOne: "",
+    descriptionOne: "",
   });
 
   useEffect(() => {
     const authenticatedCheck = async () => {
       const fetchState = await authenticated();
       if (fetchState) {
+        const user: UserData = await userDetails();
+        setUserData(user);
+        localStorage.setItem("role", user.role);
         const homeFetch = await getHome();
         if (homeFetch) {
           setHomeData(homeFetch);
@@ -76,9 +89,6 @@ const PreviewApp: React.FC = () => {
         if (contactFetch) {
           setContactData(contactFetch);
         }
-        const user: UserData = await userDetails();
-        setUserData(user);
-        localStorage.setItem("role", user.role);
       } else {
         localStorage.removeItem("role");
       }
@@ -99,15 +109,15 @@ const PreviewApp: React.FC = () => {
           path="/"
           element={<HomeP pageData={homeData} userData={userData} />}
         />
-        <Route
-          path="/contact"
-          element={<ContactP userData={userData} pageData={contactData} />}
-        />
-        <Route path="/projects" element={<ProjectsP />} />
-        <Route
-          path="/about"
-          element={<AboutP userData={userData} pageData={aboutData} />}
-        />
+        {/*<Route*/}
+        {/*  path="/contact"*/}
+        {/*  element={<ContactP userData={userData} pageData={contactData} />}*/}
+        {/*/>*/}
+        {/*<Route path="/projects" element={<ProjectsP />} />*/}
+        {/*<Route*/}
+        {/*  path="/about"*/}
+        {/*  element={<AboutP />}*/}
+        {/*/>*/}
       </Routes>
     </>
   );
