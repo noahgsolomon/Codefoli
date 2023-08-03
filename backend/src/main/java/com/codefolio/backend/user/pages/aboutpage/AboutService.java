@@ -41,6 +41,7 @@ public class AboutService {
                     aboutData.getHeaderTwo(),
                     aboutData.getIconThree(),
                     aboutData.getDescriptionOne(),
+                    aboutData.getDescriptionTwo(),
                     sectionDetails
                     );
 
@@ -111,4 +112,23 @@ public class AboutService {
         }
     }
 
+    public ResponseEntity<Response> updateDescriptionTwo(Principal principal, String descriptionTwo) {
+        try {
+            Users user = getAuthenticatedUser(principal);
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Response(StatusType.UNAUTHORIZED, "User not authenticated", null));
+            }
+            About aboutData = aboutRepository.findByUsers(user);
+            if (aboutData == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(StatusType.NOT_FOUND, "About data not found", null));
+            }
+            aboutData.setDescriptionTwo(descriptionTwo);
+            aboutRepository.save(aboutData);
+            return ResponseEntity.ok(new Response(StatusType.OK, "Description two updated successfully", descriptionTwo));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.print(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(StatusType.ERROR, "Internal server error", null));
+        }
+    }
 }

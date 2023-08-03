@@ -34,4 +34,9 @@ public class AboutController {
         return aboutService.updateDescriptionOne(principal, descriptionOne);
     }
 
+    @PutMapping("/about/description-two")
+    public ResponseEntity<Response> updateDescriptionTwo(Principal principal, @RequestBody String descriptionTwo) {
+        return aboutService.updateDescriptionTwo(principal, descriptionTwo);
+    }
+
 }

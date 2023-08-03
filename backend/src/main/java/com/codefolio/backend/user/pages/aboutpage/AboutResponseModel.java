@@ -10,6 +10,7 @@ public record AboutResponseModel(
         String headerTwo,
         String iconThree,
         String descriptionOne,
+        String descriptionTwo,
         List<Object> sections
 ) {
 }

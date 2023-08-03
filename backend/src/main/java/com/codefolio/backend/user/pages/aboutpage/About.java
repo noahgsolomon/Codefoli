@@ -27,6 +27,8 @@ public class About {
     private String iconThree;
     @Column(length = 1000)
     private String descriptionOne;
+    @Column(columnDefinition = "TEXT")
+    private String descriptionTwo;
 
     public About(
             Users users,
@@ -35,7 +37,9 @@ public class About {
             String iconTwo,
             String headerTwo,
             String iconThree,
-            String descriptionOne) {
+            String descriptionOne,
+            String descriptionTwo
+            ) {
         this.users = users;
         this.headerOne = headerOne;
         this.iconOne = iconOne;
@@ -43,5 +47,6 @@ public class About {
         this.headerTwo = headerTwo;
         this.iconThree = iconThree;
         this.descriptionOne = descriptionOne;
+        this.descriptionTwo = descriptionTwo;
     }
 }

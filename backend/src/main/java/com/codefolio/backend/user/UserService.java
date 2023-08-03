@@ -274,8 +274,9 @@ public class UserService {
             String aboutIconOne = "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b443e2bb8e12b5faf51a7_about-hero-rigth-image-paperfolio-webflow-template.png";
             String aboutIconTwo = "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b440128f648585c383865_about-hero-left-image-paperfolio-webflow-template.png";
             String aboutIconThree = "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b52d3639fb5250039e574_my-story-image-paperfolio-webflow-template.png";
+            String aboutDescriptionTwo = "Embarking on a journey fueled by curiosity and passion, I found solace in the world of code. From solving complex problems to creating user-friendly interfaces, every project has been a stepping stone in my development career. Continually learning and adapting, I've embraced new technologies and methodologies to build robust and efficient solutions. My path as a developer is more than a career; it's a lifelong pursuit of innovation, creativity, and technological advancement.";
 
-            About about = new About(user, aboutHeaderOne, aboutIconOne, aboutIconTwo, aboutHeaderTwo, aboutIconThree, aboutDescriptionOne);
+            About about = new About(user, aboutHeaderOne, aboutIconOne, aboutIconTwo, aboutHeaderTwo, aboutIconThree, aboutDescriptionOne, aboutDescriptionTwo);
             aboutRepository.save(about);
 
             String contactHeaderOne = "Contact me";
