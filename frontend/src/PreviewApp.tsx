@@ -4,12 +4,14 @@ import HomeP from "./preview/pages/Home/HomeP.tsx";
 import HeaderP from "./preview/common/Components/Header/HeaderP.tsx";
 import UserData from "Type/UserData.tsx";
 import { authenticated } from "api/authenticateapi.tsx";
-import { getAbout, getContact, getHome, userDetails } from "api/userapi.tsx";
+import {getAbout, getContact, getHome, getProjectsPage, userDetails} from "api/userapi.tsx";
 import HomeData from "Type/HomeData.tsx";
 import AboutData from "Type/AboutData.tsx";
 import Loader from "Components/Loader/Loader.tsx";
 import ContactData from "Type/ContactData.tsx";
 import ProjectsPageData from "Type/ProjectsPageData.tsx";
+import ContactP from "./preview/pages/Contact/ContactP.tsx";
+import ProjectsP from "./preview/pages/Projects/ProjectsP.tsx";
 
 const PreviewApp: React.FC = () => {
   const [userData, setUserData] = useState<UserData>({
@@ -89,6 +91,10 @@ const PreviewApp: React.FC = () => {
         if (contactFetch) {
           setContactData(contactFetch);
         }
+        const projectsPageFetch = await getProjectsPage();
+        if (projectsPageFetch) {
+          setProjectsPageData(projectsPageFetch);
+        }
       } else {
         localStorage.removeItem("role");
       }
@@ -109,11 +115,11 @@ const PreviewApp: React.FC = () => {
           path="/"
           element={<HomeP pageData={homeData} userData={userData} />}
         />
-        {/*<Route*/}
-        {/*  path="/contact"*/}
-        {/*  element={<ContactP userData={userData} pageData={contactData} />}*/}
-        {/*/>*/}
-        {/*<Route path="/projects" element={<ProjectsP />} />*/}
+        <Route
+          path="/contact"
+          element={<ContactP userData={userData} pageData={contactData} />}
+        />
+        <Route path="/projects" element={<ProjectsP  userData={userData} pageData={projectsPageData}/>} />
         {/*<Route*/}
         {/*  path="/about"*/}
         {/*  element={<AboutP />}*/}
