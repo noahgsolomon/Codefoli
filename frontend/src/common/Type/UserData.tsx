@@ -24,6 +24,7 @@ type UserData = {
     image: string;
     overview: string;
     platforms: string;
+    link: string;
   }[];
 };
 
