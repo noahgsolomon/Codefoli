@@ -4,7 +4,7 @@ import { useSpring, animated } from "react-spring";
 const ModeButtonsP: FC = () => {
   const [scrollingDown, setScrollingDown] = useState(false);
   const [prevScroll, setPrevScroll] = useState(window.scrollY);
-  const thresholdShow = 400;
+  const thresholdShow = 200;
   const thresholdHide = 0;
 
   useEffect(() => {

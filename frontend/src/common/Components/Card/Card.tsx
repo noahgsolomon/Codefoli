@@ -1,29 +1,30 @@
-import React from 'react'
-import { IconType } from 'react-icons'
+import { IconType } from "react-icons";
 
 type Props = {
-    ImageUrl?: string | IconType,
-    title?: string,
-    description?: string,
-}
+  ImageUrl?: string | IconType;
+  title?: string;
+  description?: string;
+};
 
 const Card = ({ ImageUrl, title, description }: Props) => {
-    return (
-        <div className='bg-white rounded-2xl flex flex-col items-center p-5 w-72 shadow shadow-sm space-y-5 mb-5  transition-all duration-300 hover:translate-y-1 hover:shadow-lg'>
-            {ImageUrl && (
-                typeof ImageUrl === 'string'?
-                <img
-                    className={`inline-block h-40 w-40 transform object-cover transition-all ease-in-out rounded-full border border-8 shadow-sm border-gray-50 shadow`}
-                    src={ImageUrl}
-                    alt=""
-                />:<ImageUrl size={40}/>
-            )}
-            <div className="content">
-                <h2 className="title text-2xl font-bold text-center mb-2">{title}</h2>
-                <p className="description text-base text-center">{description}</p>
-            </div>
-        </div>
-    )
-}
+  return (
+    <div className="mb-5 flex w-72 flex-col items-center space-y-5 rounded-2xl border-2 border-black  bg-white p-5 shadow-custom transition-all duration-300 hover:-translate-y-0.5 hover:shadow-customHover">
+      {ImageUrl &&
+        (typeof ImageUrl === "string" ? (
+          <img
+            className={`inline-block h-40 w-40 transform rounded-full border-8 border-gray-50 object-cover transition-all ease-in-out`}
+            src={ImageUrl}
+            alt=""
+          />
+        ) : (
+          <ImageUrl size={40} />
+        ))}
+      <div className="content">
+        <h2 className="title mb-2 text-center text-2xl font-bold">{title}</h2>
+        <p className="description text-center text-base">{description}</p>
+      </div>
+    </div>
+  );
+};
 
-export default Card
+export default Card;
