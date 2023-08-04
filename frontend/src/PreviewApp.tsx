@@ -18,9 +18,9 @@ import ContactData from "Type/ContactData.tsx";
 import ProjectsPageData from "Type/ProjectsPageData.tsx";
 import ContactP from "./preview/pages/Contact/ContactP.tsx";
 import ProjectsP from "./preview/pages/Projects/ProjectsP.tsx";
-import NotFound from "./NotFound.tsx";
 import ProjectP from "./preview/pages/Project/ProjectP.tsx";
 import AboutP from "./preview/pages/About/AboutP.tsx";
+import NotFoundP from "./preview/pages/NotFound/NotFoundP.tsx";
 
 const PreviewApp: React.FC = () => {
   const [userData, setUserData] = useState<UserData>({
@@ -87,7 +87,7 @@ const PreviewApp: React.FC = () => {
     if (slug && userData.slugs.some((s) => s.slug === slug)) {
       return <ProjectP userData={userData} />;
     } else {
-      return <NotFound />;
+      return <NotFoundP />;
     }
   };
 

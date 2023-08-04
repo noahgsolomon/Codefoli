@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 
-const NotFound: FC = () => {
+const NotFoundP: FC = () => {
   const warningAnimation = useSpring({
     from: { opacity: 0, transform: "translate3d(-20px, 0, 0)" },
     to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
@@ -40,7 +40,7 @@ const NotFound: FC = () => {
         <h1 className="mt-10 text-2xl font-bold md:text-4xl">Oops!</h1>
         <h1 className="mt-5 text-2xl font-bold md:text-4xl">Page Not Found</h1>
         <Link
-          to={"/dashboard"}
+          to={"/preview"}
           className="mt-10 rounded-xl bg-black px-8 py-2 font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-blue-500"
         >
           Go to homepage
@@ -56,4 +56,4 @@ const NotFound: FC = () => {
   );
 };
 
-export default NotFound;
+export default NotFoundP;
