@@ -74,7 +74,7 @@ const ContactMain: FC<{
               </div>
             </div>
           </animated.div>
-          <FormP />
+          <FormP userData={userData} />
         </div>
       </div>
     </main>
