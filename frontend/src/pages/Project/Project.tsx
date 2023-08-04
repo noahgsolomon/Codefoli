@@ -85,6 +85,7 @@ const Project: FC<{
     visible: boolean;
     message: string;
   }>({ visible: false, message: "" });
+  const [imageLoading, setImageLoading] = useState(false);
 
   const headerAnimation = useSpring({
     from: { opacity: 0, transform: "translate3d(0, -20px, 0)" },
@@ -275,6 +276,7 @@ const Project: FC<{
   ) => {
     if (!e.target.files) return;
     setEdit(true);
+    setImageLoading(true);
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append("file", file);
@@ -290,7 +292,9 @@ const Project: FC<{
       console.log(data);
       if (data.status !== "OK") {
         setEdit(false);
+        setImageLoading(false);
         if (data.status === "ERROR") {
+          setImageLoading(false);
           setShowError({ visible: true, message: data.message });
           setTimeout(() => setShowError({ visible: false, message: "" }), 3000);
           return;
@@ -305,8 +309,9 @@ const Project: FC<{
           [imageKey]: data.data.url + `?date=${new Date()}`,
         };
       });
-      setTimeout(() => setEdit(false), 500);
+      setTimeout(() => setImageLoading(false), 500);
     } catch (error) {
+      setImageLoading(false);
       setEdit(false);
       console.error("Error uploading file: ", error);
     }
@@ -383,7 +388,8 @@ const Project: FC<{
             </animated.div>
             <animated.div style={imageAnimation}>
               <div
-                className={`relative overflow-hidden rounded-lg border-2 border-black bg-white p-2 shadow-custom transition-all lg:h-[600px]`}
+                className={`relative overflow-hidden rounded-lg border-2 border-black bg-white p-2 shadow-custom transition-all lg:h-[600px]
+                ${imageLoading ? "opacity-0" : "opacity-100"}`}
                 onMouseEnter={() => {
                   setImageEdit(true);
                   setImageHover(true);

@@ -45,6 +45,7 @@ const StorySection: React.FC<{
   const bulletOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const bulletTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const bulletThreeTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [imageLoading, setImageLoading] = useState(false);
 
   const [StoryHover, setStoryHover] = useState<boolean>(false);
   const [removeStory, setRemoveStory] = useState<boolean>(false);
@@ -164,6 +165,7 @@ const StorySection: React.FC<{
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (!e.target.files) return;
+    setImageLoading(true);
     setEdit(true);
     const file = e.target.files[0];
     const formData = new FormData();
@@ -178,8 +180,10 @@ const StorySection: React.FC<{
       const data = await response.json();
 
       if (data.status !== "OK") {
+        setImageLoading(false);
         setEdit(false);
         if (data.status === "ERROR") {
+          setImageLoading(false);
           setShowError({ visible: true, message: data.message });
           setTimeout(() => setShowError({ visible: false, message: "" }), 3000);
           return;
@@ -201,9 +205,10 @@ const StorySection: React.FC<{
             : section
         ),
       }));
-      setTimeout(() => setEdit(false), 500);
+      setTimeout(() => setImageLoading(false), 500);
     } catch (error) {
       setEdit(false);
+      setImageLoading(false);
       console.error("Error uploading file: ", error);
     }
   };
@@ -433,7 +438,9 @@ const StorySection: React.FC<{
         </div>
         <div className="content-right flex items-center justify-center">
           <div
-            className={`image-wrapper relative mb-5 h-[400px] w-[400px] transition-all`}
+            className={`image-wrapper relative mb-5 h-[400px] w-[400px] transition-all ${
+              imageLoading ? "opacity-0" : "opacity-100"
+            }`}
             onMouseEnter={() => setImageOneEdit(true)}
             onMouseLeave={() => setImageOneEdit(false)}
             onClick={() =>

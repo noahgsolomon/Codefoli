@@ -76,6 +76,7 @@ const JobCard: FC<{
     visible: boolean;
     message: string;
   }>({ visible: false, message: "" });
+  const [imageLoading, setImageLoading] = useState<boolean>(false);
 
   const handleJobOrderChange = async (from: number, to: number) => {
     const jobOrderChangeFetch = await jobOrderChange(from, to);
@@ -108,6 +109,7 @@ const JobCard: FC<{
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (!e.target.files) return;
+    setImageLoading(true);
     setEdit(true);
     const file = e.target.files[0];
     const formData = new FormData();
@@ -124,7 +126,9 @@ const JobCard: FC<{
 
       if (data.status !== "OK") {
         setEdit(false);
+        setImageLoading(false);
         if (data.status === "ERROR") {
+          setImageLoading(false);
           setShowError({ visible: true, message: data.message });
           setTimeout(() => setShowError({ visible: false, message: "" }), 3000);
           return;
@@ -140,9 +144,10 @@ const JobCard: FC<{
             : job
         ),
       }));
-      setTimeout(() => setEdit(false), 500);
+      setTimeout(() => setImageLoading(false), 500);
     } catch (error) {
       setEdit(false);
+      setImageLoading(false);
       console.error("Error uploading file: ", error);
     }
   };
@@ -399,9 +404,9 @@ const JobCard: FC<{
           </div>
         </div>
         <div
-          className={
-            "relative mr-5 mt-5 h-[100px] w-[100px] rounded-full border-2 border-black"
-          }
+          className={`relative mr-5 mt-5 h-[100px] w-[100px] rounded-full border-2 border-black transition-all ${
+            imageLoading ? "opacity-0" : "opacity-100"
+          }`}
           onMouseEnter={() => setImageEdit(true)}
           onMouseLeave={() => setImageEdit(false)}
           onClick={() =>

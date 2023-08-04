@@ -50,6 +50,9 @@ const AboutMain: React.FC<{
     visible: boolean;
     message: string;
   }>({ visible: false, message: "" });
+  const [iconOneLoading, setIconOneLoading] = useState<boolean>(false);
+  const [iconTwoLoading, setIconTwoLoading] = useState<boolean>(false);
+  const [iconThreeLoading, setIconThreeLoading] = useState<boolean>(false);
 
   const headerAnimation = useSpring({
     from: { opacity: 0, transform: "translate3d(-20px, 0, 0)" },
@@ -73,10 +76,14 @@ const AboutMain: React.FC<{
     path: string,
     setEdit: React.Dispatch<React.SetStateAction<boolean>>,
     imageKey: keyof AboutData,
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: string
   ) => {
     if (!e.target.files) return;
     setEdit(true);
+    if (type === "iconOne") setIconOneLoading(true);
+    if (type === "iconTwo") setIconTwoLoading(true);
+    if (type === "iconThree") setIconThreeLoading(true);
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append("file", file);
@@ -91,6 +98,9 @@ const AboutMain: React.FC<{
 
       if (data.status !== "OK") {
         setEdit(false);
+        if (type === "iconOne") setIconOneLoading(false);
+        if (type === "iconTwo") setIconTwoLoading(false);
+        if (type === "iconThree") setIconThreeLoading(false);
         if (data.status === "ERROR") {
           setShowError({ visible: true, message: data.message });
           setTimeout(() => setShowError({ visible: false, message: "" }), 3000);
@@ -103,9 +113,16 @@ const AboutMain: React.FC<{
         ...pageData,
         [imageKey]: `${data.data.url}?timestamp=${new Date().getTime()}`,
       });
+      if (type === "iconOne") setTimeout(() => setIconOneLoading(false), 500);
+      if (type === "iconTwo") setTimeout(() => setIconTwoLoading(false), 500);
+      if (type === "iconThree")
+        setTimeout(() => setIconThreeLoading(false), 500);
       setTimeout(() => setEdit(false), 500);
     } catch (error) {
       setEdit(false);
+      if (type === "iconOne") setIconOneLoading(false);
+      if (type === "iconTwo") setIconTwoLoading(false);
+      if (type === "iconThree") setIconThreeLoading(false);
       console.error("Error uploading file: ", error);
     }
   };
@@ -236,7 +253,9 @@ const AboutMain: React.FC<{
           </animated.div>
           <animated.div
             style={imageAnimation}
-            className="image-wrapper relative order-2 h-[150px] w-[150px] text-center md:order-1 md:self-end"
+            className={`image-wrapper relative order-2 h-[150px] w-[150px] text-center md:order-1 md:self-end ${
+              iconOneLoading ? "opacity-0" : "opacity-100"
+            }`}
             onMouseEnter={() => setIconOneEdit(true)}
             onMouseLeave={() => setIconOneEdit(false)}
             onClick={() => {
@@ -253,7 +272,8 @@ const AboutMain: React.FC<{
                   "about-icon-one-upload",
                   setIconOneEdit,
                   "iconOne",
-                  e
+                  e,
+                  "iconOne"
                 );
               }}
             />
@@ -276,7 +296,9 @@ const AboutMain: React.FC<{
 
           <animated.div
             style={imageAnimation}
-            className="image-wrapper relative order-last h-[150px] w-[150px] text-center md:self-start"
+            className={`image-wrapper relative order-last h-[150px] w-[150px] text-center md:self-start ${
+              iconTwoLoading ? "opacity-0" : "opacity-100"
+            }`}
             onMouseEnter={() => setIconTwoEdit(true)}
             onMouseLeave={() => setIconTwoEdit(false)}
             onClick={() =>
@@ -293,7 +315,8 @@ const AboutMain: React.FC<{
                   "about-icon-two-upload",
                   setIconTwoEdit,
                   "iconTwo",
-                  e
+                  e,
+                  "iconTwo"
                 );
               }}
             />
@@ -348,7 +371,9 @@ const AboutMain: React.FC<{
               )}
             </div>
             <div
-              className="image-wrapper relative mb-5 h-60 w-full sm:mx-auto sm:h-[200px] sm:w-[300px] md:mx-0 md:h-[200px] md:w-[400px] lg:h-72 lg:w-[500px]"
+              className={`image-wrapper relative mb-5 h-60 w-full transition-all sm:mx-auto sm:h-[200px] sm:w-[300px] md:mx-0 md:h-[200px] md:w-[400px] lg:h-72 lg:w-[500px] ${
+                iconThreeLoading ? "opacity-0" : "opacity-100"
+              }`}
               onMouseEnter={() => setIconThreeEdit(true)}
               onMouseLeave={() => setIconThreeEdit(false)}
               onClick={() =>
@@ -365,7 +390,8 @@ const AboutMain: React.FC<{
                     "about-icon-three-upload",
                     setIconThreeEdit,
                     "iconThree",
-                    e
+                    e,
+                    "iconThree"
                   );
                 }}
               />

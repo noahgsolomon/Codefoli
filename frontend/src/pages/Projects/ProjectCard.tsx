@@ -55,6 +55,7 @@ const ProjectCard: FC<{
   const [languageHover, setLanguageHover] = useState(-1);
   const [addProjectLanguageState, setAddProjectLanguageState] = useState(false);
   const [languageAddValue, setLanguageAddValue] = useState("");
+  const [imageLoading, setImageLoading] = useState(false);
 
   const handleRemoveProject = async () => {
     const removeProjectFetch = await removeProject(id);
@@ -75,6 +76,7 @@ const ProjectCard: FC<{
   ) => {
     if (!e.target.files) return;
     setEdit(true);
+    setImageLoading(true);
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append("file", file);
@@ -89,8 +91,10 @@ const ProjectCard: FC<{
       const data = await response.json();
 
       if (data.status !== "OK") {
+        setImageLoading(false);
         setEdit(false);
         if (data.status === "ERROR") {
+          setImageLoading(false);
           setShowError({ visible: true, message: data.message });
           setTimeout(() => setShowError({ visible: false, message: "" }), 3000);
           return;
@@ -106,9 +110,10 @@ const ProjectCard: FC<{
             : project
         ),
       }));
-      setTimeout(() => setEdit(false), 500);
+      setTimeout(() => setImageLoading(false), 500);
     } catch (error) {
       setEdit(false);
+      setImageLoading(false);
       console.error("Error uploading file: ", error);
     }
   };
@@ -215,7 +220,8 @@ const ProjectCard: FC<{
         -
       </button>
       <div
-        className={`image-wrapper relative h-[400px] overflow-hidden rounded-t-lg transition-all`}
+        className={`image-wrapper relative h-[400px] overflow-hidden rounded-t-lg transition-all
+        ${imageLoading ? "opacity-0" : "opacity-100"}`}
         onMouseEnter={() => setImageEdit(true)}
         onMouseLeave={() => setImageEdit(false)}
         onClick={() => {
