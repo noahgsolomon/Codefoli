@@ -20,6 +20,7 @@ import ContactP from "./preview/pages/Contact/ContactP.tsx";
 import ProjectsP from "./preview/pages/Projects/ProjectsP.tsx";
 import NotFound from "./NotFound.tsx";
 import ProjectP from "./preview/pages/Project/ProjectP.tsx";
+import AboutP from "./preview/pages/About/AboutP.tsx";
 
 const PreviewApp: React.FC = () => {
   const [userData, setUserData] = useState<UserData>({
@@ -143,10 +144,10 @@ const PreviewApp: React.FC = () => {
             <ProjectsP userData={userData} pageData={projectsPageData} />
           }
         />
-        {/*<Route*/}
-        {/*  path="/about"*/}
-        {/*  element={<AboutP />}*/}
-        {/*/>*/}
+        <Route
+          path="/about"
+          element={<AboutP userData={userData} pageData={aboutData} />}
+        />
         <Route path="/:slug" element={<ProjectOr404 />} />
       </Routes>
     </>
