@@ -158,7 +158,7 @@ const MainApp: React.FC = () => {
     return <Loader />;
   }
 
-  console.log(projectsPageData);
+  console.log(contactData);
 
 
 
@@ -217,6 +217,7 @@ const MainApp: React.FC = () => {
         />
         <Route path="/404" element={<NotFound />} />
         <Route path="/:slug" element={<ProjectOr404 />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );

@@ -149,6 +149,7 @@ const PreviewApp: React.FC = () => {
           element={<AboutP userData={userData} pageData={aboutData} />}
         />
         <Route path="/:slug" element={<ProjectOr404 />} />
+        <Route path="*" element={<NotFoundP />} />
       </Routes>
     </>
   );

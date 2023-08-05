@@ -1,0 +1,108 @@
+/* Use Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Onest-Regular";
+  src: url("./assets/fonts/Onest-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Onest-Bold";
+  src: url("./assets/fonts/Onest-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Onest-Black";
+  src: url("./assets/fonts/Onest-Black.ttf") format("truetype");
+}
+
+* {
+  @apply text-gray-800;
+}
+
+body {
+  @apply bg-gray-50
+    font-sans
+    text-lg
+    font-medium
+    leading-loose
+    text-gray-800;
+  font-family: "Onest-Regular", sans-serif;
+}
+
+.font-bold {
+  font-family: "Onest-Bold", sans-serif;
+}
+
+.font-extra-bold {
+  font-family: "Onest-Black", sans-serif;
+}
+
+/*
+src/
+  assets/
+    Onest-Black.ttf
+    Onest-Bold.ttf
+    Onest-ExtraBold.ttf
+    Onest-Regular.ttf
+  common/
+    Header/
+      Header.tsx
+    Marquee
+      Marquee.tsx
+    Sections/
+      FAQ/
+        FaqAccordion.tsx
+        FaqSection.tsx
+      Resume/
+        JobCard.tsx
+        ResumeSection.tsx
+      Skill/
+        ServiceCard.tsx
+        SkillSection.tsx
+      Story/
+        StorySection.tsx
+      Value/
+        ValueCard.tsx
+        ValueSection.tsx
+      Sections.tsx
+    types/
+      AboutData.tsx
+      ContactData.tsx
+      HomeData.tsx
+      ProjectsPageData.tsx
+      Section.tsx
+      SectionData.tsx
+      Services.tsx
+      UserData.tsx
+      Values.tsx
+    util
+      COLORS.ts
+  pages/
+    About/
+      About.tsx
+    Contact/
+      Contact.tsx
+      Form.tsx
+    Home/
+      Home.tsx
+    Project/
+      Project.tsx
+    Projects/
+      Projects.tsx
+      ProjectCard.tsx
+  App.css
+  App.tsx
+  main.tsx
+  NotFound.tsx
+.eslintrc.cjs
+index.html
+package.json
+postcss.config.js
+tailwind.config.js
+tsconfig.json
+tsconfig.node.json
+vite.config.ts
+ */

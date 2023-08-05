@@ -40,6 +40,7 @@ import com.codefolio.backend.user.skills.Skills;
 import com.codefolio.backend.user.skills.SkillsRepository;
 import com.codefolio.backend.user.skills.SkillsType;
 import com.codefolio.backend.user.workhistory.Work;
+import com.codefolio.backend.user.workhistory.WorkModel;
 import com.codefolio.backend.user.workhistory.WorkRepository;
 import com.codefolio.backend.util.Response;
 import com.codefolio.backend.util.StatusType;
@@ -117,6 +118,20 @@ public class UserService {
                 ));
                 slugList.add(new SlugUserDetailsResponseModel(project.getSlug(), projectContent.getHeader(), projectContent.getDescription(), projectContent.getAbout(), projectContent.getImage(), projectContent.getOverview(), projectContent.getPlatforms(), projectContent.getLink()));
             }
+
+            List<SlugUserDetailsResponseModel> slugModelList = slugList.stream().map(slug ->
+                    new SlugUserDetailsResponseModel(
+                            slug.slug(),
+                            slug.header(),
+                            slug.image(),
+                            slug.about(),
+                            slug.image(),
+                            slug.overview(),
+                            slug.platforms(),
+                            slug.link()
+                    )
+            ).toList();
+
             List<Skills> userSkills = skillsRepository.findAllByUsers(user);
             List<Services> userServices = servicesRepository.findAllByUsers(user);
 
@@ -128,6 +143,19 @@ public class UserService {
                     .map(Services::getService)
                     .toArray(ServicesType[]::new);
 
+            List<WorkModel> workModelList = userWorks.stream().map(work -> {
+                WorkModel workModel = new WorkModel();
+                workModel.id = work.getId();
+                workModel.company = work.getCompany();
+                workModel.position = work.getPosition();
+                workModel.startDate = work.getStartDate();
+                workModel.endDate = work.getEndDate();
+                workModel.description = work.getDescription();
+                workModel.orderId = work.getOrderId();
+                workModel.image = work.getImage();
+                return workModel;
+            }).toList();
+
             UserHomeResponseModel userHomeResponseModel = new UserHomeResponseModel(
                     user.getName(),
                     user.getEmail(),
@@ -137,11 +165,11 @@ public class UserService {
                     user.getAbout(),
                     userSkillsTypes,
                     userProjects.toArray(new ProjectsResponseModel[0]),
-                    userWorks.toArray(new Work[0]),
+                    workModelList.toArray(new WorkModel[0]),
                     user.getRole().toString(),
                     user.getProfession(),
                     userServicesTypes,
-                    slugList
+                    slugModelList.toArray(new SlugUserDetailsResponseModel[0])
             );
 
             return ResponseEntity.ok(new Response(StatusType.OK, "User details fetched successfully", userHomeResponseModel));
