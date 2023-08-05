@@ -1,7 +1,6 @@
-import {FC} from "react";
-
+import { FC } from "react";
 const Marquee: FC<{
-    items: string[];
+  items: string[];
 }> = ({ items }) => {
   return (
     <div className="mt-32 overflow-x-hidden bg-black">

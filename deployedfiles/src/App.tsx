@@ -3,6 +3,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./common/Header/Header.tsx";
 import Home from "./pages/Home/Home.tsx";
 import "./App.css";
+import About from "./pages/About/About.tsx";
+import { HomeData } from "./common/types/HomeData.tsx";
+import { AboutData } from "./common/types/AboutData.tsx";
 
 const App: FC = () => {
   //
@@ -137,13 +140,68 @@ const App: FC = () => {
     []
   );
 
+  const aboutData = useMemo(
+    () => ({
+      headerOne: "Hello, I'm Noah Solomon",
+      iconOne:
+        "https://codefolioimagebucket.s3.amazonaws.com/26-about-icon-one",
+      iconTwo:
+        "https://codefolioimagebucket.s3.amazonaws.com/26-about-icon-two",
+      headerTwo: "My story as a designer",
+      iconThree:
+        "https://codefolioimagebucket.s3.amazonaws.com/26-about-icon-three",
+      descriptionOne: "Something about me",
+      descriptionTwo:
+        "Embarking on a journey fueled by curiosity and passion, I found solace in the world of code. From solving complex problems to creating user-friendly interfaces, every project has been a stepping stone in my development career. Continually learning and adapting, I've embraced new technologies and methodologies to build robust and efficient solutions. My path as a developer is more than a career; it's a lifelong pursuit of innovation, creativity, and technological advancement.",
+      sections: [
+        {
+          details: {
+            headerOne: "Designing since I was 20 years old",
+            descriptionOne:
+              "I started designing when I was ? years old. My first designs were for my school projects. I was fascinated by the idea of creating something that people can interact with. I studied design for 5 years in college and have been working as a designer for 3 years.",
+            bulletOne: "Passionate about design from a young age.",
+            bulletTwo: "Five years of design education, three professionally.",
+            bulletThree: "Strong advocate of user-centered design.",
+            imageOne:
+              "https://codefolioimagebucket.s3.amazonaws.com/26-about-image-one",
+            order: 1,
+          },
+          type: "STORY",
+        },
+        {
+          details: {
+            headerOne: "Take a look at my resume",
+            order: 2,
+          },
+          type: "RESUME",
+        },
+        {
+          details: {
+            headerOne: "The core values that drive my work",
+            descriptionOne:
+              "Steering the helm of my career is a deeply ingrained set of core values. These principles not only guide my work ethic but also shape the way I view and approach design. Let's delve into the convictions that drive my professional journey.",
+            values: [
+              { value: "HARD_WORK" },
+              { value: "TRANSPARENCY" },
+              { value: "INNOVATION" },
+              { value: "GROWTH" },
+            ],
+            order: 3,
+          },
+          type: "VALUE",
+        },
+      ],
+    }),
+    []
+  );
+
   return (
     <BrowserRouter>
       <Header />
       <Routes>
         <Route
           path="/"
-          element={<Home userData={userData} pageData={homeData} />}
+          element={<Home userData={userData} pageData={homeData as HomeData} />}
         />
         {/*<Route*/}
         {/*    path="/contact"*/}
@@ -155,10 +213,12 @@ const App: FC = () => {
         {/*        <Projects />*/}
         {/*    }*/}
         {/*/>*/}
-        {/*<Route*/}
-        {/*    path="/about"*/}
-        {/*    element={<About />}*/}
-        {/*/>*/}
+        <Route
+          path="/about"
+          element={
+            <About pageData={aboutData as AboutData} userData={userData} />
+          }
+        />
         {/*<Route path="/:slug" element={<ProjectOr404 />} />*/}
       </Routes>
     </BrowserRouter>

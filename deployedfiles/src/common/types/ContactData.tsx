@@ -1,11 +1,9 @@
 import { Section } from "./Section.tsx";
 
-interface HomeData {
+type ContactData = {
   headerOne: string;
   descriptionOne: string;
-  headerTwo: string;
-  profileImage: string;
   sections: Section[];
-}
+};
 
-export type { HomeData };
+export default ContactData;
