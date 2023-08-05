@@ -33,19 +33,19 @@ const Header: React.FC<{ authenticated: boolean }> = ({ authenticated }) => {
               <div className="lg:mx-10">
                 <Link
                   to="/dashboard"
-                  className="mx-2 py-1 text-lg no-underline transition-all hover:text-blue-500 md:mx-10"
+                  className="mx-2 py-1 sm:text-lg  text-sm no-underline transition-all hover:text-blue-500 md:mx-10"
                 >
                   Dashboard
                 </Link>
                 <Link
                   to="/about"
-                  className="mx-2 py-1 text-lg no-underline transition-all hover:text-blue-500 md:mx-10"
+                  className="mx-2 py-1 sm:text-lg text-sm  no-underline transition-all hover:text-blue-500 md:mx-10"
                 >
                   About
                 </Link>
                 <Link
                   to="/projects"
-                  className="mx-2 py-1 text-lg no-underline transition-all hover:text-blue-500 md:mx-10"
+                  className="mx-2 py-1 sm:text-lg text-sm no-underline transition-all hover:text-blue-500 md:mx-10"
                 >
                   Projects
                 </Link>
