@@ -1,5 +1,6 @@
 import { useState, useEffect, FC } from "react";
 import { useSpring, animated } from "react-spring";
+import {deploy} from "api/deployapi.tsx";
 
 const ModeButtons: FC = () => {
   const [scrollingDown, setScrollingDown] = useState(false);
@@ -54,7 +55,9 @@ const ModeButtons: FC = () => {
             Preview ↗
           </button>
         </a>
-        <button className="flex h-12 w-40 justify-center rounded-3xl border-2 border-black bg-blue-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom">
+        <button className="flex h-12 w-40 justify-center rounded-3xl border-2 border-black bg-blue-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+        onClick={async () => await deploy()}
+        >
           Deploy <span className={"text-2xl text-white"}>&nbsp; ✈</span>
         </button>
       </div>

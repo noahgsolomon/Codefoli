@@ -138,7 +138,7 @@ const ContactMain: FC<{
                     await handleDescriptionOneSubmit();
                   }
                 }}
-                className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg leading-snug outline-none focus:outline-none focus:ring-0 md:text-left"
+                className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg leading-snug outline-none focus:outline-none focus:ring-0 text-center md:text-left"
                 autoFocus
                 onFocus={(e) => e.currentTarget.select()}
                 maxLength={250}
@@ -146,7 +146,7 @@ const ContactMain: FC<{
               />
             ) : (
               <p
-                className="cursor-pointer select-none transition-all hover:opacity-50 md:text-left"
+                className="cursor-pointer select-none text-center transition-all hover:opacity-50 md:text-left"
                 onClick={() => setDescriptionOneEdit(true)}
               >
                 {pageData.descriptionOne}

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import {FC, useEffect, useState} from "react";
 import { Link, useLocation } from "react-router-dom";
 
-const Header: React.FC<{ authenticated: boolean }> = ({ authenticated }) => {
+const Header: FC<{ authenticated: boolean }> = ({ authenticated }) => {
   const location = useLocation();
   const blank = ["/setup"].includes(location.pathname);
   const [loading, setLoading] = useState(true);
