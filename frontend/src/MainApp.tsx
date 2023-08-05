@@ -158,6 +158,9 @@ const MainApp: React.FC = () => {
     return <Loader />;
   }
 
+  console.log(userData)
+  console.log(homeData)
+
   return (
     <>
       <Github />

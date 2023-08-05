@@ -1,9 +1,9 @@
 import { FC } from "react";
-import UserData from "Type/UserData.tsx";
-import { ResumeType } from "Type/Section.tsx";
-import JobCardP from "./JobCard/JobCardP.tsx";
+import { ResumeType } from "../../types/Section.tsx";
+import { UserData } from "../../types/UserData.tsx";
+import JobCard from "./JobCard.tsx";
 
-const ResumeSectionP: FC<{
+const ResumeSection: FC<{
   details: ResumeType;
   userData: UserData;
 }> = ({ details, userData }) => {
@@ -17,7 +17,7 @@ const ResumeSectionP: FC<{
           {userData.work
             .sort((a, b) => a.orderId - b.orderId)
             .map((job, index) => (
-              <JobCardP
+              <JobCard
                 key={job.id}
                 image={job.image}
                 companyTitle={job.company}
@@ -34,4 +34,4 @@ const ResumeSectionP: FC<{
   );
 };
 
-export default ResumeSectionP;
+export default ResumeSection;

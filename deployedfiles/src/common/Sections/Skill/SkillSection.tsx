@@ -1,11 +1,10 @@
 import { FC } from "react";
-import UserData from "Type/UserData.tsx";
-import { ServiceData } from "Type/Services.tsx";
+import { UserData } from "../../types/UserData.tsx";
+import { SkillType } from "../../types/Section.tsx";
+import { ServiceData } from "../../types/Services.tsx";
+import ServiceCard from "./ServiceCard.tsx";
 import { Link } from "react-router-dom";
-import { SkillType } from "Type/Section.tsx";
-import { COLORS } from "../../../../../util/colors.ts";
-import ServiceCardP from "./ServiceCardP.tsx";
-
+import { COLORS } from "../../util/COLORS.ts";
 const SkillSectionP: FC<{
   userData: UserData;
   details: SkillType;
@@ -39,7 +38,7 @@ const SkillSectionP: FC<{
         <>
           {userData.services.map((service, index) => {
             return (
-              <ServiceCardP
+              <ServiceCard
                 key={index}
                 imageUrl={ServiceData[service].image}
                 title={service.replaceAll("_", " ")}
