@@ -158,7 +158,9 @@ const MainApp: React.FC = () => {
     return <Loader />;
   }
 
-  console.log(aboutData)
+  console.log(projectsPageData);
+
+
 
   return (
     <>

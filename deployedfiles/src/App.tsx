@@ -1,23 +1,26 @@
 import { FC, useMemo } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useParams } from "react-router-dom";
 import Header from "./common/Header/Header.tsx";
 import Home from "./pages/Home/Home.tsx";
 import "./App.css";
 import About from "./pages/About/About.tsx";
 import { HomeData } from "./common/types/HomeData.tsx";
 import { AboutData } from "./common/types/AboutData.tsx";
+import Contact from "./pages/Contact/Contact.tsx";
+import ContactData from "./common/types/ContactData.tsx";
+import Projects from "./pages/Projects/Projects.tsx";
+import NotFound from "./NotFound.tsx";
+import Project from "./pages/Project/Project.tsx";
 
 const App: FC = () => {
-  //
-  // const ProjectOr404 = () => {
-  //     const { slug } = useParams();
-  //                 //should be project slug list
-  //     if (slug && ['', ''].some((s) => s === slug)) {
-  //         return <Project/>;
-  //     } else {
-  //         return <NotFound/>;
-  //     }
-  // };
+  const ProjectOr404 = () => {
+    const { slug } = useParams();
+    if (slug && userData.slugs.some((s) => s.slug === slug)) {
+      return <Project userData={userData} />;
+    } else {
+      return <NotFound />;
+    }
+  };
 
   const userData = useMemo(
     () => ({
@@ -195,6 +198,67 @@ const App: FC = () => {
     []
   );
 
+  const projectsPageData = useMemo(
+    () => ({
+      headerOne: "Projects",
+      descriptionOne:
+        "Here are some of my recent projects. I've worked on a wide range of projects, from website and app design to branding and graphic design. Each project brings its own unique challenges and opportunities.",
+    }),
+    []
+  );
+
+  const contactData = useMemo(
+    () => ({
+      headerOne: "Contact me",
+      descriptionOne:
+        "Don't hesitate to get in touch! Whether you're looking for a design consult, interested in a collaboration, or just want to say hello, I'd be delighted to hear from you. I strive to respond promptly and look forward to our potential correspondence!",
+      sections: [
+        {
+          details: {
+            headerOne: "Frequently Asked Questions",
+            descriptionOne:
+              "From understanding my design process to discussing project timelines, I've gathered responses to questions often asked by clients and collaborators. If you can't find your answer here, feel free to reach out!",
+            faq: [
+              {
+                question: "What is your design process?",
+                answer:
+                  "My design process starts with understanding the client's needs, then moving onto research, ideation, prototyping, and finally, implementation.",
+                id: 98,
+              },
+              {
+                question: "How long does a project usually take?",
+                answer:
+                  "The duration of a project varies depending on its complexity and scope, but typically it ranges from a few weeks to a few months.",
+                id: 99,
+              },
+              {
+                question: "Do you collaborate with other designers?",
+                answer:
+                  "Yes, I often collaborate with other designers and believe that teamwork can lead to more innovative and comprehensive solutions.",
+                id: 100,
+              },
+              {
+                question: "What types of projects do you work on?",
+                answer:
+                  "I work on a wide range of projects, from website and app design to branding and graphic design. Each project brings its own unique challenges and opportunities.",
+                id: 101,
+              },
+              {
+                question: "How can I contact you for a project?",
+                answer:
+                  "You can reach out to me via the contact form on this website, or directly through email. I look forward to discussing how we can work together.",
+                id: 102,
+              },
+            ],
+            order: 1,
+          },
+          type: "FAQ",
+        },
+      ],
+    }),
+    []
+  );
+
   return (
     <BrowserRouter>
       <Header />
@@ -203,23 +267,26 @@ const App: FC = () => {
           path="/"
           element={<Home userData={userData} pageData={homeData as HomeData} />}
         />
-        {/*<Route*/}
-        {/*    path="/contact"*/}
-        {/*    element={<Contact />}*/}
-        {/*/>*/}
-        {/*<Route*/}
-        {/*    path="/projects"*/}
-        {/*    element={*/}
-        {/*        <Projects />*/}
-        {/*    }*/}
-        {/*/>*/}
+        <Route
+          path="/contact"
+          element={
+            <Contact
+              pageData={contactData as ContactData}
+              userData={userData}
+            />
+          }
+        />
+        <Route
+          path="/projects"
+          element={<Projects pageData={projectsPageData} userData={userData} />}
+        />
         <Route
           path="/about"
           element={
             <About pageData={aboutData as AboutData} userData={userData} />
           }
         />
-        {/*<Route path="/:slug" element={<ProjectOr404 />} />*/}
+        <Route path="/:slug" element={<ProjectOr404 />} />
       </Routes>
     </BrowserRouter>
   );
