@@ -10,7 +10,7 @@ import {
 import PageType from "Type/Pages.tsx";
 import { removeSection } from "Components/Sections/api/sectionapi.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
-import ErrorStatus from "Components/ErrorStatus/ErrorStatus.tsx";
+import StatusBar from "Components/StatusBar/StatusBar.tsx";
 
 const StorySection: React.FC<{
   page: PageType;
@@ -254,7 +254,9 @@ const StorySection: React.FC<{
       onMouseEnter={() => setStoryHover(true)}
       onMouseLeave={() => setStoryHover(false)}
     >
-      {showError.visible && <ErrorStatus message={showError.message} />}
+      {showError.visible && (
+        <StatusBar message={showError.message} color={"bg-red-400"} />
+      )}
       {removeStory && (
         <div
           className={` absolute inset-0 z-10 bg-red-300 opacity-25 transition-all`}
