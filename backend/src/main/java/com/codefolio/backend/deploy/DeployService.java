@@ -48,6 +48,7 @@ public class DeployService {
     private final PageSections pageSections;
     private final ProjectsPageService projectsPageService;
     private final S3Config s3Config;
+    private final UserRepository userRepository;
     public ResponseEntity<Response> deploy(Principal principal) {
         Users user = getAuthenticatedUser(principal);
 
@@ -146,6 +147,9 @@ public class DeployService {
 
         String region = "us-east-1";
         String bucketUrl = "http://" + bucketName + ".s3-website-" + region + ".amazonaws.com/";
+
+        user.setWebsite(bucketUrl);
+        userRepository.save(user);
 
         return ResponseEntity.ok().body(new Response(StatusType.OK, "Deployed successfully", bucketUrl));
     }
@@ -2818,7 +2822,7 @@ public class DeployService {
                         className={`image-wrapper relative h-[400px] overflow-hidden rounded-t-lg transition-all`}
                       >
                         <img
-                          src={imageSrc || ''}
+                          src={imageSrc || 'https://picsum.photos/400/400'}
                           alt=""
                           className={`inline-block h-full w-full transform object-cover transition-all ease-in-out ${
                             hovered ? "scale-105" : ""
@@ -3141,12 +3145,12 @@ public class DeployService {
             slugs.append("{\n")
                     .append("slug: \"").append(slugsArray[i].slug()).append("\",\n")
                     .append("header: \"").append(slugsArray[i].header()).append("\",\n")
-                    .append("description: \"").append(slugsArray[i].description()).append("\",\n")
-                    .append("about: \"").append(slugsArray[i].about()).append("\",\n")
+                    .append("description: \"").append(slugsArray[i].description().replace("\n", " ").replace("\"", "\\\"")).append("\",\n")
+                    .append("about: \"").append(slugsArray[i].about().replace("\n", " ").replace("\"", "\\\"")).append("\",\n")
                     .append("image: \"").append(slugsArray[i].image().replace("https://codefolioimagebucket.s3.amazonaws.com/", "")).append("\",\n")
-                    .append("overview: \"").append(slugsArray[i].overview()).append("\",\n")
-                    .append("platforms: \"").append(slugsArray[i].platforms()).append("\",\n")
-                    .append("link: \"").append(slugsArray[i].link()).append("\"\n")
+                    .append("overview: \"").append(slugsArray[i].overview().replace("\n", " ").replace("\"", "\\\"")).append("\",\n")
+                    .append("platforms: \"").append(slugsArray[i].platforms().replace("\n", " ").replace("\"", "\\\"")).append("\",\n")
+                    .append("link: \"").append(slugsArray[i].link().replace("\n", " ").replace("\"", "\\\"")).append("\"\n")
                     .append("}");
             if (i < slugsArray.length - 1) {
                 slugs.append(",\n");
