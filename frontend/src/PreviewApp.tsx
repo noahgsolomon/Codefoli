@@ -30,6 +30,7 @@ const PreviewApp: React.FC = () => {
     company: "",
     location: "",
     profession: "",
+    website: "",
     projects: [],
     skills: [],
     work: [],
@@ -81,11 +82,26 @@ const PreviewApp: React.FC = () => {
     descriptionOne: "",
   });
 
+  const [deploying, setDeploying] = useState(false);
+  const [deployed, setDeployed] = useState<{ url: string; bool: boolean }>({
+    url: "",
+    bool: false,
+  });
+
   const ProjectOr404 = () => {
     const { slug } = useParams();
 
     if (slug && userData.slugs.some((s) => s.slug === slug)) {
-      return <ProjectP userData={userData} />;
+      return (
+        <ProjectP
+          userData={userData}
+          setUserData={setUserData}
+          deploying={deploying}
+          deployed={deployed}
+          setDeploying={setDeploying}
+          setDeployed={setDeployed}
+        />
+      );
     } else {
       return <NotFoundP />;
     }
@@ -132,21 +148,59 @@ const PreviewApp: React.FC = () => {
       <Routes>
         <Route
           path="/"
-          element={<HomeP pageData={homeData} userData={userData} />}
+          element={
+            <HomeP
+              pageData={homeData}
+              setUserData={setUserData}
+              userData={userData}
+              deploying={deploying}
+              deployed={deployed}
+              setDeploying={setDeploying}
+              setDeployed={setDeployed}
+            />
+          }
         />
         <Route
           path="/contact"
-          element={<ContactP userData={userData} pageData={contactData} />}
+          element={
+            <ContactP
+              userData={userData}
+              setUserData={setUserData}
+              pageData={contactData}
+              deploying={deploying}
+              deployed={deployed}
+              setDeploying={setDeploying}
+              setDeployed={setDeployed}
+            />
+          }
         />
         <Route
           path="/projects"
           element={
-            <ProjectsP userData={userData} pageData={projectsPageData} />
+            <ProjectsP
+              userData={userData}
+              setUserData={setUserData}
+              pageData={projectsPageData}
+              deploying={deploying}
+              deployed={deployed}
+              setDeploying={setDeploying}
+              setDeployed={setDeployed}
+            />
           }
         />
         <Route
           path="/about"
-          element={<AboutP userData={userData} pageData={aboutData} />}
+          element={
+            <AboutP
+              userData={userData}
+              setUserData={setUserData}
+              pageData={aboutData}
+              deploying={deploying}
+              deployed={deployed}
+              setDeploying={setDeploying}
+              setDeployed={setDeployed}
+            />
+          }
         />
         <Route path="/:slug" element={<ProjectOr404 />} />
         <Route path="*" element={<NotFoundP />} />
