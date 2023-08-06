@@ -1,5 +1,7 @@
 package com.codefolio.backend.deploy;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.*;
 import com.codefolio.backend.user.*;
 import com.codefolio.backend.user.faq.FAQResponseModel;
 import com.codefolio.backend.user.pages.aboutpage.AboutResponseModel;
@@ -18,6 +20,7 @@ import com.codefolio.backend.user.sections.type.story.StorySectionResponseModel;
 import com.codefolio.backend.user.sections.type.value.ValueSectionResponseModel;
 import com.codefolio.backend.user.services.ServicesType;
 import com.codefolio.backend.user.skills.SkillsType;
+import com.codefolio.backend.user.uploadimage.S3Config;
 import com.codefolio.backend.user.values.ValuesResponseModel;
 import com.codefolio.backend.user.workhistory.WorkModel;
 import com.codefolio.backend.util.PageSections;
@@ -31,6 +34,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
+
 import static com.codefolio.backend.user.UserService.getAuthenticatedUser;
 
 @Service
@@ -43,7 +47,7 @@ public class DeployService {
     private final ContactService contactService;
     private final PageSections pageSections;
     private final ProjectsPageService projectsPageService;
-
+    private final S3Config s3Config;
     public ResponseEntity<Response> deploy(Principal principal) {
         Users user = getAuthenticatedUser(principal);
 
@@ -62,12 +66,142 @@ public class DeployService {
 
         System.out.println("Directory created at: " + userDirectoryPath);
 
-        buildProject(userDirectoryPath, principal);
+        buildProject(userDirectoryPath, principal, user.getId().toString());
 
-        return ResponseEntity.ok().body(new Response(StatusType.OK, "Deployed successfully", null));
+        File packageJson = new File(userDirectoryPath + "/package.json");
+        if (packageJson.exists()) {
+            try {
+                String[] installCommand = {"npm", "install"};
+                executeCommand(installCommand, userDirectoryPath);
+
+                String[] buildCommand = {"npm", "run", "build"};
+                executeCommand(buildCommand, userDirectoryPath);
+
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("package.json not found in " + userDirectoryPath + ". Skipping npm commands.");
+        }
+
+        String bucketName = "user-" + user.getId() + "-website";
+
+        AmazonS3 s3client = s3Config.s3client();
+
+        if (!s3client.doesBucketExistV2(bucketName)) {
+            s3client.createBucket(bucketName);
+            System.out.println("Bucket created: " + bucketName);
+        }
+
+        PublicAccessBlockConfiguration publicAccessBlockConfiguration = new PublicAccessBlockConfiguration()
+                .withBlockPublicAcls(false)
+                .withIgnorePublicAcls(false)
+                .withBlockPublicPolicy(false)
+                .withRestrictPublicBuckets(false);
+        s3client.setPublicAccessBlock(new SetPublicAccessBlockRequest()
+                .withBucketName(bucketName)
+                .withPublicAccessBlockConfiguration(publicAccessBlockConfiguration));
+        System.out.println("Block Public Access settings disabled for bucket: " + bucketName);
+
+        BucketWebsiteConfiguration websiteConfig = new BucketWebsiteConfiguration("index.html");
+        s3client.setBucketWebsiteConfiguration(bucketName, websiteConfig);
+        System.out.println("Static website hosting enabled for bucket: " + bucketName);
+
+        File distDirectory = new File(userDirectoryPath + "/dist");
+        uploadDirectoryToS3(distDirectory, s3client, bucketName, "");
+
+        String publicReadPolicy = "{\n" +
+                "  \"Version\":\"2012-10-17\",\n" +
+                "  \"Statement\":[{\n" +
+                "    \"Sid\":\"PublicRead\",\n" +
+                "    \"Effect\":\"Allow\",\n" +
+                "    \"Principal\": \"*\",\n" +
+                "    \"Action\":[\"s3:GetObject\"],\n" +
+                "    \"Resource\":[\"arn:aws:s3:::" + bucketName + "/*\"]\n" +
+                "  }]\n" +
+                "}";
+
+        System.out.println(publicReadPolicy);
+
+        s3client.setBucketPolicy(bucketName, publicReadPolicy);
+
+        boolean isDeleted = deleteDirectory(userDirectory);
+        if (isDeleted) {
+            System.out.println("Successfully deleted directory: " + userDirectoryPath);
+        } else {
+            System.out.println("Failed to delete directory: " + userDirectoryPath);
+        }
+
+        String region = "us-east-1";
+        String bucketUrl = "http://" + bucketName + ".s3-website-" + region + ".amazonaws.com/";
+
+        return ResponseEntity.ok().body(new Response(StatusType.OK, "Deployed successfully", bucketUrl));
     }
 
-    private void buildProject(String directoryPath, Principal principal){
+    private void executeCommand(String[] command, String directoryPath) throws IOException, InterruptedException {
+        ProcessBuilder processBuilder = new ProcessBuilder(command);
+        processBuilder.directory(new File(directoryPath));
+        Process process = processBuilder.start();
+
+        Thread outThread = new Thread(() -> {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        Thread errThread = new Thread(() -> {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        outThread.start();
+        errThread.start();
+
+        outThread.join();
+        errThread.join();
+
+        process.waitFor();
+    }
+
+    public void uploadDirectoryToS3(File directory, AmazonS3 s3client, String bucketName, String parentKey) {
+        for (File file : directory.listFiles()) {
+            if (file.isDirectory()) {
+                uploadDirectoryToS3(file, s3client, bucketName, parentKey + file.getName() + "/");
+            } else {
+                String keyName = parentKey + file.getName();
+                s3client.putObject(new PutObjectRequest(bucketName, keyName, file));
+                System.out.println("Uploaded file: " + file.getName() + " to bucket: " + bucketName);
+            }
+        }
+    }
+
+    public static boolean deleteDirectory(File dir) {
+        if (dir.isDirectory()) {
+            File[] children = dir.listFiles();
+            if (children != null) {
+                for (File child : children) {
+                    boolean success = deleteDirectory(child);
+                    if (!success) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return dir.delete();
+    }
+
+    private void buildProject(String directoryPath, Principal principal, String id){
         writeViteConfigTsFile(directoryPath);
         writeTsConfigNodeJsonFile(directoryPath);
         writeTsConfigJsonFile(directoryPath);
@@ -76,7 +210,7 @@ public class DeployService {
         writePackageJsonFile(directoryPath);
         writeIndexHtmlFile(directoryPath);
         writeEslintRCFile(directoryPath);
-        writeSrc(directoryPath, principal);
+        writeSrc(directoryPath, principal, id);
     }
 
     private void writeViteConfigTsFile(String directoryPath) {
@@ -241,7 +375,8 @@ public class DeployService {
                           "dev": "vite",
                           "build": "tsc && vite build",
                           "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-                          "preview": "vite preview"
+                          "preview": "vite preview",
+                          "postinstall": "npm install -g serve"
                       },
                   "dependencies": {
                     "@tailwindcss/aspect-ratio": "^0.4.2",
@@ -331,7 +466,7 @@ public class DeployService {
         }
     }
 
-    private void writeSrc(String directoryPath, Principal principal) {
+    private void writeSrc(String directoryPath, Principal principal, String id) {
         String srcDirectoryPath = directoryPath + "/src";
         File srcDirectory = new File(srcDirectoryPath);
         if (!srcDirectory.exists()) {
@@ -345,16 +480,15 @@ public class DeployService {
             System.out.println("Directory already exists at: " + srcDirectory.getAbsolutePath());
         }
 
-        writeAssets(srcDirectoryPath);
+        writeAssets(srcDirectoryPath, id);
         writeCommon(srcDirectoryPath);
         writePages(srcDirectoryPath);
         writeApp(srcDirectoryPath, principal);
         writeNotFound(srcDirectoryPath);
         writeMain(srcDirectoryPath);
-        writeNotFound(srcDirectoryPath);
     }
 
-    private void writeAssets(String directoryPath) {
+    private void writeAssets(String directoryPath, String id) {
         String assetsDirectoryPath = directoryPath + "/assets";
         File assetsDirectory = new File(assetsDirectoryPath);
         if (!assetsDirectory.exists()) {
@@ -385,6 +519,8 @@ public class DeployService {
         for (String fontFile : fontFiles) {
             copyFontFile(fontsDirectoryPath, fontFile);
         }
+
+        writeImages(assetsDirectoryPath, id);
     }
 
     private void copyFontFile(String directoryPath, String fileName) {
@@ -404,6 +540,53 @@ public class DeployService {
             System.err.println("Failed to copy file: " + fileName + ". " + e.getMessage());
         }
     }
+
+    private void writeImages(String directoryPath, String userId) {
+        String imagesDirectoryPath = directoryPath + "/images";
+        String imageBucketName = "codefolioimagebucket";
+        File imagesDirectory = new File(imagesDirectoryPath);
+        if (!imagesDirectory.exists()) {
+            boolean success = imagesDirectory.mkdirs();
+            if (success) {
+                System.out.println("Images directory created at: " + imagesDirectory.getAbsolutePath());
+            } else {
+                System.out.println("Failed to create images directory at: " + imagesDirectory.getAbsolutePath());
+            }
+        } else {
+            System.out.println("Images directory already exists at: " + imagesDirectory.getAbsolutePath());
+        }
+
+        ListObjectsV2Request req = new ListObjectsV2Request().withBucketName(imageBucketName).withPrefix(userId + "-");
+        ListObjectsV2Result result;
+        AmazonS3 s3client = s3Config.s3client();
+        do {
+            result = s3client.listObjectsV2(req);
+
+            for (S3ObjectSummary objectSummary : result.getObjectSummaries()) {
+                String key = objectSummary.getKey();
+                System.out.println("Processing key: " + key);
+
+                S3Object object = s3client.getObject(new GetObjectRequest(imageBucketName, key));
+                InputStream objectData = object.getObjectContent();
+                File targetFile = new File(imagesDirectoryPath + "/" + key + ".png");
+                try {
+                    try (OutputStream out = new FileOutputStream(targetFile)) {
+                        byte[] buf = new byte[1024];
+                        int len;
+                        while ((len = objectData.read(buf)) > 0) {
+                            out.write(buf, 0, len);
+                        }
+                    }
+                    System.out.println("Downloaded " + key + " to " + targetFile.getAbsolutePath());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println("Failed to download " + key);
+                }
+            }
+            req.setContinuationToken(result.getNextContinuationToken());
+        } while (result.isTruncated());
+    }
+
 
     private void writeCommon(String directoryPath) {
         String commonDirectoryPath = directoryPath + "/common";
@@ -729,72 +912,82 @@ public class DeployService {
         }
 
         String jobCardTsContent = """
-            import { FC } from "react";
-            const JobCard: FC<{
-              companyTitle: string;
-              role: string;
-              description: string;
-              startDate: string;
-              endDate: string;
-              active?: boolean;
-              image: string;
-            }> = ({
-              companyTitle,
-              role,
-              description,
-              startDate,
-              endDate,
-              active,
-              image,
-            }) => {
-              return (
-                <div
-                  className={`relative transition-all hover:-translate-y-0.5 ${
-                    active
-                      ? "card mb-8 rounded-lg border-2 border-black shadow-custom"
-                      : "card mb-8 rounded-lg border-2 border-black"
-                  }`}
-                >
-                  <div className="flex justify-between">
-                    <div>
-                      <h2 className="px-5 pt-5 text-3xl font-bold transition-all">
-                        {companyTitle}
-                      </h2>
-                      <div className=" p-5">
-                        <h2 className="font-bold transition-all">{role}</h2>
-                        <p className="transition-all">{description}</p>
+                import {FC, useEffect, useState} from "react";
+                const JobCard: FC<{
+                  companyTitle: string;
+                  role: string;
+                  description: string;
+                  startDate: string;
+                  endDate: string;
+                  active?: boolean;
+                  image: string;
+                }> = ({
+                  companyTitle,
+                  role,
+                  description,
+                  startDate,
+                  endDate,
+                  active,
+                  image,
+                }) => {
+                                
+                  const [jobImage, setJobImage] = useState<string>("");
+                    useEffect(() => {
+                        import(`../../../assets/images/${image}.png`)
+                            .then((module) => {
+                                setJobImage(module.default);
+                            }).catch(error => {
+                                console.error("Failed to load job image:", error);
+                            });
+                    }, [image]);
+                                
+                  return (
+                    <div
+                      className={`relative transition-all hover:-translate-y-0.5 ${
+                        active
+                          ? "card mb-8 rounded-lg border-2 border-black shadow-custom"
+                          : "card mb-8 rounded-lg border-2 border-black"
+                      }`}
+                    >
+                      <div className="flex justify-between">
+                        <div>
+                          <h2 className="px-5 pt-5 text-3xl font-bold transition-all">
+                            {companyTitle}
+                          </h2>
+                          <div className=" p-5">
+                            <h2 className="font-bold transition-all">{role}</h2>
+                            <p className="transition-all">{description}</p>
+                          </div>
+                        </div>
+                        <div
+                          className={
+                            "relative mr-5 mt-5 h-[100px] w-[100px] rounded-full border-2 border-black"
+                          }
+                        >
+                          <img
+                            className={"h-full w-full rounded-full object-cover"}
+                            src={jobImage || "https://picsum.photos/100/100"}
+                            alt={"job photo"}
+                          />
+                        </div>
+                      </div>
+                                
+                      <div
+                        className={`flew-row flex ${
+                          active
+                            ? "duration active rounded-b-lg border-t-2 border-black bg-yellow-500 p-5 font-bold"
+                            : "duration rounded-b-lg border-t-2 border-black p-5 font-bold"
+                        }`}
+                      >
+                        <p className={"transition-all"}>{startDate}</p>
+                        &nbsp;-&nbsp;
+                        <p className={"transition-all"}>{endDate}</p>
                       </div>
                     </div>
-                    <div
-                      className={
-                        "relative mr-5 mt-5 h-[100px] w-[100px] rounded-full border-2 border-black"
-                      }
-                    >
-                      <img
-                        className={"h-full w-full rounded-full object-cover"}
-                        src={image}
-                        alt={"job photo"}
-                      />
-                    </div>
-                  </div>
-
-                  <div
-                    className={`flew-row flex ${
-                      active
-                        ? "duration active rounded-b-lg border-t-2 border-black bg-yellow-500 p-5 font-bold"
-                        : "duration rounded-b-lg border-t-2 border-black p-5 font-bold"
-                    }`}
-                  >
-                    <p className={"transition-all"}>{startDate}</p>
-                    &nbsp;-&nbsp;
-                    <p className={"transition-all"}>{endDate}</p>
-                  </div>
-                </div>
-              );
-            };
-
-            export default JobCard;
-            """;
+                  );
+                };
+                                
+                export default JobCard;""";
 
         File jobCardTsFile = new File(resumeDirectoryPath + "/JobCard.tsx");
         try (FileWriter writer = new FileWriter(jobCardTsFile)) {
@@ -949,61 +1142,72 @@ public class DeployService {
 
     private void writeStoryFiles(String storyDirectoryPath) {
         String storySectionTsContent = """
-            import { FC } from "react";
-            import { StoryType } from "../../types/Section.tsx";
-
-            const StorySection: FC<{
-              details: StoryType;
-            }> = ({ details }) => {
-              return (
-                <section className=" relative mb-20 mt-20 bg-black transition-all">
-                  <div className=" mx-auto my-20 max-w-screen-lg gap-5 px-5 py-20 md:grid md:grid-cols-2 md:items-center md:justify-between">
-                    <div>
-                      <h2 className="mb-8 text-4xl font-bold text-white transition-all md:text-5xl md:leading-tight">
-                        {details.headerOne}
-                      </h2>
-                      <p className=" text-lg font-semibold text-white transition-all">
-                        {details.descriptionOne}
-                      </p>
-                      <div className="my-5">
-                        <div className=" flex items-start justify-between gap-4">
-                          <div className="mt-1 h-4 w-4 rounded border-2 bg-indigo-600"></div>
-                          <p className="event-descripition flex-1 pt-0 text-lg font-semibold text-white transition-all">
-                            {details.bulletOne}
+                import {FC, useEffect, useState} from "react";
+                import { StoryType } from "../../types/Section.tsx";
+                                
+                const StorySection: FC<{
+                  details: StoryType;
+                }> = ({ details }) => {
+                                
+                  const [imageOne, setImageOne] = useState(null);
+                  useEffect(() => {
+                    import(`../../../assets/images/${details.imageOne}.png`).
+                        then(module => {
+                            setImageOne(module.default);
+                            }).catch(error => {
+                                console.error("Failed to load imageOne image:", error);
+                            })
+                  }, [details.imageOne]);
+                                
+                  return (
+                    <section className=" relative mb-20 mt-20 bg-black transition-all">
+                      <div className=" mx-auto my-20 max-w-screen-lg gap-5 px-5 py-20 md:grid md:grid-cols-2 md:items-center md:justify-between">
+                        <div>
+                          <h2 className="mb-8 text-4xl font-bold text-white transition-all md:text-5xl md:leading-tight">
+                            {details.headerOne}
+                          </h2>
+                          <p className=" text-lg font-semibold text-white transition-all">
+                            {details.descriptionOne}
                           </p>
+                          <div className="my-5">
+                            <div className=" flex items-start justify-between gap-4">
+                              <div className="mt-1 h-4 w-4 rounded border-2 bg-indigo-600"></div>
+                              <p className="event-descripition flex-1 pt-0 text-lg font-semibold text-white transition-all">
+                                {details.bulletOne}
+                              </p>
+                            </div>
+                            <div className=" flex items-start justify-between gap-4">
+                              <div className="mt-1 h-4 w-4 rounded border-2 bg-sky-600"></div>
+                              <p className="event-descripition flex-1 pt-0 text-lg font-semibold text-white transition-all">
+                                {details.bulletTwo}
+                              </p>
+                            </div>
+                            <div className=" flex items-start justify-between gap-4">
+                              <div className="mt-1 h-4 w-4 rounded border-2 bg-yellow-500"></div>
+                              <p className="event-descripition flex-1 pt-0 text-lg font-semibold text-white transition-all">
+                                {details.bulletThree}
+                              </p>
+                            </div>
+                          </div>
                         </div>
-                        <div className=" flex items-start justify-between gap-4">
-                          <div className="mt-1 h-4 w-4 rounded border-2 bg-sky-600"></div>
-                          <p className="event-descripition flex-1 pt-0 text-lg font-semibold text-white transition-all">
-                            {details.bulletTwo}
-                          </p>
-                        </div>
-                        <div className=" flex items-start justify-between gap-4">
-                          <div className="mt-1 h-4 w-4 rounded border-2 bg-yellow-500"></div>
-                          <p className="event-descripition flex-1 pt-0 text-lg font-semibold text-white transition-all">
-                            {details.bulletThree}
-                          </p>
+                        <div className="flex items-center justify-center">
+                          <div className={` relative mb-5 h-[400px] w-[400px] transition-all`}>
+                            <div className="h-full w-full overflow-hidden rounded-3xl">
+                              <img
+                                src={imageOne || 'https://picsum.photos/400/400'}
+                                alt=""
+                                className="h-full w-full rounded-3xl object-cover"
+                              />
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="flex items-center justify-center">
-                      <div className={` relative mb-5 h-[400px] w-[400px] transition-all`}>
-                        <div className="h-full w-full overflow-hidden rounded-3xl">
-                          <img
-                            src={details.imageOne}
-                            alt=""
-                            className="h-full w-full rounded-3xl object-cover"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              );
-            };
-
-            export default StorySection;
-            """;
+                    </section>
+                  );
+                };
+                                
+                export default StorySection;
+                """;
 
         File storySectionTsFile = new File(storyDirectoryPath + "/StorySection.tsx");
         try (FileWriter writer = new FileWriter(storySectionTsFile)) {
@@ -1929,7 +2133,7 @@ public class DeployService {
 
     private void writeAboutFiles(String aboutDirectoryPath){
         String aboutTsContent = """
-                import { FC } from "react";
+                import {FC, useEffect, useState} from "react";
                 import { UserData } from "../../common/types/UserData.tsx";
                 import { AboutData } from "../../common/types/AboutData.tsx";
                 import { useSpring, animated } from "react-spring";
@@ -1937,7 +2141,7 @@ public class DeployService {
                 import Marquee from "../../common/Marquee/Marquee.tsx";
                 import Sections from "../../common/Sections/Sections.tsx";
                                 
-                const AboutP: FC<{
+                const About: FC<{
                   userData: UserData;
                   pageData: AboutData;
                 }> = ({ userData, pageData }) => {
@@ -1958,6 +2162,37 @@ public class DeployService {
                     to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
                     delay: 100,
                   });
+                                
+                  const [iconOneImage, setIconOneImage] = useState(null);
+                  const [iconTwoImage, setIconTwoImage] = useState(null);
+                  const [iconThreeImage, setIconThreeImage] = useState(null);
+                                
+                  useEffect(() => {
+                    import(`../../assets/images/${pageData.iconOne}.png`)
+                        .then(module => {
+                          setIconOneImage(module.default);
+                        })
+                        .catch(error => {
+                          console.error("Failed to load iconOne image:", error);
+                        });
+                                
+                    import(`../../assets/images/${pageData.iconTwo}.png`)
+                        .then(module => {
+                          setIconTwoImage(module.default);
+                        })
+                        .catch(error => {
+                          console.error("Failed to load iconTwo image:", error);
+                        });
+                                
+                    import(`../../assets/images/${pageData.iconThree}.png`)
+                        .then(module => {
+                          setIconThreeImage(module.default);
+                        })
+                        .catch(error => {
+                          console.error("Failed to load iconThree image:", error);
+                        });
+                  }, [pageData.iconOne, pageData.iconTwo, pageData.iconThree]);
+                                
                                 
                   return (
                     <>
@@ -1995,7 +2230,7 @@ public class DeployService {
                                 <div className="h-full w-full overflow-hidden rounded-full">
                                   <img
                                     className="h-full w-full object-cover"
-                                    src={pageData.iconOne}
+                                    src={iconOneImage || 'https://picsum.photos/400/400'}
                                     alt="portfolio"
                                   />
                                 </div>
@@ -2008,7 +2243,7 @@ public class DeployService {
                                 <div className="h-full w-full overflow-hidden rounded-full">
                                   <img
                                     className="h-full w-full object-cover"
-                                    src={pageData.iconTwo}
+                                    src={iconTwoImage || 'https://picsum.photos/400/400'}
                                     alt="portfolio"
                                   />
                                 </div>
@@ -2030,7 +2265,7 @@ public class DeployService {
                                   <div className="h-full w-full overflow-hidden rounded-3xl border-2 border-black">
                                     <img
                                       className="h-full w-full object-cover"
-                                      src={pageData.iconThree}
+                                      src={iconThreeImage || 'https://picsum.photos/400/400'}
                                       alt="portfolio"
                                     />
                                   </div>
@@ -2056,8 +2291,7 @@ public class DeployService {
                   );
                 };
                                 
-                export default AboutP;
-                                
+                export default About;
                 """;
 
         File aboutTsFile = new File(aboutDirectoryPath + "/About.tsx");
@@ -2280,7 +2514,7 @@ public class DeployService {
 
     private void writeHomeFiles(String homeDirectoryPath){
         String homeTsContent = """
-                import { FC } from "react";
+                import {FC, useEffect, useState} from "react";
                 import { animated, useSpring } from "react-spring";
                 import { Link } from "react-router-dom";
                 import { HomeData } from "../../common/types/HomeData.tsx";
@@ -2302,6 +2536,19 @@ public class DeployService {
                     to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
                     delay: 200,
                   });
+                                
+                  const [profileImage, setProfileImage] = useState(null);
+                  useEffect(() => {
+                    import(`../../assets/images/${pageData.profileImage}.png`)
+                        .then(module => {
+                          setProfileImage(module.default);
+                        })
+                        .catch(error => {
+                          console.error("Failed to load profile image:", error);
+                        });
+                                
+                  }, [pageData.profileImage]);
+                                
                                 
                   return (
                     <>
@@ -2338,7 +2585,7 @@ public class DeployService {
                               <div className="h-full w-full overflow-hidden rounded-3xl shadow-customHover">
                                 <img
                                   className="h-full w-full object-cover"
-                                  src={pageData.profileImage}
+                                  src={profileImage || 'https://picsum.photos/500/500'}
                                   alt="pfp"
                                 ></img>
                               </div>
@@ -2373,7 +2620,7 @@ public class DeployService {
 
     private void writeProjectFiles(String projectDirectoryPath){
         String projectTsContent = """
-                import { FC, useEffect } from "react";
+                import {FC, useEffect, useState} from "react";
                 import { useNavigate, useParams } from "react-router-dom";
                 import { UserData } from "../../common/types/UserData.tsx";
                 import { useSpring, animated } from "react-spring";
@@ -2410,6 +2657,18 @@ public class DeployService {
                     delay: 400,
                   });
                                 
+                  const [imageSrc, setImageSrc] = useState(null);
+                                
+                  useEffect(() => {
+                    import(`../../assets/images/${projectDetails?.image}.png`)
+                        .then((module) => {
+                          setImageSrc(module.default);
+                        })
+                        .catch((error) => {
+                          console.error("Failed to load image", error);
+                        });
+                  }, [projectDetails?.image]);
+                                
                   if (!slug || !projectDetails || !projectData) {
                     navigate("/404");
                     return null;
@@ -2433,7 +2692,7 @@ public class DeployService {
                                 className={`relative overflow-hidden rounded-lg border-2 border-black bg-white p-2 shadow-custom transition-all lg:h-[600px]`}
                               >
                                 <img
-                                  src={projectDetails.image}
+                                  src={imageSrc || 'https://picsum.photos/400/400'}
                                   alt=""
                                   className={`block h-full w-full rounded-lg object-cover transition-all`}
                                 />
@@ -2511,9 +2770,10 @@ public class DeployService {
 
     private void writeProjectsFiles(String projectsDirectoryPath){
         String projectCardTsContent = """
-                import { FC, useState } from "react";
+                import {FC, useEffect, useState} from "react";
                 import { Link } from "react-router-dom";
                 import { COLORS } from "../../common/util/COLORS.ts";
+                                       
                                 
                 const ProjectCard: FC<{
                   title: string;
@@ -2523,6 +2783,18 @@ public class DeployService {
                   slug: string;
                 }> = ({ title, description, image, languages, slug }) => {
                   const [hovered, setHovered] = useState(false);
+                  const [imageSrc, setImageSrc] = useState(null);
+                                  
+                  useEffect(() => {
+                      import(`../../assets/images/${image}.png`)
+                        .then((module) => {
+                          setImageSrc(module.default);
+                        })
+                        .catch((error) => {
+                          console.error("Failed to load image", error);
+                        });
+                    }, [image]);                
+                                   
                   return (
                     <Link
                       to={`/${slug}`}
@@ -2534,7 +2806,7 @@ public class DeployService {
                         className={`image-wrapper relative h-[400px] overflow-hidden rounded-t-lg transition-all`}
                       >
                         <img
-                          src={image}
+                          src={imageSrc || ''}
                           alt=""
                           className={`inline-block h-full w-full transform object-cover transition-all ease-in-out ${
                             hovered ? "scale-105" : ""
@@ -2812,7 +3084,7 @@ public class DeployService {
             }
             projects.append("],\n")
                     .append("updatedAt: \"").append(projectsArray[i].updatedAt()).append("\",\n")
-                    .append("image: \"").append(projectsArray[i].image()).append("\",\n")
+                    .append("image: \"").append(projectsArray[i].image().replace("https://codefolioimagebucket.s3.amazonaws.com/", "")).append("\",\n")
                     .append("id: \"").append(projectsArray[i].id()).append("\",\n")
                     .append("slug: \"").append(projectsArray[i].slug()).append("\"\n")
                     .append("}");
@@ -2833,7 +3105,7 @@ public class DeployService {
                     .append("endDate: \"").append(workArray[i].getEndDate()).append("\",\n")
                     .append("description: \"").append(workArray[i].getDescription()).append("\",\n")
                     .append("orderId: ").append(workArray[i].getOrderId()).append(",\n")
-                    .append("image: \"").append(workArray[i].getImage()).append("\"\n")
+                    .append("image: \"").append(workArray[i].getImage().replace("https://codefolioimagebucket.s3.amazonaws.com/", "")).append("\",\n")
                     .append("}");
             if (i < workArray.length - 1) {
                 work.append(",\n");
@@ -2859,7 +3131,7 @@ public class DeployService {
                     .append("header: \"").append(slugsArray[i].header()).append("\",\n")
                     .append("description: \"").append(slugsArray[i].description()).append("\",\n")
                     .append("about: \"").append(slugsArray[i].about()).append("\",\n")
-                    .append("image: \"").append(slugsArray[i].image()).append("\",\n")
+                    .append("image: \"").append(slugsArray[i].image().replace("https://codefolioimagebucket.s3.amazonaws.com/", "")).append("\",\n")
                     .append("overview: \"").append(slugsArray[i].overview()).append("\",\n")
                     .append("platforms: \"").append(slugsArray[i].platforms()).append("\",\n")
                     .append("link: \"").append(slugsArray[i].link()).append("\"\n")
@@ -2882,7 +3154,7 @@ public class DeployService {
                 "                      headerOne: \"" + homeData.headerOne() + "\",\n" +
                 "                      descriptionOne: \"" + homeData.descriptionOne() + "\",\n" +
                 "                      headerTwo: \"" + homeData.headerTwo() + "\",\n" +
-                "                      profileImage: \"" + homeData.profileImage() + "\",\n" +
+                "                      profileImage: \"" + homeData.profileImage().replace("https://codefolioimagebucket.s3.amazonaws.com/", "") + "\",\n" +
                 "                      sections: [\n";
 
         for (int i = 0; i < homeSections.size(); i++) {
@@ -2906,7 +3178,7 @@ public class DeployService {
                             "                            bulletOne: \"" + storyDetails.bulletOne() + "\",\n" +
                             "                            bulletTwo: \"" + storyDetails.bulletTwo() + "\",\n" +
                             "                            bulletThree: \"" + storyDetails.bulletThree() + "\",\n" +
-                            "                            imageOne: \"" + storyDetails.imageOne() + "\",\n" +
+                            "                            imageOne: \"" + storyDetails.imageOne().replace("https://codefolioimagebucket.s3.amazonaws.com/", "") + "\",\n" +
                             "                            order: " + storyDetails.order() + "\n";
                 }
                 case "SKILL" -> {
@@ -2963,10 +3235,10 @@ public class DeployService {
         String aboutString = "const aboutData = useMemo(\n" +
                 "                    () => ({\n" +
                 "                      headerOne: \"" + aboutData.headerOne() + "\",\n" +
-                "                      iconOne: \"" + aboutData.iconOne() + "\",\n" +
-                "                      iconTwo: \"" + aboutData.iconTwo() + "\",\n" +
+                "                      iconOne: \"" + aboutData.iconOne().replace("https://codefolioimagebucket.s3.amazonaws.com/", "") + "\",\n" +
+                "                      iconTwo: \"" + aboutData.iconTwo().replace("https://codefolioimagebucket.s3.amazonaws.com/", "") + "\",\n" +
+                "                      iconThree: \"" + aboutData.iconThree().replace("https://codefolioimagebucket.s3.amazonaws.com/", "") + "\",\n" +
                 "                      headerTwo: \"" + aboutData.headerTwo() + "\",\n" +
-                "                      iconThree: \"" + aboutData.iconThree() + "\",\n" +
                 "                      descriptionOne: \"" + aboutData.descriptionOne() + "\",\n" +
                 "                      descriptionTwo: \"" + aboutData.descriptionTwo() + "\",\n" +
                 "                      sections: [\n";
@@ -2992,7 +3264,7 @@ public class DeployService {
                             "                            bulletOne: \"" + storyDetails.bulletOne() + "\",\n" +
                             "                            bulletTwo: \"" + storyDetails.bulletTwo() + "\",\n" +
                             "                            bulletThree: \"" + storyDetails.bulletThree() + "\",\n" +
-                            "                            imageOne: \"" + storyDetails.imageOne() + "\",\n" +
+                            "                            imageOne: \"" + storyDetails.imageOne().replace("https://codefolioimagebucket.s3.amazonaws.com/", "") + "\",\n" +
                             "                            order: " + storyDetails.order() + "\n";
                 }
                 case "SKILL" -> {
@@ -3063,7 +3335,7 @@ public class DeployService {
                             "                            bulletOne: \"" + storyDetails.bulletOne() + "\",\n" +
                             "                            bulletTwo: \"" + storyDetails.bulletTwo() + "\",\n" +
                             "                            bulletThree: \"" + storyDetails.bulletThree() + "\",\n" +
-                            "                            imageOne: \"" + storyDetails.imageOne() + "\",\n" +
+                            "                            imageOne: \"" + storyDetails.imageOne().replace("https://codefolioimagebucket.s3.amazonaws.com/", "") + "\",\n" +
                             "                            order: " + storyDetails.order() + "\n";
                 }
                 case "SKILL" -> {
