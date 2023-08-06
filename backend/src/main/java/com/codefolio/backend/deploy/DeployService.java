@@ -91,6 +91,18 @@ public class DeployService {
         if (!s3client.doesBucketExistV2(bucketName)) {
             s3client.createBucket(bucketName);
             System.out.println("Bucket created: " + bucketName);
+        } else {
+            ListObjectsV2Request listObjectsReq = new ListObjectsV2Request().withBucketName(bucketName);
+            ListObjectsV2Result result;
+            do {
+                result = s3client.listObjectsV2(listObjectsReq);
+                for (S3ObjectSummary objectSummary : result.getObjectSummaries()) {
+                    s3client.deleteObject(bucketName, objectSummary.getKey());
+                    System.out.println("Deleted object: " + objectSummary.getKey());
+                }
+                listObjectsReq.setContinuationToken(result.getNextContinuationToken());
+            } while (result.isTruncated());
+            System.out.println("All objects in the bucket have been deleted.");
         }
 
         PublicAccessBlockConfiguration publicAccessBlockConfiguration = new PublicAccessBlockConfiguration()
