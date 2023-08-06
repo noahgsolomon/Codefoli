@@ -68,19 +68,32 @@ const ModeButtons: FC<{
         }
       >
         {!deploying ? (
-          <>
-            <a href="/preview">
-              <button className="mr-2 flex h-12 w-40 justify-center rounded-3xl border-2 border-black bg-green-400 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom">
-                Preview ↗
+          <div className={"flex flex-col items-center justify-center"}>
+            <div className={"flex flex-row"}>
+              <a href="/preview">
+                <button className="mr-2 flex h-12 w-40 justify-center rounded-3xl border-2 border-black bg-green-400 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom">
+                  Preview ↗
+                </button>
+              </a>
+              <button
+                className="flex h-12 w-40 justify-center rounded-3xl border-2 border-black bg-blue-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                onClick={async () => await handleDeploy()}
+              >
+                Deploy <span className={"text-2xl text-white"}>&nbsp; ✈</span>
               </button>
-            </a>
-            <button
-              className="flex h-12 w-40 justify-center rounded-3xl border-2 border-black bg-blue-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
-              onClick={async () => await handleDeploy()}
-            >
-              Deploy <span className={"text-2xl text-white"}>&nbsp; ✈</span>
-            </button>
-          </>
+            </div>
+            <div>
+              <a
+                href={userData.website}
+                className={
+                  "break-all text-sm text-blue-500 underline transition-all hover:text-yellow-500"
+                }
+                target={"_blank"}
+              >
+                {userData.website}
+              </a>
+            </div>
+          </div>
         ) : (
           <div className="flex h-12 w-40 items-center justify-center rounded-3xl border-2 border-black bg-blue-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom">
             <svg className="mr-2 h-5 w-5 animate-spin" viewBox="0 0 24 24">
