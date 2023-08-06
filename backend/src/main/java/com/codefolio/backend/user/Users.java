@@ -26,6 +26,7 @@ public class Users {
     private String profession;
     private String gitHubId;
     private String phone;
+    private String website;
     @Enumerated(EnumType.STRING)
     private RoleType role;
 

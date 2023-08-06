@@ -11,6 +11,7 @@ public record UserHomeResponseModel(
             String company,
             String location,
             String about,
+            String website,
             SkillsType[] skills,
             ProjectsResponseModel[] projects,
             WorkModel[] work,

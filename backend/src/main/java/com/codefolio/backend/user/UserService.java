@@ -163,6 +163,7 @@ public class UserService {
                     user.getCompany(),
                     user.getLocation(),
                     user.getAbout(),
+                    user.getWebsite(),
                     userSkillsTypes,
                     userProjects.toArray(new ProjectsResponseModel[0]),
                     workModelList.toArray(new WorkModel[0]),
