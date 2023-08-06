@@ -10,6 +10,7 @@ type UserData = {
   company: string;
   location: string;
   profession: string;
+  website: string;
   projects: Project[];
   services: Services[];
   skills: Skills[];
