@@ -123,7 +123,7 @@ public class UserService {
                     new SlugUserDetailsResponseModel(
                             slug.slug(),
                             slug.header(),
-                            slug.image(),
+                            slug.description(),
                             slug.about(),
                             slug.image(),
                             slug.overview(),
