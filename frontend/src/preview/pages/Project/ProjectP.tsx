@@ -5,10 +5,24 @@ import UserData from "Type/UserData.tsx";
 import { useSpring, animated } from "react-spring";
 import { COLORS } from "../../../util/colors.ts";
 import ModeButtonsP from "../../common/Components/ModeButtons/ModeButtonsP.tsx";
+import StatusBar from "Components/StatusBar/StatusBar.tsx";
+import DeploymentBar from "Components/DeploymentBar/DeploymentBar.tsx";
 
 const ProjectP: FC<{
   userData: UserData;
-}> = ({ userData }) => {
+  setUserData: (userData: UserData) => void;
+  deploying: boolean;
+  deployed: { url: string; bool: boolean };
+  setDeploying: (deploying: boolean) => void;
+  setDeployed: (deployed: { url: string; bool: boolean }) => void;
+}> = ({
+  userData,
+  setUserData,
+  setDeployed,
+  deployed,
+  deploying,
+  setDeploying,
+}) => {
   const { slug } = useParams<{ slug: string }>();
 
   const navigate = useNavigate();
@@ -120,7 +134,22 @@ const ProjectP: FC<{
           </animated.section>
         </div>
       </main>
-      <ModeButtonsP />
+      <ModeButtonsP
+        deploying={deploying}
+        setDeploying={setDeploying}
+        setDeployed={setDeployed}
+        userData={userData}
+        setUserData={setUserData}
+      />
+      {deploying && (
+        <StatusBar
+          message="Deploying! plz wait a few minutes..."
+          color="bg-green-500"
+        />
+      )}
+      {deployed.bool && (
+        <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
+      )}
     </>
   );
 };

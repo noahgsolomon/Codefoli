@@ -4,11 +4,26 @@ import ProjectsPageData from "Type/ProjectsPageData.tsx";
 import { useSpring, animated } from "react-spring";
 import ProjectCardP from "./ProjectCardP.tsx";
 import ModeButtonsP from "../../common/Components/ModeButtons/ModeButtonsP.tsx";
+import StatusBar from "Components/StatusBar/StatusBar.tsx";
+import DeploymentBar from "Components/DeploymentBar/DeploymentBar.tsx";
 
 const ProjectsP: FC<{
   pageData: ProjectsPageData;
   userData: UserData;
-}> = ({ userData, pageData }) => {
+  setUserData: (userData: UserData) => void;
+  deploying: boolean;
+  deployed: { url: string; bool: boolean };
+  setDeploying: (deploying: boolean) => void;
+  setDeployed: (deployed: { url: string; bool: boolean }) => void;
+}> = ({
+  userData,
+  pageData,
+  setUserData,
+  setDeployed,
+  deployed,
+  setDeploying,
+  deploying,
+}) => {
   const headerAnimation = useSpring({
     from: { opacity: 0, transform: "translate3d(20px, 0, 0)" },
     to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
@@ -60,7 +75,22 @@ const ProjectsP: FC<{
           </div>
         </animated.div>
       </section>
-      <ModeButtonsP />
+      <ModeButtonsP
+        deploying={deploying}
+        setDeploying={setDeploying}
+        setDeployed={setDeployed}
+        userData={userData}
+        setUserData={setUserData}
+      />
+      {deploying && (
+        <StatusBar
+          message="Deploying! plz wait a few minutes..."
+          color="bg-green-500"
+        />
+      )}
+      {deployed.bool && (
+        <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
+      )}
     </>
   );
 };
