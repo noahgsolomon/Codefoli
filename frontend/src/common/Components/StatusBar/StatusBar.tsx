@@ -1,9 +1,10 @@
 import { FC, useEffect, useState } from "react";
 import { useSpring, animated } from "react-spring";
 
-const ErrorStatus: FC<{
+const StatusBar: FC<{
   message: string;
-}> = ({ message }) => {
+  color: string;
+}> = ({ message, color }) => {
   const [show, setShow] = useState(false);
   const [animateDown, setAnimateDown] = useState(false);
   const [animateUp, setAnimateUp] = useState(false);
@@ -38,13 +39,11 @@ const ErrorStatus: FC<{
   return (
     <animated.div
       style={animate}
-      className={
-        "fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 transform rounded-xl border-2 border-black bg-red-400 px-3 text-lg text-white md:px-6 md:py-3 md:text-2xl md:font-bold"
-      }
+      className={`fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 transform rounded-xl border-2 border-black ${color} px-3 text-lg text-white md:px-6 md:py-3 md:text-2xl md:font-bold`}
     >
       {message}
     </animated.div>
   );
 };
 
-export default ErrorStatus;
+export default StatusBar;
