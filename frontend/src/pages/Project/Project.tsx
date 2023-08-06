@@ -28,12 +28,24 @@ import {
 import Project from "Type/Project.tsx";
 import { useSpring, animated } from "react-spring";
 import ModeButtons from "Components/ModeButtons/ModeButtons.tsx";
-import ErrorStatus from "Components/ErrorStatus/ErrorStatus.tsx";
+import StatusBar from "Components/StatusBar/StatusBar.tsx";
+import DeploymentBar from "Components/DeploymentBar/DeploymentBar.tsx";
 
 const Project: FC<{
   userData: UserData;
   setUserData: Dispatch<SetStateAction<UserData>>;
-}> = ({ userData, setUserData }) => {
+  deploying: boolean;
+  deployed: { url: string; bool: boolean };
+  setDeploying: (deploying: boolean) => void;
+  setDeployed: (deployed: { url: string; bool: boolean }) => void;
+}> = ({
+  userData,
+  setUserData,
+  deploying,
+  deployed,
+  setDeploying,
+  setDeployed,
+}) => {
   const { slug } = useParams<{ slug: string }>();
 
   const navigate = useNavigate();
@@ -320,7 +332,9 @@ const Project: FC<{
   return (
     <>
       <main>
-        {showError.visible && <ErrorStatus message={showError.message} />}
+        {showError.visible && (
+          <StatusBar message={showError.message} color={"bg-red-400"} />
+        )}
         <div className="container mx-auto my-20 max-w-screen-lg px-5">
           <section className="hero mb-8">
             <animated.div style={headerAnimation}>
@@ -619,7 +633,22 @@ const Project: FC<{
           </animated.section>
         </div>
       </main>
-      <ModeButtons />
+      <ModeButtons
+        deploying={deploying}
+        setDeploying={setDeploying}
+        setDeployed={setDeployed}
+        userData={userData}
+        setUserData={setUserData}
+      />
+      {deploying && (
+        <StatusBar
+          message="Deploying! plz wait a few minutes..."
+          color="bg-green-500"
+        />
+      )}
+      {deployed.bool && (
+        <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
+      )}
       <Footer />
     </>
   );

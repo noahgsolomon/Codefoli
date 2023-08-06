@@ -41,6 +41,7 @@ const MainApp: React.FC = () => {
     profession: "",
     projects: [],
     skills: [],
+    website: "",
     work: [],
     role: "NEWBIE",
     about: "",
@@ -88,6 +89,12 @@ const MainApp: React.FC = () => {
   const [projectsPageData, setProjectsPageData] = useState<ProjectsPageData>({
     headerOne: "",
     descriptionOne: "",
+  });
+
+  const [deploying, setDeploying] = useState(false);
+  const [deployed, setDeployed] = useState<{ url: string; bool: boolean }>({
+    url: "",
+    bool: false,
   });
 
   useEffect(() => {
@@ -148,7 +155,16 @@ const MainApp: React.FC = () => {
     const { slug } = useParams();
 
     if (slug && userData.slugs.some((s) => s.slug === slug)) {
-      return <Project userData={userData} setUserData={setUserData} />;
+      return (
+        <Project
+          userData={userData}
+          setUserData={setUserData}
+          setDeployed={setDeployed}
+          setDeploying={setDeploying}
+          deployed={deployed}
+          deploying={deploying}
+        />
+      );
     } else {
       return <NotFound />;
     }
@@ -159,8 +175,6 @@ const MainApp: React.FC = () => {
   }
 
   console.log(contactData);
-
-
 
   return (
     <>
@@ -179,6 +193,10 @@ const MainApp: React.FC = () => {
               userData={userData}
               pageData={homeData}
               setPageData={setHomeData}
+              setDeployed={setDeployed}
+              setDeploying={setDeploying}
+              deployed={deployed}
+              deploying={deploying}
             />
           }
         />
@@ -190,6 +208,10 @@ const MainApp: React.FC = () => {
               userData={userData}
               setUserData={setUserData}
               setPageData={setContactData}
+              setDeployed={setDeployed}
+              setDeploying={setDeploying}
+              deployed={deployed}
+              deploying={deploying}
             />
           }
         />
@@ -201,6 +223,10 @@ const MainApp: React.FC = () => {
               pageData={aboutData}
               setUserData={setUserData}
               setPageData={setAboutData}
+              setDeployed={setDeployed}
+              setDeploying={setDeploying}
+              deployed={deployed}
+              deploying={deploying}
             />
           }
         />
@@ -212,10 +238,13 @@ const MainApp: React.FC = () => {
               pageData={projectsPageData}
               setPageData={setProjectsPageData}
               setUserData={setUserData}
+              setDeployed={setDeployed}
+              setDeploying={setDeploying}
+              deployed={deployed}
+              deploying={deploying}
             />
           }
         />
-        <Route path="/404" element={<NotFound />} />
         <Route path="/:slug" element={<ProjectOr404 />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

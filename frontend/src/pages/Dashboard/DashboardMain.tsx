@@ -6,7 +6,7 @@ import {
 } from "./dashboardapi.tsx";
 import { useSpring, animated } from "react-spring";
 import HomeData from "Type/HomeData.tsx";
-import ErrorStatus from "Components/ErrorStatus/ErrorStatus.tsx";
+import StatusBar from "Components/StatusBar/StatusBar.tsx";
 
 const DashboardMain: React.FC<{
   pageData: HomeData;
@@ -127,7 +127,9 @@ const DashboardMain: React.FC<{
 
   return (
     <div className="container mx-auto px-6">
-      {showError.visible && <ErrorStatus message={showError.message} />}
+      {showError.visible && (
+        <StatusBar message={showError.message} color={"bg-red-400"} />
+      )}
       <div className="flex flex-col lg:flex-row xl:mx-auto xl:justify-center">
         <animated.div style={headerAnimation}>
           <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center justify-center font-bold xl:mt-32">

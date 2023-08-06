@@ -17,7 +17,7 @@ import {
   updateJobStartDate,
 } from "api/userapi.tsx";
 import Work from "Type/Work.tsx";
-import ErrorStatus from "Components/ErrorStatus/ErrorStatus.tsx";
+import StatusBar from "Components/StatusBar/StatusBar.tsx";
 const JobCard: FC<{
   companyTitle: string;
   role: string;
@@ -269,7 +269,9 @@ const JobCard: FC<{
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      {showError.visible && <ErrorStatus message={showError.message} />}
+      {showError.visible && (
+        <StatusBar message={showError.message} color={"bg-red-400"} />
+      )}
       {removeJobHover && (
         <div
           className={`absolute inset-0 z-10 bg-red-300 opacity-25 transition-all`}

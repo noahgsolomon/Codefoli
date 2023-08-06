@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import Marquee from "Components/Marquee/Marquee.tsx";
 import UserData from "Type/UserData.tsx";
 import { useSpring, animated } from "react-spring";
-import ErrorStatus from "Components/ErrorStatus/ErrorStatus.tsx";
+import StatusBar from "Components/StatusBar/StatusBar.tsx";
 
 const AboutMain: React.FC<{
   userData: UserData;
@@ -175,7 +175,9 @@ const AboutMain: React.FC<{
   return (
     <>
       <div className="container mx-auto my-20 max-w-screen-lg px-5">
-        {showError.visible && <ErrorStatus message={showError.message} />}
+        {showError.visible && (
+          <StatusBar message={showError.message} color={"bg-red-400"} />
+        )}
         <section className="about mb-20 grid grid-cols-2 justify-center gap-10 md:h-[400px] md:grid-cols-5">
           <animated.div
             style={headerAnimation}

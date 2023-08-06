@@ -5,13 +5,28 @@ import UserData from "Type/UserData.tsx";
 import DashboardSections from "./DashboardSections.tsx";
 import DashboardMain from "./DashboardMain.tsx";
 import ModeButtons from "Components/ModeButtons/ModeButtons.tsx";
+import StatusBar from "Components/StatusBar/StatusBar.tsx";
+import DeploymentBar from "Components/DeploymentBar/DeploymentBar.tsx";
 
 const Dashboard: FC<{
   pageData: HomeData;
   setPageData: Dispatch<SetStateAction<HomeData>>;
   userData: UserData;
   setUserData: Dispatch<SetStateAction<UserData>>;
-}> = ({ pageData, userData, setPageData, setUserData }) => {
+  deploying: boolean;
+  deployed: { url: string; bool: boolean };
+  setDeploying: (deploying: boolean) => void;
+  setDeployed: (deployed: { url: string; bool: boolean }) => void;
+}> = ({
+  pageData,
+  userData,
+  setPageData,
+  setUserData,
+  deployed,
+  setDeploying,
+  setDeployed,
+  deploying,
+}) => {
   return (
     <>
       <DashboardMain pageData={pageData} setPageData={setPageData} />
@@ -21,7 +36,22 @@ const Dashboard: FC<{
         pageData={pageData}
         setPageData={setPageData}
       />
-      <ModeButtons />
+      <ModeButtons
+        deploying={deploying}
+        setDeploying={setDeploying}
+        setDeployed={setDeployed}
+        userData={userData}
+        setUserData={setUserData}
+      />
+      {deploying && (
+        <StatusBar
+          message="Deploying! plz wait a few minutes..."
+          color="bg-green-500"
+        />
+      )}
+      {deployed.bool && (
+        <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
+      )}
       <Footer />
     </>
   );
