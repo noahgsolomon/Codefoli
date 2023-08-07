@@ -1,5 +1,3 @@
-import React from "react";
-
 type Props = {
   imageUrl?: string;
   description?: string;
@@ -22,7 +20,7 @@ const TestimonialCard = ({
       }`}
     >
       <img
-        className="shadow-box mx-auto h-28 w-28 flex-shrink-0 transform self-start rounded-full border-4 border-black bg-blue-500 object-contain transition-all duration-300 hover:translate-y-1 hover:shadow-lg md:mx-0"
+        className="mx-auto h-28 w-28 flex-shrink-0 transform self-start rounded-full border-2 border-black bg-blue-500 object-contain transition-all hover:-translate-y-0.5 hover:shadow-custom md:mx-0"
         src={imageUrl}
         alt="User testimonial"
       />

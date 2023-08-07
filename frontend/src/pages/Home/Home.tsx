@@ -2,11 +2,9 @@ import { FC } from "react";
 import { useSpring, animated } from "react-spring";
 import { FiCode, FiLayout } from "react-icons/fi";
 import profileDisplayImg from "assets/profiledisplay.png";
-import user2PfpImg from "assets/user2-pfp.png";
-import userPfpImg from "assets/user-pfp.png";
+
 import Footer from "Components/Footer/Footer";
 import Card from "Components/Card/Card";
-import TestimonialCard from "Components/TestimonialCard/TestimonialCard";
 import Banner from "Components/Banner/Banner";
 
 const Home: FC = () => {
@@ -44,14 +42,14 @@ const Home: FC = () => {
                 </span>
                 !
               </h1>
-              <p className="mb-2 text-center text-lg">
+              <p className="text-bold mb-2 text-center text-2xl">
                 A platform dedicated to helping programmers create stunning
                 portfolio websites...
               </p>
             </animated.div>
             <animated.div style={imageAnimation}>
               <img
-                className="mb-5 h-auto w-full transform rounded-lg border-2 border-black shadow-custom transition-all duration-300 hover:-translate-y-0.5 hover:shadow-customHover md:max-w-screen-lg"
+                className="mb-5 h-auto w-full transform rounded-lg border-2 border-black shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover md:max-w-screen-lg"
                 src={profileDisplayImg}
                 alt="Introductory visual"
               />
@@ -67,17 +65,17 @@ const Home: FC = () => {
               <Card
                 title="Professional Design"
                 description="Create a professional and personalized portfolio website"
-                ImageUrl="/assets/images/professional-website.jpg"
+                ImageUrl="/assets/images/professional-website.png"
               />
               <Card
                 title="Add Your Skills"
                 description="Showcase your projects, skills, and accomplishments"
-                ImageUrl="/assets/images/skills.jpeg"
+                ImageUrl="/assets/images/skills.png"
               />
               <Card
                 title="Easy To Edit"
                 description="Easily update and maintain your portfolio over time"
-                ImageUrl="/assets/images/easy-to-edit.jpg"
+                ImageUrl="/assets/images/easy-to-edit.png"
               />
             </div>
           </div>
@@ -93,36 +91,35 @@ const Home: FC = () => {
               to: "/register",
               text: "Sign Up",
             }}
-            imageUrl="/assets/images/website.png"
-            backgroundColor="red"
+            backgroundColor="blue"
           />
         </section>
 
-        <section className="testimonial-section mb-10 px-5">
-          <div className="mx-auto my-10 max-w-screen-lg  px-5">
-            <h2 className="mb-5 text-center text-2xl font-bold md:text-4xl">
-              What Our{" "}
-              <span className="highlight-users bg-blue-500 px-1 text-white">
-                Users
-              </span>{" "}
-              Say
-            </h2>
+        {/*<section className="testimonial-section mb-10 px-5">*/}
+        {/*  <div className="mx-auto my-10 max-w-screen-lg  px-5">*/}
+        {/*    <h2 className="mb-5 text-center text-2xl font-bold md:text-4xl">*/}
+        {/*      What Our{" "}*/}
+        {/*      <span className="highlight-users bg-blue-500 px-1 text-white">*/}
+        {/*        Users*/}
+        {/*      </span>{" "}*/}
+        {/*      Say*/}
+        {/*    </h2>*/}
 
-            <TestimonialCard
-              imageUrl={user2PfpImg}
-              description="Codefolio made building my portfolio a breeze. It truly
-                  represents my skills and work."
-              userName="Jane Doe"
-            />
-            <TestimonialCard
-              imageUrl={userPfpImg}
-              description="With Codefolio, I was able to create a professional portfolio in
-                  no time."
-              userName="John Smith"
-              reverse
-            />
-          </div>
-        </section>
+        {/*    <TestimonialCard*/}
+        {/*      imageUrl={user2PfpImg}*/}
+        {/*      description="Codefolio made building my portfolio a breeze. It truly*/}
+        {/*          represents my skills and work."*/}
+        {/*      userName="Michael Tikhonovsky"*/}
+        {/*    />*/}
+        {/*    <TestimonialCard*/}
+        {/*      imageUrl={userPfpImg}*/}
+        {/*      description="With Codefolio, I was able to create a professional portfolio in*/}
+        {/*          no time."*/}
+        {/*      userName="David Mann"*/}
+        {/*      reverse*/}
+        {/*    />*/}
+        {/*  </div>*/}
+        {/*</section>*/}
 
         <section className="mb-10 px-5">
           <div className="mx-auto my-10 max-w-screen-lg  px-5">
