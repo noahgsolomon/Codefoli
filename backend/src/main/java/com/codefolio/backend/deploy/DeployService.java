@@ -1210,7 +1210,7 @@ public class DeployService {
                           <div className={` relative mb-5 h-[400px] w-[400px] transition-all`}>
                             <div className="h-full w-full overflow-hidden rounded-3xl">
                               <img
-                                src={imageOne || 'https://picsum.photos/400/400'}
+                                src={imageOne || 'https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b55bcb4baec57b75b66fd_desigining-experience-paperfolio-webflow-template.png'}
                                 alt=""
                                 className="h-full w-full rounded-3xl object-cover"
                               />
@@ -2246,7 +2246,7 @@ public class DeployService {
                                 <div className="h-full w-full overflow-hidden rounded-full">
                                   <img
                                     className="h-full w-full object-cover"
-                                    src={iconOneImage || 'https://picsum.photos/400/400'}
+                                    src={iconOneImage || 'https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b443e2bb8e12b5faf51a7_about-hero-rigth-image-paperfolio-webflow-template.png'}
                                     alt="portfolio"
                                   />
                                 </div>
@@ -2259,7 +2259,7 @@ public class DeployService {
                                 <div className="h-full w-full overflow-hidden rounded-full">
                                   <img
                                     className="h-full w-full object-cover"
-                                    src={iconTwoImage || 'https://picsum.photos/400/400'}
+                                    src={iconTwoImage || 'https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b440128f648585c383865_about-hero-left-image-paperfolio-webflow-template.png'}
                                     alt="portfolio"
                                   />
                                 </div>
@@ -2281,7 +2281,7 @@ public class DeployService {
                                   <div className="h-full w-full overflow-hidden rounded-3xl border-2 border-black">
                                     <img
                                       className="h-full w-full object-cover"
-                                      src={iconThreeImage || 'https://picsum.photos/400/400'}
+                                      src={iconThreeImage || 'https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b52d3639fb5250039e574_my-story-image-paperfolio-webflow-template.png'}
                                       alt="portfolio"
                                     />
                                   </div>
@@ -2601,7 +2601,7 @@ public class DeployService {
                               <div className="h-full w-full overflow-hidden rounded-3xl shadow-customHover">
                                 <img
                                   className="h-full w-full object-cover"
-                                  src={profileImage || 'https://picsum.photos/500/500'}
+                                  src={profileImage || 'https://assets.website-files.com/63360c0c2b86f80ba8b5421a/63407fbdc2d4ac5270385fd4_home-hero-image-paperfolio-webflow-template.svg'}
                                   alt="pfp"
                                 ></img>
                               </div>
