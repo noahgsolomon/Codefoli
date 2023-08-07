@@ -35,6 +35,7 @@ public class Users {
         this.email = email;
         this.password = password;
         this.role = RoleType.NEWBIE;
+        this.phone = "(123)-456-7890";
     }
 
     public Users(String name, String email, String password, String company, String location, String about){
@@ -45,6 +46,6 @@ public class Users {
         this.location = location;
         this.about = about;
         this.role = RoleType.NEWBIE;
-        this.phone = "1234567890";
+        this.phone = "(123)-456-7890";
     }
 }
