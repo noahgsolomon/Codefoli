@@ -100,7 +100,7 @@ const MainApp: React.FC = () => {
   useEffect(() => {
     const authenticatedCheck = async () => {
       const fetchState = await authenticated();
-      if (fetchState) {
+      if (fetchState.status === "OK") {
         const user: UserData = await userDetails();
         if (user.role === "NEWBIE") {
           if (window.location.pathname !== "/setup") {
@@ -135,15 +135,10 @@ const MainApp: React.FC = () => {
           }
         }
       } else {
-        localStorage.removeItem("role");
         const path = window.location.pathname;
-        if (
-          path === "/about" ||
-          path === "/contact" ||
-          path === "/dashboard" ||
-          path === "/setup"
-        ) {
-          navigate("/");
+        if (path !== "/login" && path !== "/register" && path !== "/") {
+          localStorage.removeItem("role");
+          navigate("/login");
         }
       }
       setLoading(false);
@@ -173,8 +168,6 @@ const MainApp: React.FC = () => {
   if (loading) {
     return <Loader />;
   }
-
-  console.log(contactData);
 
   return (
     <>

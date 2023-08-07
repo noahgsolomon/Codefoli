@@ -54,9 +54,8 @@ const authenticated = async () => {
       headers: { "Content-Type": "application/json" },
       credentials: "include",
     });
-    if (response.ok) {
-      return response.text();
-    }
+
+    return await response.json();
   } catch (e) {
     console.log(e);
     throw e;

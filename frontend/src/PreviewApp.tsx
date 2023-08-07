@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Route, Routes, useParams } from "react-router-dom";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import HomeP from "./preview/pages/Home/HomeP.tsx";
 import HeaderP from "./preview/common/Components/Header/HeaderP.tsx";
 import UserData from "Type/UserData.tsx";
@@ -23,6 +23,8 @@ import AboutP from "./preview/pages/About/AboutP.tsx";
 import NotFoundP from "./preview/pages/NotFound/NotFoundP.tsx";
 
 const PreviewApp: React.FC = () => {
+  const navigate = useNavigate();
+
   const [userData, setUserData] = useState<UserData>({
     name: "",
     email: "",
@@ -110,33 +112,49 @@ const PreviewApp: React.FC = () => {
   useEffect(() => {
     const authenticatedCheck = async () => {
       const fetchState = await authenticated();
-      if (fetchState) {
+      if (fetchState.status === "OK") {
         const user: UserData = await userDetails();
-        setUserData(user);
-        localStorage.setItem("role", user.role);
-        const homeFetch = await getHome();
-        if (homeFetch) {
-          setHomeData(homeFetch);
-        }
-        const aboutFetch = await getAbout();
-        if (aboutFetch) {
-          setAboutData(aboutFetch);
-        }
-        const contactFetch = await getContact();
-        if (contactFetch) {
-          setContactData(contactFetch);
-        }
-        const projectsPageFetch = await getProjectsPage();
-        if (projectsPageFetch) {
-          setProjectsPageData(projectsPageFetch);
+        if (user.role === "NEWBIE") {
+          if (window.location.pathname !== "/setup") {
+            navigate("/setup");
+          }
+          localStorage.setItem("role", user.role);
+          setUserData(user);
+        } else {
+          const homeFetch = await getHome();
+          if (homeFetch) {
+            setHomeData(homeFetch);
+          }
+          const aboutFetch = await getAbout();
+          if (aboutFetch) {
+            setAboutData(aboutFetch);
+          }
+          const contactFetch = await getContact();
+          if (contactFetch) {
+            setContactData(contactFetch);
+          }
+          const projectsPageFetch = await getProjectsPage();
+          if (projectsPageFetch) {
+            setProjectsPageData(projectsPageFetch);
+          }
+          setUserData(user);
+          localStorage.setItem("role", user.role);
+          const path = window.location.pathname;
+          if (path === "/" || path === "/login" || path === "/register") {
+            navigate("/dashboard");
+          }
         }
       } else {
-        localStorage.removeItem("role");
+        const path = window.location.pathname;
+        if (path !== "/login" && path !== "/register" && path !== "/") {
+          localStorage.removeItem("role");
+          navigate("/login");
+        }
       }
       setLoading(false);
     };
     authenticatedCheck();
-  }, []);
+  }, [navigate]);
 
   if (loading) {
     return <Loader />;
