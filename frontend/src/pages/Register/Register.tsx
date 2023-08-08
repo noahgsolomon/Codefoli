@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { Link } from "react-router-dom";
 import { register } from "api/authenticateapi.tsx";
 
@@ -9,7 +9,6 @@ const Register: React.FC = () => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [fullNameError, setFullNameError] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   const redirectUri = "http://localhost:5173/dashboard";
 
@@ -19,16 +18,6 @@ const Register: React.FC = () => {
       window.location.href = "/setup";
     }
   };
-
-  useEffect(() => {
-    if (!localStorage.getItem("role")) {
-      setLoading(false);
-    }
-  }, []);
-
-  if (loading) {
-    return <></>;
-  }
 
   function isValidEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
