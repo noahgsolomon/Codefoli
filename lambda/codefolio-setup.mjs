@@ -48,9 +48,18 @@ const handler = async (event) => {
             company: body.company,
             location: body.location,
             about: body.about,
+            name: body.name,
             profession: body.profession,
             role: 'USER'
         });
+
+    for (const skill of body.skills) {
+        await knex('Skills').insert({
+            skill: skill,
+            user_id: existingUser.id
+        });
+    }
+
     console.log("User details updated successfully");
 
     const updatedUser = await knex('users')
