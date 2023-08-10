@@ -62,17 +62,19 @@ const handler = async (event) => {
                     about: body.about,
                     name: body.name,
                     profession: body.profession,
-                    role: 'USER'        });
+                    role: 'USER'
+
+                });
 
             for (const skill of body.skills) {
-                await knex('skills').insert({
+                await trx('skills').insert({
                     skill: skill,
                     user_id: existingUser.id
                 });
             }
             let workOrder = 1;
             for (const work of body.work){
-                await knex('work').insert({
+                await trx('work').insert({
                     company: work.company,
                     position: work.position,
                     start_date: work.startDate,
@@ -93,7 +95,7 @@ const handler = async (event) => {
 
             for (const project of body.projects){
 
-                const [projectRow] = await knex('projects').insert({
+                const [projectRow] = await trx('projects').insert({
                     name: project.name,
                     description: project.description,
                     updated_at: project.updatedAt,
@@ -105,14 +107,14 @@ const handler = async (event) => {
                 const projectId = projectRow.id;
 
                 for (const language of project.languages){
-                    await knex('languages').insert({
+                    await trx('languages').insert({
                         user_id: existingUser.id,
                         project_id: projectId,
                         language: language
                     });
                 }
 
-                await knex('project_content').insert({
+                await trx('project_content').insert({
                     user_id: existingUser.id,
                     project_id: projectId,
                     header: projectRow.name,
@@ -127,7 +129,7 @@ const handler = async (event) => {
             }
 
             for (const service of body.services){
-                await knex('services').insert({
+                await trx('services').insert({
                     service: service,
                     user_id: existingUser.id
                 });
@@ -136,14 +138,9 @@ const handler = async (event) => {
 
             console.log("User details updated successfully");
 
-            const updatedUser = await trx('users')
-                .where('cognito_user_id', cognitoUserId)
-                .first();
-            console.log("Updated user details:", updatedUser);
-
             return {
                 statusCode: 200,
-                body: JSON.stringify({ status: "OK", message: "User details updated successfully", data: updatedUser }),
+                body: JSON.stringify({ status: "OK", message: "User details updated successfully", data: null }),
             };
         } catch (error) {
             console.error("An error occurred:", error);
