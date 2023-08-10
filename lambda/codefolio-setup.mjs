@@ -60,6 +60,19 @@ const handler = async (event) => {
         });
     }
 
+    for (const work of body.work){
+        await knex('work').insert({
+            company: work.company,
+            position: work.position,
+            startDate: work.startDate,
+            endDate: work.endDate,
+            description: work.description,
+            orderId: work.orderId,
+            image: work.image,
+            user_id: existingUser.id
+        });
+    }
+
     console.log("User details updated successfully");
 
     const updatedUser = await knex('users')
