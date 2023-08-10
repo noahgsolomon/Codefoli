@@ -135,8 +135,155 @@ const handler = async (event) => {
                 });
             }
 
+            await trx('faq').insert({
+                user_id: existingUser.id,
+                question: "What is your design process?",
+                answer: "My design process starts with understanding the client's needs, then moving onto research, ideation, prototyping, and finally, implementation."
+            });
 
-            console.log("User details updated successfully");
+            await trx('faq').insert({
+                user_id: existingUser.id,
+                question: "How long does a project usually take?",
+                answer: "The duration of a project varies depending on its complexity and scope, but typically it ranges from a few weeks to a few months."
+            });
+
+            await trx('faq').insert({
+                user_id: existingUser.id,
+                question: "Do you collaborate with other designers?",
+                answer: "Yes, I often collaborate with other designers and believe that teamwork can lead to more innovative and comprehensive solutions."
+            });
+
+            await trx('faq').insert({
+                user_id: existingUser.id,
+                question: "What types of projects do you work on?",
+                answer: "I work on a wide range of projects, from website and app design to branding and graphic design. Each project brings its own unique challenges and opportunities."
+            });
+
+            await trx('faq').insert({
+                user_id: existingUser.id,
+                question: "How can I contact you for a project?",
+                answer: "You can reach out to me via the contact form on this website, or directly through email. I look forward to discussing how we can work together."
+            });
+
+            await trx('home').insert({
+                user_id: existingUser.id,
+                header_one: "I'm " + existingUser.name + ", a " + existingUser.profession + " from " + existingUser.location,
+                description_one: existingUser.about,
+                header_two: "My broad set of services and skills",
+                profile_image: "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/63407fbdc2d4ac5270385fd4_home-hero-image-paperfolio-webflow-template.svg"
+            });
+
+            await trx('about').insert({
+                header_one: "Hello, I'm " + existingUser.name,
+                icon_one: "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b443e2bb8e12b5faf51a7_about-hero-rigth-image-paperfolio-webflow-template.png",
+                icon_two: "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b440128f648585c383865_about-hero-left-image-paperfolio-webflow-template.png",
+                icon_three: "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b52d3639fb5250039e574_my-story-image-paperfolio-webflow-template.png",
+                header_two: "My story as a designer",
+                description_one: existingUser.about,
+                description_two: "Embarking on a journey fueled by curiosity and passion, I found solace in the world of code. From solving complex problems to creating user-friendly interfaces, every project has been a stepping stone in my development career. Continually learning and adapting, I've embraced new technologies and methodologies to build robust and efficient solutions. My path as a developer is more than a career; it's a lifelong pursuit of innovation, creativity, and technological advancement."
+            });
+
+            await trx('contact').insert({
+                user_id: existingUser.id,
+                header_one: 'Contact Me',
+                description_one:"Don't hesitate to get in touch! Whether you're looking for a design consult, interested in a collaboration, or just want to say hello, I'd be delighted to hear from you. I strive to respond promptly and look forward to our potential correspondence!"
+            });
+
+            await trx('projects_page').insert({
+                user_id: existingUser.id,
+                header_one: "Projects",
+                description_one: "Here are some of my recent projects. I've worked on a wide range of projects, from website and app design to branding and graphic design. Each project brings its own unique challenges and opportunities."
+            });
+
+            await trx('story_section').insert({
+                user_id: existingUser.id,
+                header_one: "Designing since I was ? years old",
+                description_one: "I started designing when I was ? years old. My first designs were for my school projects. I was fascinated by the idea of creating something that people can interact with. I studied design for 5 years in college and have been working as a designer for 3 years.",
+                bullet_one: "Passionate about design from a young age.",
+                bullet_two: "Five years of design education, three professionally.",
+                bullet_three: "Strong advocate of user-centered design.",
+                image_one: "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b55bcb4baec57b75b66fd_desigining-experience-paperfolio-webflow-template.png"
+            });
+
+            await trx('resume_section').insert({
+                user_id: existingUser.id,
+                header_one: "Take a look at my resume"
+            });
+
+            await trx('value_section').insert({
+                user_id: existingUser.id,
+                header_one: "the core values that drive my work.",
+                description_one: "Steering the helm of my career is a deeply ingrained set of core values. These principles not only guide my work ethic but also shape the way I view and approach design. Let's delve into the convictions that drive my professional journey."
+            });
+
+            await trx('faq_section').insert({
+                user_id: existingUser.id,
+                header_one: "Frequently Asked Questions",
+                description_one: "From understanding my design process to discussing project timelines, I've gathered responses to questions often asked by clients and collaborators. If you can't find your answer here, feel free to reach out!"
+            });
+
+            await trx('skill_section').insert({
+                user_id: existingUser.id,
+                header_one: "My broad set of services and skills"
+            });
+
+            await trx('section').insert({
+                user_id: existingUser.id,
+                type: 'STORY',
+                page: 'ABOUT',
+                page_order: 1
+            });
+
+            await trx('section').insert({
+                user_id: existingUser.id,
+                type: 'RESUME',
+                page: 'ABOUT',
+                page_order: 2
+            });
+
+            await trx('section').insert({
+                user_id: existingUser.id,
+                type: 'VALUE',
+                page: 'ABOUT',
+                page_order: 3
+            });
+
+            await trx('section').insert({
+                user_id: existingUser.id,
+                type: 'SKILL',
+                page: 'HOME',
+                page_order: 1
+            });
+
+            await trx('section').insert({
+                user_id: existingUser.id,
+                type: 'FAQ',
+                page: 'CONTACT',
+                page_order: 1
+            });
+
+            await trx('values').insert({
+                user_id: existingUser.id,
+                value: 'HARD_WORK'
+            });
+
+            await trx('values').insert({
+                user_id: existingUser.id,
+                value: 'TRANSPARENCY'
+            });
+
+            await trx('values').insert({
+                user_id: existingUser.id,
+                value: 'INNOVATION'
+            });
+
+            await trx('values').insert({
+                user_id: existingUser.id,
+                value: 'GROWTH'
+            });
+
+
+            console.log("User profile setup successfully");
 
             return {
                 statusCode: 200,
