@@ -73,6 +73,25 @@ const handler = async (event) => {
         });
     }
 
+    const createSlug = (name) => {
+        return name.toLowerCase()
+            .replace(/[':;/.,!@#$%^&*()_+=]/g, "")
+            .replace(/\s+/g, "-")
+            .replace(/--+/g, "-");
+    };
+
+    for (const project of body.projects){
+        await knex('projects').insert({
+            name: project.name,
+            description: project.description,
+            languages: project.languages,
+            updatedAt: project.updatedAt,
+            image: project.image,
+            user_id: existingUser.id,
+            slug: createSlug(project.name)
+        });
+    }
+
     console.log("User details updated successfully");
 
     const updatedUser = await knex('users')
