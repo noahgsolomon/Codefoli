@@ -167,19 +167,20 @@ const handler = async (event) => {
 
             await trx('home').insert({
                 user_id: existingUser.id,
-                header_one: "I'm " + existingUser.name + ", a " + existingUser.profession + " from " + existingUser.location,
-                description_one: existingUser.about,
+                header_one: "I'm " + body.name + ", a " + body.profession + " from " + body.location,
+                description_one: body.about,
                 header_two: "My broad set of services and skills",
                 profile_image: "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/63407fbdc2d4ac5270385fd4_home-hero-image-paperfolio-webflow-template.svg"
             });
 
             await trx('about').insert({
-                header_one: "Hello, I'm " + existingUser.name,
+                user_id: existingUser.id,
+                header_one: "Hello, I'm " + body.name,
                 icon_one: "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b443e2bb8e12b5faf51a7_about-hero-rigth-image-paperfolio-webflow-template.png",
                 icon_two: "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b440128f648585c383865_about-hero-left-image-paperfolio-webflow-template.png",
                 icon_three: "https://assets.website-files.com/63360c0c2b86f80ba8b5421a/633b52d3639fb5250039e574_my-story-image-paperfolio-webflow-template.png",
                 header_two: "My story as a designer",
-                description_one: existingUser.about,
+                description_one: body.about,
                 description_two: "Embarking on a journey fueled by curiosity and passion, I found solace in the world of code. From solving complex problems to creating user-friendly interfaces, every project has been a stepping stone in my development career. Continually learning and adapting, I've embraced new technologies and methodologies to build robust and efficient solutions. My path as a developer is more than a career; it's a lifelong pursuit of innovation, creativity, and technological advancement."
             });
 
