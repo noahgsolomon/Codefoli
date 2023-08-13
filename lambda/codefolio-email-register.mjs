@@ -1,13 +1,27 @@
 import { CognitoIdentityProviderClient, SignUpCommand, InitiateAuthCommand } from "@aws-sdk/client-cognito-identity-provider";
 import Knex from 'knex';
+import { user, password, host, database } from '/opt/credentials.mjs';
+
+const client = new CognitoIdentityProviderClient({ region: "us-east-1" });
+
+const connection = {
+    ssl: { rejectUnauthorized: false },
+    host,
+    user,
+    password,
+    database
+};
+const knex = Knex({
+    client: 'postgres',
+    connection
+});
+console.log("Connected to the database.");
 
 const handler = async (event) => {
     console.log("Received event:", JSON.stringify(event));
 
-    const client = new CognitoIdentityProviderClient({ region: "us-east-1" });
-
     const params = {
-        ClientId: '****',
+        ClientId: '5et40k0da1hoosqmjf5peo0i8j',
         Username: event.email,
         Password: event.password,
         UserAttributes: [
@@ -24,7 +38,7 @@ const handler = async (event) => {
 
         const authParams = {
             AuthFlow: 'USER_PASSWORD_AUTH',
-            ClientId: '****',
+            ClientId: '5et40k0da1hoosqmjf5peo0i8j',
             AuthParameters: {
                 USERNAME: event.email,
                 PASSWORD: event.password
@@ -32,24 +46,6 @@ const handler = async (event) => {
         };
         const authResult = await client.send(new InitiateAuthCommand(authParams));
         console.log("InitiateAuthCommand result:", authResult);
-
-        const user = '****';
-        const password = '****';
-        const host = '****';
-        const database = 'codefolio';
-
-        const connection = {
-            ssl: { rejectUnauthorized: false },
-            host,
-            user,
-            password,
-            database
-        };
-        const knex = Knex({
-            client: 'postgres',
-            connection
-        });
-        console.log("Connected to the database.");
 
         await knex('users').insert({
             name: event.name,
