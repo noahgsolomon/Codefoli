@@ -1,5 +1,21 @@
 import Knex from 'knex';
 import jwt from 'jsonwebtoken';
+import { user, password, host, database } from '/opt/credentials.mjs';
+
+const connection = {
+    ssl: { rejectUnauthorized: false },
+    host,
+    user,
+    password,
+    database
+};
+
+console.log("Attempting to connect to the database...");
+const knex = Knex({
+    client: 'postgres',
+    connection
+});
+console.log("Connected to the database.");
 
 const handler = async (event) => {
 
@@ -8,26 +24,6 @@ const handler = async (event) => {
     const idToken = event.headers.Authorization.replace('Bearer ', '');
     const decodedToken = jwt.decode(idToken);
     const cognitoUserId = decodedToken['sub'];
-
-    const user = '****';
-    const password = '****';
-    const host = '****';
-    const database = 'codefolio';
-
-    const connection = {
-        ssl: { rejectUnauthorized: false },
-        host,
-        user,
-        password,
-        database
-    };
-
-    console.log("Attempting to connect to the database...");
-    const knex = Knex({
-        client: 'postgres',
-        connection
-    });
-    console.log("Connected to the database.");
 
     const existingUser = await knex('users')
         .where('cognito_user_id', cognitoUserId)
