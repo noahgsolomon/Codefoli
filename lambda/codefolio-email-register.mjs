@@ -1,6 +1,7 @@
 import { CognitoIdentityProviderClient, SignUpCommand, InitiateAuthCommand } from "@aws-sdk/client-cognito-identity-provider";
 import Knex from 'knex';
-import { user, password, host, database } from '/opt/credentials.mjs';
+import { user, password, host, database } from '/opt/db.mjs';
+
 
 const client = new CognitoIdentityProviderClient({ region: "us-east-1" });
 

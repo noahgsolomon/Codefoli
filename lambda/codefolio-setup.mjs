@@ -1,6 +1,7 @@
 import Knex from 'knex';
 import jwt from 'jsonwebtoken';
-import { user, password, host, database } from '/opt/credentials.mjs';
+import { user, password, host, database } from '/opt/db.mjs';
+
 
 const connection = {
     ssl: { rejectUnauthorized: false },
