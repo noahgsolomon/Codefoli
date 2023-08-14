@@ -11,15 +11,15 @@ const Login: React.FC = () => {
 
   const handleLogin = async () => {
     const loginRequest = await login(email, password);
-    if (loginRequest) {
-      window.location.href = "/dashboard";
-    } else {
-      setEmailError(true);
-      setPasswordError(true);
-    }
+    console.log(loginRequest)
+    // if (loginRequest) {
+    //   window.location.href = "/dashboard";
+    // } else {
+    //   setEmailError(true);
+    //   setPasswordError(true);
+    // }
   };
 
-  const redirectUri = "http://localhost:5173/dashboard";
 
   return (
       <div className="flex items-center justify-center bg-gray-50 p-4">
@@ -121,16 +121,17 @@ const Login: React.FC = () => {
               <>
                 <div className="mt-5 flex flex-col items-center">
                   <button
-                      className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl bg-black px-9 py-6 text-lg text-white transition-all hover:-translate-y-1 hover:opacity-90"
+                      className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl bg-[#4285F4]  border-2 border-white px-9 py-6 text-lg text-white transition-all hover:-translate-y-1 hover:opacity-90"
                       onClick={() => {
-                        window.location.href = `http://localhost:8080/oauth/authorize/github?redirect_uri=${redirectUri}`;
+                        // window.location.href = `http://localhost:8080/oauth/authorize/github?redirect_uri=${redirectUri}`;
+                        console.log('something');
                       }}
                   >
-                    Continue with GitHub
+                    Continue with Google
                     <img
                         className="ml-2 h-auto w-8 rounded-2xl bg-white p-1"
-                        src={"src/assets/github-logo.png"}
-                        alt={"github icon"}
+                        src={"src/assets/google-logo.png"}
+                        alt={"google icon"}
                     />
                   </button>
                   <button
