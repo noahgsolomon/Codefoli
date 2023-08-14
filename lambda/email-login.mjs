@@ -16,24 +16,24 @@ const handler = async (event) => {
         const response = await client.send(command);
         return {
             statusCode: 200,
-            body: JSON.stringify({
+            body: {
                 status: "OK",
                 message: "User logged in successfully",
                 data: {
                     idToken: response.AuthenticationResult.IdToken,
                     accessToken: response.AuthenticationResult.AccessToken,
-                    refreshToken: response.AuthenticationResult.RefreshToken // Include the refresh token
+                    refreshToken: response.AuthenticationResult.RefreshToken
                 }
-            }),
+            }
         };
     } catch (err) {
         return {
             statusCode: 400,
-            body: JSON.stringify({
+            body: {
                 status: "ERROR",
                 message: err.message,
                 data: null
-            }),
+            },
         };
     }
 };

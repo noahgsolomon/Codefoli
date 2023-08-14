@@ -2,7 +2,6 @@ import { CognitoIdentityProviderClient, SignUpCommand, InitiateAuthCommand } fro
 import Knex from 'knex';
 import { user, password, host, database } from '/opt/db.mjs';
 
-
 const client = new CognitoIdentityProviderClient({ region: "us-east-1" });
 
 const connection = {
@@ -60,7 +59,7 @@ const handler = async (event) => {
 
         return {
             statusCode: 200,
-            body: JSON.stringify({
+            body: {
                 status: "OK",
                 message: "User registered successfully",
                 data: {
@@ -70,17 +69,17 @@ const handler = async (event) => {
                     idToken: authResult.AuthenticationResult.IdToken,
                     refreshToken: authResult.AuthenticationResult.RefreshToken // Include the refresh token
                 }
-            }),
+            },
         };
     } catch (err) {
         console.error("Error occurred:", err);
         return {
             statusCode: 400,
-            body: JSON.stringify({
+            body: {
                 status: "ERROR",
                 message: err.message,
                 data: null
-            }),
+            },
         };
     }
 };
