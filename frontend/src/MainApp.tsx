@@ -100,7 +100,8 @@ const MainApp: React.FC = () => {
   useEffect(() => {
     const authenticatedCheck = async () => {
       const fetchState = await authenticated();
-      if (fetchState.status === "OK") {
+      console.log(fetchState)
+      if (fetchState.status === "s") {
         const user: UserData = await userDetails();
         if (user.role === "NEWBIE") {
           if (window.location.pathname !== "/setup") {
