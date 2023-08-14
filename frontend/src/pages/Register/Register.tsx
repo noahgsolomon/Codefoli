@@ -10,13 +10,13 @@ const Register: React.FC = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [fullNameError, setFullNameError] = useState(false);
 
-  const redirectUri = "http://localhost:5173/dashboard";
 
   const handleRegister = async () => {
     const registerRequest = await register(fullName, email, password);
-    if (registerRequest) {
-      window.location.href = "/setup";
-    }
+    console.log(registerRequest)
+    // if (registerRequest) {
+    //   window.location.href = "/setup";
+    // }
   };
 
   function isValidEmail(email: string): boolean {
@@ -142,16 +142,17 @@ const Register: React.FC = () => {
         </button>
         <p className="my-1 text-gray-500">or</p>
         <button
-          className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl bg-black px-9 py-6 text-lg text-white transition-all hover:-translate-y-1 hover:opacity-90"
-          onClick={() => {
-            window.location.href = `http://localhost:8080/oauth/authorize/github?redirect_uri=${redirectUri}`;
-          }}
+            className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl bg-[#4285F4]  border-2 border-white px-9 py-6 text-lg text-white transition-all hover:-translate-y-1 hover:opacity-90"
+            onClick={() => {
+              // window.location.href = `http://localhost:8080/oauth/authorize/github?redirect_uri=${redirectUri}`;
+              console.log('something');
+            }}
         >
-          Continue with GitHub
+          Continue with Google
           <img
-            className="ml-2 h-auto w-8 rounded-2xl bg-white p-1"
-            src={"src/assets/github-logo.png"}
-            alt={"github icon"}
+              className="ml-2 h-auto w-8 rounded-2xl bg-white p-1"
+              src={"src/assets/google-logo.png"}
+              alt={"google icon"}
           />
         </button>
         <Link to={"/login"}>
