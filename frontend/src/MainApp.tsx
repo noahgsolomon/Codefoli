@@ -100,7 +100,7 @@ const MainApp: React.FC = () => {
   useEffect(() => {
     const authenticatedCheck = async () => {
       const fetchState = await authenticated();
-      console.log(fetchState)
+      console.log(fetchState);
       if (fetchState.status === "OK") {
         const user: UserData = await userDetails();
         console.log(user);
@@ -108,8 +108,8 @@ const MainApp: React.FC = () => {
           if (window.location.pathname !== "/setup") {
             navigate("/setup");
           }
-        setAuthenticatedUser(true);
-        setUserData(user);
+          setAuthenticatedUser(true);
+          setUserData(user);
         } else {
           setAuthenticatedUser(true);
           const homeFetch = await getHome();
