@@ -1,5 +1,4 @@
 import Work from "Type/Work.tsx";
-import Project from "Type/Project.tsx";
 
 const userDetails = async () => {
   try {
@@ -28,19 +27,23 @@ const userDetails = async () => {
 
 const setupAccount = async (
   name: string,
-  email: string,
-  profession: string,
   company: string,
   location: string,
-  about: string,
   skills: string[],
   work: Work[],
-  projects: Project[],
+  projects: {
+    name: string;
+    description: string;
+    languages: string[];
+    updatedAt: string;
+    link?: string
+  }[],
+  profession: string,
+  about: string,
   services: string[]
 ) => {
   const model = {
     name: name,
-    email: email,
     profession: profession,
     company: company,
     location: location,
@@ -51,20 +54,22 @@ const setupAccount = async (
     services: services,
   };
   try {
-    const response = await fetch("http://localhost:8080/setup", {
+    const response = await fetch("https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/setup", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("Id"),
+      },
       body: JSON.stringify(model),
-      credentials: "include",
     });
 
     const responseJson = await response.json();
     console.log(responseJson);
     if (responseJson.status === "OK") {
-      return responseJson.status;
+      return responseJson;
     } else {
       console.log(responseJson.message);
-      return responseJson.status;
+      return responseJson;
     }
   } catch (e) {
     console.log(e);
