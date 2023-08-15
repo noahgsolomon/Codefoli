@@ -40,28 +40,29 @@ const ContactSections: FC<{
           let sectionComponent;
           switch (type) {
             case "SKILL":
-              sectionComponent = (
-                <SkillSection
-                  key={index}
-                  userData={userData}
-                  setUserData={setUserData}
-                  preview={false}
-                  details={details}
-                  setPageData={
-                    setPageData as Dispatch<SetStateAction<AnyPageData>>
-                  }
-                  page={"CONTACT"}
-                  order={section.details.order}
-                />
-              );
+              sectionComponent =
+                "header_one" in details ? (
+                  <SkillSection
+                    key={index}
+                    userData={userData}
+                    setUserData={setUserData}
+                    preview={false}
+                    details={details}
+                    setPageData={
+                      setPageData as Dispatch<SetStateAction<AnyPageData>>
+                    }
+                    page={"CONTACT"}
+                    order={section.details.order}
+                  />
+                ) : null;
               break;
             case "STORY":
               sectionComponent =
-                "descriptionOne" in details &&
-                "bulletOne" in details &&
-                "bulletTwo" in details &&
-                "bulletThree" in details &&
-                "imageOne" in details ? (
+                "description_one" in details &&
+                "bullet_one" in details &&
+                "bullet_two" in details &&
+                "bullet_three" in details &&
+                "image_one" in details ? (
                   <StorySection
                     page={"CONTACT"}
                     key={index}
@@ -74,24 +75,25 @@ const ContactSections: FC<{
                 ) : null;
               break;
             case "RESUME":
-              sectionComponent = (
-                <ResumeSection
-                  key={index}
-                  page={"CONTACT"}
-                  details={details}
-                  setPageData={
-                    setPageData as Dispatch<SetStateAction<AnyPageData>>
-                  }
-                  userData={userData}
-                  order={section.details.order}
-                  setUserData={setUserData}
-                />
-              );
+              sectionComponent =
+                "header_one" in details ? (
+                  <ResumeSection
+                    key={index}
+                    page={"CONTACT"}
+                    details={details}
+                    setPageData={
+                      setPageData as Dispatch<SetStateAction<AnyPageData>>
+                    }
+                    userData={userData}
+                    order={section.details.order}
+                    setUserData={setUserData}
+                  />
+                ) : null;
               break;
             case "FAQ":
               sectionComponent =
-                "descriptionOne" in details &&
-                "headerOne" in details &&
+                "description_one" in details &&
+                "header_one" in details &&
                 "faq" in details ? (
                   <FAQSection
                     setPageData={
@@ -106,8 +108,8 @@ const ContactSections: FC<{
               break;
             case "VALUE":
               sectionComponent =
-                "descriptionOne" in details &&
-                "headerOne" in details &&
+                "description_one" in details &&
+                "header_one" in details &&
                 "values" in details ? (
                   <ValueSection
                     setPageData={
@@ -123,7 +125,6 @@ const ContactSections: FC<{
             default:
               sectionComponent = null;
           }
-
           return [
             <AddSection
               key={`add-${index}`}

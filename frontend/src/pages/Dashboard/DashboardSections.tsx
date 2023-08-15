@@ -1,4 +1,4 @@
-import React from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import SkillSection from "Components/Sections/Skill/SkillSection.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import StorySection from "Components/Sections/Story/StorySection.tsx";
@@ -10,11 +10,11 @@ import UserData from "Type/UserData.tsx";
 import HomeData from "Type/HomeData.tsx";
 import { SectionType } from "Type/Section.tsx";
 
-const DashboardSections: React.FC<{
+const DashboardSections: FC<{
   pageData: HomeData;
-  setPageData: React.Dispatch<React.SetStateAction<HomeData>>;
+  setPageData: Dispatch<SetStateAction<HomeData>>;
   userData: UserData;
-  setUserData: React.Dispatch<React.SetStateAction<UserData>>;
+  setUserData: Dispatch<SetStateAction<UserData>>;
 }> = ({ pageData, setPageData, userData, setUserData }) => {
   const allSectionTypes: SectionType[] = [
     "STORY",
@@ -40,70 +40,64 @@ const DashboardSections: React.FC<{
           let sectionComponent;
           switch (type) {
             case "SKILL":
-              sectionComponent = (
-                <SkillSection
-                  key={index}
-                  userData={userData}
-                  setUserData={setUserData}
-                  preview={false}
-                  details={details}
-                  setPageData={
-                    setPageData as React.Dispatch<
-                      React.SetStateAction<AnyPageData>
-                    >
-                  }
-                  page={"HOME"}
-                  order={section.details.order}
-                />
-              );
+              sectionComponent =
+                "header_one" in details ? (
+                  <SkillSection
+                    key={index}
+                    userData={userData}
+                    setUserData={setUserData}
+                    preview={false}
+                    details={details}
+                    setPageData={
+                      setPageData as Dispatch<SetStateAction<AnyPageData>>
+                    }
+                    page={"HOME"}
+                    order={section.details.order}
+                  />
+                ) : null;
               break;
             case "STORY":
               sectionComponent =
-                "descriptionOne" in details &&
-                "bulletOne" in details &&
-                "bulletTwo" in details &&
-                "bulletThree" in details &&
-                "imageOne" in details ? (
+                "description_one" in details &&
+                "bullet_one" in details &&
+                "bullet_two" in details &&
+                "bullet_three" in details &&
+                "image_one" in details ? (
                   <StorySection
                     page={"HOME"}
                     key={index}
                     details={details}
                     setPageData={
-                      setPageData as React.Dispatch<
-                        React.SetStateAction<AnyPageData>
-                      >
+                      setPageData as Dispatch<SetStateAction<AnyPageData>>
                     }
                     order={section.details.order}
                   />
                 ) : null;
               break;
             case "RESUME":
-              sectionComponent = (
-                <ResumeSection
-                  key={index}
-                  page={"HOME"}
-                  details={details}
-                  setPageData={
-                    setPageData as React.Dispatch<
-                      React.SetStateAction<AnyPageData>
-                    >
-                  }
-                  userData={userData}
-                  order={section.details.order}
-                  setUserData={setUserData}
-                />
-              );
+              sectionComponent =
+                "header_one" in details ? (
+                  <ResumeSection
+                    key={index}
+                    page={"HOME"}
+                    details={details}
+                    setPageData={
+                      setPageData as Dispatch<SetStateAction<AnyPageData>>
+                    }
+                    userData={userData}
+                    order={section.details.order}
+                    setUserData={setUserData}
+                  />
+                ) : null;
               break;
             case "FAQ":
               sectionComponent =
-                "descriptionOne" in details &&
-                "headerOne" in details &&
+                "description_one" in details &&
+                "header_one" in details &&
                 "faq" in details ? (
                   <FAQSection
                     setPageData={
-                      setPageData as React.Dispatch<
-                        React.SetStateAction<AnyPageData>
-                      >
+                      setPageData as Dispatch<SetStateAction<AnyPageData>>
                     }
                     key={index}
                     page={"HOME"}
@@ -114,14 +108,12 @@ const DashboardSections: React.FC<{
               break;
             case "VALUE":
               sectionComponent =
-                "descriptionOne" in details &&
-                "headerOne" in details &&
+                "description_one" in details &&
+                "header_one" in details &&
                 "values" in details ? (
                   <ValueSection
                     setPageData={
-                      setPageData as React.Dispatch<
-                        React.SetStateAction<AnyPageData>
-                      >
+                      setPageData as Dispatch<SetStateAction<AnyPageData>>
                     }
                     key={index}
                     page={"HOME"}
@@ -139,18 +131,14 @@ const DashboardSections: React.FC<{
               key={`add-${index}`}
               sections={availableSectionTypes}
               page={"HOME"}
-              setPageData={
-                setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>
-              }
+              setPageData={setPageData as Dispatch<SetStateAction<AnyPageData>>}
               order={section.details.order}
             />,
             sectionComponent,
           ];
         })}
       <AddSection
-        setPageData={
-          setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>
-        }
+        setPageData={setPageData as Dispatch<SetStateAction<AnyPageData>>}
         sections={availableSectionTypes}
         page={"HOME"}
         order={pageData.sections.length + 1}
