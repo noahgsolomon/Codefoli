@@ -151,8 +151,7 @@ const Login: React.FC = () => {
               <button
                 className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl border-2  border-white bg-[#4285F4] px-9 py-6 text-lg text-white transition-all hover:-translate-y-1 hover:opacity-90"
                 onClick={() => {
-                  window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=80810281685-eqf05nodee3q27j6p0ki7bgvm7qlq1jn.apps.googleusercontent.com&redirect_uri=http://localhost:5173/dashboard&scope=openid%20email%20profile&response_type=code`;
-                  console.log("something");
+                  window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=80810281685-eqf05nodee3q27j6p0ki7bgvm7qlq1jn.apps.googleusercontent.com&redirect_uri=http://localhost:5173/processing&scope=openid%20email%20profile&response_type=code`;
                 }}
               >
                 Continue with Google
