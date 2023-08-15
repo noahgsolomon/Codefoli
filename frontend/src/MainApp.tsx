@@ -102,6 +102,7 @@ const MainApp: React.FC = () => {
       const fetchState = await authenticated();
       if (fetchState.status === "OK") {
         const user: UserData = await userDetails();
+        console.log(user);
         if (user.role === "NEWBIE") {
           if (window.location.pathname !== "/setup") {
             navigate("/setup");
@@ -123,6 +124,7 @@ const MainApp: React.FC = () => {
             setContactData(contactFetch);
           }
           const projectsPageFetch = await getProjectsPage();
+          console.log(projectsPageFetch)
           if (projectsPageFetch) {
             setProjectsPageData(projectsPageFetch);
           }
@@ -142,7 +144,7 @@ const MainApp: React.FC = () => {
       setLoading(false);
     };
     authenticatedCheck();
-  }, [navigate]);
+  }, []);
 
   const ProjectOr404 = () => {
     const { slug } = useParams();
