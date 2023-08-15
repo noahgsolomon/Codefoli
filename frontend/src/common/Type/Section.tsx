@@ -1,18 +1,18 @@
 import { ValuesFormatted } from "Type/Values.tsx";
 
 type StoryType = {
-  headerOne: string;
-  descriptionOne: string;
-  bulletOne: string;
-  bulletTwo: string;
-  bulletThree: string;
-  imageOne: string;
+  header_one: string;
+  description_one: string;
+  bullet_one: string;
+  bullet_two: string;
+  bullet_three: string;
+  image_one: string;
   order: number;
 };
 
 type ValueType = {
-  headerOne: string;
-  descriptionOne: string;
+  header_one: string;
+  description_one: string;
   values: {
     value: ValuesFormatted;
   }[];
@@ -20,18 +20,18 @@ type ValueType = {
 };
 
 type ResumeType = {
-  headerOne: string;
+  header_one: string;
   order: number;
 };
 
 type SkillType = {
-  headerOne: string;
+  header_one: string;
   order: number;
 };
 
 type FAQType = {
-  headerOne: string;
-  descriptionOne: string;
+  header_one: string;
+  description_one: string;
   faq: [
     {
       question: string;
