@@ -117,10 +117,11 @@ const MainApp: React.FC = () => {
           if (homeFetch) {
             setHomeData(homeFetch);
           }
-        //   const aboutFetch = await getAbout();
-        //   if (aboutFetch) {
-        //     setAboutData(aboutFetch);
-        //   }
+          const aboutFetch = await getAbout();
+          console.log(aboutFetch);
+          if (aboutFetch) {
+            setAboutData(aboutFetch);
+          }
         //   const contactFetch = await getContact();
         //   if (contactFetch) {
         //     setContactData(contactFetch);

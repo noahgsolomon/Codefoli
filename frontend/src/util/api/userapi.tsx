@@ -92,10 +92,12 @@ const getHome = async () => {
 
 const getAbout = async () => {
   try {
-    const aboutData = await fetch("http://localhost:8080/about", {
+    const aboutData = await fetch("https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/about", {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem('Id')
+      },
     });
 
     const responseJson = await aboutData.json();
