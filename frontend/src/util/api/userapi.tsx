@@ -3,13 +3,16 @@ import Project from "Type/Project.tsx";
 
 const userDetails = async () => {
   try {
-    const response = await fetch("https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/user", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem('Id')
+    const response = await fetch(
+      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/user",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("Id"),
         },
-    });
+      }
+    );
 
     const responseJson = await response.json();
     if (responseJson.status === "OK") {
@@ -70,13 +73,16 @@ const setupAccount = async (
 
 const getHome = async () => {
   try {
-    const homeData = await fetch("https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/home", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem('Id')
-      },
-    });
+    const homeData = await fetch(
+      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/home",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("Id"),
+        },
+      }
+    );
 
     const responseJson = await homeData.json();
     if (responseJson.status === "OK") {
@@ -92,13 +98,16 @@ const getHome = async () => {
 
 const getAbout = async () => {
   try {
-    const aboutData = await fetch("https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/about", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem('Id')
-      },
-    });
+    const aboutData = await fetch(
+      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/about",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("Id"),
+        },
+      }
+    );
 
     const responseJson = await aboutData.json();
     if (responseJson.status === "OK") {
@@ -114,13 +123,16 @@ const getAbout = async () => {
 
 const getContact = async () => {
   try {
-    const contactData = await fetch("https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/contact", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem('Id')
-      },
-    });
+    const contactData = await fetch(
+      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/contact",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("Id"),
+        },
+      }
+    );
 
     const responseJson = await contactData.json();
     if (responseJson.status === "OK") {
@@ -136,13 +148,16 @@ const getContact = async () => {
 
 const getProjectsPage = async () => {
   try {
-    const response = await fetch("https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/projects-page", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem('Id')
-      },
-    });
+    const response = await fetch(
+      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/projects-page",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("Id"),
+        },
+      }
+    );
 
     const responseJson = await response.json();
     if (responseJson.status === "OK") {
