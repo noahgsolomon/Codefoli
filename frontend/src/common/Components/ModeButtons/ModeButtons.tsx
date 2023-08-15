@@ -57,6 +57,10 @@ const ModeButtons: FC<{
     }
   };
 
+  const handleDownloadCode = async () => {
+    console.log('download code');
+  }
+
   return (
     <animated.div
       style={animation}
@@ -75,6 +79,12 @@ const ModeButtons: FC<{
                   Preview ↗
                 </button>
               </a>
+              <button
+                  className="flex mr-2 h-12 w-40 justify-center rounded-3xl border-2 border-black bg-red-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                  onClick={async () => await handleDownloadCode()}
+              >
+                Code <span className={" text-white"}>&nbsp;↓</span>
+              </button>
               <button
                 className="flex h-12 w-40 justify-center rounded-3xl border-2 border-black bg-blue-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
                 onClick={async () => await handleDeploy()}
