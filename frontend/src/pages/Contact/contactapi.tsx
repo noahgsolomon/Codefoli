@@ -1,77 +1,20 @@
-const updateHeaderOneContact = async (headerOne: string) => {
+const updateContactText = async (type: 'header_one' | 'description_one' | 'phone' | 'email', text: string) => {
+  const model = {
+    type: type,
+    text: text,
+  }
   try {
     const updateFetch = await fetch(
-      "http://localhost:8080/contact/header-one",
+      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/contact",
       {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: headerOne,
-        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("Id")}`
+        },
+        body: JSON.stringify(model),
       }
     );
-    const updateFetchJson = await updateFetch.json();
-    if (updateFetchJson.status === "OK") {
-      return updateFetchJson.data;
-    } else {
-      console.log(updateFetchJson.message);
-      return updateFetchJson.message;
-    }
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-const updateDescriptionOneContact = async (descriptionOne: string) => {
-  try {
-    const updateFetch = await fetch(
-      "http://localhost:8080/contact/description-one",
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: descriptionOne,
-        credentials: "include",
-      }
-    );
-    const updateFetchJson = await updateFetch.json();
-    if (updateFetchJson.status === "OK") {
-      return updateFetchJson.data;
-    } else {
-      console.log(updateFetchJson.message);
-      return updateFetchJson.message;
-    }
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-const updateEmailContact = async (email: string) => {
-  try {
-    const updateFetch = await fetch("http://localhost:8080/contact/email", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: email,
-      credentials: "include",
-    });
-    const updateFetchJson = await updateFetch.json();
-    if (updateFetchJson.status === "OK") {
-      return updateFetchJson;
-    } else {
-      console.log(updateFetchJson.message);
-      return updateFetchJson;
-    }
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-const updatePhoneContact = async (phone: string) => {
-  try {
-    const updateFetch = await fetch("http://localhost:8080/contact/phone", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: phone,
-      credentials: "include",
-    });
     const updateFetchJson = await updateFetch.json();
     if (updateFetchJson.status === "OK") {
       return updateFetchJson;
@@ -85,8 +28,5 @@ const updatePhoneContact = async (phone: string) => {
 };
 
 export {
-  updateHeaderOneContact,
-  updateDescriptionOneContact,
-  updateEmailContact,
-  updatePhoneContact,
+  updateContactText
 };

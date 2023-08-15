@@ -3,12 +3,10 @@ import Form from "./Form/Form.tsx";
 import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
 import ContactData from "Type/ContactData.tsx";
 import {
-  updateDescriptionOneContact,
-  updateEmailContact,
-  updateHeaderOneContact,
-  updatePhoneContact,
+  updateContactText
 } from "./contactapi.tsx";
 import UserData from "Type/UserData.tsx";
+import StatusBar from "Components/StatusBar/StatusBar.tsx";
 
 const ContactMain: FC<{
   pageData: ContactData;
@@ -22,6 +20,7 @@ const ContactMain: FC<{
     delay: 100,
   });
 
+  const [emailError, setEmailError] = useState(false);
   const [headerOneEdit, setHeaderOneEdit] = useState(false);
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
     pageData.header_one
@@ -41,48 +40,47 @@ const ContactMain: FC<{
   const phoneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const handleHeaderOneSubmit = async () => {
-    const updateHeader = await updateHeaderOneContact(headerOneEditValue);
-    if (updateHeader) {
-      setPageData((prev) => ({ ...prev, headerOne: headerOneEditValue }));
-      setHeaderOneEditValue(updateHeader);
+    const updateText = await updateContactText('header_one', headerOneEditValue);
+    if (updateText.status === 'OK') {
+      setPageData((prev) => ({ ...prev, header_one: headerOneEditValue }));
     }
     setHeaderOneEdit(false);
   };
 
   const handleDescriptionOneSubmit = async () => {
-    const updateDescription = await updateDescriptionOneContact(
-      descriptionOneEditValue
-    );
-    if (updateDescription) {
+    const updateText = await updateContactText('description_one', descriptionOneEditValue);
+    if (updateText.status === 'OK') {
       setPageData((prev) => ({
         ...prev,
-        descriptionOne: descriptionOneEditValue,
+        description_one: descriptionOneEditValue,
       }));
-      setDescriptionOneEditValue(updateDescription);
     }
     setDescriptionOneEdit(false);
   };
 
   const handleEmailSubmit = async () => {
-    const updateEmail = await updateEmailContact(emailEditValue);
-    if (updateEmail) {
+    const updateEmail = await updateContactText('email', emailEditValue);
+    if (updateEmail.status === 'OK') {
       setUserData((prev) => ({
         ...prev,
         email: emailEditValue,
       }));
-      setEmailEditValue(updateEmail.data);
+    } else {
+        setEmailError(true);
+        setTimeout(() => {
+          setEmailError(false);
+        }, 3000);
     }
     setEmailEdit(false);
   };
 
   const handlePhoneSubmit = async () => {
-    const updatePhone = await updatePhoneContact(phoneEditValue);
-    if (updatePhone) {
+    const updatePhone = await updateContactText('phone', phoneEditValue);
+    if (updatePhone.status === 'OK') {
       setUserData((prev) => ({
         ...prev,
         phone: phoneEditValue,
       }));
-      setPhoneEditValue(updatePhone.data);
     }
     setPhoneEdit(false);
   };
@@ -236,6 +234,9 @@ const ContactMain: FC<{
           <Form userData={userData} />
         </div>
       </div>
+      {emailError && (
+          <StatusBar message={'Email is already taken'} color={'bg-red-500'}/>
+      )}
     </main>
   );
 };
