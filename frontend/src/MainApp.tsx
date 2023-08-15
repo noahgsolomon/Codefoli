@@ -128,15 +128,15 @@ const MainApp: React.FC = () => {
             setContactData(contactFetch);
           }
           const projectsPageFetch = await getProjectsPage();
+          console.log(projectsPageFetch);
           if (projectsPageFetch) {
             setProjectsPageData(projectsPageFetch);
           }
-        //   setUserData(user);
-        //   localStorage.setItem("role", user.role);
-        //   const path = window.location.pathname;
-        //   if (path === "/" || path === "/login" || path === "/register") {
-        //     navigate("/dashboard");
-        //   }
+          setUserData(user);
+          const path = window.location.pathname;
+          if (path === "/" || path === "/login" || path === "/register") {
+            navigate("/dashboard");
+          }
         }
       } else {
         const path = window.location.pathname;
