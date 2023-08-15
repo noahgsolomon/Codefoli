@@ -11,19 +11,9 @@ const ServiceCard: React.FC<{
   imageUrl?: string;
   title: string;
   description: string;
-  children?: React.ReactNode;
-  preview?: boolean;
   setUserData?: React.Dispatch<React.SetStateAction<UserData>>;
   userData?: UserData;
-}> = ({
-  imageUrl,
-  title,
-  description,
-  children,
-  preview = true,
-  setUserData,
-  userData,
-}) => {
+}> = ({ imageUrl, title, description, setUserData, userData }) => {
   const [hovered, setHovered] = useState(false);
   const [removeHover, setRemoveHover] = useState(false);
 
@@ -41,7 +31,7 @@ const ServiceCard: React.FC<{
 
       <button
         className={`${
-          hovered && !preview ? "opacity-100" : "hidden"
+          hovered ? "opacity-100" : "hidden"
         } absolute -right-3 -top-3 z-20 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onMouseEnter={() => setRemoveHover(true)}
         onMouseLeave={() => setRemoveHover(false)}
@@ -65,7 +55,7 @@ const ServiceCard: React.FC<{
       </button>
       <button
         className={`${
-          hovered && !preview && setUserData ? "opacity-100" : "hidden"
+          hovered && setUserData ? "opacity-100" : "hidden"
         } absolute -right-3 top-12 z-10 rounded-2xl bg-blue-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onClick={async () => {
           if (setUserData && userData) {
@@ -108,7 +98,6 @@ const ServiceCard: React.FC<{
         <h2 className="title text-2xl font-bold">{title}</h2>
         <p className="description text-base">{description}</p>
       </div>
-      {children}
       <div className="flex-grow rounded-2xl bg-white"></div>
     </div>
   );

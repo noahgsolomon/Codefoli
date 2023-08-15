@@ -51,7 +51,7 @@ const SkillSection: FC<{
   ]);
   const [headerOneEdit, setHeaderOneEdit] = useState(false);
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
-    details.headerOne
+    details.header_one
   );
 
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -184,7 +184,7 @@ const SkillSection: FC<{
           value={headerOneEditValue}
           onChange={(e) => setHeaderOneEditValue(e.target.value)}
           onBlur={() => {
-            setHeaderOneEditValue(details.headerOne);
+            setHeaderOneEditValue(details.header_one);
             setHeaderOneEdit(false);
           }}
           onKeyDown={async (e) => {
@@ -205,7 +205,7 @@ const SkillSection: FC<{
           className="mb-10 cursor-pointer select-none text-center text-2xl font-bold leading-relaxed transition-all hover:opacity-50"
           onClick={() => setHeaderOneEdit(true)}
         >
-          {details.headerOne}
+          {details.header_one}
         </h2>
       )}
       <div className="mx-10 grid justify-center gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:mx-80">
@@ -228,7 +228,7 @@ const SkillSection: FC<{
             style={{ marginBottom: (12 - userData.skills.length) * 25 + "px" }}
             className={`min-h-64 mt-5 flex flex-wrap gap-2 rounded-tl-2xl rounded-tr-2xl bg-white px-2 py-2`}
           >
-            {userData?.skills.map((skill, index) => {
+            {userData.skills.map((skill, index) => {
               return (
                 <span
                   key={index}
@@ -239,7 +239,7 @@ const SkillSection: FC<{
                   } py-2 text-sm`}
                   onClick={async () => await handleRemoveSkill(skill)}
                 >
-                  {skill.replaceAll("_", " ")}
+                  {skill}
                 </span>
               );
             })}
@@ -259,9 +259,9 @@ const SkillSection: FC<{
                 />
                 {newSkill && matchingSkills.length > 0 && (
                   <div className="absolute left-0 z-10 mt-2 max-h-60 w-full overflow-y-auto overflow-x-hidden rounded border border-gray-200 bg-white pt-5">
-                    {matchingSkills.map((skill) => (
+                    {matchingSkills.map((skill, index) => (
                       <div
-                        key={skill}
+                        key={index}
                         className="m-1 inline-block cursor-pointer rounded-full border-b border-gray-300 bg-black p-2 transition-all hover:-translate-y-0.5 hover:opacity-90"
                         onMouseDown={async (e) => {
                           e.preventDefault();
@@ -295,12 +295,16 @@ const SkillSection: FC<{
             return (
               <ServiceCard
                 key={index}
-                imageUrl={ServiceData[service]?.image}
+                imageUrl={
+                  ServiceData[service.toUpperCase().replaceAll(" ", "_")]?.image
+                }
                 setUserData={setUserData}
                 userData={userData}
-                title={service.replaceAll("_", " ")}
-                description={ServiceData[service]?.description}
-                preview={preview}
+                title={service}
+                description={
+                  ServiceData[service.toUpperCase().replaceAll(" ", "_")]
+                    ?.description
+                }
               />
             );
           })}
