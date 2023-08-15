@@ -1,13 +1,13 @@
 import { Section } from "Type/Section.tsx";
 
 type AboutData = {
-  headerOne: string;
-  iconOne: string;
-  iconTwo: string;
-  headerTwo: string;
-  iconThree: string;
-  descriptionOne: string;
-  descriptionTwo: string;
+  header_one: string;
+  icon_one: string;
+  icon_two: string;
+  header_two: string;
+  icon_three: string;
+  description_one: string;
+  description_two: string;
   sections: Section[];
 };
 

@@ -26,19 +26,19 @@ const AboutMain: React.FC<{
 
   const [headerOneEdit, setHeaderOneEdit] = useState(false);
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
-    pageData.headerOne
+    pageData.header_one
   );
   const [headerTwoEdit, setHeaderTwoEdit] = useState(false);
   const [headerTwoEditValue, setHeaderTwoEditValue] = useState(
-    pageData.headerTwo
+    pageData.header_two
   );
   const [descriptionOneEdit, setDescriptionOneEdit] = useState(false);
   const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(
-    pageData.descriptionOne
+    pageData.description_one
   );
   const [descriptionTwoEdit, setDescriptionTwoEdit] = useState(false);
   const [descriptionTwoEditValue, setDescriptionTwoEditValue] = useState(
-    pageData.descriptionTwo
+    pageData.description_two
   );
   const descriptionTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -190,7 +190,7 @@ const AboutMain: React.FC<{
                   value={headerOneEditValue}
                   onChange={(e) => setHeaderOneEditValue(e.target.value)}
                   onBlur={() => {
-                    setHeaderOneEditValue(pageData.headerOne);
+                    setHeaderOneEditValue(pageData.header_one);
                     setHeaderOneEdit(false);
                   }}
                   onKeyDown={async (e) => {
@@ -209,7 +209,7 @@ const AboutMain: React.FC<{
                   className="mb-5 cursor-pointer select-none text-center text-5xl font-bold transition-all hover:opacity-50 md:text-7xl"
                   onClick={() => setHeaderOneEdit(true)}
                 >
-                  {pageData.headerOne}
+                  {pageData.header_one}
                 </h2>
               )}
             </div>
@@ -220,7 +220,7 @@ const AboutMain: React.FC<{
                   value={descriptionOneEditValue}
                   onChange={(e) => setDescriptionOneEditValue(e.target.value)}
                   onBlur={() => {
-                    setDescriptionOneEditValue(pageData.descriptionOne);
+                    setDescriptionOneEditValue(pageData.description_one);
                     setDescriptionOneEdit(false);
                   }}
                   onKeyDown={async (e) => {
@@ -240,7 +240,7 @@ const AboutMain: React.FC<{
                   className="mb-5 cursor-pointer select-none text-center text-2xl font-semibold transition-all hover:opacity-50"
                   onClick={() => setDescriptionOneEdit(true)}
                 >
-                  {pageData.descriptionOne}
+                  {pageData.description_one}
                 </p>
               )}
             </div>
@@ -273,7 +273,7 @@ const AboutMain: React.FC<{
                 await handleFileUpload(
                   "about-icon-one-upload",
                   setIconOneEdit,
-                  "iconOne",
+                  "icon_one",
                   e,
                   "iconOne"
                 );
@@ -282,7 +282,7 @@ const AboutMain: React.FC<{
             <div className="h-full w-full overflow-hidden rounded-full">
               <img
                 className="h-full w-full object-cover"
-                src={pageData.iconOne + "?date=" + date}
+                src={pageData.icon_one + "?date=" + date}
                 alt="portfolio"
               />
             </div>
@@ -316,7 +316,7 @@ const AboutMain: React.FC<{
                 await handleFileUpload(
                   "about-icon-two-upload",
                   setIconTwoEdit,
-                  "iconTwo",
+                  "icon_two",
                   e,
                   "iconTwo"
                 );
@@ -325,7 +325,7 @@ const AboutMain: React.FC<{
             <div className="h-full w-full overflow-hidden rounded-full">
               <img
                 className="h-full w-full object-cover"
-                src={pageData.iconTwo + "?date=" + date}
+                src={pageData.icon_two + "?date=" + date}
                 alt="portfolio"
               />
             </div>
@@ -349,7 +349,7 @@ const AboutMain: React.FC<{
                   value={headerTwoEditValue}
                   onChange={(e) => setHeaderTwoEditValue(e.target.value)}
                   onBlur={() => {
-                    setHeaderTwoEditValue(pageData.headerTwo);
+                    setHeaderTwoEditValue(pageData.header_two);
                     setHeaderTwoEdit(false);
                   }}
                   onKeyDown={async (e) => {
@@ -368,7 +368,7 @@ const AboutMain: React.FC<{
                   className="mb-8 cursor-pointer select-none text-center text-4xl font-bold transition-all hover:opacity-50 lg:text-left lg:text-6xl lg:leading-tight"
                   onClick={() => setHeaderTwoEdit(true)}
                 >
-                  {pageData.headerTwo}
+                  {pageData.header_two}
                 </h2>
               )}
             </div>
@@ -391,7 +391,7 @@ const AboutMain: React.FC<{
                   await handleFileUpload(
                     "about-icon-three-upload",
                     setIconThreeEdit,
-                    "iconThree",
+                    "icon_three",
                     e,
                     "iconThree"
                   );
@@ -400,7 +400,7 @@ const AboutMain: React.FC<{
               <div className="h-full w-full overflow-hidden rounded-3xl border-2 border-black">
                 <img
                   className="h-full w-full object-cover"
-                  src={pageData.iconThree + "?date=" + date}
+                  src={pageData.icon_three + "?date=" + date}
                   alt="portfolio"
                 />
               </div>
@@ -418,7 +418,7 @@ const AboutMain: React.FC<{
                 value={descriptionTwoEditValue}
                 onChange={(e) => setDescriptionTwoEditValue(e.target.value)}
                 onBlur={() => {
-                  setDescriptionTwoEditValue(pageData.descriptionTwo);
+                  setDescriptionTwoEditValue(pageData.description_two);
                   setDescriptionTwoEdit(false);
                 }}
                 onKeyDown={async (e) => {
@@ -438,7 +438,7 @@ const AboutMain: React.FC<{
                 className="mb-5 cursor-pointer select-none text-2xl font-semibold transition-all hover:opacity-50"
                 onClick={() => setDescriptionTwoEdit(true)}
               >
-                {pageData.descriptionTwo}
+                {pageData.description_two}
               </p>
             )}
           </div>
