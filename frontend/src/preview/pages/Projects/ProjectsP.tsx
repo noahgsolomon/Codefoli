@@ -43,10 +43,10 @@ const ProjectsP: FC<{
           <section>
             <animated.div style={headerAnimation}>
               <h1 className="mb-5 text-center text-3xl font-bold leading-snug transition-all md:text-5xl lg:text-6xl">
-                {pageData.headerOne}
+                {pageData.header_one}
               </h1>
               <p className=" text-center font-semibold transition-all">
-                {pageData.descriptionOne}
+                {pageData.description_one}
               </p>
             </animated.div>
           </section>
