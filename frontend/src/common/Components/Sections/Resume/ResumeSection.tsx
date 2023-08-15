@@ -21,7 +21,7 @@ const ResumeSection: React.FC<{
     useState<boolean>(false);
   const [headerOneEdit, setHeaderOneEdit] = useState(false);
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
-    details.headerOne
+    details.header_one
   );
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -105,7 +105,7 @@ const ResumeSection: React.FC<{
             value={headerOneEditValue}
             onChange={(e) => setHeaderOneEditValue(e.target.value)}
             onBlur={() => {
-              setHeaderOneEditValue(details.headerOne);
+              setHeaderOneEditValue(details.header_one);
               setHeaderOneEdit(false);
             }}
             onKeyDown={async (e) => {
@@ -127,7 +127,7 @@ const ResumeSection: React.FC<{
             className="mb-8 text-center text-3xl font-bold transition-all hover:cursor-pointer hover:opacity-50 "
             onClick={() => setHeaderOneEdit(true)}
           >
-            {details.headerOne}
+            {details.header_one}
           </h2>
         )}
         <div className="resume-events">
