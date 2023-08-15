@@ -23,10 +23,10 @@ const ContactMain: FC<{
             className="content mx-auto max-w-lg md:mx-0"
           >
             <h2 className="  text-center text-5xl font-bold transition-all md:text-left md:text-6xl">
-              {pageData.headerOne}
+              {pageData.header_one}
             </h2>
             <p className=" transition-all md:text-left">
-              {pageData.descriptionOne}
+              {pageData.description_one}
             </p>
             <div className="mb-5">
               <div className="card contact-card rounded-lg border-2 border-black p-5">

@@ -30,11 +30,11 @@ const SectionsP: FC<{
               break;
             case "STORY":
               sectionComponent =
-                "descriptionOne" in details &&
-                "bulletOne" in details &&
-                "bulletTwo" in details &&
-                "bulletThree" in details &&
-                "imageOne" in details ? (
+                "description_one" in details &&
+                "bullet_one" in details &&
+                "bullet_two" in details &&
+                "bullet_three" in details &&
+                "image_one" in details ? (
                   <StorySectionP key={index} details={details} />
                 ) : null;
               break;
@@ -49,16 +49,16 @@ const SectionsP: FC<{
               break;
             case "FAQ":
               sectionComponent =
-                "descriptionOne" in details &&
-                "headerOne" in details &&
+                "description_one" in details &&
+                "header_one" in details &&
                 "faq" in details ? (
                   <FAQSectionP key={index} details={details} />
                 ) : null;
               break;
             case "VALUE":
               sectionComponent =
-                "descriptionOne" in details &&
-                "headerOne" in details &&
+                "description_one" in details &&
+                "header_one" in details &&
                 "values" in details ? (
                   <ValueSectionP key={index} details={details} />
                 ) : null;

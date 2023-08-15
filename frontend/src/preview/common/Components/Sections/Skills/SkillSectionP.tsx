@@ -13,7 +13,7 @@ const SkillSectionP: FC<{
   return (
     <div className="relative mb-20 mt-20">
       <h2 className="mb-10 text-center text-2xl font-bold leading-relaxed transition-all">
-        {details.headerOne}
+        {details.header_one}
       </h2>
       <div className="mx-10 grid justify-center gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:mx-80">
         <div className="card relative mb-5 flex max-w-[400px] flex-col rounded-2xl border-2 border-black bg-white shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover">
@@ -27,7 +27,7 @@ const SkillSectionP: FC<{
                   key={index}
                   className={`inline-flex items-center justify-center rounded-lg px-3 text-white transition-all hover:-translate-y-0.5 ${COLORS[index]} py-2 text-sm`}
                 >
-                  {skill.replaceAll("_", " ")}
+                  {skill}
                 </span>
               );
             })}
@@ -41,9 +41,14 @@ const SkillSectionP: FC<{
             return (
               <ServiceCardP
                 key={index}
-                imageUrl={ServiceData[service].image}
+                imageUrl={
+                  ServiceData[service.toUpperCase().replaceAll(" ", "_")].image
+                }
                 title={service.replaceAll("_", " ")}
-                description={ServiceData[service]?.description}
+                description={
+                  ServiceData[service.toUpperCase().replaceAll(" ", "_")]
+                    ?.description
+                }
               />
             );
           })}

@@ -39,12 +39,12 @@ const AboutMainP: FC<{
           >
             <div>
               <h2 className="mb-5 text-center text-5xl font-bold transition-all  md:text-7xl">
-                {pageData.headerOne}
+                {pageData.header_one}
               </h2>
             </div>
             <div className="ml-5">
               <p className="mb-5 text-center text-2xl font-semibold transition-all ">
-                {pageData.descriptionOne}
+                {pageData.description_one}
               </p>
             </div>
             <div className="flex justify-center text-center">
@@ -63,7 +63,7 @@ const AboutMainP: FC<{
             <div className="h-full w-full overflow-hidden rounded-full">
               <img
                 className="h-full w-full object-cover"
-                src={pageData.iconOne + "?date=" + date}
+                src={pageData.icon_one + "?date=" + date}
                 alt="portfolio"
               />
             </div>
@@ -76,7 +76,7 @@ const AboutMainP: FC<{
             <div className="h-full w-full overflow-hidden rounded-full">
               <img
                 className="h-full w-full object-cover"
-                src={pageData.iconTwo + "?date=" + date}
+                src={pageData.icon_two + "?date=" + date}
                 alt="portfolio"
               />
             </div>
@@ -88,20 +88,20 @@ const AboutMainP: FC<{
           <div className="content-left">
             <div className="flex justify-center md:justify-between">
               <h2 className="mb-8 text-center text-4xl font-bold transition-all  lg:text-left lg:text-6xl lg:leading-tight">
-                {pageData.headerTwo}
+                {pageData.header_two}
               </h2>
             </div>
             <div className="image-wrapper relative mb-5 h-60 w-full sm:mx-auto sm:h-[200px] sm:w-[300px] md:mx-0 md:h-[200px] md:w-[400px] lg:h-72 lg:w-[500px]">
               <div className="h-full w-full overflow-hidden rounded-3xl border-2 border-black">
                 <img
                   className="h-full w-full object-cover"
-                  src={pageData.iconThree + "?date=" + date}
+                  src={pageData.icon_three + "?date=" + date}
                   alt="portfolio"
                 />
               </div>
             </div>
             <p className="mb-5 text-2xl font-semibold transition-all">
-              {pageData.descriptionTwo}
+              {pageData.description_two}
             </p>
           </div>
         </div>

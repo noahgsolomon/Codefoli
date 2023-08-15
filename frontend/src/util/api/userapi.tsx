@@ -36,7 +36,7 @@ const setupAccount = async (
     description: string;
     languages: string[];
     updatedAt: string;
-    link?: string
+    link?: string;
   }[],
   profession: string,
   about: string,
@@ -54,14 +54,17 @@ const setupAccount = async (
     services: services,
   };
   try {
-    const response = await fetch("https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/setup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem("Id"),
-      },
-      body: JSON.stringify(model),
-    });
+    const response = await fetch(
+      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/setup",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("Id"),
+        },
+        body: JSON.stringify(model),
+      }
+    );
 
     const responseJson = await response.json();
     console.log(responseJson);

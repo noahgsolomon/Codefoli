@@ -11,7 +11,7 @@ const ResumeSectionP: FC<{
     <section className="relative mb-20 mt-20">
       <div className="container mx-auto max-w-screen-lg px-5">
         <h2 className="mb-8 text-center text-3xl font-bold transition-all">
-          {details.headerOne}
+          {details.header_one}
         </h2>
         <div>
           {userData.work

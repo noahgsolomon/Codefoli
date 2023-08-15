@@ -26,10 +26,10 @@ const HomeMainP: FC<{
         <animated.div style={headerAnimation}>
           <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center justify-center font-bold xl:mt-32">
             <h1 className="font-extra-bold max-w-[15ch] text-center text-4xl leading-snug transition-all md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal">
-              {pageData.headerOne}
+              {pageData.header_one}
             </h1>
             <p className="max-w-[35ch] text-center text-base opacity-60 transition-all xl:max-w-[50ch] xl:text-left">
-              {pageData.descriptionOne}
+              {pageData.description_one}
             </p>
           </div>
           <div className="mx-auto mt-5 flex justify-center xl:justify-start">
@@ -54,7 +54,7 @@ const HomeMainP: FC<{
             <div className="h-full w-full overflow-hidden rounded-3xl shadow-customHover">
               <img
                 className="h-full w-full object-cover"
-                src={pageData.profileImage + "?date=" + date}
+                src={pageData.profile_image + "?date=" + date}
                 alt="pfp"
               ></img>
             </div>

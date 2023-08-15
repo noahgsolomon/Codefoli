@@ -55,33 +55,33 @@ const PreviewApp: React.FC = () => {
 
   const [loading, setLoading] = useState<boolean>(true);
   const [homeData, setHomeData] = useState<HomeData>({
-    headerOne: "",
-    descriptionOne: "",
-    headerTwo: "",
-    profileImage: "",
+    header_one: "",
+    description_one: "",
+    header_two: "",
+    profile_image: "",
     sections: [],
   });
 
   const [aboutData, setAboutData] = useState<AboutData>({
-    headerOne: "",
-    iconOne: "",
-    iconTwo: "",
-    headerTwo: "",
-    iconThree: "",
-    descriptionOne: "",
-    descriptionTwo: "",
+    header_one: "",
+    icon_one: "",
+    icon_two: "",
+    header_two: "",
+    icon_three: "",
+    description_one: "",
+    description_two: "",
     sections: [],
   });
 
   const [contactData, setContactData] = useState<ContactData>({
-    headerOne: "",
-    descriptionOne: "",
+    header_one: "",
+    description_one: "",
     sections: [],
   });
 
   const [projectsPageData, setProjectsPageData] = useState<ProjectsPageData>({
-    headerOne: "",
-    descriptionOne: "",
+    header_one: "",
+    description_one: "",
   });
 
   const [deploying, setDeploying] = useState(false);
@@ -114,31 +114,35 @@ const PreviewApp: React.FC = () => {
       const fetchState = await authenticated();
       if (fetchState.status === "OK") {
         const user: UserData = await userDetails();
+        console.log(user);
         if (user.role === "NEWBIE") {
           if (window.location.pathname !== "/setup") {
             navigate("/setup");
           }
-          localStorage.setItem("role", user.role);
           setUserData(user);
         } else {
-          const homeFetch = await getHome();
+          const [homeFetch, aboutFetch, contactFetch, projectsPageFetch] =
+            await Promise.all([
+              getHome(),
+              getAbout(),
+              getContact(),
+              getProjectsPage(),
+            ]);
+
           if (homeFetch) {
             setHomeData(homeFetch);
           }
-          const aboutFetch = await getAbout();
           if (aboutFetch) {
             setAboutData(aboutFetch);
           }
-          const contactFetch = await getContact();
           if (contactFetch) {
             setContactData(contactFetch);
           }
-          const projectsPageFetch = await getProjectsPage();
           if (projectsPageFetch) {
+            console.log(projectsPageFetch);
             setProjectsPageData(projectsPageFetch);
           }
           setUserData(user);
-          localStorage.setItem("role", user.role);
           const path = window.location.pathname;
           if (path === "/" || path === "/login" || path === "/register") {
             navigate("/dashboard");
@@ -154,7 +158,7 @@ const PreviewApp: React.FC = () => {
       setLoading(false);
     };
     authenticatedCheck();
-  }, [navigate]);
+  }, []);
 
   if (loading) {
     return <Loader />;
