@@ -9,8 +9,6 @@ import UserData from "Type/UserData.tsx";
 
 const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
   const [page, setPage] = useState(0);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
   const [location, setLocation] = useState("");
   const [about, setAbout] = useState("");
@@ -24,7 +22,6 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
   const [noProjectDateError, setNoProjectDateError] = useState(false);
   const [noProjectDescriptionError, setNoProjectDescriptionError] =
     useState(false);
-  const [loading, setLoading] = useState(true);
   const [noProjectError, setNoProjectError] = useState(false);
 
   const [profession, setProfession] = useState("");
@@ -66,8 +63,6 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
   const [matchingServices, setMatchingServices] = useState<string[]>([
     ...allServices,
   ]);
-  const [nameError, setNameError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
   const [professionError, setProfessionError] = useState(false);
   const [companyError, setCompanyError] = useState(false);
   const [locationError, setLocationError] = useState(false);
@@ -121,9 +116,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
       localStorage.getItem("role") &&
       localStorage.getItem("role") === "NEWBIE"
     ) {
-      setName(userData.name);
       setCompany(userData.company || "");
-      setEmail(userData.email || "");
       setLocation(userData.location || "");
       userData.projects
         ? setProjects(
@@ -141,46 +134,29 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
             }))
           )
         : setProjects([]);
-      setLoading(false);
     }
   }, [navigate, userData, colors]);
 
   const submitSetup = async () => {
     const postData = await setupAccount(
-      name,
-      email,
-      profession,
+      userData.name,
       company,
       location,
-      about,
       selectedSkills.map((skill) =>
-        skill.skill
-          .replaceAll(" ", "_")
-          .replaceAll(".", "_")
-          .replaceAll("-", "_")
-          .replaceAll("/", "_")
-          .replaceAll("+", "_PLUS")
-          .replaceAll("#", "_SHARP")
-          .toUpperCase()
+         skill.skill
       ),
       work.map((item) => item.work),
       projects.map((item) => item.project),
-      selectedServices.map((service) =>
-        service.service
-          .replaceAll(" ", "_")
-          .replaceAll("-", "_")
-          .replaceAll(".", "_")
-          .replaceAll("/", "_")
-          .replaceAll("+", "_PLUS")
-          .replaceAll("#", "_SHARP")
-          .toUpperCase()
-      )
+      profession,
+      about,
+      selectedServices.map((service) => service.service)
     );
 
-    if (postData === "OK") {
+    if (postData.status === "OK") {
       window.location.href = "/dashboard";
     } else {
       alert("Error");
+      // window.location.reload();
     }
   };
 
@@ -283,10 +259,6 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
     return monthNames[dateObj.getMonth()] + " " + dateObj.getFullYear();
   }
 
-  if (loading) {
-    return <></>;
-  }
-
   return (
     <div className="my-5 flex flex-col items-center justify-center">
       <div className="mb-10 text-4xl font-bold">
@@ -299,64 +271,6 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
           className="md:8/12 mb-4 mt-5 w-full max-w-2xl rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all sm:w-11/12"
           onSubmit={(e) => e.preventDefault()}
         >
-          <div className="relative">
-            <label htmlFor="name" className="text-base font-bold">
-              Name
-            </label>
-            <div className="relative">
-              <input
-                type="text"
-                id="name"
-                value={name}
-                placeholder="// John Doe"
-                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${
-                  nameError ? "border-red-500" : ""
-                }`}
-                onChange={(e) => {
-                  setName(e.target.value);
-                  if (e.target.value) {
-                    setNameError(false);
-                  }
-                }}
-              />
-              <img
-                width="24"
-                height="24"
-                src="https://img.icons8.com/cotton/24/person-male--v2.png"
-                alt="user-male-circle"
-                className="absolute left-2 top-9 -translate-y-1/2 transform"
-              />
-            </div>
-          </div>
-          <div className="relative">
-            <label htmlFor="email" className="text-base font-bold">
-              Email
-            </label>
-            <div className="relative">
-              <input
-                type="text"
-                id="email"
-                value={email}
-                placeholder="// example@gmail.com"
-                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 ${
-                  emailError ? "border-red-500" : ""
-                }`}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  if (e.target.value) {
-                    setEmailError(false);
-                  }
-                }}
-              />
-              <img
-                width="24"
-                height="24"
-                src="https://img.icons8.com/cotton/24/new-post.png"
-                alt="email"
-                className="absolute left-2 top-9 -translate-y-1/2 transform"
-              />
-            </div>
-          </div>
           <div className="relative">
             <label htmlFor="profession" className="text-base font-bold">
               Profession
@@ -596,8 +510,6 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
             <button
               onClick={() => {
                 if (
-                  !name ||
-                  !email ||
                   !profession ||
                   !company ||
                   !location ||
@@ -605,8 +517,6 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                   selectedSkills.length === 0 ||
                   selectedServices.length === 0
                 ) {
-                  setNameError(!name);
-                  setEmailError(!email);
                   setCompanyError(!company);
                   setLocationError(!location);
                   setSkillsError(selectedSkills.length === 0);
@@ -621,8 +531,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
               }}
               className={
                 "mt-3 flex cursor-pointer items-center justify-center rounded-2xl px-8 py-3 text-base font-bold transition-all " +
-                (name &&
-                email &&
+                (
                 profession &&
                 company &&
                 location &&
