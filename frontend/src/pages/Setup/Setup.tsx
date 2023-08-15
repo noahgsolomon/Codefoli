@@ -6,6 +6,7 @@ import Work from "Type/Work.tsx";
 import Project from "Type/Project.tsx";
 import { Services } from "Type/Services.tsx";
 import UserData from "Type/UserData.tsx";
+import StatusBar from "Components/StatusBar/StatusBar.tsx";
 
 const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
   const [page, setPage] = useState(0);
@@ -69,6 +70,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
   const [aboutError, setAboutError] = useState(false);
   const [skillsError, setSkillsError] = useState(false);
   const [serviceError, setServiceError] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const navigate = useNavigate();
 
@@ -138,13 +140,12 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
   }, [navigate, userData, colors]);
 
   const submitSetup = async () => {
+    setSubmitted(true);
     const postData = await setupAccount(
       userData.name,
       company,
       location,
-      selectedSkills.map((skill) =>
-         skill.skill
-      ),
+      selectedSkills.map((skill) => skill.skill),
       work.map((item) => item.work),
       projects.map((item) => item.project),
       profession,
@@ -156,7 +157,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
       window.location.href = "/dashboard";
     } else {
       alert("Error");
-      // window.location.reload();
+      window.location.reload();
     }
   };
 
@@ -531,8 +532,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
               }}
               className={
                 "mt-3 flex cursor-pointer items-center justify-center rounded-2xl px-8 py-3 text-base font-bold transition-all " +
-                (
-                profession &&
+                (profession &&
                 company &&
                 location &&
                 about &&
@@ -1107,6 +1107,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                     setNoProjectError(true);
                     return;
                   }
+                  if (submitted) return;
                   await submitSetup();
                 }}
                 className={
@@ -1116,11 +1117,30 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                     : "cursor-default bg-gray-200 text-gray-500")
                 }
               >
-                Submit
+                {submitted ? (
+                    <svg className="mr-2 h-5 w-5 animate-spin" viewBox="0 0 24 24">
+                      <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="white"
+                          strokeWidth="4"
+                      ></circle>
+                      <path
+                          className="opacity-75"
+                          fill="white"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                ) : ('Submit')}
               </button>
             </div>
           </div>
         </form>
+      )}
+      {submitted && (
+          <StatusBar message={'Submitted! We are getting your profile ready!'} color={'bg-green-500'}/>
       )}
     </div>
   );
