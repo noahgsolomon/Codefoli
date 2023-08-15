@@ -1,10 +1,7 @@
 import React, { useMemo, useRef, useState } from "react";
 import AboutData from "Type/AboutData.tsx";
 import {
-  updateDescriptionOneAbout,
-  updateDescriptionTwoAbout,
-  updateHeaderOneAbout,
-  updateHeaderTwoAbout,
+  updateAboutText
 } from "./aboutapi.tsx";
 import { Link } from "react-router-dom";
 import Marquee from "Components/Marquee/Marquee.tsx";
@@ -128,46 +125,58 @@ const AboutMain: React.FC<{
   };
 
   const handleHeaderOneSubmit = async () => {
-    const updateHeader = await updateHeaderOneAbout(headerOneEditValue);
-    if (updateHeader) {
-      setPageData((prev) => ({ ...prev, headerOne: headerOneEditValue }));
-      setHeaderOneEditValue(updateHeader);
+    if (headerOneEditValue.length > 50 || headerOneEditValue.length < 1) {
+      setHeaderOneEdit(false);
+      setHeaderOneEditValue(pageData.header_one);
+      return;
+    }
+    const updateText = await updateAboutText('header_one', headerOneEditValue);
+    if (updateText.status === 'OK') {
+      setPageData((prev) => ({ ...prev, header_one: headerOneEditValue }));
     }
     setHeaderOneEdit(false);
   };
   const handleHeaderTwoSubmit = async () => {
-    const updateHeader = await updateHeaderTwoAbout(headerTwoEditValue);
-    if (updateHeader) {
-      setPageData((prev) => ({ ...prev, headerTwo: headerTwoEditValue }));
-      setHeaderTwoEditValue(updateHeader);
+    if (headerTwoEditValue.length > 50 || headerTwoEditValue.length < 1) {
+        setHeaderTwoEdit(false);
+        setHeaderTwoEditValue(pageData.header_two);
+        return;
+    }
+    const updateText = await updateAboutText('header_two', headerTwoEditValue);
+    if (updateText.status === 'OK') {
+      setPageData((prev) => ({ ...prev, header_two: headerTwoEditValue }));
     }
     setHeaderTwoEdit(false);
   };
 
   const handleDescriptionOneSubmit = async () => {
-    const updateHeader = await updateDescriptionOneAbout(
-      descriptionOneEditValue
-    );
-    if (updateHeader) {
+    if (descriptionOneEditValue.length > 250 || descriptionOneEditValue.length < 1) {
+        setDescriptionOneEdit(false);
+        setDescriptionOneEditValue(pageData.description_one);
+        return;
+    }
+    const updateText = await updateAboutText('description_one', descriptionOneEditValue);
+    if (updateText.status === 'OK') {
       setPageData((prev) => ({
         ...prev,
-        descriptionOne: descriptionOneEditValue,
+        description_one: descriptionOneEditValue,
       }));
-      setDescriptionOneEditValue(updateHeader);
     }
     setDescriptionOneEdit(false);
   };
 
   const handleDescriptionTwoSubmit = async () => {
-    const updateHeader = await updateDescriptionTwoAbout(
-      descriptionTwoEditValue
-    );
-    if (updateHeader) {
+    if (descriptionTwoEditValue.length > 500 || descriptionTwoEditValue.length < 1) {
+        setDescriptionTwoEdit(false);
+        setDescriptionTwoEditValue(pageData.description_two);
+        return;
+    }
+    const updateText = await updateAboutText('description_two', descriptionTwoEditValue);
+    if (updateText.status === 'OK') {
       setPageData((prev) => ({
         ...prev,
-        descriptionTwo: descriptionTwoEditValue,
+        description_two: descriptionTwoEditValue,
       }));
-      setDescriptionTwoEditValue(updateHeader);
     }
     setDescriptionTwoEdit(false);
   };
@@ -229,7 +238,7 @@ const AboutMain: React.FC<{
                       await handleDescriptionOneSubmit();
                     }
                   }}
-                  className="mb-5 resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-2xl font-semibold leading-snug outline-none focus:outline-none focus:ring-0"
+                  className="w-full mb-5 resize-none appearance-none overflow-hidden border-none text-center bg-transparent text-2xl font-semibold leading-snug outline-none focus:outline-none focus:ring-0"
                   style={{ minHeight: "8em" }}
                   autoFocus
                   onFocus={(e) => e.currentTarget.select()}
@@ -361,7 +370,7 @@ const AboutMain: React.FC<{
                   className="mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-4xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 lg:text-left lg:text-6xl lg:leading-tight"
                   autoFocus
                   onFocus={(e) => e.currentTarget.select()}
-                  maxLength={25}
+                  maxLength={50}
                 />
               ) : (
                 <h2
@@ -430,8 +439,9 @@ const AboutMain: React.FC<{
                 className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-2xl font-semibold leading-snug outline-none focus:outline-none focus:ring-0"
                 style={{ minHeight: "8em" }}
                 autoFocus
+                rows={15}
                 onFocus={(e) => e.currentTarget.select()}
-                maxLength={250}
+                maxLength={500}
               />
             ) : (
               <p
