@@ -29,8 +29,6 @@ const FAQSection: FC<{
   );
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  console.log(details);
-
   const handleHeaderOneSubmit = async () => {
     const updateHeader = await updateHeaderOneFaq(headerOneEditValue);
     if (updateHeader.status === "OK") {

@@ -62,33 +62,33 @@ const MainApp: React.FC = () => {
 
   const [loading, setLoading] = useState<boolean>(true);
   const [homeData, setHomeData] = useState<HomeData>({
-    headerOne: "",
-    descriptionOne: "",
-    headerTwo: "",
-    profileImage: "",
+    header_one: "",
+    description_one: "",
+    header_two: "",
+    profile_image: "",
     sections: [],
   });
 
   const [aboutData, setAboutData] = useState<AboutData>({
-    headerOne: "",
-    iconOne: "",
-    iconTwo: "",
-    headerTwo: "",
-    iconThree: "",
-    descriptionOne: "",
-    descriptionTwo: "",
+    header_one: "",
+    icon_one: "",
+    icon_two: "",
+    header_two: "",
+    icon_three: "",
+    description_one: "",
+    description_two: "",
     sections: [],
   });
 
   const [contactData, setContactData] = useState<ContactData>({
-    headerOne: "",
-    descriptionOne: "",
+    header_one: "",
+    description_one: "",
     sections: [],
   });
 
   const [projectsPageData, setProjectsPageData] = useState<ProjectsPageData>({
-    headerOne: "",
-    descriptionOne: "",
+    header_one: "",
+    description_one: "",
   });
 
   const [deploying, setDeploying] = useState(false);
@@ -100,10 +100,8 @@ const MainApp: React.FC = () => {
   useEffect(() => {
     const authenticatedCheck = async () => {
       const fetchState = await authenticated();
-      console.log(fetchState);
       if (fetchState.status === "OK") {
         const user: UserData = await userDetails();
-        console.log(user);
         if (user.role === "NEWBIE") {
           if (window.location.pathname !== "/setup") {
             navigate("/setup");
@@ -113,22 +111,18 @@ const MainApp: React.FC = () => {
         } else {
           setAuthenticatedUser(true);
           const homeFetch = await getHome();
-          console.log(homeFetch);
           if (homeFetch) {
             setHomeData(homeFetch);
           }
           const aboutFetch = await getAbout();
-          console.log(aboutFetch);
           if (aboutFetch) {
             setAboutData(aboutFetch);
           }
           const contactFetch = await getContact();
-          console.log(contactFetch);
           if (contactFetch) {
             setContactData(contactFetch);
           }
           const projectsPageFetch = await getProjectsPage();
-          console.log(projectsPageFetch);
           if (projectsPageFetch) {
             setProjectsPageData(projectsPageFetch);
           }

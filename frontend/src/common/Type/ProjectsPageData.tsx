@@ -1,5 +1,5 @@
 type ProjectsPageData = {
-  headerOne: string;
-  descriptionOne: string;
+  header_one: string;
+  description_one: string;
 };
 export default ProjectsPageData;

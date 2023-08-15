@@ -18,7 +18,6 @@ const StorySection: React.FC<{
   setPageData: React.Dispatch<SetStateAction<AnyPageData>>;
   order: number;
 }> = ({ page, details, setPageData, order }) => {
-  console.log(details);
 
   const [imageOneEdit, setImageOneEdit] = useState<boolean>(false);
   const imageOneFileInput = useRef<HTMLInputElement | null>(null);
