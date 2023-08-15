@@ -122,14 +122,15 @@ const MainApp: React.FC = () => {
           if (aboutFetch) {
             setAboutData(aboutFetch);
           }
-        //   const contactFetch = await getContact();
-        //   if (contactFetch) {
-        //     setContactData(contactFetch);
-        //   }
-        //   const projectsPageFetch = await getProjectsPage();
-        //   if (projectsPageFetch) {
-        //     setProjectsPageData(projectsPageFetch);
-        //   }
+          const contactFetch = await getContact();
+          console.log(contactFetch);
+          if (contactFetch) {
+            setContactData(contactFetch);
+          }
+          const projectsPageFetch = await getProjectsPage();
+          if (projectsPageFetch) {
+            setProjectsPageData(projectsPageFetch);
+          }
         //   setUserData(user);
         //   localStorage.setItem("role", user.role);
         //   const path = window.location.pathname;

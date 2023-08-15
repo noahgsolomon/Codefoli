@@ -114,10 +114,12 @@ const getAbout = async () => {
 
 const getContact = async () => {
   try {
-    const contactData = await fetch("http://localhost:8080/contact", {
+    const contactData = await fetch("https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/contact", {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem('Id')
+      },
     });
 
     const responseJson = await contactData.json();
@@ -134,10 +136,12 @@ const getContact = async () => {
 
 const getProjectsPage = async () => {
   try {
-    const response = await fetch("http://localhost:8080/projects-page", {
+    const response = await fetch("https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/projects-page", {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem('Id')
+      },
     });
 
     const responseJson = await response.json();
