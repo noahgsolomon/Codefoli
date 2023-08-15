@@ -3,8 +3,7 @@ import Footer from "Components/Footer/Footer";
 import UserData from "Type/UserData.tsx";
 import ProjectsPageData from "Type/ProjectsPageData.tsx";
 import {
-  updateDescriptionOneProjects,
-  updateHeaderOneProjects,
+  updateProjectsPageText,
 } from "./projectspageapi.tsx";
 import ProjectCard from "./ProjectCard.tsx";
 import AddProjectCard from "./AddProjectCard.tsx";
@@ -60,24 +59,20 @@ const Projects: FC<{
   });
 
   const handleHeaderOneSubmit = async () => {
-    const updateHeader = await updateHeaderOneProjects(headerOneEditValue);
+    const updateHeader = await updateProjectsPageText('header_one', headerOneEditValue);
     if (updateHeader) {
-      setPageData((prev) => ({ ...prev, headerOne: headerOneEditValue }));
-      setHeaderOneEditValue(updateHeader.data);
+      setPageData((prev) => ({ ...prev, header_one: headerOneEditValue }));
     }
     setHeaderOneEdit(false);
   };
 
   const handleDescriptionOneSubmit = async () => {
-    const updateDescription = await updateDescriptionOneProjects(
-      descriptionOneEditValue
-    );
+    const updateDescription = await updateProjectsPageText('description_one', descriptionOneEditValue);
     if (updateDescription) {
       setPageData((prev) => ({
         ...prev,
-        descriptionOne: descriptionOneEditValue,
+        description_one: descriptionOneEditValue,
       }));
-      setDescriptionOneEditValue(updateDescription);
     }
     setDescriptionOneEdit(false);
   };
