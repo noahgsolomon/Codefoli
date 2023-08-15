@@ -22,13 +22,13 @@ const ValueSection: React.FC<{
   const [headerOneEdit, setHeaderOneEdit] = useState(false);
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
-    details.headerOne
+    details.header_one
   );
 
   const [descriptionOneEdit, setDescriptionEdit] = useState(false);
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(
-    details.descriptionOne
+    details.description_one
   );
 
   const handleSectionRemove = async () => {
@@ -137,7 +137,7 @@ const ValueSection: React.FC<{
             value={headerOneEditValue}
             onChange={(e) => setHeaderOneEditValue(e.target.value)}
             onBlur={() => {
-              setHeaderOneEditValue(details.headerOne);
+              setHeaderOneEditValue(details.header_one);
               setHeaderOneEdit(false);
             }}
             onKeyDown={async (e) => {
@@ -158,7 +158,7 @@ const ValueSection: React.FC<{
             className="mb-8 cursor-pointer select-none text-center text-3xl font-bold transition-all hover:opacity-50"
             onClick={() => setHeaderOneEdit(true)}
           >
-            {details.headerOne}
+            {details.header_one}
           </h2>
         )}
         {descriptionOneEdit ? (
@@ -167,7 +167,7 @@ const ValueSection: React.FC<{
             value={descriptionOneEditValue}
             onChange={(e) => setDescriptionOneEditValue(e.target.value)}
             onBlur={() => {
-              setDescriptionOneEditValue(details.descriptionOne);
+              setDescriptionOneEditValue(details.description_one);
               setDescriptionEdit(false);
             }}
             onKeyDown={async (e) => {
@@ -189,7 +189,7 @@ const ValueSection: React.FC<{
             className="mb-8 cursor-pointer text-center text-lg font-semibold transition-all hover:opacity-50"
             onClick={() => setDescriptionEdit(true)}
           >
-            {details.descriptionOne}
+            {details.description_one}
           </p>
         )}
 
