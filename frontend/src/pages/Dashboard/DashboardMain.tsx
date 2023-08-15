@@ -14,11 +14,11 @@ const DashboardMain: React.FC<{
 }> = ({ pageData, setPageData }) => {
   const [headerOneEdit, setHeaderOneEdit] = useState(false);
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
-    pageData.headerOne
+    pageData.header_one
   );
   const [descriptionOneEdit, setDescriptionOneEdit] = useState(false);
   const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(
-    pageData.descriptionOne
+    pageData.description_one
   );
   const [imageOneEdit, setImageOneEdit] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
@@ -116,7 +116,7 @@ const DashboardMain: React.FC<{
 
       setPageData({
         ...pageData,
-        profileImage: `${data.data.url}?timestamp=${new Date().getTime()}`,
+        profile_image: `${data.data.url}?timestamp=${new Date().getTime()}`,
       });
       setTimeout(() => setImageLoading(false), 500);
     } catch (error) {
@@ -139,7 +139,7 @@ const DashboardMain: React.FC<{
                 value={headerOneEditValue}
                 onChange={(e) => setHeaderOneEditValue(e.target.value)}
                 onBlur={() => {
-                  setHeaderOneEditValue(pageData.headerOne);
+                  setHeaderOneEditValue(pageData.header_one);
                   setHeaderOneEdit(false);
                 }}
                 onKeyDown={async (e) => {
@@ -160,7 +160,7 @@ const DashboardMain: React.FC<{
                 className="font-extra-bold max-w-[15ch] cursor-pointer select-none text-center text-4xl leading-snug transition-all hover:opacity-50 md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal"
                 onClick={() => setHeaderOneEdit(true)}
               >
-                {pageData.headerOne}
+                {pageData.header_one}
               </h1>
             )}
             {descriptionOneEdit ? (
@@ -169,7 +169,7 @@ const DashboardMain: React.FC<{
                 value={descriptionOneEditValue}
                 onChange={(e) => setDescriptionOneEditValue(e.target.value)}
                 onBlur={() => {
-                  setDescriptionOneEditValue(pageData.descriptionOne);
+                  setDescriptionOneEditValue(pageData.description_one);
                   setDescriptionOneEdit(false);
                 }}
                 onKeyDown={async (e) => {
@@ -191,7 +191,7 @@ const DashboardMain: React.FC<{
                 className="max-w-[35ch] cursor-pointer select-none text-center text-base opacity-60 transition-all hover:opacity-50 xl:max-w-[50ch] xl:text-left"
                 onClick={() => setDescriptionOneEdit(true)}
               >
-                {pageData.descriptionOne}
+                {pageData.description_one}
               </p>
             )}
           </div>
@@ -229,7 +229,7 @@ const DashboardMain: React.FC<{
             <div className="h-full w-full overflow-hidden rounded-3xl shadow-customHover">
               <img
                 className="h-full w-full object-cover"
-                src={pageData.profileImage + "?date=" + date}
+                src={pageData.profile_image + "?date=" + date}
                 alt="pfp"
               ></img>
             </div>

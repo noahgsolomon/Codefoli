@@ -1,10 +1,10 @@
 import { Section } from "Type/Section.tsx";
 
 type HomeData = {
-  headerOne: string;
-  descriptionOne: string;
-  headerTwo: string;
-  profileImage: string;
+  header_one: string;
+  description_one: string;
+  header_two: string;
+  profile_image: string;
   sections: Section[];
 };
 
