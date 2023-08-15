@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import { user, password, host, database } from '/opt/db.mjs';
 
 
-
 const connection = {
     ssl: { rejectUnauthorized: false },
     host,
@@ -16,6 +15,13 @@ const knex = Knex({
     client: 'postgres',
     connection
 });
+
+
+const headers = {
+    "Access-Control-Allow-Origin": "http://localhost:5173",
+    "Access-Control-Allow-Headers": "Content-Type,Authorization",
+    "Content-Type": "application/json"
+};
 
 const handler = async (event) => {
     console.log("Received event:", JSON.stringify(event));
@@ -32,6 +38,7 @@ const handler = async (event) => {
         console.error("User does not exist");
         return {
             statusCode: 400,
+            headers: headers,
             body: JSON.stringify({ status: "ERROR", message: "User does not exist", data: null }),
         };
     }
@@ -66,6 +73,7 @@ const handler = async (event) => {
             project_id: project.id,
             user_id: existingUser.id
         });
+        const languages_formatted = languages.map((language) => language.language);
         const project_content = await knex('project_content').where({
             project_id: project.id,
             user_id: existingUser.id
@@ -74,7 +82,7 @@ const handler = async (event) => {
         project_formatted.push({
             name: project.name,
             description: project.description,
-            languages: languages,
+            languages: languages_formatted,
             updated_at: project.updated_at,
             image: project.image,
             id: project.id,
@@ -102,6 +110,10 @@ const handler = async (event) => {
         user_id: existingUser.id
     });
 
+    const services_formatted = services.map((service) => service.service);
+
+    const skills_formatted = skills.map((skill) => skill.skill);
+
     const user_data = {
         name: existingUser.name,
         email: existingUser.email,
@@ -110,17 +122,18 @@ const handler = async (event) => {
         location: existingUser.location,
         about: existingUser.about,
         website: existingUser.website,
-        skills: skills,
+        skills: skills_formatted,
         projects: project_formatted,
         work: work_formatted,
         role: existingUser.role,
         profession: existingUser.profession,
-        services: services,
+        services: services_formatted,
         slugs: slug_list
     };
 
     return {
         statusCode: 200,
+        headers: headers,
         body: JSON.stringify({
             status: "OK",
             message: "User data retrieved successfully",
