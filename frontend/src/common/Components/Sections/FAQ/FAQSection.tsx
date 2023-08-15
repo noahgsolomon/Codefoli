@@ -20,14 +20,17 @@ const FAQSection: FC<{
   const [removeFAQ, setRemoveFAQ] = useState<boolean>(false);
   const [headerOneEdit, setHeaderOneEdit] = useState(false);
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
-    details.headerOne
+    details.header_one
   );
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [descriptionOneEdit, setDescriptionEdit] = useState(false);
   const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(
-    details.descriptionOne
+    details.description_one
   );
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  console.log(details);
+
   const handleHeaderOneSubmit = async () => {
     const updateHeader = await updateHeaderOneFaq(headerOneEditValue);
     if (updateHeader.status === "OK") {
@@ -135,7 +138,7 @@ const FAQSection: FC<{
               value={headerOneEditValue}
               onChange={(e) => setHeaderOneEditValue(e.target.value)}
               onBlur={() => {
-                setHeaderOneEditValue(details.headerOne);
+                setHeaderOneEditValue(details.header_one);
                 setHeaderOneEdit(false);
               }}
               onKeyDown={async (e) => {
@@ -156,7 +159,7 @@ const FAQSection: FC<{
               className="cursor-pointer select-none text-center text-2xl font-bold transition-all hover:opacity-50 md:text-5xl"
               onClick={() => setHeaderOneEdit(true)}
             >
-              {details.headerOne}
+              {details.header_one}
             </h2>
           )}
           {descriptionOneEdit ? (
@@ -165,7 +168,7 @@ const FAQSection: FC<{
               value={descriptionOneEditValue}
               onChange={(e) => setDescriptionOneEditValue(e.target.value)}
               onBlur={() => {
-                setDescriptionOneEditValue(details.descriptionOne);
+                setDescriptionOneEditValue(details.description_one);
                 setDescriptionEdit(false);
               }}
               onKeyDown={async (e) => {
@@ -187,7 +190,7 @@ const FAQSection: FC<{
               className="cursor-pointer text-center transition-all hover:opacity-50"
               onClick={() => setDescriptionEdit(true)}
             >
-              {details.descriptionOne}
+              {details.description_one}
             </p>
           )}
         </div>
