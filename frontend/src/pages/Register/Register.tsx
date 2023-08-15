@@ -173,17 +173,16 @@ const Register: React.FC = () => {
         </button>
         <p className="my-1 text-gray-500">or</p>
         <button
-          className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl border-2  border-white bg-[#4285F4] px-9 py-6 text-lg text-white transition-all hover:-translate-y-1 hover:opacity-90"
-          onClick={() => {
-            // window.location.href = `http://localhost:8080/oauth/authorize/github?redirect_uri=${redirectUri}`;
-            console.log("something");
-          }}
+            className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl border-2  border-white bg-[#4285F4] px-9 py-6 text-lg text-white transition-all hover:-translate-y-1 hover:opacity-90"
+            onClick={() => {
+              window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=80810281685-eqf05nodee3q27j6p0ki7bgvm7qlq1jn.apps.googleusercontent.com&redirect_uri=http://localhost:5173/processing&scope=openid%20email%20profile&response_type=code`;
+            }}
         >
           Continue with Google
           <img
-            className="ml-2 h-auto w-8 rounded-2xl bg-white p-1"
-            src={"src/assets/google-logo.png"}
-            alt={"google icon"}
+              className="ml-2 h-auto w-8 rounded-2xl bg-white p-1"
+              src={"src/assets/google-logo.png"}
+              alt={"google icon"}
           />
         </button>
         <Link to={"/login"}>
