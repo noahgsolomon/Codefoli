@@ -1,44 +1,32 @@
-const updateHeaderOneHome = async (headerOne: string) => {
-  try {
-    const updateFetch = await fetch("http://localhost:8080/home/headerOne", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: headerOne,
-      credentials: "include",
-    });
-    const updateFetchJson = await updateFetch.json();
-    if (updateFetchJson.status === "OK") {
-      return updateFetchJson.data;
-    } else {
-      console.log(updateFetchJson.message);
-      return updateFetchJson.message;
-    }
-  } catch (e) {
-    console.log(e);
-  }
-};
 
-const updateDescriptionOneHome = async (descriptionOne: string) => {
+
+const updateHomeText = async (type: "header_one" | "description_one", text: string) => {
+  const model = {
+    type: type,
+    text: text,
+  }
   try {
     const updateFetch = await fetch(
-      "http://localhost:8080/home/descriptionOne",
+      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/home",
       {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: descriptionOne,
-        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("Id")}`
+          },
+        body: JSON.stringify(model),
       }
     );
     const updateFetchJson = await updateFetch.json();
     if (updateFetchJson.status === "OK") {
-      return updateFetchJson.data;
+      return updateFetchJson;
     } else {
       console.log(updateFetchJson.message);
-      return updateFetchJson.message;
+      return updateFetchJson;
     }
   } catch (e) {
     console.log(e);
   }
 };
 
-export { updateHeaderOneHome, updateDescriptionOneHome };
+export { updateHomeText };

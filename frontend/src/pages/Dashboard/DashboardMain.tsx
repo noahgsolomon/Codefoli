@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
-  updateDescriptionOneHome,
-  updateHeaderOneHome,
+  updateHomeText
 } from "./dashboardapi.tsx";
-import { useSpring, animated } from "react-spring";
+import {useSpring, animated} from "react-spring";
 import HomeData from "Type/HomeData.tsx";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
 
@@ -49,26 +48,34 @@ const DashboardMain: React.FC<{
   ]);
 
   const handleHeaderOneSubmit = async () => {
-    const updateHeader = await updateHeaderOneHome(headerOneEditValue);
-    if (updateHeader) {
-      setPageData((prev) => ({ ...prev, headerOne: headerOneEditValue }));
-      setHeaderOneEditValue(updateHeader);
+    if (headerOneEditValue.length > 50 || headerOneEditValue.length < 1) {
+      setHeaderOneEditValue(pageData.header_one);
+      return;
+    }
+    const updateHeader = await updateHomeText('header_one', headerOneEditValue);
+    if (updateHeader.status === 'OK') {
+      setPageData((prev) => ({ ...prev, header_one: headerOneEditValue }));
+      setHeaderOneEdit(false);
+      setHeaderOneEditValue(headerOneEditValue);
     }
     setHeaderOneEdit(false);
   };
 
   const handleDescriptionOneSubmit = async () => {
-    const updateDescription = await updateDescriptionOneHome(
-      descriptionOneEditValue
-    );
-    if (updateDescription) {
+    if (descriptionOneEditValue.length > 250 || descriptionOneEditValue.length < 1) {
+      setDescriptionOneEdit(false);
+      setDescriptionOneEditValue(pageData.description_one);
+      return;
+    }
+    const updateDescription = await updateHomeText('description_one', descriptionOneEditValue);
+    if (updateDescription.status === 'OK') {
       setPageData((prev) => ({
         ...prev,
-        descriptionOne: descriptionOneEditValue,
+        description_one: descriptionOneEditValue,
       }));
-      setDescriptionOneEditValue(updateDescription);
+      setDescriptionOneEditValue(descriptionOneEditValue);
     }
-    setHeaderOneEdit(false);
+    setDescriptionOneEdit(false);
   };
 
   const fileInput = useRef<HTMLInputElement | null>(null);
