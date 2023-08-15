@@ -3,18 +3,20 @@ import Project from "Type/Project.tsx";
 
 const userDetails = async () => {
   try {
-    const response = await fetch("http://localhost:8080/user", {
+    const response = await fetch("https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/user", {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem('Id')
+        },
     });
 
     const responseJson = await response.json();
     if (responseJson.status === "OK") {
       return responseJson.data;
     } else {
-      console.log(responseJson.message);
-      return responseJson.message;
+      console.log(responseJson);
+      return responseJson.data;
     }
   } catch (e) {
     console.log(e);
@@ -68,10 +70,12 @@ const setupAccount = async (
 
 const getHome = async () => {
   try {
-    const homeData = await fetch("http://localhost:8080/home", {
+    const homeData = await fetch("https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/home", {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem('Id')
+      },
     });
 
     const responseJson = await homeData.json();
