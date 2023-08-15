@@ -1,8 +1,8 @@
 import { Section } from "Type/Section.tsx";
 
 type ContactData = {
-  headerOne: string;
-  descriptionOne: string;
+  header_one: string;
+  description_one: string;
   sections: Section[];
 };
 

@@ -24,12 +24,12 @@ const ContactMain: FC<{
 
   const [headerOneEdit, setHeaderOneEdit] = useState(false);
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
-    pageData.headerOne
+    pageData.header_one
   );
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [descriptionOneEdit, setDescriptionOneEdit] = useState(false);
   const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(
-    pageData.descriptionOne
+    pageData.description_one
   );
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [emailEdit, setEmailEdit] = useState(false);
@@ -101,7 +101,7 @@ const ContactMain: FC<{
                 value={headerOneEditValue}
                 onChange={(e) => setHeaderOneEditValue(e.target.value)}
                 onBlur={() => {
-                  setHeaderOneEditValue(pageData.headerOne);
+                  setHeaderOneEditValue(pageData.header_one);
                   setHeaderOneEdit(false);
                 }}
                 onKeyDown={async (e) => {
@@ -120,7 +120,7 @@ const ContactMain: FC<{
                 className="cursor-pointer select-none text-center text-5xl font-bold transition-all hover:opacity-50 md:text-left md:text-6xl"
                 onClick={() => setHeaderOneEdit(true)}
               >
-                {pageData.headerOne}
+                {pageData.header_one}
               </h2>
             )}
             {descriptionOneEdit ? (
@@ -129,7 +129,7 @@ const ContactMain: FC<{
                 value={descriptionOneEditValue}
                 onChange={(e) => setDescriptionOneEditValue(e.target.value)}
                 onBlur={() => {
-                  setDescriptionOneEditValue(pageData.descriptionOne);
+                  setDescriptionOneEditValue(pageData.description_one);
                   setDescriptionOneEdit(false);
                 }}
                 onKeyDown={async (e) => {
@@ -149,7 +149,7 @@ const ContactMain: FC<{
                 className="cursor-pointer select-none text-center transition-all hover:opacity-50 md:text-left"
                 onClick={() => setDescriptionOneEdit(true)}
               >
-                {pageData.descriptionOne}
+                {pageData.description_one}
               </p>
             )}
             <div className="mb-5">
