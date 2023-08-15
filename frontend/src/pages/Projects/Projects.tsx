@@ -34,12 +34,12 @@ const Projects: FC<{
 }) => {
   const [headerOneEdit, setHeaderOneEdit] = useState(false);
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
-    pageData.headerOne
+    pageData.header_one
   );
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [descriptionOneEdit, setDescriptionOneEdit] = useState(false);
   const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(
-    pageData.descriptionOne
+    pageData.description_one
   );
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [showError, setShowError] = useState<{
@@ -56,7 +56,7 @@ const Projects: FC<{
   const projectCardsAnimation = useSpring({
     from: { transform: "translate3d(0, 20px, 0)", opacity: 0 },
     to: { transform: "translate3d(0, 0, 0)", opacity: 1 },
-    delay: 500,
+    delay: 300,
   });
 
   const handleHeaderOneSubmit = async () => {
@@ -97,7 +97,7 @@ const Projects: FC<{
                   value={headerOneEditValue}
                   onChange={(e) => setHeaderOneEditValue(e.target.value)}
                   onBlur={() => {
-                    setHeaderOneEditValue(pageData.headerOne);
+                    setHeaderOneEditValue(pageData.header_one);
                     setHeaderOneEdit(false);
                   }}
                   onKeyDown={async (e) => {
@@ -118,7 +118,7 @@ const Projects: FC<{
                   className="mb-5 cursor-pointer select-none text-center text-3xl font-bold leading-snug transition-all hover:opacity-50 md:text-5xl lg:text-6xl"
                   onClick={() => setHeaderOneEdit(true)}
                 >
-                  {pageData.headerOne}
+                  {pageData.header_one}
                 </h1>
               )}
               {descriptionOneEdit ? (
@@ -127,7 +127,7 @@ const Projects: FC<{
                   value={descriptionOneEditValue}
                   onChange={(e) => setDescriptionOneEditValue(e.target.value)}
                   onBlur={() => {
-                    setDescriptionOneEditValue(pageData.descriptionOne);
+                    setDescriptionOneEditValue(pageData.description_one);
                     setDescriptionOneEdit(false);
                   }}
                   onKeyDown={async (e) => {
@@ -147,7 +147,7 @@ const Projects: FC<{
                   className="cursor-pointer select-none text-center font-semibold transition-all hover:opacity-50"
                   onClick={() => setDescriptionOneEdit(true)}
                 >
-                  {pageData.descriptionOne}
+                  {pageData.description_one}
                 </p>
               )}
             </animated.div>
