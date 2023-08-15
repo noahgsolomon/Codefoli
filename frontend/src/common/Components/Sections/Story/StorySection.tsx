@@ -18,27 +18,29 @@ const StorySection: React.FC<{
   setPageData: React.Dispatch<SetStateAction<AnyPageData>>;
   order: number;
 }> = ({ page, details, setPageData, order }) => {
+  console.log(details);
+
   const [imageOneEdit, setImageOneEdit] = useState<boolean>(false);
   const imageOneFileInput = useRef<HTMLInputElement | null>(null);
   const [descriptionOneEdit, setDescriptionOneEdit] = useState(false);
   const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(
-    details.descriptionOne
+    details.description_one
   );
   const [headerOneEdit, setHeaderOneEdit] = useState(false);
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
-    details.headerOne
+    details.header_one
   );
   const [bulletOneEdit, setBulletOneEdit] = useState(false);
   const [bulletOneEditValue, setBulletOneEditValue] = useState(
-    details.bulletOne
+    details.bullet_one
   );
   const [bulletTwoEdit, setBulletTwoEdit] = useState(false);
   const [bulletTwoEditValue, setBulletTwoEditValue] = useState(
-    details.bulletTwo
+    details.bullet_two
   );
   const [bulletThreeEdit, setBulletThreeEdit] = useState(false);
   const [bulletThreeEditValue, setBulletThreeEditValue] = useState(
-    details.bulletThree
+    details.bullet_three
   );
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -280,7 +282,7 @@ const StorySection: React.FC<{
               value={headerOneEditValue}
               onChange={(e) => setHeaderOneEditValue(e.target.value)}
               onBlur={() => {
-                setHeaderOneEditValue(details.headerOne);
+                setHeaderOneEditValue(details.header_one);
                 setHeaderOneEdit(false);
               }}
               onKeyDown={async (e) => {
@@ -301,7 +303,7 @@ const StorySection: React.FC<{
               className="mb-8 cursor-pointer select-none text-4xl font-bold text-white transition-all hover:opacity-50 md:text-5xl md:leading-tight"
               onClick={() => setHeaderOneEdit(true)}
             >
-              {details.headerOne}
+              {details.header_one}
             </h2>
           )}
           {descriptionOneEdit ? (
@@ -310,7 +312,7 @@ const StorySection: React.FC<{
               value={descriptionOneEditValue}
               onChange={(e) => setDescriptionOneEditValue(e.target.value)}
               onBlur={() => {
-                setDescriptionOneEditValue(details.descriptionOne);
+                setDescriptionOneEditValue(details.description_one);
                 setDescriptionOneEdit(false);
               }}
               onKeyDown={async (e) => {
@@ -332,7 +334,7 @@ const StorySection: React.FC<{
               className="description cursor-pointer select-none text-lg font-semibold text-white transition-all hover:opacity-50"
               onClick={() => setDescriptionOneEdit(true)}
             >
-              {details.descriptionOne}
+              {details.description_one}
             </p>
           )}
 
@@ -345,7 +347,7 @@ const StorySection: React.FC<{
                   value={bulletOneEditValue}
                   onChange={(e) => setBulletOneEditValue(e.target.value)}
                   onBlur={() => {
-                    setBulletOneEditValue(details.bulletOne);
+                    setBulletOneEditValue(details.bullet_one);
                     setBulletOneEdit(false);
                   }}
                   onKeyDown={async (e) => {
@@ -366,7 +368,7 @@ const StorySection: React.FC<{
                   className="event-descripition flex-1 cursor-pointer select-none pt-0 text-lg font-semibold text-white transition-all hover:opacity-50"
                   onClick={() => setBulletOneEdit(true)}
                 >
-                  {details.bulletOne}
+                  {details.bullet_one}
                 </p>
               )}
             </div>
@@ -378,7 +380,7 @@ const StorySection: React.FC<{
                   value={bulletTwoEditValue}
                   onChange={(e) => setBulletTwoEditValue(e.target.value)}
                   onBlur={() => {
-                    setBulletTwoEditValue(details.bulletTwo);
+                    setBulletTwoEditValue(details.bullet_two);
                     setBulletTwoEdit(false);
                   }}
                   onKeyDown={async (e) => {
@@ -399,7 +401,7 @@ const StorySection: React.FC<{
                   className="event-descripition flex-1 cursor-pointer select-none pt-0 text-lg font-semibold text-white transition-all hover:opacity-50"
                   onClick={() => setBulletTwoEdit(true)}
                 >
-                  {details.bulletTwo}
+                  {details.bullet_two}
                 </p>
               )}
             </div>
@@ -411,7 +413,7 @@ const StorySection: React.FC<{
                   value={bulletThreeEditValue}
                   onChange={(e) => setBulletThreeEditValue(e.target.value)}
                   onBlur={() => {
-                    setBulletThreeEditValue(details.bulletThree);
+                    setBulletThreeEditValue(details.bullet_three);
                     setBulletThreeEdit(false);
                   }}
                   onKeyDown={async (e) => {
@@ -432,7 +434,7 @@ const StorySection: React.FC<{
                   className="event-descripition flex-1 cursor-pointer select-none pt-0 text-lg font-semibold text-white transition-all hover:opacity-50"
                   onClick={() => setBulletThreeEdit(true)}
                 >
-                  {details.bulletThree}
+                  {details.bullet_three}
                 </p>
               )}
             </div>
@@ -458,14 +460,14 @@ const StorySection: React.FC<{
                 await handleFileUpload(
                   "about-image-one-upload",
                   setImageOneEdit,
-                  "imageOne",
+                  "image_one",
                   e
                 );
               }}
             />
             <div className="h-full w-full overflow-hidden rounded-3xl">
               <img
-                src={details.imageOne + "?date=" + date}
+                src={details.image_one + "?date=" + date}
                 alt=""
                 className="h-full w-full rounded-3xl object-cover"
               />
