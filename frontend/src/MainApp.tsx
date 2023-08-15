@@ -101,39 +101,40 @@ const MainApp: React.FC = () => {
     const authenticatedCheck = async () => {
       const fetchState = await authenticated();
       console.log(fetchState)
-      if (fetchState.status === "s") {
+      if (fetchState.status === "OK") {
         const user: UserData = await userDetails();
+        console.log(user);
         if (user.role === "NEWBIE") {
           if (window.location.pathname !== "/setup") {
             navigate("/setup");
           }
-          localStorage.setItem("role", user.role);
-          setAuthenticatedUser(true);
-          setUserData(user);
+        setAuthenticatedUser(true);
+        setUserData(user);
         } else {
           setAuthenticatedUser(true);
           const homeFetch = await getHome();
+          console.log(homeFetch);
           if (homeFetch) {
             setHomeData(homeFetch);
           }
-          const aboutFetch = await getAbout();
-          if (aboutFetch) {
-            setAboutData(aboutFetch);
-          }
-          const contactFetch = await getContact();
-          if (contactFetch) {
-            setContactData(contactFetch);
-          }
-          const projectsPageFetch = await getProjectsPage();
-          if (projectsPageFetch) {
-            setProjectsPageData(projectsPageFetch);
-          }
-          setUserData(user);
-          localStorage.setItem("role", user.role);
-          const path = window.location.pathname;
-          if (path === "/" || path === "/login" || path === "/register") {
-            navigate("/dashboard");
-          }
+        //   const aboutFetch = await getAbout();
+        //   if (aboutFetch) {
+        //     setAboutData(aboutFetch);
+        //   }
+        //   const contactFetch = await getContact();
+        //   if (contactFetch) {
+        //     setContactData(contactFetch);
+        //   }
+        //   const projectsPageFetch = await getProjectsPage();
+        //   if (projectsPageFetch) {
+        //     setProjectsPageData(projectsPageFetch);
+        //   }
+        //   setUserData(user);
+        //   localStorage.setItem("role", user.role);
+        //   const path = window.location.pathname;
+        //   if (path === "/" || path === "/login" || path === "/register") {
+        //     navigate("/dashboard");
+        //   }
         }
       } else {
         const path = window.location.pathname;
