@@ -111,21 +111,26 @@ const MainApp: React.FC = () => {
           setUserData(user);
         } else {
           setAuthenticatedUser(true);
-          const homeFetch = await getHome();
+
+          const [homeFetch, aboutFetch, contactFetch, projectsPageFetch] =
+            await Promise.all([
+              getHome(),
+              getAbout(),
+              getContact(),
+              getProjectsPage(),
+            ]);
+
           if (homeFetch) {
             setHomeData(homeFetch);
           }
-          const aboutFetch = await getAbout();
           if (aboutFetch) {
             setAboutData(aboutFetch);
           }
-          const contactFetch = await getContact();
           if (contactFetch) {
             setContactData(contactFetch);
           }
-          const projectsPageFetch = await getProjectsPage();
-          console.log(projectsPageFetch)
           if (projectsPageFetch) {
+            console.log(projectsPageFetch);
             setProjectsPageData(projectsPageFetch);
           }
           setUserData(user);
