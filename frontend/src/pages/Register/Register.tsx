@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { register } from "api/authenticateapi.tsx";
 
@@ -10,10 +10,9 @@ const Register: React.FC = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [fullNameError, setFullNameError] = useState(false);
 
-
   const handleRegister = async () => {
     const registerRequest = await register(fullName, email, password);
-    console.log(registerRequest)
+    console.log(registerRequest);
     // if (registerRequest) {
     //   window.location.href = "/setup";
     // }
@@ -142,17 +141,17 @@ const Register: React.FC = () => {
         </button>
         <p className="my-1 text-gray-500">or</p>
         <button
-            className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl bg-[#4285F4]  border-2 border-white px-9 py-6 text-lg text-white transition-all hover:-translate-y-1 hover:opacity-90"
-            onClick={() => {
-              // window.location.href = `http://localhost:8080/oauth/authorize/github?redirect_uri=${redirectUri}`;
-              console.log('something');
-            }}
+          className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl border-2  border-white bg-[#4285F4] px-9 py-6 text-lg text-white transition-all hover:-translate-y-1 hover:opacity-90"
+          onClick={() => {
+            // window.location.href = `http://localhost:8080/oauth/authorize/github?redirect_uri=${redirectUri}`;
+            console.log("something");
+          }}
         >
           Continue with Google
           <img
-              className="ml-2 h-auto w-8 rounded-2xl bg-white p-1"
-              src={"src/assets/google-logo.png"}
-              alt={"google icon"}
+            className="ml-2 h-auto w-8 rounded-2xl bg-white p-1"
+            src={"src/assets/google-logo.png"}
+            alt={"google icon"}
           />
         </button>
         <Link to={"/login"}>
