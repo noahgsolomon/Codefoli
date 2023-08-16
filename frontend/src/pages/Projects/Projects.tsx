@@ -2,9 +2,7 @@ import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
 import Footer from "Components/Footer/Footer";
 import UserData from "Type/UserData.tsx";
 import ProjectsPageData from "Type/ProjectsPageData.tsx";
-import {
-  updateProjectsPageText,
-} from "./projectspageapi.tsx";
+import { updateProjectsPageText } from "./projectspageapi.tsx";
 import ProjectCard from "./ProjectCard.tsx";
 import AddProjectCard from "./AddProjectCard.tsx";
 import { useSpring, animated } from "react-spring";
@@ -59,7 +57,10 @@ const Projects: FC<{
   });
 
   const handleHeaderOneSubmit = async () => {
-    const updateHeader = await updateProjectsPageText('header_one', headerOneEditValue);
+    const updateHeader = await updateProjectsPageText(
+      "header_one",
+      headerOneEditValue
+    );
     if (updateHeader) {
       setPageData((prev) => ({ ...prev, header_one: headerOneEditValue }));
     }
@@ -67,7 +68,10 @@ const Projects: FC<{
   };
 
   const handleDescriptionOneSubmit = async () => {
-    const updateDescription = await updateProjectsPageText('description_one', descriptionOneEditValue);
+    const updateDescription = await updateProjectsPageText(
+      "description_one",
+      descriptionOneEditValue
+    );
     if (updateDescription) {
       setPageData((prev) => ({
         ...prev,

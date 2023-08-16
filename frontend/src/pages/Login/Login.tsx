@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { login } from "api/authenticateapi.tsx";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
-import {useSpring, animated} from "react-spring";
+import { useSpring, animated } from "react-spring";
 
 const Login: React.FC = () => {
   const [showFields, setShowFields] = useState(false);
@@ -32,7 +32,10 @@ const Login: React.FC = () => {
   });
 
   return (
-    <animated.div style={loginAnimation} className="flex items-center justify-center bg-gray-50 p-4">
+    <animated.div
+      style={loginAnimation}
+      className="flex items-center justify-center bg-gray-50 p-4"
+    >
       <div className="mt-20 w-[700px] max-w-[80%] rounded-xl border-2 border-black bg-gray-100 p-10 text-center shadow-custom transition-all">
         <h2 className="mb-10 text-3xl">
           <span className="bg-blue-500 px-1 text-white">Codefolio</span>

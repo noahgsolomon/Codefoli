@@ -6,12 +6,10 @@ import PreviewApp from "./PreviewApp.tsx";
 import Processing from "./Processing.tsx";
 
 const App: React.FC = () => {
-
-
-    return (
+  return (
     <BrowserRouter>
       <Routes>
-         <Route path="/processing" element={<Processing />} />
+        <Route path="/processing" element={<Processing />} />
         <Route path="/*" element={<MainApp />} />
         <Route path="/preview/*" element={<PreviewApp />} />
       </Routes>

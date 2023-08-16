@@ -1,10 +1,11 @@
-
-
-const updateHomeText = async (type: "header_one" | "description_one", text: string) => {
+const updateHomeText = async (
+  type: "header_one" | "description_one",
+  text: string
+) => {
   const model = {
     type: type,
     text: text,
-  }
+  };
   try {
     const updateFetch = await fetch(
       "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/home",
@@ -12,8 +13,8 @@ const updateHomeText = async (type: "header_one" | "description_one", text: stri
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("Id")}`
-          },
+          Authorization: `Bearer ${localStorage.getItem("Id")}`,
+        },
         body: JSON.stringify(model),
       }
     );

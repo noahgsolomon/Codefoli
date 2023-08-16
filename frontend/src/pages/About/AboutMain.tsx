@@ -1,8 +1,6 @@
 import React, { useMemo, useRef, useState } from "react";
 import AboutData from "Type/AboutData.tsx";
-import {
-  updateAboutText
-} from "./aboutapi.tsx";
+import { updateAboutText } from "./aboutapi.tsx";
 import { Link } from "react-router-dom";
 import Marquee from "Components/Marquee/Marquee.tsx";
 import UserData from "Type/UserData.tsx";
@@ -130,33 +128,39 @@ const AboutMain: React.FC<{
       setHeaderOneEditValue(pageData.header_one);
       return;
     }
-    const updateText = await updateAboutText('header_one', headerOneEditValue);
-    if (updateText.status === 'OK') {
+    const updateText = await updateAboutText("header_one", headerOneEditValue);
+    if (updateText.status === "OK") {
       setPageData((prev) => ({ ...prev, header_one: headerOneEditValue }));
     }
     setHeaderOneEdit(false);
   };
   const handleHeaderTwoSubmit = async () => {
     if (headerTwoEditValue.length > 50 || headerTwoEditValue.length < 1) {
-        setHeaderTwoEdit(false);
-        setHeaderTwoEditValue(pageData.header_two);
-        return;
+      setHeaderTwoEdit(false);
+      setHeaderTwoEditValue(pageData.header_two);
+      return;
     }
-    const updateText = await updateAboutText('header_two', headerTwoEditValue);
-    if (updateText.status === 'OK') {
+    const updateText = await updateAboutText("header_two", headerTwoEditValue);
+    if (updateText.status === "OK") {
       setPageData((prev) => ({ ...prev, header_two: headerTwoEditValue }));
     }
     setHeaderTwoEdit(false);
   };
 
   const handleDescriptionOneSubmit = async () => {
-    if (descriptionOneEditValue.length > 250 || descriptionOneEditValue.length < 1) {
-        setDescriptionOneEdit(false);
-        setDescriptionOneEditValue(pageData.description_one);
-        return;
+    if (
+      descriptionOneEditValue.length > 250 ||
+      descriptionOneEditValue.length < 1
+    ) {
+      setDescriptionOneEdit(false);
+      setDescriptionOneEditValue(pageData.description_one);
+      return;
     }
-    const updateText = await updateAboutText('description_one', descriptionOneEditValue);
-    if (updateText.status === 'OK') {
+    const updateText = await updateAboutText(
+      "description_one",
+      descriptionOneEditValue
+    );
+    if (updateText.status === "OK") {
       setPageData((prev) => ({
         ...prev,
         description_one: descriptionOneEditValue,
@@ -166,13 +170,19 @@ const AboutMain: React.FC<{
   };
 
   const handleDescriptionTwoSubmit = async () => {
-    if (descriptionTwoEditValue.length > 500 || descriptionTwoEditValue.length < 1) {
-        setDescriptionTwoEdit(false);
-        setDescriptionTwoEditValue(pageData.description_two);
-        return;
+    if (
+      descriptionTwoEditValue.length > 500 ||
+      descriptionTwoEditValue.length < 1
+    ) {
+      setDescriptionTwoEdit(false);
+      setDescriptionTwoEditValue(pageData.description_two);
+      return;
     }
-    const updateText = await updateAboutText('description_two', descriptionTwoEditValue);
-    if (updateText.status === 'OK') {
+    const updateText = await updateAboutText(
+      "description_two",
+      descriptionTwoEditValue
+    );
+    if (updateText.status === "OK") {
       setPageData((prev) => ({
         ...prev,
         description_two: descriptionTwoEditValue,
@@ -238,7 +248,7 @@ const AboutMain: React.FC<{
                       await handleDescriptionOneSubmit();
                     }
                   }}
-                  className="w-full mb-5 resize-none appearance-none overflow-hidden border-none text-center bg-transparent text-2xl font-semibold leading-snug outline-none focus:outline-none focus:ring-0"
+                  className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-2xl font-semibold leading-snug outline-none focus:outline-none focus:ring-0"
                   style={{ minHeight: "8em" }}
                   autoFocus
                   onFocus={(e) => e.currentTarget.select()}

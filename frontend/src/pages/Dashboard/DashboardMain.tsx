@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import {
-  updateHomeText
-} from "./dashboardapi.tsx";
-import {useSpring, animated} from "react-spring";
+import { updateHomeText } from "./dashboardapi.tsx";
+import { useSpring, animated } from "react-spring";
 import HomeData from "Type/HomeData.tsx";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
 
@@ -52,8 +50,8 @@ const DashboardMain: React.FC<{
       setHeaderOneEditValue(pageData.header_one);
       return;
     }
-    const updateHeader = await updateHomeText('header_one', headerOneEditValue);
-    if (updateHeader.status === 'OK') {
+    const updateHeader = await updateHomeText("header_one", headerOneEditValue);
+    if (updateHeader.status === "OK") {
       setPageData((prev) => ({ ...prev, header_one: headerOneEditValue }));
       setHeaderOneEdit(false);
       setHeaderOneEditValue(headerOneEditValue);
@@ -62,13 +60,19 @@ const DashboardMain: React.FC<{
   };
 
   const handleDescriptionOneSubmit = async () => {
-    if (descriptionOneEditValue.length > 250 || descriptionOneEditValue.length < 1) {
+    if (
+      descriptionOneEditValue.length > 250 ||
+      descriptionOneEditValue.length < 1
+    ) {
       setDescriptionOneEdit(false);
       setDescriptionOneEditValue(pageData.description_one);
       return;
     }
-    const updateDescription = await updateHomeText('description_one', descriptionOneEditValue);
-    if (updateDescription.status === 'OK') {
+    const updateDescription = await updateHomeText(
+      "description_one",
+      descriptionOneEditValue
+    );
+    if (updateDescription.status === "OK") {
       setPageData((prev) => ({
         ...prev,
         description_one: descriptionOneEditValue,
