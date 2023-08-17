@@ -45,30 +45,30 @@ const handler = async (event) => {
     }
 
     const body = JSON.parse(event.body);
-    const type = body.type;
 
     try {
-        if (type === 'header_one'){
-            await knex('projects_page').where({
+        if (body.table !== 'users') {
+            await knex(body.table).where({
                 user_id: existingUser.id
             }).update({
-                header_one: body.text
+                [body.type]: body.text
             });
         }
-        else if (type === 'description_one'){
-            await knex('projects_page').where({
-                user_id: existingUser.id
+        else {
+            await knex('users').where({
+                id: existingUser.id
             }).update({
-                description_one: body.text
+                [body.type]: body.text
             });
         }
+
 
         return {
             statusCode: 200,
             headers: headers,
             body: JSON.stringify({
                 status: "OK",
-                message: "Projects page data updated successfully",
+                message: "Text data updated successfully",
                 data: null
             })
         };
@@ -77,7 +77,7 @@ const handler = async (event) => {
         return {
             statusCode: 500,
             headers: headers,
-            body: JSON.stringify({ status: "ERROR", message: "An error occurred while updating projects page", data: error }),
+            body: JSON.stringify({ status: "ERROR", message: "An error occurred while updating text", data: error }),
         };
     }
 };
