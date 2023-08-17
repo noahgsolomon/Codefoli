@@ -107,44 +107,57 @@ const DashboardMain: React.FC<{
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append("file", file);
-    console.log(formData.get("file"));
-    try {
-      const response = await fetch(
-        "http://localhost:8080/profile-image-upload",
-        {
-          method: "POST",
-          body: formData,
-          credentials: "include",
-        }
-      );
 
-      const data = await response.json();
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = async () => {
+      const base64File = reader.result as string;
 
-      if (data.status !== "OK") {
-        setImageLoading(false);
-        if (data.status === "ERROR") {
-          setShowError({ visible: true, message: data.message });
-          setTimeout(() => setShowError({ visible: false, message: "" }), 3000);
+      try {
+        const response = await fetch(
+            "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/upload-image?table=home&link=profile-image&image_column=profile_image",
+            {
+              method: "POST",
+              body: JSON.stringify({ file: base64File }),
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("Id"),
+              },
+            }
+        );
+
+        const data = await response.json();
+
+        if (data.status !== "OK") {
+          setImageLoading(false);
+          if (data.status === "ERROR") {
+            setShowError({ visible: true, message: data.message });
+            setTimeout(() => setShowError({ visible: false, message: "" }), 3000);
+            return;
+          }
           return;
         }
-        return;
-      }
 
-      setPageData({
-        ...pageData,
-        profile_image: `${data.data.url}?timestamp=${new Date().getTime()}`,
-      });
-      setTimeout(() => setImageLoading(false), 500);
-    } catch (error) {
-      setImageLoading(false);
-      console.error("Error uploading file: ", error);
-    }
+        setPageData({
+          ...pageData,
+          profile_image: `${data.data.url}?timestamp=${new Date().getTime()}`,
+        });
+        setTimeout(() => setImageLoading(false), 500);
+      } catch (error) {
+        setImageLoading(false);
+        console.error("Error uploading file: ", error);
+      }
+    };
   };
+
 
   return (
     <div className="container mx-auto px-6">
       {showError.visible && (
         <StatusBar message={showError.message} color={"bg-red-400"} />
+      )}
+      {imageLoading && (
+          <StatusBar message={'Uploading image!'} color={"bg-green-500"} />
       )}
       <div className="flex flex-col lg:flex-row xl:mx-auto xl:justify-center">
         <animated.div style={headerAnimation}>
