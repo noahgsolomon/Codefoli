@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { updateHomeText } from "./dashboardapi.tsx";
 import { useSpring, animated } from "react-spring";
 import HomeData from "Type/HomeData.tsx";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
+import { updateText } from "api/updatetext.tsx";
 
 const DashboardMain: React.FC<{
   pageData: HomeData;
@@ -50,7 +50,11 @@ const DashboardMain: React.FC<{
       setHeaderOneEditValue(pageData.header_one);
       return;
     }
-    const updateHeader = await updateHomeText("header_one", headerOneEditValue);
+    const updateHeader = await updateText(
+      "header_one",
+      headerOneEditValue,
+      "home"
+    );
     if (updateHeader.status === "OK") {
       setPageData((prev) => ({ ...prev, header_one: headerOneEditValue }));
       setHeaderOneEdit(false);
@@ -68,9 +72,10 @@ const DashboardMain: React.FC<{
       setDescriptionOneEditValue(pageData.description_one);
       return;
     }
-    const updateDescription = await updateHomeText(
+    const updateDescription = await updateText(
       "description_one",
-      descriptionOneEditValue
+      descriptionOneEditValue,
+      "home"
     );
     if (updateDescription.status === "OK") {
       setPageData((prev) => ({

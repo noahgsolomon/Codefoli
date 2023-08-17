@@ -33,7 +33,7 @@ const AboutSections: React.FC<{
   return (
     <>
       {pageData.sections
-        .sort((a, b) => a.details.order - b.details.order)
+        .sort((a, b) => a.details.page_order - b.details.page_order)
         .map((section, index) => {
           const { type, details } = section;
 
@@ -52,7 +52,7 @@ const AboutSections: React.FC<{
                       setPageData as Dispatch<SetStateAction<AnyPageData>>
                     }
                     page={"ABOUT"}
-                    order={section.details.order}
+                    order={section.details.page_order}
                   />
                 ) : null;
               break;
@@ -70,7 +70,7 @@ const AboutSections: React.FC<{
                     setPageData={
                       setPageData as Dispatch<SetStateAction<AnyPageData>>
                     }
-                    order={section.details.order}
+                    order={section.details.page_order}
                   />
                 ) : null;
               break;
@@ -85,7 +85,7 @@ const AboutSections: React.FC<{
                       setPageData as Dispatch<SetStateAction<AnyPageData>>
                     }
                     userData={userData}
-                    order={section.details.order}
+                    order={section.details.page_order}
                     setUserData={setUserData}
                   />
                 ) : null;
@@ -102,7 +102,7 @@ const AboutSections: React.FC<{
                     key={index}
                     page={"ABOUT"}
                     details={details}
-                    order={section.details.order}
+                    order={section.details.page_order}
                   />
                 ) : null;
               break;
@@ -118,7 +118,7 @@ const AboutSections: React.FC<{
                     key={index}
                     page={"ABOUT"}
                     details={details}
-                    order={section.details.order}
+                    order={section.details.page_order}
                   />
                 ) : null;
               break;
@@ -134,7 +134,7 @@ const AboutSections: React.FC<{
               setPageData={
                 setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>
               }
-              order={section.details.order}
+              order={section.details.page_order}
             />,
             sectionComponent,
           ];

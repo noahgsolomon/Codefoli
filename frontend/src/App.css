@@ -19,14 +19,30 @@
 }
 
 @keyframes rainbow {
-  0% { stroke: red; }
-  14% { stroke: orange; }
-  28% { stroke: yellow; }
-  42% { stroke: green; }
-  57% { stroke: blue; }
-  71% { stroke: indigo; }
-  85% { stroke: violet; }
-  100% { stroke: red; }
+  0% {
+    stroke: red;
+  }
+  14% {
+    stroke: orange;
+  }
+  28% {
+    stroke: yellow;
+  }
+  42% {
+    stroke: green;
+  }
+  57% {
+    stroke: blue;
+  }
+  71% {
+    stroke: indigo;
+  }
+  85% {
+    stroke: violet;
+  }
+  100% {
+    stroke: red;
+  }
 }
 
 .rainbow-stroke {

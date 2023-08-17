@@ -2,9 +2,9 @@ import { animated, useSpring } from "react-spring";
 import Form from "./Form/Form.tsx";
 import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
 import ContactData from "Type/ContactData.tsx";
-import { updateContactText } from "./contactapi.tsx";
 import UserData from "Type/UserData.tsx";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
+import { updateText } from "api/updatetext.tsx";
 
 const ContactMain: FC<{
   pageData: ContactData;
@@ -38,22 +38,24 @@ const ContactMain: FC<{
   const phoneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const handleHeaderOneSubmit = async () => {
-    const updateText = await updateContactText(
+    const updatedText = await updateText(
       "header_one",
-      headerOneEditValue
+      headerOneEditValue,
+      "contact"
     );
-    if (updateText.status === "OK") {
+    if (updatedText.status === "OK") {
       setPageData((prev) => ({ ...prev, header_one: headerOneEditValue }));
     }
     setHeaderOneEdit(false);
   };
 
   const handleDescriptionOneSubmit = async () => {
-    const updateText = await updateContactText(
+    const updatedText = await updateText(
       "description_one",
-      descriptionOneEditValue
+      descriptionOneEditValue,
+      "contact"
     );
-    if (updateText.status === "OK") {
+    if (updatedText.status === "OK") {
       setPageData((prev) => ({
         ...prev,
         description_one: descriptionOneEditValue,
@@ -63,13 +65,14 @@ const ContactMain: FC<{
   };
 
   const handleEmailSubmit = async () => {
-    const updateEmail = await updateContactText("email", emailEditValue);
+    const updateEmail = await updateText("email", emailEditValue, "users");
     if (updateEmail.status === "OK") {
       setUserData((prev) => ({
         ...prev,
         email: emailEditValue,
       }));
     } else {
+      setEmailEditValue(userData.email);
       setEmailError(true);
       setTimeout(() => {
         setEmailError(false);
@@ -79,7 +82,8 @@ const ContactMain: FC<{
   };
 
   const handlePhoneSubmit = async () => {
-    const updatePhone = await updateContactText("phone", phoneEditValue);
+    const updatePhone = await updateText("phone", phoneEditValue, "users");
+    console.log(updatePhone);
     if (updatePhone.status === "OK") {
       setUserData((prev) => ({
         ...prev,

@@ -1,11 +1,11 @@
 import React, { useMemo, useRef, useState } from "react";
 import AboutData from "Type/AboutData.tsx";
-import { updateAboutText } from "./aboutapi.tsx";
 import { Link } from "react-router-dom";
 import Marquee from "Components/Marquee/Marquee.tsx";
 import UserData from "Type/UserData.tsx";
 import { useSpring, animated } from "react-spring";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
+import { updateText } from "api/updatetext.tsx";
 
 const AboutMain: React.FC<{
   userData: UserData;
@@ -128,8 +128,12 @@ const AboutMain: React.FC<{
       setHeaderOneEditValue(pageData.header_one);
       return;
     }
-    const updateText = await updateAboutText("header_one", headerOneEditValue);
-    if (updateText.status === "OK") {
+    const updatedText = await updateText(
+      "header_one",
+      headerOneEditValue,
+      "about"
+    );
+    if (updatedText.status === "OK") {
       setPageData((prev) => ({ ...prev, header_one: headerOneEditValue }));
     }
     setHeaderOneEdit(false);
@@ -140,8 +144,12 @@ const AboutMain: React.FC<{
       setHeaderTwoEditValue(pageData.header_two);
       return;
     }
-    const updateText = await updateAboutText("header_two", headerTwoEditValue);
-    if (updateText.status === "OK") {
+    const updatedText = await updateText(
+      "header_two",
+      headerTwoEditValue,
+      "about"
+    );
+    if (updatedText.status === "OK") {
       setPageData((prev) => ({ ...prev, header_two: headerTwoEditValue }));
     }
     setHeaderTwoEdit(false);
@@ -156,11 +164,12 @@ const AboutMain: React.FC<{
       setDescriptionOneEditValue(pageData.description_one);
       return;
     }
-    const updateText = await updateAboutText(
+    const updatedText = await updateText(
       "description_one",
-      descriptionOneEditValue
+      descriptionOneEditValue,
+      "about"
     );
-    if (updateText.status === "OK") {
+    if (updatedText.status === "OK") {
       setPageData((prev) => ({
         ...prev,
         description_one: descriptionOneEditValue,
@@ -178,11 +187,12 @@ const AboutMain: React.FC<{
       setDescriptionTwoEditValue(pageData.description_two);
       return;
     }
-    const updateText = await updateAboutText(
+    const updatedText = await updateText(
       "description_two",
-      descriptionTwoEditValue
+      descriptionTwoEditValue,
+      "about"
     );
-    if (updateText.status === "OK") {
+    if (updatedText.status === "OK") {
       setPageData((prev) => ({
         ...prev,
         description_two: descriptionTwoEditValue,
