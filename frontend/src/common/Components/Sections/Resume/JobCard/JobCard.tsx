@@ -7,15 +7,7 @@ import React, {
   useState,
 } from "react";
 import UserData from "Type/UserData.tsx";
-import {
-  jobOrderChange,
-  removeJob,
-  updateJobCompany,
-  updateJobDescription,
-  updateJobEndDate,
-  updateJobRole,
-  updateJobStartDate,
-} from "api/userapi.tsx";
+import { jobOperations } from "api/userapi.tsx";
 import Work from "Type/Work.tsx";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
 const JobCard: FC<{
@@ -79,20 +71,21 @@ const JobCard: FC<{
   const [imageLoading, setImageLoading] = useState<boolean>(false);
 
   const handleJobOrderChange = async (from: number, to: number) => {
-    const jobOrderChangeFetch = await jobOrderChange(from, to);
-    console.log("Before update:", userData.work);
+    const jobOrderChangeFetch = await jobOperations({
+      type: "orderChange",
+      from: from,
+      to: to,
+    });
     if (jobOrderChangeFetch.status === "OK") {
       setHover(false);
-      console.log(jobOrderChangeFetch.data);
       setUserData((prev) => {
-        console.log("Updating state...");
         return {
           ...prev,
           work: prev.work.map((work) => {
-            if (work.orderId === from) {
-              return { ...work, orderId: to };
-            } else if (work.orderId === to) {
-              return { ...work, orderId: from };
+            if (work.order_id === from) {
+              return { ...work, order_id: to };
+            } else if (work.order_id === to) {
+              return { ...work, order_id: from };
             } else {
               return work;
             }
@@ -153,20 +146,21 @@ const JobCard: FC<{
   };
 
   const handleCompanyTitleSubmit = async () => {
-    const updateCompanyTitleFetch = await updateJobCompany(
-      id,
-      companyTitleEditValue
-    );
+    const updateCompanyTitleFetch = await jobOperations({
+      type: "update",
+      field: "company",
+      id: parseInt(id),
+      value: companyTitleEditValue,
+    });
+
     if (updateCompanyTitleFetch.status === "OK") {
       setUserData((prev) => ({
         ...prev,
         work: prev.work.map((job) =>
-          job.id === id
-            ? { ...job, companyTitle: updateCompanyTitleFetch.data }
-            : job
+          job.id === id ? { ...job, company: companyTitleEditValue } : job
         ),
       }));
-      setCompanyTitleValue(updateCompanyTitleFetch.data);
+      setCompanyTitleValue(companyTitleEditValue);
     } else {
       setCompanyTitleEditValue(companyTitleValue);
     }
@@ -174,15 +168,20 @@ const JobCard: FC<{
   };
 
   const handleRoleSubmit = async () => {
-    const updateRoleFetch = await updateJobRole(id, roleEditValue);
+    const updateRoleFetch = await jobOperations({
+      type: "update",
+      field: "position",
+      id: parseInt(id),
+      value: roleEditValue,
+    });
     if (updateRoleFetch.status === "OK") {
       setUserData((prev) => ({
         ...prev,
         work: prev.work.map((job) =>
-          job.id === id ? { ...job, role: updateRoleFetch.data } : job
+          job.id === id ? { ...job, position: roleEditValue } : job
         ),
       }));
-      setRoleValue(updateRoleFetch.data);
+      setRoleValue(roleEditValue);
     } else {
       setRoleEditValue(roleValue);
     }
@@ -190,20 +189,20 @@ const JobCard: FC<{
   };
 
   const handleDescriptionSubmit = async () => {
-    const updateDescriptionFetch = await updateJobDescription(
-      id,
-      descriptionEditValue
-    );
+    const updateDescriptionFetch = await jobOperations({
+      type: "update",
+      field: "description",
+      id: parseInt(id),
+      value: descriptionEditValue,
+    });
     if (updateDescriptionFetch.status === "OK") {
       setUserData((prev) => ({
         ...prev,
         work: prev.work.map((job) =>
-          job.id === id
-            ? { ...job, description: updateDescriptionFetch.data }
-            : job
+          job.id === id ? { ...job, description: descriptionEditValue } : job
         ),
       }));
-      setDescriptionValue(updateDescriptionFetch.data);
+      setDescriptionValue(descriptionEditValue);
     } else {
       setDescriptionEditValue(descriptionValue);
     }
@@ -211,15 +210,18 @@ const JobCard: FC<{
   };
 
   const handleStartDateSubmit = async () => {
-    const updateStartDateFetch = await updateJobStartDate(
-      id,
-      startDateEditValue
-    );
+    const updateStartDateFetch = await jobOperations({
+      type: "update",
+      field: "start_date",
+      id: parseInt(id),
+      value: startDateEditValue,
+    });
+
     if (updateStartDateFetch.status === "OK") {
       setUserData((prev) => ({
         ...prev,
         work: prev.work.map((job) =>
-          job.id === id ? { ...job, startDate: updateStartDateFetch.data } : job
+          job.id === id ? { ...job, startDate: startDateEditValue } : job
         ),
       }));
       setStartDateValue(startDateEditValue);
@@ -230,12 +232,17 @@ const JobCard: FC<{
   };
 
   const handleEndDateSubmit = async () => {
-    const updateEndDateFetch = await updateJobEndDate(id, endDateEditValue);
+    const updateEndDateFetch = await jobOperations({
+      type: "update",
+      field: "end_date",
+      id: parseInt(id),
+      value: endDateEditValue,
+    });
     if (updateEndDateFetch.status === "OK") {
       setUserData((prev) => ({
         ...prev,
         work: prev.work.map((job) =>
-          job.id === id ? { ...job, endDate: updateEndDateFetch.data } : job
+          job.id === id ? { ...job, endDate: endDateEditValue } : job
         ),
       }));
       setEndDateValue(endDateEditValue);
@@ -246,14 +253,20 @@ const JobCard: FC<{
   };
 
   const handleJobRemove = async () => {
-    const removeJobFetch = await removeJob(id);
+    const removeJobFetch = await jobOperations({
+      type: "remove",
+      id: parseInt(id),
+      order_id: orderId,
+    });
     if (removeJobFetch.status === "OK") {
       setUserData((prev) => ({
         ...prev,
         work: prev.work
           .filter((prevWork) => prevWork.id !== id)
           .map((job) =>
-            job.orderId > orderId ? { ...job, orderId: job.orderId - 1 } : job
+            job.order_id > orderId
+              ? { ...job, order_id: job.order_id - 1 }
+              : job
           ),
       }));
     }

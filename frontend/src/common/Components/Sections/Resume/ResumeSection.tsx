@@ -4,9 +4,9 @@ import UserData from "Type/UserData.tsx";
 import PageType from "Type/Pages.tsx";
 import { ResumeType } from "Type/Section.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
-import { removeSection } from "Components/Sections/api/sectionapi.tsx";
-import { updateHeaderOneResume } from "Components/Sections/Resume/resumeapi.tsx";
+import { addRemoveSection } from "Components/Sections/api/sectionapi.tsx";
 import AddJobCard from "Components/Sections/Resume/JobCard/AddJobCard.tsx";
+import {updateText} from "api/updatetext.tsx";
 
 const ResumeSection: React.FC<{
   page: PageType;
@@ -26,7 +26,16 @@ const ResumeSection: React.FC<{
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const handleHeaderOneSubmit = async () => {
-    const updateHeader = await updateHeaderOneResume(headerOneEditValue);
+    if (headerOneEditValue.length === 0) {
+      setHeaderOneEdit(false);
+      setHeaderOneEditValue(details.header_one);
+      return;
+    }
+    const updateHeader = await updateText(
+      "header_one",
+      headerOneEditValue,
+        'resume_section'
+    );
     if (updateHeader.status === "OK") {
       setPageData((prev) => ({
         ...prev,
@@ -34,12 +43,11 @@ const ResumeSection: React.FC<{
           section.type === "RESUME"
             ? {
                 ...section,
-                details: { ...section.details, headerOne: headerOneEditValue },
+                details: { ...section.details, header_one: headerOneEditValue },
               }
             : section
         ),
       }));
-      setHeaderOneEditValue(headerOneEditValue);
     }
     setHeaderOneEdit(false);
   };
@@ -62,8 +70,13 @@ const ResumeSection: React.FC<{
         onMouseEnter={() => setRemoveResumeSection(true)}
         onMouseLeave={() => setRemoveResumeSection(false)}
         onClick={async () => {
-          const remove = await removeSection(page, "RESUME", order);
-          if (remove) {
+          const remove = await addRemoveSection(
+            page,
+            "RESUME",
+            order,
+            "remove"
+          );
+          if (remove.status === "OK") {
             setPageData((prev) => {
               const removedSection = prev.sections.find(
                 (section) => section.type === "RESUME"
@@ -71,16 +84,16 @@ const ResumeSection: React.FC<{
               if (!removedSection) {
                 return prev;
               }
-              const removedOrder = removedSection.details.order;
+              const removedOrder = removedSection.details.page_order;
               const updatedSections = prev.sections
                 .filter((section) => section.type !== "RESUME")
                 .map((section) => {
-                  if (section.details.order > removedOrder) {
+                  if (section.details.page_order > removedOrder) {
                     return {
                       ...section,
                       details: {
                         ...section.details,
-                        order: section.details.order - 1,
+                        page_order: section.details.page_order - 1,
                       },
                     };
                   } else {
@@ -132,7 +145,7 @@ const ResumeSection: React.FC<{
         )}
         <div className="resume-events">
           {userData.work
-            .sort((a, b) => a.orderId - b.orderId)
+            .sort((a, b) => a.order_id - b.order_id)
             .map((job, index) => (
               <JobCard
                 key={job.id}
@@ -141,10 +154,10 @@ const ResumeSection: React.FC<{
                 companyTitle={job.company}
                 role={job.position}
                 description={job.description}
-                startDate={job.startDate}
-                endDate={job.endDate}
+                startDate={job.start_date}
+                endDate={job.end_date}
                 active={index === 0}
-                orderId={job.orderId}
+                orderId={job.order_id}
                 setUserData={setUserData}
                 userData={userData}
               />
