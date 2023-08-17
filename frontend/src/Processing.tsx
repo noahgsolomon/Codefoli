@@ -1,8 +1,13 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useRef } from "react";
 import Loader from "Components/Loader/Loader.tsx";
 
 const Processing: FC = () => {
+  const hasRun = useRef(false);
+
   useEffect(() => {
+    if (hasRun.current) return;
+    hasRun.current = true;
+
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
     console.log("Code:", code);
@@ -52,7 +57,7 @@ const Processing: FC = () => {
         if (responseBody.status === "OK") {
           localStorage.setItem("Id", responseBody.data.idToken);
           localStorage.setItem("Refresh", responseBody.data.refreshToken);
-          window.location.href = "http://localhost:5173/dashboard";
+          window.location.href = "/";
         }
         console.log(responseBody);
       })();
