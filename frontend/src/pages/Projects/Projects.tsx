@@ -39,10 +39,7 @@ const Projects: FC<{
     pageData.description_one
   );
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const [showError, setShowError] = useState<{
-    visible: boolean;
-    message: string;
-  }>({ visible: false, message: "" });
+  const [projectError, setProjectError] = useState<{visible: boolean, message:string}>({visible:false, message:''});
 
   const headerAnimation = useSpring({
     from: { opacity: 0, transform: "translate3d(20px, 0, 0)" },
@@ -86,9 +83,6 @@ const Projects: FC<{
   return (
     <>
       <main>
-        {showError.visible && (
-          <StatusBar message={showError.message} color={"bg-red-400"} />
-        )}
         <div className="container mx-auto my-20 max-w-screen-lg px-5">
           <section>
             <animated.div style={headerAnimation}>
@@ -165,6 +159,7 @@ const Projects: FC<{
               ({ name, description, id, languages, image, slug }) => {
                 return (
                   <ProjectCard
+                    setProjectError={setProjectError}
                     title={name}
                     description={description}
                     setUserData={setUserData}
@@ -173,13 +168,12 @@ const Projects: FC<{
                     key={id}
                     languages={languages}
                     slug={slug}
-                    setShowError={setShowError}
                   />
                 );
               }
             )}
             {userData.projects.length < 8 && (
-              <AddProjectCard setUserData={setUserData} />
+              <AddProjectCard setUserData={setUserData} setProjectError={setProjectError} />
             )}
           </div>
         </animated.div>
@@ -201,6 +195,7 @@ const Projects: FC<{
         <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
       )}
       <Footer />
+      {projectError.visible && (<StatusBar message={projectError.message} color={'bg-red-500'} />)}
     </>
   );
 };
