@@ -2,13 +2,10 @@ import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
 import FaqAccordion from "Components/Sections/FAQ/FaqAccordion.tsx";
 import { FAQType } from "Type/Section.tsx";
 import PageType from "Type/Pages.tsx";
-import { removeSection } from "Components/Sections/api/sectionapi.tsx";
+import { addRemoveSection } from "Components/Sections/api/sectionapi.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
-import {
-  updateDescriptionOneFaq,
-  updateHeaderOneFaq,
-} from "Components/Sections/FAQ/faqapi.tsx";
 import AddFaq from "Components/Sections/FAQ/AddFaq.tsx";
+import { updateText } from "api/updatetext.tsx";
 
 const FAQSection: FC<{
   page: PageType;
@@ -30,7 +27,11 @@ const FAQSection: FC<{
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const handleHeaderOneSubmit = async () => {
-    const updateHeader = await updateHeaderOneFaq(headerOneEditValue);
+    const updateHeader = await updateText(
+      "header_one",
+      headerOneEditValue,
+      "faq_section"
+    );
     if (updateHeader.status === "OK") {
       setPageData((prev) => ({
         ...prev,
@@ -38,19 +39,20 @@ const FAQSection: FC<{
           section.type === "FAQ"
             ? {
                 ...section,
-                details: { ...section.details, headerOne: headerOneEditValue },
+                details: { ...section.details, header_one: headerOneEditValue },
               }
             : section
         ),
       }));
-      setHeaderOneEditValue(updateHeader.data);
     }
     setHeaderOneEdit(false);
   };
 
   const handleDescriptionOneSubmit = async () => {
-    const updateDescription = await updateDescriptionOneFaq(
-      descriptionOneEditValue
+    const updateDescription = await updateText(
+      "description_one",
+      descriptionOneEditValue,
+      "faq_section"
     );
     if (updateDescription.status === "OK") {
       setPageData((prev) => ({
@@ -61,20 +63,19 @@ const FAQSection: FC<{
                 ...section,
                 details: {
                   ...section.details,
-                  descriptionOne: descriptionOneEditValue,
+                  description_one: descriptionOneEditValue,
                 },
               }
             : section
         ),
       }));
-      setDescriptionOneEditValue(updateDescription.data);
     }
     setDescriptionEdit(false);
   };
 
   const handleRemoveSection = async () => {
-    const remove = await removeSection(page, "FAQ", order);
-    if (remove) {
+    const remove = await addRemoveSection(page, "FAQ", order, "remove");
+    if (remove.status === "OK") {
       setPageData((prev) => {
         const removedSection = prev.sections.find(
           (section) => section.type === "FAQ"
@@ -82,16 +83,16 @@ const FAQSection: FC<{
         if (!removedSection) {
           return prev;
         }
-        const removedOrder = removedSection.details.order;
+        const removedOrder = removedSection.details.page_order;
         const updatedSections = prev.sections
           .filter((section) => section.type !== "FAQ")
           .map((section) => {
-            if (section.details.order > removedOrder) {
+            if (section.details.page_order > removedOrder) {
               return {
                 ...section,
                 details: {
                   ...section.details,
-                  order: section.details.order - 1,
+                  page_order: section.details.page_order - 1,
                 },
               };
             } else {
