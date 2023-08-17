@@ -1,7 +1,6 @@
 import { Dispatch, FC, SetStateAction } from "react";
-import { addJob } from "api/userapi.tsx";
+import { jobOperations } from "api/userapi.tsx";
 import UserData from "Type/UserData.tsx";
-
 const AddJobCard: FC<{
   setUserData: Dispatch<SetStateAction<UserData>>;
   orderId: number;
@@ -12,14 +11,15 @@ const AddJobCard: FC<{
     const position = "Position...";
     const startDate = "June 2021";
     const endDate = "Present";
-    const addJobFetch = await addJob(
-      company,
-      position,
-      description,
-      startDate,
-      endDate,
-      orderId
-    );
+    const addJobFetch = await jobOperations({
+      type: "add",
+      company: company,
+      position: position,
+      description: description,
+      start_date: startDate,
+      end_date: endDate,
+      order_id: orderId,
+    });
     if (addJobFetch.status === "OK") {
       setUserData((prev) => ({
         ...prev,
