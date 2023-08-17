@@ -1,8 +1,8 @@
 import React, { SetStateAction, useState } from "react";
 import { SectionType } from "Type/Section.tsx";
 import PageType from "Type/Pages.tsx";
-import { addSection } from "Components/AddSection/addsectionapi.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
+import { addRemoveSection } from "Components/Sections/api/sectionapi.tsx";
 
 const AddSection: React.FC<{
   sections: SectionType[];
@@ -35,18 +35,23 @@ const AddSection: React.FC<{
               key={index}
               className="text-normal block w-full rounded px-4 py-2 text-gray-900 transition-all hover:underline"
               onClick={async () => {
-                const addSectionFetch = await addSection(page, section, order);
-                if (addSectionFetch) {
+                const addSectionFetch = await addRemoveSection(
+                  page,
+                  section,
+                  order,
+                  "add"
+                );
+                if (addSectionFetch.status === "OK") {
                   setPageData((prev) => {
                     let updatedSections = [...prev.sections];
 
                     updatedSections = updatedSections.map((sec) => {
-                      if (sec.details.order >= order) {
+                      if (sec.details.page_order >= order) {
                         return {
                           ...sec,
                           details: {
                             ...sec.details,
-                            order: sec.details.order + 1,
+                            page_order: sec.details.page_order + 1,
                           },
                         };
                       } else {
