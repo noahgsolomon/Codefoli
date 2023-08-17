@@ -12,16 +12,13 @@ import { ServiceData } from "Type/Services.tsx";
 import { Link } from "react-router-dom";
 import { COLORS } from "../../../../util/colors.ts";
 import { SkillType } from "Type/Section.tsx";
-import { removeSection } from "Components/Sections/api/sectionapi.tsx";
+import { addRemoveSection } from "Components/Sections/api/sectionapi.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import PageType from "Type/Pages.tsx";
 import { Skills } from "Type/Skills.tsx";
-import {
-  addLanguage,
-  removeLanguage,
-  updateHeaderOneSkill,
-} from "Components/Sections/Skill/skillapi.tsx";
+import { changeSkill } from "Components/Sections/Skill/skillapi.tsx";
 import AddServiceCard from "Components/Sections/Skill/AddServiceCard.tsx";
+import { updateText } from "api/updatetext.tsx";
 
 const SkillSection: FC<{
   userData: UserData;
@@ -68,7 +65,11 @@ const SkillSection: FC<{
   };
 
   const handleHeaderOneSubmit = async () => {
-    const updateHeader = await updateHeaderOneSkill(headerOneEditValue);
+    const updateHeader = await updateText(
+      "header_one",
+      headerOneEditValue,
+      "skill_section"
+    );
     if (updateHeader.status === "OK") {
       setPageData((prev) => ({
         ...prev,
@@ -76,18 +77,21 @@ const SkillSection: FC<{
           section.type === "SKILL"
             ? {
                 ...section,
-                details: { ...section.details, headerOne: headerOneEditValue },
+                details: { ...section.details, header_one: headerOneEditValue },
               }
             : section
         ),
       }));
-      setHeaderOneEditValue(updateHeader.data);
     }
     setHeaderOneEdit(false);
   };
 
   const handleRemoveSkill = async (skill: string) => {
-    const removeLanguageFetch = await removeLanguage(skill);
+    const removeLanguageFetch = await changeSkill({
+      type: "language",
+      operation: "remove",
+      value: skill,
+    });
     if (removeLanguageFetch.status === "OK") {
       setUserData((prev) => {
         const updatedSkills = prev.skills.filter(
@@ -102,8 +106,8 @@ const SkillSection: FC<{
   };
 
   const handleRemoveSection = async () => {
-    const remove = await removeSection(page, "SKILL", order);
-    if (remove) {
+    const remove = await addRemoveSection(page, "SKILL", order, "remove");
+    if (remove.status === "OK") {
       setPageData((prev) => {
         const removedSection = prev.sections.find(
           (section) => section.type === "SKILL"
@@ -111,16 +115,16 @@ const SkillSection: FC<{
         if (!removedSection) {
           return prev;
         }
-        const removedOrder = removedSection.details.order;
+        const removedOrder = removedSection.details.page_order;
         const updatedSections = prev.sections
           .filter((section) => section.type !== "SKILL")
           .map((section) => {
-            if (section.details.order > removedOrder) {
+            if (section.details.page_order > removedOrder) {
               return {
                 ...section,
                 details: {
                   ...section.details,
-                  order: section.details.order - 1,
+                  page_order: section.details.page_order - 1,
                 },
               };
             } else {
@@ -137,15 +141,14 @@ const SkillSection: FC<{
   };
 
   const handleAddSkill = async (skill: string) => {
-    const addNewSkillFetch = await addLanguage(
-      skill.toUpperCase().replaceAll(" ", "_")
-    );
+    const addNewSkillFetch = await changeSkill({
+      type: "language",
+      operation: "add",
+      value: skill,
+    });
     if (addNewSkillFetch.status === "OK") {
       setUserData((prev) => {
-        const updatedSkills = [
-          ...prev.skills,
-          skill.toUpperCase().replaceAll(" ", "_") as Skills,
-        ];
+        const updatedSkills = [...prev.skills, skill as Skills];
         return {
           ...prev,
           skills: updatedSkills,

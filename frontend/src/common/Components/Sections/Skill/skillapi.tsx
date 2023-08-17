@@ -1,23 +1,3 @@
-const updateHeaderOneSkill = async (headerOne: string) => {
-  try {
-    const updateFetch = await fetch("http://localhost:8080/skill/header-one", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: headerOne,
-      credentials: "include",
-    });
-    const updateFetchJson = await updateFetch.json();
-    if (updateFetchJson.status === "OK") {
-      return updateFetchJson;
-    } else {
-      console.log(updateFetchJson.message);
-      return updateFetchJson;
-    }
-  } catch (e) {
-    console.log(e);
-  }
-};
-
 const addService = async (service: string) => {
   try {
     const response = await fetch("http://localhost:8080/add-service", {
@@ -123,11 +103,42 @@ const addLanguage = async (skill: string) => {
   }
 };
 
+const changeSkill = async (skill: {
+  type: "service" | "language";
+  operation: "add" | "remove" | "update";
+  value: string;
+  before?: string;
+}) => {
+  try {
+    const response = await fetch(
+      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/skill",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("Id"),
+        },
+        body: JSON.stringify(skill),
+      }
+    );
+
+    const responseJson = await response.json();
+    if (responseJson.status === "OK") {
+      return responseJson;
+    } else {
+      console.log(responseJson.message);
+      return responseJson;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export {
   addLanguage,
   removeLanguage,
   removeService,
   updateService,
   addService,
-  updateHeaderOneSkill,
+  changeSkill,
 };
