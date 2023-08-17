@@ -101,9 +101,14 @@ const MainApp: React.FC = () => {
     const authenticatedCheck = async () => {
       const fetchState = await authenticated();
       if (fetchState.status === "OK") {
-        const user: UserData = await userDetails();
+        const user = await userDetails();
         console.log(user);
-        if (user.role === "NEWBIE") {
+        if (user.status === "ERROR") {
+          localStorage.removeItem("Id");
+          localStorage.removeItem("Refresh");
+          window.location.href = "/login";
+        }
+        if (user.data.role === "NEWBIE") {
           if (window.location.pathname !== "/setup") {
             navigate("/setup");
           }
@@ -123,6 +128,7 @@ const MainApp: React.FC = () => {
           if (homeFetch) {
             setHomeData(homeFetch);
           }
+          console.log(homeFetch);
           if (aboutFetch) {
             setAboutData(aboutFetch);
           }
@@ -133,7 +139,7 @@ const MainApp: React.FC = () => {
             console.log(projectsPageFetch);
             setProjectsPageData(projectsPageFetch);
           }
-          setUserData(user);
+          setUserData(user.data);
           const path = window.location.pathname;
           if (path === "/" || path === "/login" || path === "/register") {
             navigate("/dashboard");
