@@ -37,8 +37,8 @@ const Home: FC = () => {
             <animated.div style={headerAnimation}>
               <h1 className="mb-5 text-center text-4xl font-bold md:text-5xl">
                 Welcome to{" "}
-                <span className="highlight-codefolio bg-red-500 px-1 text-white">
-                  Codefolio
+                <span className=" bg-red-500 px-1 text-white">
+                  Codefoli
                 </span>
                 !
               </h1>
@@ -83,7 +83,7 @@ const Home: FC = () => {
         <section>
           <Banner
             title={{
-              text: "Ready to build your portfolio website with Codefolio? Sign Up and get started!",
+              text: "Ready to build your portfolio website with Codefoli? Sign Up and get started!",
               align: "left",
               color: "white",
             }}
@@ -107,13 +107,13 @@ const Home: FC = () => {
 
         {/*    <TestimonialCard*/}
         {/*      imageUrl={user2PfpImg}*/}
-        {/*      description="Codefolio made building my portfolio a breeze. It truly*/}
+        {/*      description="Codefoli made building my portfolio a breeze. It truly*/}
         {/*          represents my skills and work."*/}
         {/*      userName="Michael Tikhonovsky"*/}
         {/*    />*/}
         {/*    <TestimonialCard*/}
         {/*      imageUrl={userPfpImg}*/}
-        {/*      description="With Codefolio, I was able to create a professional portfolio in*/}
+        {/*      description="With Codefoli, I was able to create a professional portfolio in*/}
         {/*          no time."*/}
         {/*      userName="David Mann"*/}
         {/*      reverse*/}
@@ -124,7 +124,7 @@ const Home: FC = () => {
         <section className="mb-10 px-5">
           <div className="mx-auto my-10 max-w-screen-lg  px-5">
             <h2 className="mb-5 text-center text-3xl font-bold md:text-4xl">
-              Codefolio{" "}
+              Codefoli{" "}
               <span className="bg-indigo-500 px-1 text-white">Features</span>
             </h2>
             <div className="flex flex-wrap items-stretch justify-evenly md:space-x-10">

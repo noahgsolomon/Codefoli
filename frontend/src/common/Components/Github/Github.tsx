@@ -22,7 +22,7 @@ const Github: FC = () => {
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        ⭐ enjoying codefolio? Leave a star{" "}
+        ⭐ enjoying codefoli? Leave a star{" "}
         <span
           className={`absolute -right-4 text-white transition-all ${
             hover ? "-right-6 text-opacity-80" : ""
