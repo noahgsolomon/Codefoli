@@ -1,34 +1,24 @@
-const updateHeaderOneValue = async (headerOne: string) => {
-  try {
-    const updateFetch = await fetch("http://localhost:8080/value/header-one", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: headerOne,
-      credentials: "include",
-    });
-    const updateFetchJson = await updateFetch.json();
-    if (updateFetchJson.status === "OK") {
-      return updateFetchJson;
-    } else {
-      console.log(updateFetchJson.message);
-      return updateFetchJson;
-    }
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-const updateDescriptionOneValue = async (descriptionOne: string) => {
+const updateValueText = async (
+  type: "header_one" | "description_one",
+  text: string
+) => {
+  const model = {
+    type: type,
+    text: text,
+  };
   try {
     const updateFetch = await fetch(
-      "http://localhost:8080/value/description-one",
+      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/text",
       {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: descriptionOne,
-        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("Id"),
+        },
+        body: JSON.stringify(model),
       }
     );
+
     const updateFetchJson = await updateFetch.json();
     if (updateFetchJson.status === "OK") {
       return updateFetchJson;
@@ -108,10 +98,4 @@ const addValue = async (value: string) => {
   }
 };
 
-export {
-  updateHeaderOneValue,
-  updateDescriptionOneValue,
-  removeValue,
-  updateValue,
-  addValue,
-};
+export { updateValueText, removeValue, updateValue, addValue };
