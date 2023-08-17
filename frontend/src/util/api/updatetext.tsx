@@ -1,14 +1,12 @@
-const updateAboutText = async (
-  type: "header_one" | "description_one" | "header_two" | "description_two",
-  text: string
-) => {
+const updateText = async (type: string, text: string, table: string) => {
   const model = {
     type: type,
     text: text,
+    table: table,
   };
   try {
     const updateFetch = await fetch(
-      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/about",
+      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/text",
       {
         method: "PUT",
         headers: {
@@ -18,6 +16,7 @@ const updateAboutText = async (
         body: JSON.stringify(model),
       }
     );
+
     const updateFetchJson = await updateFetch.json();
     if (updateFetchJson.status === "OK") {
       return updateFetchJson;
@@ -30,4 +29,4 @@ const updateAboutText = async (
   }
 };
 
-export { updateAboutText };
+export { updateText };
