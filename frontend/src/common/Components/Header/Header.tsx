@@ -23,7 +23,7 @@ const Header: FC<{ authenticated: boolean }> = ({ authenticated }) => {
           to={authenticated ? (blank ? "#" : "/dashboard") : "/"}
           className="cursor-pointer select-none text-4xl text-current no-underline transition-all hover:bg-blue-500 hover:p-2 hover:text-white md:text-2xl"
         >
-          Codefolio
+          Codefoli
         </Link>
         {blank ? (
           <></>
