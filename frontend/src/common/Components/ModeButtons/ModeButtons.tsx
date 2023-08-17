@@ -57,12 +57,13 @@ const ModeButtons: FC<{
 
   const handleDeploy = async () => {
     setDeploying(true);
-    const deployFetch = await deploy();
-    if (deployFetch.status === "OK") {
-      setDeployed({ url: deployFetch.data, bool: true });
-      setDeploying(false);
-      setUserData({ ...userData, website: deployFetch.data });
-    }
+    await deploy();
+    // const deployFetch = await deploy();
+    // if (deployFetch.status === "OK") {
+    //   setDeployed({ url: deployFetch.data, bool: true });
+    //   setDeploying(false);
+    //   setUserData({ ...userData, website: deployFetch.data });
+    // }
   };
 
   const handleDownloadReactCode = async () => {
