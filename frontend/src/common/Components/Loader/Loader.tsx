@@ -1,4 +1,4 @@
-import {FC, useMemo} from 'react';
+import { FC, useMemo } from "react";
 
 const Loader: FC = () => {
   const facts = [
@@ -64,40 +64,46 @@ const Loader: FC = () => {
     "According to Amazon, the most highlighted books on Kindle are the Bible, the Steve Jobs biography, and The Hunger Games.",
     "Bob Marley's last words to his son before he died were 'Money can't buy life'.",
     "A mole can dig a tunnel that is 300 feet long in only one night.",
-    "A hippo's wide-open mouth is big enough to fit a 4-foot-tall child in."
+    "A hippo's wide-open mouth is big enough to fit a 4-foot-tall child in.",
+    "Drake had a Bar Mitzvah",
   ];
 
-  const randomFact = useMemo(() => facts[Math.floor(Math.random() * facts.length)], []);
+  const randomFact = useMemo(
+    () => facts[Math.floor(Math.random() * facts.length)],
+    []
+  );
 
   return (
-      <div className="fixed left-0 top-0 z-30 h-screen w-screen bg-gray-50">
-        <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform flex-col items-center justify-center">
-          <div role="status">
-            <svg className="mr-2 border-2 border-gray-200 rounded-full h-10 w-10 animate-spin" viewBox="0 0 24 24">
-              <circle
-                  className="rainbow-stroke"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  strokeWidth="4"
-                  fill={'white'}
-              ></circle>
-              <path
-                  className="opacity-75"
-                  fill="white"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
-            </svg>
-          </div>
-          <span className="text-center font-bold">Loading</span>
+    <div className="fixed left-0 top-0 z-30 h-screen w-screen bg-gray-50">
+      <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform flex-col items-center justify-center">
+        <div role="status">
+          <svg
+            className="mr-2 h-10 w-10 animate-spin rounded-full border-2 border-gray-200"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="rainbow-stroke"
+              cx="12"
+              cy="12"
+              r="10"
+              strokeWidth="4"
+              fill={"white"}
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="white"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
         </div>
-        <div className="flex flex-col absolute bottom-16 text-bold left-1/2 transform -translate-x-1/2 text-center">
-          <h2 className={'font-bold'}>Did you know...</h2>
-          <p>{randomFact}</p>
-        </div>
+        <span className="text-center font-bold">Loading</span>
       </div>
+      <div className="text-bold absolute bottom-16 left-1/2 flex -translate-x-1/2 transform flex-col text-center">
+        <h2 className={"font-bold"}>Did you know...</h2>
+        <p>{randomFact}</p>
+      </div>
+    </div>
   );
 };
 
 export default Loader;
-

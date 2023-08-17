@@ -149,9 +149,10 @@ const ModeButtonsP: FC<{
         <div className="rounded-lg bg-white p-8 shadow-lg">
           <h2 className="mb-4 text-2xl font-bold">Download Code</h2>
           <button
-            className="mb-2 flex w-full justify-center rounded-3xl border-2 border-black bg-blue-500 px-4 py-3 font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+            className="mb-2 flex w-full items-center justify-center rounded-3xl border-2 border-black bg-blue-500 px-4 py-3 font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
             onClick={handleDownloadReactCode}
           >
+            <FaDownload fill={"white"} className="mr-2" />
             Download React Source Code
             <img
               className={"ml-2"}
@@ -168,9 +169,10 @@ const ModeButtonsP: FC<{
             />
           </button>
           <button
-            className="flex w-full justify-center rounded-3xl border-2 border-black bg-yellow-500 px-4 py-3 font-bold text-black transition-all hover:-translate-y-0.5 hover:shadow-custom"
+            className="flex w-full items-center justify-center rounded-3xl border-2 border-black bg-yellow-500 px-4 py-3 font-bold text-black transition-all hover:-translate-y-0.5 hover:shadow-custom"
             onClick={handleDownloadCompiledCode}
           >
+            <FaDownload fill={"black"} className="mr-2" />
             Download Compiled Code
             <img
               className={"ml-2"}
