@@ -33,8 +33,8 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
   const [addWork, setAddWork] = useState({
     company: "",
     position: "",
-    startDate: "",
-    endDate: "",
+    start_date: "",
+    end_date: "",
     description: "",
   });
   const [skillSearch, setSkillsSkillSearch] = useState("");
@@ -150,7 +150,14 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
       projects.map((item) => item.project),
       profession,
       about,
-      selectedServices.map((service) => service.service)
+      selectedServices.map((service) =>
+        service.service
+          .toUpperCase()
+          .replaceAll(" ", "_")
+          .replaceAll("/", "_")
+          .replaceAll(".", "_")
+          .replaceAll("-", "_")
+      )
     );
 
     if (postData.status === "OK") {
@@ -295,7 +302,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
               <img
                 width="24"
                 height="24"
-                src="https://img.icons8.com/cotton/24/certificate--v1.png"
+                src="https://img.icons8.com/cotton/48/certificate--v1.png"
                 alt="profession"
                 className="absolute left-2 top-9 -translate-y-1/2 transform"
               />
@@ -324,7 +331,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
               <img
                 width="24"
                 height="24"
-                src="https://img.icons8.com/cotton/24/box--v2.png"
+                src="https://img.icons8.com/cotton/48/box--v2.png"
                 alt="company"
                 className="absolute left-2 top-9 -translate-y-1/2 transform"
               />
@@ -353,7 +360,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
               <img
                 width="24"
                 height="24"
-                src="https://img.icons8.com/cotton/24/airplane-take-off--v1.png"
+                src="https://img.icons8.com/cotton/48/airplane-take-off--v1.png"
                 alt="location"
                 className="absolute left-2 top-9 -translate-y-1/2 transform"
               />
@@ -381,7 +388,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
               <img
                 width="24"
                 height="24"
-                src="https://img.icons8.com/cotton/24/quill-pen.png"
+                src="https://img.icons8.com/cotton/48/quill-pen.png"
                 alt="about"
                 className="absolute left-2 top-9 -translate-y-1/2 transform"
               />
@@ -409,8 +416,8 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                 <img
                   width="24"
                   height="24"
-                  src="https://img.icons8.com/cotton/24/trophy--v1.png"
-                  alt="skills"
+                  src="https://img.icons8.com/cotton/48/filled-star.png"
+                  alt="services"
                   className="absolute left-2 top-9 -translate-y-1/2 transform"
                 />
               </div>
@@ -470,7 +477,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                 <img
                   width="24"
                   height="24"
-                  src="https://img.icons8.com/cotton/24/trophy--v1.png"
+                  src="https://img.icons8.com/cotton/48/trophy--v1.png"
                   alt="services"
                   className="absolute left-2 top-9 -translate-y-1/2 transform"
                 />
@@ -588,9 +595,9 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
 
                 <p className="font-bold underline">{job.work.position}</p>
                 <p>
-                  {formatDate(job.work.startDate)}-
-                  {job.work.endDate.toLowerCase() !== "current"
-                    ? formatDate(job.work.endDate)
+                  {formatDate(job.work.start_date)}-
+                  {job.work.end_date.toLowerCase() !== "current"
+                    ? formatDate(job.work.end_date)
                     : "Current"}
                 </p>
                 <p className="font mt-5 italic">{job.work.description}</p>
@@ -646,11 +653,11 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                   type="text"
                   id="start-date"
                   placeholder="// 12/30/12"
-                  value={addWork.startDate}
+                  value={addWork.start_date}
                   className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0
                   ${startDateError ? "border-red-500" : ""}`}
                   onChange={(e) => {
-                    setAddWork({ ...addWork, startDate: e.target.value });
+                    setAddWork({ ...addWork, start_date: e.target.value });
                     if (e.target.value) {
                       setStartDateError(false);
                     }
@@ -666,11 +673,11 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                   type="text"
                   id="end-date"
                   placeholder="// 6/09/23 or current"
-                  value={addWork.endDate}
+                  value={addWork.end_date}
                   className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0
                   ${endDateError ? "border-red-500" : ""}`}
                   onChange={(e) => {
-                    setAddWork({ ...addWork, endDate: e.target.value });
+                    setAddWork({ ...addWork, end_date: e.target.value });
                     if (e.target.value) {
                       setEndDateError(false);
                     }
@@ -710,8 +717,8 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                     setAddWork({
                       company: "",
                       position: "",
-                      startDate: "",
-                      endDate: "",
+                      start_date: "",
+                      end_date: "",
                       description: "",
                     });
                   }}
@@ -723,8 +730,8 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                     "mt-3 flex cursor-pointer items-center justify-center rounded-2xl px-8 py-3 text-base font-bold transition-all " +
                     (addWork.company &&
                     addWork.position &&
-                    addWork.startDate &&
-                    addWork.endDate &&
+                    addWork.start_date &&
+                    addWork.end_date &&
                     addWork.description
                       ? "cursor-pointer bg-black text-white hover:-translate-y-0.5 hover:bg-green-500 active:translate-y-0.5"
                       : "cursor-default bg-gray-200 text-gray-500")
@@ -733,31 +740,31 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                     if (
                       !addWork.company ||
                       !addWork.position ||
-                      !addWork.startDate ||
-                      !addWork.endDate ||
+                      !addWork.start_date ||
+                      !addWork.end_date ||
                       !addWork.description
                     ) {
                       setCompanyError(!addWork.company);
                       setPositionError(!addWork.position);
-                      setStartDateError(!addWork.startDate);
-                      setEndDateError(!addWork.endDate);
+                      setStartDateError(!addWork.start_date);
+                      setEndDateError(!addWork.end_date);
                       setDescriptionError(!addWork.description);
 
                       return;
                     }
                     if (
-                      !isDate(addWork.startDate) ||
-                      (!isDate(addWork.endDate) &&
-                        addWork.endDate.toLowerCase() !== "current")
+                      !isDate(addWork.start_date) ||
+                      (!isDate(addWork.end_date) &&
+                        addWork.end_date.toLowerCase() !== "current")
                     ) {
-                      setStartDateError(!isDate(addWork.startDate));
-                      setEndDateError(!isDate(addWork.endDate));
+                      setStartDateError(!isDate(addWork.start_date));
+                      setEndDateError(!isDate(addWork.end_date));
                       return;
                     }
                     setWork([
                       ...work,
                       {
-                        work: { ...addWork, orderId: 1, id: "", image: "" },
+                        work: { ...addWork, order_id: 1, id: "", image: "" },
                         color:
                           colors[Math.floor(Math.random() * colors.length)],
                       },
@@ -772,8 +779,8 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                     setAddWork({
                       company: "",
                       position: "",
-                      startDate: "",
-                      endDate: "",
+                      start_date: "",
+                      end_date: "",
                       description: "",
                     });
                   }}
