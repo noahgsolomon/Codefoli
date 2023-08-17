@@ -9,11 +9,7 @@ import {
 } from "react";
 import UserData from "Type/UserData.tsx";
 import {
-  addProjectLanguage,
-  removeProject,
-  removeProjectLanguage,
-  updateProjectDescription,
-  updateProjectTitle,
+  changeProjects,
 } from "./projectspageapi.tsx";
 import Project from "Type/Project.tsx";
 import ArrowRight from "assets/icons/arrow-right.svg";
@@ -28,7 +24,7 @@ const ProjectCard: FC<{
   id: string;
   languages: string[];
   slug: string;
-  setShowError: Dispatch<SetStateAction<{ visible: boolean; message: string }>>;
+  setProjectError: Dispatch<SetStateAction<{visible: boolean, message:string}>>;
 }> = ({
   title,
   description,
@@ -37,7 +33,7 @@ const ProjectCard: FC<{
   languages,
   id,
   slug,
-  setShowError,
+    setProjectError
 }) => {
   const [hovered, setHovered] = useState(false);
   const [removeHover, setRemoveHover] = useState(false);
@@ -56,9 +52,8 @@ const ProjectCard: FC<{
   const [addProjectLanguageState, setAddProjectLanguageState] = useState(false);
   const [languageAddValue, setLanguageAddValue] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
-
   const handleRemoveProject = async () => {
-    const removeProjectFetch = await removeProject(id);
+    const removeProjectFetch = await changeProjects({id: id, operation:'remove', type:'project'});
     if (removeProjectFetch.status === "OK") {
       setUserData((prev) => ({
         ...prev,
@@ -95,8 +90,8 @@ const ProjectCard: FC<{
         setEdit(false);
         if (data.status === "ERROR") {
           setImageLoading(false);
-          setShowError({ visible: true, message: data.message });
-          setTimeout(() => setShowError({ visible: false, message: "" }), 3000);
+          setProjectError({ visible: true, message: data.message });
+          setTimeout(() => setProjectError({ visible: false, message: "" }), 3000);
           return;
         }
         return;
@@ -119,26 +114,44 @@ const ProjectCard: FC<{
   };
 
   const handleTitleSubmit = async () => {
-    const updateTitleFetch = await updateProjectTitle(id, titleEditValue);
+    if (titleEditValue.length < 1){
+      setTitleEdit(false);
+      setTitleEditValue(titleValue);
+      return;
+    }
+    const updateTitleFetch = await changeProjects({text:titleEditValue, id: id, type:'title'});
+    console.log(updateTitleFetch);
     if (updateTitleFetch.status === "OK") {
       setUserData((prev) => ({
         ...prev,
+        slugs: prev.slugs.map((slugObj) =>
+            slugObj.slug === slug
+                ? { ...slugObj, slug: updateTitleFetch.data }
+                : slugObj
+        ),
         projects: prev.projects.map((project) =>
           project.id === id
-            ? { ...project, title: titleEditValue, slug: updateTitleFetch.data }
+            ? { ...project, name: titleEditValue, slug: updateTitleFetch.data }
             : project
-        ),
+        )
       }));
       setTitleValue(titleEditValue);
       setTitleEdit(false);
+    } else if (updateTitleFetch.status === "ERROR") {
+      setTitleEdit(false);
+      setTitleEditValue(titleValue);
+      setProjectError({ message: updateTitleFetch.message, visible: true });
+      setTimeout(() => setProjectError({ visible: false, message: "" }), 3000);
     }
   };
 
   const handleDescriptionSubmit = async () => {
-    const updateDescriptionFetch = await updateProjectDescription(
-      id,
-      descriptionEditValue
-    );
+    if (descriptionEditValue.length < 1){
+        setDescriptionEdit(false);
+        setDescriptionEditValue(descriptionValue);
+        return;
+    }
+    const updateDescriptionFetch = await changeProjects({text:descriptionEditValue, id: id, type:'description'});
     if (updateDescriptionFetch.status === "OK") {
       setUserData((prev) => ({
         ...prev,
@@ -154,7 +167,7 @@ const ProjectCard: FC<{
   };
 
   const handleRemoveLanguage = async (language: string) => {
-    const updateLanguageFetch = await removeProjectLanguage(id, language);
+    const updateLanguageFetch = await changeProjects({operation:'remove', language: language, type:'language', id:id});
     if (updateLanguageFetch.status === "OK") {
       setUserData((prev) => ({
         ...prev,
@@ -180,7 +193,7 @@ const ProjectCard: FC<{
       setAddProjectLanguageState(false);
       return;
     }
-    const updateLanguageFetch = await addProjectLanguage(id, language);
+    const updateLanguageFetch = await changeProjects({operation:'add', language: language, type:'language', id:id});
     if (updateLanguageFetch.status === "OK") {
       setUserData((prev) => ({
         ...prev,
