@@ -14,22 +14,14 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import UserData from "Type/UserData.tsx";
 import {
-  updateProjectAbout,
-  updateProjectDescription,
-  updateProjectHeader,
-  updateProjectLink,
-  updateProjectOverview,
-  updateProjectPlatforms,
+  changeProject
 } from "./projectapi.tsx";
-import {
-  addProjectLanguage,
-  removeProjectLanguage,
-} from "../Projects/projectspageapi.tsx";
 import Project from "Type/Project.tsx";
 import { useSpring, animated } from "react-spring";
 import ModeButtons from "Components/ModeButtons/ModeButtons.tsx";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
 import DeploymentBar from "Components/DeploymentBar/DeploymentBar.tsx";
+import {changeProjects} from "../Projects/projectspageapi.tsx";
 
 const Project: FC<{
   userData: UserData;
@@ -123,7 +115,7 @@ const Project: FC<{
   }
 
   const handleHeaderSubmit = async () => {
-    const updateHeader = await updateProjectHeader(slug, headerEditValue);
+    const updateHeader = await changeProject({text:headerEditValue, id: projectData.id, type:'header'});
     if (updateHeader) {
       const updatedSlugs = userData.slugs.map((s) =>
         s.slug === slug ? { ...s, header: headerEditValue } : s
@@ -149,11 +141,11 @@ const Project: FC<{
       setAddProjectLanguageState(false);
       return;
     }
-    const updateLanguages = await addProjectLanguage(projectData.id, language);
+    const updateLanguages = await changeProjects({operation:'add', language: language, type:'language', id:projectData.id});
     if (updateLanguages) {
       const updatedProjects = userData.projects.map((p) =>
         p.slug === slug
-          ? { ...p, languages: [...p.languages, updateLanguages.data] }
+          ? { ...p, languages: [...p.languages, language] }
           : p
       );
 
@@ -169,10 +161,7 @@ const Project: FC<{
   };
 
   const handleRemoveLanguage = async (language: string) => {
-    const updateLanguages = await removeProjectLanguage(
-      projectData.id,
-      language
-    );
+    const updateLanguages = await changeProjects({operation:'remove', language: language, type:'language', id:projectData.id});
     if (updateLanguages.status === "OK") {
       const updatedProjects = userData.projects.map((p) =>
         p.slug === slug
@@ -189,10 +178,7 @@ const Project: FC<{
   };
 
   const handleDescriptionSubmit = async () => {
-    const updateDescription = await updateProjectDescription(
-      slug,
-      descriptionEditValue
-    );
+    const updateDescription = await changeProject({text:descriptionEditValue, id: projectData.id, type:'description'});
     if (updateDescription) {
       const updatedSlugs = userData.slugs.map((s) =>
         s.slug === slug ? { ...s, description: descriptionEditValue } : s
@@ -209,7 +195,7 @@ const Project: FC<{
   };
 
   const handleAboutSubmit = async () => {
-    const updateAbout = await updateProjectAbout(slug, aboutEditValue);
+    const updateAbout = await changeProject({text:aboutEditValue, id: projectData.id, type:'about'});
     if (updateAbout) {
       const updatedSlugs = userData.slugs.map((s) =>
         s.slug === slug ? { ...s, about: aboutEditValue } : s
@@ -226,7 +212,7 @@ const Project: FC<{
   };
 
   const handleOverviewSubmit = async () => {
-    const updateOverview = await updateProjectOverview(slug, overviewEditValue);
+    const updateOverview = await changeProject({text:overviewEditValue, id: projectData.id, type:'overview'});
     if (updateOverview) {
       const updatedSlugs = userData.slugs.map((s) =>
         s.slug === slug ? { ...s, overview: overviewEditValue } : s
@@ -243,10 +229,7 @@ const Project: FC<{
   };
 
   const handlePlatformsSubmit = async () => {
-    const updatePlatforms = await updateProjectPlatforms(
-      slug,
-      platformsEditValue
-    );
+    const updatePlatforms = await changeProject({text:platformsEditValue, id: projectData.id, type:'platforms'});
     if (updatePlatforms.status === "OK") {
       const updatedSlugs = userData.slugs.map((s) =>
         s.slug === slug ? { ...s, platforms: platformsEditValue } : s
@@ -263,7 +246,7 @@ const Project: FC<{
   };
 
   const handleLinkSubmit = async () => {
-    const updateLink = await updateProjectLink(slug, linkValue);
+    const updateLink = await changeProject({text:linkValue, id: projectData.id, type:'link'});
     if (updateLink.status === "OK") {
       const updatedSlugs = userData.slugs.map((s) =>
         s.slug === slug ? { ...s, link: linkValue } : s
