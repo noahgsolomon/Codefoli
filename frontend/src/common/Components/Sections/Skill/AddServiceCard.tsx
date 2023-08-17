@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import UserData from "Type/UserData.tsx";
 import { Services } from "Type/Services.tsx";
 
-import { addService } from "Components/Sections/Skill/skillapi.tsx";
+import { changeSkill } from "Components/Sections/Skill/skillapi.tsx";
 
 const AddServiceCard: React.FC<{
   setUserData: React.Dispatch<React.SetStateAction<UserData>>;
@@ -32,6 +32,31 @@ const AddServiceCard: React.FC<{
     setMatchingServices(matches);
   };
 
+  const handleAddService = async (service: string) => {
+    const newService = service
+      .toUpperCase()
+      .replaceAll(" ", "_")
+      .toUpperCase()
+      .replaceAll(" ", "_")
+      .replaceAll("/", "_")
+      .replaceAll(".", "_")
+      .replaceAll("-", "_");
+    const addServiceFetch = await changeSkill({
+      type: "service",
+      operation: "add",
+      value: newService,
+    });
+    if (addServiceFetch.status === "OK") {
+      setUserData((prev) => ({
+        ...prev,
+        services: [...prev.services, newService],
+      }));
+    }
+    setAddServiceInput(false);
+    setNewService("");
+    setMatchingServices([...allServices]);
+  };
+
   return (
     <div
       className={`${
@@ -59,24 +84,7 @@ const AddServiceCard: React.FC<{
                   <div
                     key={service}
                     className="m-1 inline-block cursor-pointer rounded-full border-b border-gray-300 bg-black transition-all hover:-translate-y-0.5 hover:opacity-90"
-                    onClick={async () => {
-                      const newService = service
-                        .toUpperCase()
-                        .replaceAll(" ", "_")
-                        .replaceAll("/", "_")
-                        .replaceAll(".", "_")
-                        .replaceAll("-", "_");
-                      const addServiceFetch = await addService(newService);
-                      if (addServiceFetch.status === "OK") {
-                        setUserData((prev) => ({
-                          ...prev,
-                          services: [...prev.services, newService],
-                        }));
-                      }
-                      setAddServiceInput(false);
-                      setNewService("");
-                      setMatchingServices([...allServices]);
-                    }}
+                    onClick={async () => await handleAddService(service)}
                   >
                     <span className="px-2 text-white">{service}</span>
                   </div>
