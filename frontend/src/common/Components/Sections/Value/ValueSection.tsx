@@ -3,13 +3,10 @@ import PageType from "Type/Pages.tsx";
 import { ValueType } from "Type/Section.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import { ValuesData } from "Type/Values.tsx";
-import { removeSection } from "Components/Sections/api/sectionapi.tsx";
-import {
-  updateDescriptionOneValue,
-  updateHeaderOneValue,
-} from "Components/Sections/Value/valueapi.tsx";
+import { addRemoveSection } from "Components/Sections/api/sectionapi.tsx";
 import ValueCard from "Components/Sections/Value/ValueCard.tsx";
 import AddValueCard from "Components/Sections/Value/AddValueCard.tsx";
+import { updateText } from "api/updatetext.tsx";
 
 const ValueSection: React.FC<{
   page: PageType;
@@ -32,8 +29,8 @@ const ValueSection: React.FC<{
   );
 
   const handleSectionRemove = async () => {
-    const remove = await removeSection(page, "VALUE", order);
-    if (remove) {
+    const remove = await addRemoveSection(page, "VALUE", order, "remove");
+    if (remove.status === "OK") {
       setPageData((prev) => {
         const removedSection = prev.sections.find(
           (section) => section.type === "VALUE"
@@ -41,16 +38,16 @@ const ValueSection: React.FC<{
         if (!removedSection) {
           return prev;
         }
-        const removedOrder = removedSection.details.order;
+        const removedOrder = removedSection.details.page_order;
         const updatedSections = prev.sections
           .filter((section) => section.type !== "VALUE")
           .map((section) => {
-            if (section.details.order > removedOrder) {
+            if (section.details.page_order > removedOrder) {
               return {
                 ...section,
                 details: {
                   ...section.details,
-                  order: section.details.order - 1,
+                  page_order: section.details.page_order - 1,
                 },
               };
             } else {
@@ -67,7 +64,11 @@ const ValueSection: React.FC<{
   };
 
   const handleHeaderOneSubmit = async () => {
-    const updateHeader = await updateHeaderOneValue(headerOneEditValue);
+    const updateHeader = await updateText(
+      "header_one",
+      headerOneEditValue,
+      "value_section"
+    );
     if (updateHeader.status === "OK") {
       setPageData((prev) => ({
         ...prev,
@@ -75,19 +76,20 @@ const ValueSection: React.FC<{
           section.type === "VALUE"
             ? {
                 ...section,
-                details: { ...section.details, headerOne: headerOneEditValue },
+                details: { ...section.details, header_one: headerOneEditValue },
               }
             : section
         ),
       }));
-      setHeaderOneEditValue(updateHeader.data);
     }
     setHeaderOneEdit(false);
   };
 
   const handleDescriptionOneSubmit = async () => {
-    const updateDescription = await updateDescriptionOneValue(
-      descriptionOneEditValue
+    const updateDescription = await updateText(
+      "description_one",
+      descriptionOneEditValue,
+      "value_section"
     );
     if (updateDescription.status === "OK") {
       setPageData((prev) => ({
@@ -98,13 +100,12 @@ const ValueSection: React.FC<{
                 ...section,
                 details: {
                   ...section.details,
-                  descriptionOne: descriptionOneEditValue,
+                  description_one: descriptionOneEditValue,
                 },
               }
             : section
         ),
       }));
-      setDescriptionOneEditValue(updateDescription.data);
     }
     setDescriptionEdit(false);
   };

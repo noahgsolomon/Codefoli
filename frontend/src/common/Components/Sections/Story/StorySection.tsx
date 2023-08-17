@@ -1,16 +1,10 @@
 import React, { SetStateAction, useMemo, useRef, useState } from "react";
 import { StoryType } from "Type/Section.tsx";
-import {
-  updateBulletOneStory,
-  updateBulletThreeStory,
-  updateBulletTwoStory,
-  updateDescriptionOneStory,
-  updateHeaderOneStory,
-} from "Components/Sections/Story/storyapi.tsx";
 import PageType from "Type/Pages.tsx";
-import { removeSection } from "Components/Sections/api/sectionapi.tsx";
+import { addRemoveSection } from "Components/Sections/api/sectionapi.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
+import { updateText } from "api/updatetext.tsx";
 
 const StorySection: React.FC<{
   page: PageType;
@@ -56,10 +50,20 @@ const StorySection: React.FC<{
   }>({ visible: false, message: "" });
 
   const handleDescriptionOneSubmit = async () => {
-    const updateDescription = await updateDescriptionOneStory(
-      descriptionOneEditValue
+    if (
+      descriptionOneEditValue.length > 500 ||
+      descriptionOneEditValue.length < 1
+    ) {
+      setDescriptionOneEdit(false);
+      setDescriptionOneEditValue(details.description_one);
+      return;
+    }
+    const updateDescription = await updateText(
+      "description_one",
+      descriptionOneEditValue,
+      "story_section"
     );
-    if (updateDescription) {
+    if (updateDescription.status === "OK") {
       setPageData((prev) => ({
         ...prev,
         sections: prev.sections.map((section) =>
@@ -68,77 +72,109 @@ const StorySection: React.FC<{
                 ...section,
                 details: {
                   ...section.details,
-                  descriptionOne: descriptionOneEditValue,
+                  description_one: descriptionOneEditValue,
                 },
               }
             : section
         ),
       }));
-      setDescriptionOneEditValue(updateDescription);
     }
     setDescriptionOneEdit(false);
   };
 
   const handleHeaderOneSubmit = async () => {
-    const updateHeader = await updateHeaderOneStory(headerOneEditValue);
-    if (updateHeader) {
+    if (headerOneEditValue.length > 50 || headerOneEditValue.length < 1) {
+      setHeaderOneEdit(false);
+      setHeaderOneEditValue(details.header_one);
+      return;
+    }
+    const updateHeader = await updateText(
+      "header_one",
+      headerOneEditValue,
+      "story_section"
+    );
+    if (updateHeader.status === "OK") {
       setPageData((prev) => ({
         ...prev,
         sections: prev.sections.map((section) =>
           section.type === "STORY"
             ? {
                 ...section,
-                details: { ...section.details, headerOne: headerOneEditValue },
+                details: { ...section.details, header_one: headerOneEditValue },
               }
             : section
         ),
       }));
-      setHeaderOneEditValue(updateHeader);
     }
     setHeaderOneEdit(false);
   };
 
   const handleBulletOneSubmit = async () => {
-    const updateBullet = await updateBulletOneStory(bulletOneEditValue);
-    if (updateBullet) {
+    if (bulletOneEditValue.length > 250 || bulletOneEditValue.length < 1) {
+      setBulletOneEdit(false);
+      setBulletOneEditValue(details.bullet_one);
+      return;
+    }
+    const updateBullet = await updateText(
+      "bullet_one",
+      bulletOneEditValue,
+      "story_section"
+    );
+    if (updateBullet.status === "OK") {
       setPageData((prev) => ({
         ...prev,
         sections: prev.sections.map((section) =>
           section.type === "STORY"
             ? {
                 ...section,
-                details: { ...section.details, bulletOne: bulletOneEditValue },
+                details: { ...section.details, bullet_one: bulletOneEditValue },
               }
             : section
         ),
       }));
-      setBulletOneEditValue(updateBullet);
     }
     setBulletOneEdit(false);
   };
 
   const handleBulletTwoSubmit = async () => {
-    const updateBullet = await updateBulletTwoStory(bulletTwoEditValue);
-    if (updateBullet) {
+    if (bulletTwoEditValue.length > 250 || bulletTwoEditValue.length < 1) {
+      setBulletTwoEdit(false);
+      setBulletTwoEditValue(details.bullet_two);
+      return;
+    }
+    const updateBullet = await updateText(
+      "bullet_two",
+      bulletTwoEditValue,
+      "story_section"
+    );
+    if (updateBullet.status === "OK") {
       setPageData((prev) => ({
         ...prev,
         sections: prev.sections.map((section) =>
           section.type === "STORY"
             ? {
                 ...section,
-                details: { ...section.details, bulletTwo: bulletTwoEditValue },
+                details: { ...section.details, bullet_two: bulletTwoEditValue },
               }
             : section
         ),
       }));
-      setBulletOneEditValue(updateBullet);
     }
     setBulletTwoEdit(false);
   };
 
   const handleBulletThreeSubmit = async () => {
-    const updateBullet = await updateBulletThreeStory(bulletThreeEditValue);
-    if (updateBullet) {
+    if (bulletThreeEditValue.length > 250 || bulletThreeEditValue.length < 1) {
+      setBulletThreeEdit(false);
+      setBulletThreeEditValue(details.bullet_three);
+      return;
+    }
+    const updateBullet = await updateText(
+      "bullet_three",
+      bulletThreeEditValue,
+      "story_section"
+    );
+    if (updateBullet.status === "OK") {
       setPageData((prev) => ({
         ...prev,
         sections: prev.sections.map((section) =>
@@ -147,13 +183,12 @@ const StorySection: React.FC<{
                 ...section,
                 details: {
                   ...section.details,
-                  bulletThree: bulletThreeEditValue,
+                  bullet_three: bulletThreeEditValue,
                 },
               }
             : section
         ),
       }));
-      setBulletOneEditValue(updateBullet);
     }
     setBulletThreeEdit(false);
   };
@@ -214,8 +249,8 @@ const StorySection: React.FC<{
   };
 
   const handleRemoveStorySection = async () => {
-    const remove = await removeSection(page, "STORY", order);
-    if (remove) {
+    const remove = await addRemoveSection(page, "STORY", order, "remove");
+    if (remove.status === "OK") {
       setPageData((prev) => {
         const removedSection = prev.sections.find(
           (section) => section.type === "STORY"
@@ -223,16 +258,16 @@ const StorySection: React.FC<{
         if (!removedSection) {
           return prev;
         }
-        const removedOrder = removedSection.details.order;
+        const removedOrder = removedSection.details.page_order;
         const updatedSections = prev.sections
           .filter((section) => section.type !== "STORY")
           .map((section) => {
-            if (section.details.order > removedOrder) {
+            if (section.details.page_order > removedOrder) {
               return {
                 ...section,
                 details: {
                   ...section.details,
-                  order: section.details.order - 1,
+                  page_order: section.details.page_order - 1,
                 },
               };
             } else {
@@ -320,12 +355,12 @@ const StorySection: React.FC<{
                 }
               }}
               className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
-              style={{ minHeight: "14rem" }}
               autoFocus
               onFocus={(e) => {
                 e.target.select();
               }}
-              maxLength={250}
+              rows={10}
+              maxLength={500}
             />
           ) : (
             <p
