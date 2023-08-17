@@ -7,7 +7,7 @@ type StoryType = {
   bullet_two: string;
   bullet_three: string;
   image_one: string;
-  order: number;
+  page_order: number;
 };
 
 type ValueType = {
@@ -16,17 +16,17 @@ type ValueType = {
   values: {
     value: ValuesFormatted;
   }[];
-  order: number;
+  page_order: number;
 };
 
 type ResumeType = {
   header_one: string;
-  order: number;
+  page_order: number;
 };
 
 type SkillType = {
   header_one: string;
-  order: number;
+  page_order: number;
 };
 
 type FAQType = {
@@ -39,7 +39,7 @@ type FAQType = {
       id: string;
     }
   ];
-  order: number;
+  page_order: number;
 };
 
 type SectionDetails = StoryType | ResumeType | SkillType | FAQType | ValueType;
