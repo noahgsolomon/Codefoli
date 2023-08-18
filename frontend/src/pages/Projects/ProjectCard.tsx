@@ -1,5 +1,4 @@
 import {
-  ChangeEvent,
   Dispatch,
   FC,
   SetStateAction,
@@ -11,10 +10,10 @@ import UserData from "Type/UserData.tsx";
 import {
   changeProjects,
 } from "./projectspageapi.tsx";
-import Project from "Type/Project.tsx";
 import ArrowRight from "assets/icons/arrow-right.svg";
 import { Link } from "react-router-dom";
 import { COLORS } from "../../util/colors.ts";
+import {handleFileUpload} from "api/uploadimage.tsx";
 
 const ProjectCard: FC<{
   title: string;
@@ -60,56 +59,6 @@ const ProjectCard: FC<{
         projects: prev.projects.filter((project) => project.id !== id),
         slugs: prev.slugs.filter((slugs) => slugs.slug !== slug),
       }));
-    }
-  };
-
-  const handleFileUpload = async (
-    path: string,
-    setEdit: Dispatch<SetStateAction<boolean>>,
-    imageKey: keyof Project,
-    e: ChangeEvent<HTMLInputElement>
-  ) => {
-    if (!e.target.files) return;
-    setEdit(true);
-    setImageLoading(true);
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("id", id);
-    try {
-      const response = await fetch(`http://localhost:8080/${path}`, {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
-
-      const data = await response.json();
-
-      if (data.status !== "OK") {
-        setImageLoading(false);
-        setEdit(false);
-        if (data.status === "ERROR") {
-          setImageLoading(false);
-          setProjectError({ visible: true, message: data.message });
-          setTimeout(() => setProjectError({ visible: false, message: "" }), 3000);
-          return;
-        }
-        return;
-      }
-
-      setUserData((prev) => ({
-        ...prev,
-        projects: prev.projects.map((project) =>
-          project.id === id
-            ? { ...project, [imageKey]: data.data.url + `?date=${new Date()}` }
-            : project
-        ),
-      }));
-      setTimeout(() => setImageLoading(false), 500);
-    } catch (error) {
-      setEdit(false);
-      setImageLoading(false);
-      console.error("Error uploading file: ", error);
     }
   };
 
@@ -248,10 +197,21 @@ const ProjectCard: FC<{
           accept=".jpg,.png"
           onChange={async (e) => {
             await handleFileUpload(
-              "project-image-upload?id=" + id,
-              setImageEdit,
-              "image",
-              e
+                e,
+              setImageLoading,
+              setUserData,
+              'image',
+              setProjectError,
+                'projects',
+              'projects-image-' + id,
+                (prev: any) => {
+                  const projectToUpdate = prev.projects.find((project: any) => project.id === id);
+                  if (projectToUpdate) {
+                    projectToUpdate.image = (prev as any).image;
+                  }
+                  return prev;
+                },
+                id
             );
           }}
         />
