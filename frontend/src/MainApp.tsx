@@ -101,6 +101,9 @@ const MainApp: React.FC = () => {
     const authenticatedCheck = async () => {
       const fetchState = await authenticated();
       if (fetchState.status === "OK") {
+        if (fetchState.data !== null){
+          localStorage.setItem("Id", fetchState.data.idToken);
+        }
         const user = await userDetails();
         console.log(user);
         if (user.status === "ERROR") {
@@ -146,6 +149,7 @@ const MainApp: React.FC = () => {
           }
         }
       } else {
+        console.log(fetchState);
         const path = window.location.pathname;
         if (path !== "/login" && path !== "/register" && path !== "/") {
           localStorage.removeItem("role");
