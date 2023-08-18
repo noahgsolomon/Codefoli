@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {Dispatch, SetStateAction, useEffect, useMemo, useRef, useState} from "react";
 import { useSpring, animated } from "react-spring";
 import HomeData from "Type/HomeData.tsx";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
 import { updateText } from "api/updatetext.tsx";
+import {handleFileUpload} from "api/uploadimage.tsx";
+import AnyPageData from "Type/AnyPageData.tsx";
 
 const DashboardMain: React.FC<{
   pageData: HomeData;
@@ -100,55 +102,6 @@ const DashboardMain: React.FC<{
     to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
     delay: 200,
   });
-
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    setImageLoading(true);
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = async () => {
-      const base64File = reader.result as string;
-
-      try {
-        const response = await fetch(
-            "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/upload-image?table=home&link=profile-image&image_column=profile_image",
-            {
-              method: "POST",
-              body: JSON.stringify({ file: base64File }),
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("Id"),
-              },
-            }
-        );
-
-        const data = await response.json();
-
-        if (data.status !== "OK") {
-          setImageLoading(false);
-          if (data.status === "ERROR") {
-            setShowError({ visible: true, message: data.message });
-            setTimeout(() => setShowError({ visible: false, message: "" }), 3000);
-            return;
-          }
-          return;
-        }
-
-        setPageData({
-          ...pageData,
-          profile_image: `${data.data.url}?timestamp=${new Date().getTime()}`,
-        });
-        setTimeout(() => setImageLoading(false), 500);
-      } catch (error) {
-        setImageLoading(false);
-        console.error("Error uploading file: ", error);
-      }
-    };
-  };
 
 
   return (
@@ -253,7 +206,9 @@ const DashboardMain: React.FC<{
               ref={fileInput}
               className="hidden"
               accept=".jpg,.png"
-              onChange={handleFileUpload}
+              onChange={async (e) => {
+                await handleFileUpload(e, setImageLoading, setPageData as Dispatch<SetStateAction<AnyPageData>>, 'profile_image', setShowError, 'home', 'profile-image')
+              }}
             />
             <div className="h-full w-full overflow-hidden rounded-3xl shadow-customHover">
               <img
