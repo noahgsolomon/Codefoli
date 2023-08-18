@@ -1,4 +1,4 @@
-import React, {
+import {
   Dispatch,
   FC,
   SetStateAction,
@@ -8,8 +8,8 @@ import React, {
 } from "react";
 import UserData from "Type/UserData.tsx";
 import { jobOperations } from "api/userapi.tsx";
-import Work from "Type/Work.tsx";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
+import {handleFileUpload} from "api/uploadimage.tsx";
 const JobCard: FC<{
   companyTitle: string;
   role: string;
@@ -92,56 +92,6 @@ const JobCard: FC<{
           }),
         };
       });
-    }
-  };
-
-  const handleFileUpload = async (
-    path: string,
-    setEdit: React.Dispatch<React.SetStateAction<boolean>>,
-    imageKey: keyof Work,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (!e.target.files) return;
-    setImageLoading(true);
-    setEdit(true);
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("id", id);
-    try {
-      const response = await fetch(`http://localhost:8080/${path}`, {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
-
-      const data = await response.json();
-
-      if (data.status !== "OK") {
-        setEdit(false);
-        setImageLoading(false);
-        if (data.status === "ERROR") {
-          setImageLoading(false);
-          setShowError({ visible: true, message: data.message });
-          setTimeout(() => setShowError({ visible: false, message: "" }), 3000);
-          return;
-        }
-        return;
-      }
-
-      setUserData((prev) => ({
-        ...prev,
-        work: prev.work.map((job) =>
-          job.id === id
-            ? { ...job, [imageKey]: data.data.url + `?date=${new Date()}` }
-            : job
-        ),
-      }));
-      setTimeout(() => setImageLoading(false), 500);
-    } catch (error) {
-      setEdit(false);
-      setImageLoading(false);
-      console.error("Error uploading file: ", error);
     }
   };
 
@@ -435,10 +385,21 @@ const JobCard: FC<{
             accept=".jpg,.png"
             onChange={async (e) => {
               await handleFileUpload(
-                "job-image-upload",
-                setImageEdit,
-                "image",
-                e
+                  e,
+                setImageLoading,
+                setUserData,
+                'image',
+                setShowError,
+                'work',
+                `job-image-upload-${id}`,
+                  (prev: any) => {
+                    const workToUpdate = prev.work.find((workItem: any) => workItem.id === id);
+                    if (workToUpdate) {
+                      workToUpdate.image = (prev as any).image;
+                    }
+                    return prev;
+                  },
+                  id
               );
             }}
           />
