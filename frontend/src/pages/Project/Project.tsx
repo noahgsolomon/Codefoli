@@ -2,7 +2,6 @@ import LinkIcon from "assets/icons/arrow-up-right.svg";
 import Footer from "Components/Footer/Footer";
 import { COLORS } from "../../util/colors.ts";
 import {
-  ChangeEvent,
   Dispatch,
   FC,
   SetStateAction,
@@ -16,12 +15,12 @@ import UserData from "Type/UserData.tsx";
 import {
   changeProject
 } from "./projectapi.tsx";
-import Project from "Type/Project.tsx";
 import { useSpring, animated } from "react-spring";
 import ModeButtons from "Components/ModeButtons/ModeButtons.tsx";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
 import DeploymentBar from "Components/DeploymentBar/DeploymentBar.tsx";
 import {changeProjects} from "../Projects/projectspageapi.tsx";
+import {handleFileUpload} from "api/uploadimage.tsx";
 
 const Project: FC<{
   userData: UserData;
@@ -228,6 +227,8 @@ const Project: FC<{
     setOverviewEdit(false);
   };
 
+  console.log(userData)
+
   const handlePlatformsSubmit = async () => {
     const updatePlatforms = await changeProject({text:platformsEditValue, id: projectData.id, type:'platforms'});
     if (updatePlatforms.status === "OK") {
@@ -260,55 +261,6 @@ const Project: FC<{
       }));
 
       setProjectDetails(updatedSlugs.find((s) => s.slug === slug));
-    }
-  };
-
-  const handleFileUpload = async (
-    path: string,
-    setEdit: Dispatch<SetStateAction<boolean>>,
-    imageKey: keyof Project,
-    e: ChangeEvent<HTMLInputElement>
-  ) => {
-    if (!e.target.files) return;
-    setEdit(true);
-    setImageLoading(true);
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("id", projectData.id);
-    try {
-      const response = await fetch(`http://localhost:8080/${path}`, {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
-
-      const data = await response.json();
-      console.log(data);
-      if (data.status !== "OK") {
-        setEdit(false);
-        setImageLoading(false);
-        if (data.status === "ERROR") {
-          setImageLoading(false);
-          setShowError({ visible: true, message: data.message });
-          setTimeout(() => setShowError({ visible: false, message: "" }), 3000);
-          return;
-        }
-        return;
-      }
-
-      setProjectDetails((prev) => {
-        if (!prev) return undefined;
-        return {
-          ...prev,
-          [imageKey]: data.data.url + `?date=${new Date()}`,
-        };
-      });
-      setTimeout(() => setImageLoading(false), 500);
-    } catch (error) {
-      setImageLoading(false);
-      setEdit(false);
-      console.error("Error uploading file: ", error);
     }
   };
 
@@ -406,10 +358,21 @@ const Project: FC<{
                   accept=".jpg,.png"
                   onChange={async (e) => {
                     await handleFileUpload(
-                      "project-content-image-upload?id=" + projectData.id,
-                      setImageEdit,
-                      "image",
-                      e
+                        e,
+                      setImageLoading,
+                      setUserData,
+                      'image',
+                        setShowError,
+                      'project_content',
+                      "project-content-" + projectData.id,
+                        (prev: any) => {
+                          const slugToUpdate = prev.slugs.find((slugItem: any) => slugItem.slug === projectData.slug);
+                          if (slugToUpdate) {
+                            slugToUpdate.image = (prev as any).image;
+                          }
+                          return prev;
+                        },
+                      projectData.id,
                     );
                   }}
                 />
@@ -632,6 +595,7 @@ const Project: FC<{
       {deployed.bool && (
         <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
       )}
+      {imageLoading && (<StatusBar message={'uploading image!'} color={'bg-green-500'}/>)}
       <Footer />
     </>
   );
