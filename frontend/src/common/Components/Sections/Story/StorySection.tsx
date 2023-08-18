@@ -5,6 +5,7 @@ import { addRemoveSection } from "Components/Sections/api/sectionapi.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
 import { updateText } from "api/updatetext.tsx";
+import {handleFileUpload} from "api/uploadimage.tsx";
 
 const StorySection: React.FC<{
   page: PageType;
@@ -191,61 +192,6 @@ const StorySection: React.FC<{
       }));
     }
     setBulletThreeEdit(false);
-  };
-
-  const handleFileUpload = async (
-    path: string,
-    setEdit: React.Dispatch<React.SetStateAction<boolean>>,
-    imageKey: keyof StoryType,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (!e.target.files) return;
-    setImageLoading(true);
-    setEdit(true);
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("file", file);
-    try {
-      const response = await fetch(`http://localhost:8080/${path}`, {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
-
-      const data = await response.json();
-
-      if (data.status !== "OK") {
-        setImageLoading(false);
-        setEdit(false);
-        if (data.status === "ERROR") {
-          setImageLoading(false);
-          setShowError({ visible: true, message: data.message });
-          setTimeout(() => setShowError({ visible: false, message: "" }), 3000);
-          return;
-        }
-        return;
-      }
-
-      setPageData((prev) => ({
-        ...prev,
-        sections: prev.sections.map((section) =>
-          section.type === "STORY"
-            ? {
-                ...section,
-                details: {
-                  ...section.details,
-                  [imageKey]: data.data.url + `?date=${new Date()}`,
-                },
-              }
-            : section
-        ),
-      }));
-      setTimeout(() => setImageLoading(false), 500);
-    } catch (error) {
-      setEdit(false);
-      setImageLoading(false);
-      console.error("Error uploading file: ", error);
-    }
   };
 
   const handleRemoveStorySection = async () => {
@@ -491,11 +437,21 @@ const StorySection: React.FC<{
               accept=".jpg,.png"
               onChange={async (e) => {
                 await handleFileUpload(
-                  "about-image-one-upload",
-                  setImageOneEdit,
-                  "image_one",
-                  e
-                );
+                    e,
+                  setImageLoading,
+                  setPageData,
+                  'image_one',
+                  setShowError,
+                  "story_section",
+                    'story-image',
+                    (prev) => {
+                      const sectionToUpdate = prev.sections.find((section) => section.type === "STORY");
+                      if (sectionToUpdate && sectionToUpdate.details) {
+                        (sectionToUpdate.details as StoryType).image_one = (prev as any).image_one;
+                      }
+                      return prev;
+                    }
+              );
               }}
             />
             <div className="h-full w-full overflow-hidden rounded-3xl">
