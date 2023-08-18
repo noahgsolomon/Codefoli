@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, {Dispatch, SetStateAction, useMemo, useRef, useState} from "react";
 import AboutData from "Type/AboutData.tsx";
 import { Link } from "react-router-dom";
 import Marquee from "Components/Marquee/Marquee.tsx";
@@ -6,6 +6,8 @@ import UserData from "Type/UserData.tsx";
 import { useSpring, animated } from "react-spring";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
 import { updateText } from "api/updatetext.tsx";
+import {handleFileUpload} from "api/uploadimage.tsx";
+import AnyPageData from "Type/AnyPageData.tsx";
 
 const AboutMain: React.FC<{
   userData: UserData;
@@ -60,67 +62,13 @@ const AboutMain: React.FC<{
     to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
     delay: 300,
   });
-
+  console.log(pageData)
+  console.log(userData);
   const descriptionAnimation = useSpring({
     from: { opacity: 0, transform: "translate3d(20px, 0, 0)" },
     to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
     delay: 100,
   });
-
-  const handleFileUpload = async (
-    path: string,
-    setEdit: React.Dispatch<React.SetStateAction<boolean>>,
-    imageKey: keyof AboutData,
-    e: React.ChangeEvent<HTMLInputElement>,
-    type: string
-  ) => {
-    if (!e.target.files) return;
-    setEdit(true);
-    if (type === "iconOne") setIconOneLoading(true);
-    if (type === "iconTwo") setIconTwoLoading(true);
-    if (type === "iconThree") setIconThreeLoading(true);
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("file", file);
-    try {
-      const response = await fetch(`http://localhost:8080/${path}`, {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
-
-      const data = await response.json();
-
-      if (data.status !== "OK") {
-        setEdit(false);
-        if (type === "iconOne") setIconOneLoading(false);
-        if (type === "iconTwo") setIconTwoLoading(false);
-        if (type === "iconThree") setIconThreeLoading(false);
-        if (data.status === "ERROR") {
-          setShowError({ visible: true, message: data.message });
-          setTimeout(() => setShowError({ visible: false, message: "" }), 3000);
-          return;
-        }
-        return;
-      }
-
-      setPageData({
-        ...pageData,
-        [imageKey]: `${data.data.url}?timestamp=${new Date().getTime()}`,
-      });
-      if (type === "iconOne") setTimeout(() => setIconOneLoading(false), 500);
-      if (type === "iconTwo") setTimeout(() => setIconTwoLoading(false), 500);
-      if (type === "iconThree")
-        setTimeout(() => setIconThreeLoading(false), 500);
-      setTimeout(() => setEdit(false), 500);
-    } catch (error) {
-      setEdit(false);
-      if (type === "iconOne") setIconOneLoading(false);
-      if (type === "iconTwo") setIconTwoLoading(false);
-      if (type === "iconThree") setIconThreeLoading(false);
-      console.error("Error uploading file: ", error);
-    }
-  };
 
   const handleHeaderOneSubmit = async () => {
     if (headerOneEditValue.length > 50 || headerOneEditValue.length < 1) {
@@ -300,11 +248,13 @@ const AboutMain: React.FC<{
               accept=".jpg,.png"
               onChange={async (e) => {
                 await handleFileUpload(
-                  "about-icon-one-upload",
-                  setIconOneEdit,
-                  "icon_one",
-                  e,
-                  "iconOne"
+                    e,
+                    setIconOneLoading,
+                    setPageData as Dispatch<SetStateAction<AnyPageData>>,
+                    "icon_one",
+                    setShowError,
+                    'about',
+                    "about-icon-one-upload",
                 );
               }}
             />
@@ -343,11 +293,13 @@ const AboutMain: React.FC<{
               accept=".jpg,.png"
               onChange={async (e) => {
                 await handleFileUpload(
-                  "about-icon-two-upload",
-                  setIconTwoEdit,
-                  "icon_two",
-                  e,
-                  "iconTwo"
+                    e,
+                    setIconTwoLoading,
+                    setPageData as Dispatch<SetStateAction<AnyPageData>>,
+                    "icon_two",
+                    setShowError,
+                    'about',
+                    "about-icon-two-upload",
                 );
               }}
             />
@@ -418,11 +370,13 @@ const AboutMain: React.FC<{
                 accept=".jpg,.png"
                 onChange={async (e) => {
                   await handleFileUpload(
+                      e,
+                    setIconThreeLoading,
+                    setPageData as Dispatch<SetStateAction<AnyPageData>>,
+                      "icon_three",
+                    setShowError,
+                    'about',
                     "about-icon-three-upload",
-                    setIconThreeEdit,
-                    "icon_three",
-                    e,
-                    "iconThree"
                   );
                 }}
               />
@@ -482,6 +436,9 @@ const AboutMain: React.FC<{
             .join(" ");
         })}
       />
+      {(iconOneLoading || iconTwoLoading || iconThreeLoading) && (
+          <StatusBar message={'uploading image!'} color={'bg-green-500'} />
+      )}
     </>
   );
 };
