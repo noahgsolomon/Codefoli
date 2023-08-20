@@ -10,11 +10,10 @@ const Processing: FC = () => {
 
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
-    console.log("Code:", code);
 
     if (code) {
       (async () => {
-        const body = `code=${code}&client_id=80810281685-eqf05nodee3q27j6p0ki7bgvm7qlq1jn.apps.googleusercontent.com&client_secret=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&redirect_uri=http://localhost:5173/processing&grant_type=authorization_code`;
+        const body = `code=${code}&client_id=80810281685-eqf05nodee3q27j6p0ki7bgvm7qlq1jn.apps.googleusercontent.com&client_secret=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&redirect_uri=https://codefoli.com/processing&grant_type=authorization_code`;
 
         const tokenResponse = await fetch(
           "https://www.googleapis.com/oauth2/v4/token",
@@ -59,7 +58,6 @@ const Processing: FC = () => {
           localStorage.setItem("Refresh", responseBody.data.refreshToken);
           window.location.href = "/";
         }
-        console.log(responseBody);
       })();
     }
   }, []);
