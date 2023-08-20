@@ -14,7 +14,7 @@ const SectionsP: FC<{
   return (
     <>
       {pageData.sections
-        .sort((a, b) => a.details.order - b.details.order)
+        .sort((a, b) => a.details.page_order - b.details.page_order)
         .map((section, index) => {
           const { type, details } = section;
           let sectionComponent;

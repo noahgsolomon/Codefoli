@@ -6,7 +6,7 @@ const Footer = () => {
           <div>
             <div className="flex justify-center  sm:justify-start">
               <h2 className="bg-red-500 text-4xl font-bold text-white">
-                Codefolio
+                Codefoli
               </h2>
             </div>
 
@@ -42,7 +42,7 @@ const Footer = () => {
         {/* copyright */}
         <div className="mb-2 mt-2 border-t-2 border-gray-500 pt-6">
           <p className="text-center text-sm text-white sm:order-first">
-            &copy; 2023 Codefolio All rights reserved.
+            &copy; 2023 Codefoli All rights reserved.
           </p>
         </div>
       </div>
