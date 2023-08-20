@@ -89,6 +89,7 @@ const PreviewApp: React.FC = () => {
     url: "",
     bool: false,
   });
+  const [downloaded, setDownloaded] = useState<{bool: boolean, message: string}>({ bool: false, message: ""});
 
   const ProjectOr404 = () => {
     const { slug } = useParams();
@@ -96,6 +97,8 @@ const PreviewApp: React.FC = () => {
     if (slug && userData.slugs.some((s) => s.slug === slug)) {
       return (
         <ProjectP
+            setDownloaded={setDownloaded}
+            downloaded={downloaded}
           userData={userData}
           setUserData={setUserData}
           deploying={deploying}
@@ -180,6 +183,8 @@ const PreviewApp: React.FC = () => {
           path="/"
           element={
             <HomeP
+                setDownloaded={setDownloaded}
+                downloaded={downloaded}
               pageData={homeData}
               setUserData={setUserData}
               userData={userData}
@@ -194,6 +199,8 @@ const PreviewApp: React.FC = () => {
           path="/contact"
           element={
             <ContactP
+                setDownloaded={setDownloaded}
+                downloaded={downloaded}
               userData={userData}
               setUserData={setUserData}
               pageData={contactData}
@@ -208,6 +215,8 @@ const PreviewApp: React.FC = () => {
           path="/projects"
           element={
             <ProjectsP
+                setDownloaded={setDownloaded}
+                downloaded={downloaded}
               userData={userData}
               setUserData={setUserData}
               pageData={projectsPageData}
@@ -222,6 +231,8 @@ const PreviewApp: React.FC = () => {
           path="/about"
           element={
             <AboutP
+                setDownloaded={setDownloaded}
+                downloaded={downloaded}
               userData={userData}
               setUserData={setUserData}
               pageData={aboutData}

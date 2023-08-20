@@ -96,6 +96,7 @@ const MainApp: React.FC = () => {
     url: "",
     bool: false,
   });
+  const [downloaded, setDownloaded] = useState<{message: string, bool: boolean}>({message: '', bool: false});
 
   useEffect(() => {
     const authenticatedCheck = async () => {
@@ -105,7 +106,6 @@ const MainApp: React.FC = () => {
           localStorage.setItem("Id", fetchState.data.idToken);
         }
         const user = await userDetails();
-        console.log(user);
         if (user.status === "ERROR") {
           localStorage.removeItem("Id");
           localStorage.removeItem("Refresh");
@@ -131,7 +131,6 @@ const MainApp: React.FC = () => {
           if (homeFetch) {
             setHomeData(homeFetch);
           }
-          console.log(homeFetch);
           if (aboutFetch) {
             setAboutData(aboutFetch);
           }
@@ -139,7 +138,6 @@ const MainApp: React.FC = () => {
             setContactData(contactFetch);
           }
           if (projectsPageFetch) {
-            console.log(projectsPageFetch);
             setProjectsPageData(projectsPageFetch);
           }
           setUserData(user.data);
@@ -149,7 +147,6 @@ const MainApp: React.FC = () => {
           }
         }
       } else {
-        console.log(fetchState);
         const path = window.location.pathname;
         if (path !== "/login" && path !== "/register" && path !== "/") {
           localStorage.removeItem("role");
@@ -173,6 +170,8 @@ const MainApp: React.FC = () => {
           setDeploying={setDeploying}
           deployed={deployed}
           deploying={deploying}
+          downloaded={downloaded}
+          setDownloaded={setDownloaded}
         />
       );
     } else {
@@ -197,6 +196,8 @@ const MainApp: React.FC = () => {
           path="/dashboard"
           element={
             <Dashboard
+              downloaded={downloaded}
+              setDownloaded={setDownloaded}
               setUserData={setUserData}
               userData={userData}
               pageData={homeData}
@@ -212,6 +213,8 @@ const MainApp: React.FC = () => {
           path="/contact"
           element={
             <Contact
+              downloaded={downloaded}
+              setDownloaded={setDownloaded}
               pageData={contactData}
               userData={userData}
               setUserData={setUserData}
@@ -227,6 +230,8 @@ const MainApp: React.FC = () => {
           path="/about"
           element={
             <About
+              downloaded={downloaded}
+              setDownloaded={setDownloaded}
               userData={userData}
               pageData={aboutData}
               setUserData={setUserData}
@@ -242,6 +247,8 @@ const MainApp: React.FC = () => {
           path="/projects"
           element={
             <Projects
+              downloaded={downloaded}
+              setDownloaded={setDownloaded}
               userData={userData}
               pageData={projectsPageData}
               setPageData={setProjectsPageData}
