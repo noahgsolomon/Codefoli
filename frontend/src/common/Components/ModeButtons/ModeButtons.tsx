@@ -1,22 +1,25 @@
 import { useState, useEffect, FC } from "react";
 import { useSpring, animated } from "react-spring";
-import { deploy } from "api/deployapi.tsx";
+import {checkDeployed, deploy} from "api/deployapi.tsx";
 import UserData from "Type/UserData.tsx";
 import { FaDownload, FaPaperPlane } from "react-icons/fa";
 import { AiOutlineEye } from "react-icons/ai";
+import {download} from "api/downloadapi.tsx";
 
 const ModeButtons: FC<{
   deploying: boolean;
   setDeploying: (deploying: boolean) => void;
   setDeployed: (deployed: { url: string; bool: boolean }) => void;
+  setDownloaded: (downloaded: {bool: boolean, message: string}) => void;
   userData: UserData;
   setUserData: (userData: UserData) => void;
-}> = ({ deploying, setDeployed, setDeploying, userData, setUserData }) => {
+}> = ({ deploying, setDeploying, userData, setDownloaded, setUserData, setDeployed }) => {
   const [scrollingDown, setScrollingDown] = useState(false);
   const [codeModalOpen, setCodeModalOpen] = useState(false);
   const [prevScroll, setPrevScroll] = useState(window.scrollY);
   const thresholdShow = 200;
   const thresholdHide = 0;
+  const [activeDownload, setActiveDownload] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,19 +61,38 @@ const ModeButtons: FC<{
   const handleDeploy = async () => {
     setDeploying(true);
     await deploy();
-    // const deployFetch = await deploy();
-    // if (deployFetch.status === "OK") {
-    //   setDeployed({ url: deployFetch.data, bool: true });
-    //   setDeploying(false);
-    //   setUserData({ ...userData, website: deployFetch.data });
-    // }
+    let attempts = 0;
+    const maxAttempts = 40;
+    const interval = setInterval(async () => {
+      const deployed = await checkDeployed();
+      if (deployed.status === 'OK') {
+        clearInterval(interval);
+        setDeployed({ url: deployed.data, bool: true });
+        setDeploying(false);
+        setUserData({ ...userData, website: deployed.data });
+      } else {
+        attempts++;
+        if (attempts >= maxAttempts) {
+          clearInterval(interval);
+          console.log('Max attempts reached, website not yet deployed.');
+        }
+      }
+    }, 3000);
   };
 
   const handleDownloadReactCode = async () => {
-    console.log("react download code");
-  };
-  const handleDownloadCompiledCode = async () => {
-    console.log("compiled download code");
+    setCodeModalOpen(false);
+    setActiveDownload(true);
+    setDownloaded({bool: true, message: "Generating react code... est. time: 11 seconds"});
+    setTimeout(() => {
+      setDownloaded({bool: false, message: ""});
+    }, 3000);
+    await download();
+    setDownloaded({bool: true, message: "React code downloaded!"});
+    setActiveDownload(false);
+    setTimeout(() => {
+        setDownloaded({bool: false, message: ""});
+    }, 3000);
   };
 
   return (
@@ -84,7 +106,7 @@ const ModeButtons: FC<{
           >
             <div className="flex flex-col items-center justify-center">
               <div className="flex flex-wrap justify-center">
-                {!deploying ? (
+                {!deploying && !activeDownload ? (
                     <>
                       <a href="/preview">
                         <button className="m-2 flex h-12 w-40 items-center justify-center rounded-3xl border-2 border-black bg-green-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom">
@@ -93,11 +115,11 @@ const ModeButtons: FC<{
                         </button>
                       </a>
                       <button
-                          className="m-2 flex h-12 w-40 items-center justify-center rounded-3xl border-2 border-black bg-red-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
-                          onClick={() => setCodeModalOpen(true)}
-                      >
-                        Code <FaDownload fill={"white"} className="ml-2" />
-                      </button>
+                        className="m-2 flex h-12 w-40 items-center justify-center rounded-3xl border-2 border-black bg-red-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                        onClick={() => setCodeModalOpen(true)}
+                    >
+                      Code <FaDownload fill={"white"} className="ml-2" />
+                    </button>
                       <button
                           className="m-2 flex h-12 w-40 items-center justify-center rounded-3xl border-2 border-black bg-blue-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
                           onClick={async () => await handleDeploy()}
@@ -106,7 +128,7 @@ const ModeButtons: FC<{
                       </button>
                     </>
                 ) : (
-                    <div className="flex h-12 w-40 items-center justify-center rounded-3xl border-2 border-black bg-blue-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom">
+                    <div className={`flex h-12 w-40 items-center justify-center rounded-3xl border-2 border-black ${activeDownload ? 'bg-red-500' : 'bg-blue-500'} text-white transition-all hover:-translate-y-0.5 hover:shadow-custom`}>
                       <svg className="mr-2 h-5 w-5 animate-spin" viewBox="0 0 24 24">
                         <circle
                             className="opacity-25"
@@ -122,7 +144,7 @@ const ModeButtons: FC<{
                             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                         ></path>
                       </svg>
-                      Deploying...
+                      {activeDownload ? "Generating..." : "Deploying..."}
                     </div>
                 )}
               </div>
@@ -151,7 +173,7 @@ const ModeButtons: FC<{
                 onClick={handleDownloadReactCode}
             >
               <FaDownload fill={"white"} className="mr-2" />
-              Download React Source Code
+              Download your React Code
               <img
                   className={"ml-2"}
                   width="36"
@@ -165,32 +187,7 @@ const ModeButtons: FC<{
                   src="https://img.icons8.com/color/64/typescript.png"
                   alt="typescript"
               />
-            </button>
-            <button
-                className="flex w-full items-center justify-center rounded-3xl border-2 border-black bg-yellow-500 px-4 py-3 font-bold text-black transition-all hover:-translate-y-0.5 hover:shadow-custom"
-                onClick={handleDownloadCompiledCode}
-            >
-              <FaDownload fill={"black"} className="mr-2" />
-              Download Compiled Code
-              <img
-                  className={"ml-2"}
-                  width="36"
-                  height="36"
-                  src="https://img.icons8.com/color/64/javascript--v1.png"
-                  alt="javascript--v1"
-              />
-              <img
-                  width="36"
-                  height="36"
-                  src="https://img.icons8.com/fluency/64/css3.png"
-                  alt="css3"
-              />
-              <img
-                  width="36"
-                  height="36"
-                  src="https://img.icons8.com/color/64/html-5--v1.png"
-                  alt="html-5--v1"
-              />
+              <img width="36" height="36" src="https://img.icons8.com/color/64/tailwindcss.png" alt="tailwindcss"/>
             </button>
             <button
                 className="mt-4 flex w-full justify-center rounded-3xl border-2 border-black bg-red-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
