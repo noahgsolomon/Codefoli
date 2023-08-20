@@ -17,6 +17,8 @@ const Dashboard: FC<{
   deployed: { url: string; bool: boolean };
   setDeploying: (deploying: boolean) => void;
   setDeployed: (deployed: { url: string; bool: boolean }) => void;
+  downloaded: { bool: boolean, message: string };
+  setDownloaded: (downloaded: { bool: boolean, message: string }) => void;
 }> = ({
   pageData,
   userData,
@@ -26,6 +28,7 @@ const Dashboard: FC<{
   setDeploying,
   setDeployed,
   deploying,
+    downloaded, setDownloaded
 }) => {
   return (
     <>
@@ -37,6 +40,7 @@ const Dashboard: FC<{
         setPageData={setPageData}
       />
       <ModeButtons
+        setDownloaded={setDownloaded}
         deploying={deploying}
         setDeploying={setDeploying}
         setDeployed={setDeployed}
@@ -52,7 +56,8 @@ const Dashboard: FC<{
       {deployed.bool && (
         <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
       )}
-      <Footer />
+        {downloaded.bool && (<StatusBar message={downloaded.message} color={'bg-green-500'}/>)}
+        <Footer />
     </>
   );
 };

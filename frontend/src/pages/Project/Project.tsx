@@ -29,6 +29,8 @@ const Project: FC<{
   deployed: { url: string; bool: boolean };
   setDeploying: (deploying: boolean) => void;
   setDeployed: (deployed: { url: string; bool: boolean }) => void;
+  downloaded: { bool: boolean, message: string };
+  setDownloaded: (downloaded: { bool: boolean, message: string }) => void;
 }> = ({
   userData,
   setUserData,
@@ -36,6 +38,7 @@ const Project: FC<{
   deployed,
   setDeploying,
   setDeployed,
+  downloaded, setDownloaded
 }) => {
   const { slug } = useParams<{ slug: string }>();
 
@@ -580,6 +583,7 @@ const Project: FC<{
         </div>
       </main>
       <ModeButtons
+        setDownloaded={setDownloaded}
         deploying={deploying}
         setDeploying={setDeploying}
         setDeployed={setDeployed}
@@ -596,6 +600,7 @@ const Project: FC<{
         <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
       )}
       {imageLoading && (<StatusBar message={'uploading image!'} color={'bg-green-500'}/>)}
+      {downloaded.bool && (<StatusBar message={downloaded.message} color={'bg-green-500'}/>)}
       <Footer />
     </>
   );

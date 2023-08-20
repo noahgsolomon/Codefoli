@@ -17,6 +17,8 @@ const About: React.FC<{
   deployed: { url: string; bool: boolean };
   setDeploying: (deploying: boolean) => void;
   setDeployed: (deployed: { url: string; bool: boolean }) => void;
+  downloaded: { bool: boolean, message: string };
+  setDownloaded: (downloaded: { bool: boolean, message: string }) => void;
 }> = ({
   userData,
   pageData,
@@ -26,6 +28,8 @@ const About: React.FC<{
   setDeployed,
   deploying,
   setDeploying,
+    setDownloaded,
+    downloaded
 }) => {
   return (
     <>
@@ -43,6 +47,7 @@ const About: React.FC<{
         />
       </main>
       <ModeButtons
+        setDownloaded={setDownloaded}
         deploying={deploying}
         setDeploying={setDeploying}
         setDeployed={setDeployed}
@@ -58,6 +63,7 @@ const About: React.FC<{
       {deployed.bool && (
         <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
       )}
+      {downloaded.bool && (<StatusBar message={downloaded.message} color={'bg-green-500'}/>)}
       <Footer />
     </>
   );

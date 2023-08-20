@@ -19,6 +19,8 @@ const Projects: FC<{
   deployed: { url: string; bool: boolean };
   setDeploying: (deploying: boolean) => void;
   setDeployed: (deployed: { url: string; bool: boolean }) => void;
+  downloaded: { bool: boolean, message: string };
+  setDownloaded: (downloaded: { bool: boolean, message: string }) => void;
 }> = ({
   userData,
   setUserData,
@@ -28,6 +30,7 @@ const Projects: FC<{
   setDeployed,
   setDeploying,
   deployed,
+    downloaded, setDownloaded
 }) => {
   const [headerOneEdit, setHeaderOneEdit] = useState(false);
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
@@ -179,6 +182,7 @@ const Projects: FC<{
         </animated.div>
       </section>
       <ModeButtons
+        setDownloaded={setDownloaded}
         deploying={deploying}
         setDeploying={setDeploying}
         setDeployed={setDeployed}
@@ -195,6 +199,7 @@ const Projects: FC<{
         <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
       )}
       <Footer />
+      {downloaded.bool && (<StatusBar message={downloaded.message} color={'bg-green-500'}/>)}
       {projectError.visible && (<StatusBar message={projectError.message} color={'bg-red-500'} />)}
     </>
   );

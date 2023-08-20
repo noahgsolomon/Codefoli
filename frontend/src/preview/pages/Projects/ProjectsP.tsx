@@ -8,6 +8,8 @@ import StatusBar from "Components/StatusBar/StatusBar.tsx";
 import DeploymentBar from "Components/DeploymentBar/DeploymentBar.tsx";
 
 const ProjectsP: FC<{
+  setDownloaded: (downloaded: {bool: boolean, message: string}) => void;
+  downloaded: {bool: boolean, message: string};
   pageData: ProjectsPageData;
   userData: UserData;
   setUserData: (userData: UserData) => void;
@@ -23,6 +25,8 @@ const ProjectsP: FC<{
   deployed,
   setDeploying,
   deploying,
+    setDownloaded,
+    downloaded
 }) => {
   const headerAnimation = useSpring({
     from: { opacity: 0, transform: "translate3d(20px, 0, 0)" },
@@ -76,6 +80,7 @@ const ProjectsP: FC<{
         </animated.div>
       </section>
       <ModeButtonsP
+          setDownloaded={setDownloaded}
         deploying={deploying}
         setDeploying={setDeploying}
         setDeployed={setDeployed}
@@ -91,6 +96,7 @@ const ProjectsP: FC<{
       {deployed.bool && (
         <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
       )}
+      {downloaded.bool && (<StatusBar message={downloaded.message} color={'bg-green-500'}/>)}
     </>
   );
 };

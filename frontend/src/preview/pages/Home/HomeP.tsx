@@ -8,6 +8,8 @@ import StatusBar from "Components/StatusBar/StatusBar.tsx";
 import DeploymentBar from "Components/DeploymentBar/DeploymentBar.tsx";
 
 const HomeP: FC<{
+  setDownloaded: (downloaded: {bool: boolean, message: string}) => void;
+  downloaded: {bool: boolean, message: string};
   userData: UserData;
   setUserData: (userData: UserData) => void;
   pageData: HomeData;
@@ -23,12 +25,15 @@ const HomeP: FC<{
   deploying,
   setDeployed,
   setUserData,
+  setDownloaded,
+    downloaded
 }) => {
   return (
     <>
       <HomeMainP pageData={pageData} />
       <SectionsP userData={userData} pageData={pageData} />
       <ModeButtonsP
+          setDownloaded={setDownloaded}
         deploying={deploying}
         setDeploying={setDeploying}
         setDeployed={setDeployed}
@@ -44,6 +49,7 @@ const HomeP: FC<{
       {deployed.bool && (
         <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
       )}
+      {downloaded.bool && (<StatusBar message={downloaded.message} color={'bg-green-500'}/>)}
     </>
   );
 };

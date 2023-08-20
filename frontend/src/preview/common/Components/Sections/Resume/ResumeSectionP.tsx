@@ -15,7 +15,7 @@ const ResumeSectionP: FC<{
         </h2>
         <div>
           {userData.work
-            .sort((a, b) => a.orderId - b.orderId)
+            .sort((a, b) => a.order_id - b.order_id)
             .map((job, index) => (
               <JobCardP
                 key={job.id}
@@ -23,8 +23,8 @@ const ResumeSectionP: FC<{
                 companyTitle={job.company}
                 role={job.position}
                 description={job.description}
-                startDate={job.startDate}
-                endDate={job.endDate}
+                startDate={job.start_date}
+                endDate={job.end_date}
                 active={index === 0}
               />
             ))}

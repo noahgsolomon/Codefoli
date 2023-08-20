@@ -9,6 +9,8 @@ import StatusBar from "Components/StatusBar/StatusBar.tsx";
 import DeploymentBar from "Components/DeploymentBar/DeploymentBar.tsx";
 
 const ProjectP: FC<{
+  setDownloaded: (downloaded: {bool: boolean, message: string}) => void;
+  downloaded: {bool: boolean, message: string};
   userData: UserData;
   setUserData: (userData: UserData) => void;
   deploying: boolean;
@@ -22,6 +24,7 @@ const ProjectP: FC<{
   deployed,
   deploying,
   setDeploying,
+    downloaded, setDownloaded
 }) => {
   const { slug } = useParams<{ slug: string }>();
 
@@ -135,6 +138,7 @@ const ProjectP: FC<{
         </div>
       </main>
       <ModeButtonsP
+          setDownloaded={setDownloaded}
         deploying={deploying}
         setDeploying={setDeploying}
         setDeployed={setDeployed}
@@ -150,6 +154,7 @@ const ProjectP: FC<{
       {deployed.bool && (
         <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
       )}
+      {downloaded.bool && (<StatusBar message={downloaded.message} color={'bg-green-500'}/>)}
     </>
   );
 };
