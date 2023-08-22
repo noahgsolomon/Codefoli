@@ -43,7 +43,7 @@ const Register: React.FC = () => {
       style={registerAnimation}
       className="flex items-center justify-center bg-gray-50 p-4"
     >
-      <div className="mt-10 w-[700px] max-w-[80%] rounded-xl border-2 border-black bg-gray-100 p-10 text-center shadow-custom transition-all">
+      <div className="mt-10 w-[700px] max-w-[100%] rounded-xl border-2 border-black bg-gray-100 p-10 text-center shadow-custom transition-all">
         <h2 className="mb-12 text-3xl">
           <p>
             <span className="bg-blue-500 px-1 text-white">Register</span> for
@@ -133,7 +133,7 @@ const Register: React.FC = () => {
           </div>
         </form>
         <button
-          className={`mt-3 flex w-full cursor-pointer items-center justify-center rounded-2xl px-9 py-6 text-lg transition-all hover:opacity-90 ${
+          className={`mt-3 flex w-full cursor-pointer items-center justify-center rounded-2xl px-4 py-6 md:px-9 text-lg transition-all hover:opacity-90 ${
             fullName.length > 0 && email.length > 4 && password.length > 5
               ? "bg-blue-600 text-white"
               : "bg-gray-200 text-gray-500"
@@ -177,7 +177,7 @@ const Register: React.FC = () => {
         </button>
         <p className="my-1 text-gray-500">or</p>
         <button
-          className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl border-2  border-white bg-[#4285F4] px-9 py-6 text-lg text-white transition-all hover:-translate-y-1 hover:opacity-90"
+          className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl border-2  border-white bg-[#4285F4] px-4 py-6 md:px-9 text-lg text-white transition-all hover:-translate-y-1 hover:opacity-90"
           onClick={() => {
             window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=80810281685-eqf05nodee3q27j6p0ki7bgvm7qlq1jn.apps.googleusercontent.com&redirect_uri=${STAGE === 'prod' ? 'https://codefoli.com/processing' : 'http://localhost:5173/processing'}&scope=openid%20email%20profile&response_type=code`;
           }}
