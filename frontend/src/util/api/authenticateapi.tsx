@@ -1,3 +1,5 @@
+import {STAGE} from "../../config.ts";
+
 const login = async (email: string, password: string) => {
   const model = {
     username: email,
@@ -5,7 +7,7 @@ const login = async (email: string, password: string) => {
   };
   try {
     const response = await fetch(
-      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/login",
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/login`,
       {
         method: "POST",
         headers: {
@@ -38,7 +40,7 @@ const register = async (name: string, email: string, password: string) => {
   };
   try {
     const response = await fetch(
-      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/register",
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/register`,
       {
         method: "POST",
         headers: {
@@ -67,7 +69,7 @@ const register = async (name: string, email: string, password: string) => {
 const authenticated = async () => {
   try {
     const response = await fetch(
-      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/authenticate",
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/authenticate`,
       {
         method: "GET",
         headers: {

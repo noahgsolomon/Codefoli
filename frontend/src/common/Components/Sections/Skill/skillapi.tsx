@@ -1,3 +1,4 @@
+import {STAGE} from "../../../../config.ts";
 
 
 const changeSkill = async (skill: {
@@ -8,7 +9,7 @@ const changeSkill = async (skill: {
 }) => {
   try {
     const response = await fetch(
-      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/skill",
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/skill`,
       {
         method: "POST",
         headers: {

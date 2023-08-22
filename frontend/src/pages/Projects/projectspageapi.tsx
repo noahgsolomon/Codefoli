@@ -1,3 +1,5 @@
+import {STAGE} from "../../config.ts";
+
 const changeProjects = async (
     projects:
         ({text:string, id: string, type:'description' | 'title'}
@@ -7,7 +9,7 @@ const changeProjects = async (
             )) => {
   try {
     const response = await fetch(
-        "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/projects",
+        `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/projects`,
         {
           method: "POST",
           headers: {

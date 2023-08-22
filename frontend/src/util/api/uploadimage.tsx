@@ -1,6 +1,7 @@
 import React, {Dispatch, SetStateAction} from "react";
 import AnyPageData from "Type/AnyPageData.tsx";
 import UserData from "Type/UserData.tsx";
+import {STAGE} from "../../config.ts";
 const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, setImageLoading: Dispatch<SetStateAction<boolean>>, setPageData: Dispatch<SetStateAction<AnyPageData>> | Dispatch<SetStateAction<UserData>>, column: string, setShowError: Dispatch<SetStateAction<{visible: boolean, message: string}>>, table: string, link: string, location: ((prev: AnyPageData) => any) | null = null, id: string | null = null) => {
     if (!e.target.files) return;
     setImageLoading(true);
@@ -15,7 +16,7 @@ const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, setImage
 
         try {
             const response = await fetch(
-                `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/upload-image?table=${table}&link=${link}&image_column=${column}&id=${id || ''}`,
+                `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/upload-image?table=${table}&link=${link}&image_column=${column}&id=${id || ''}`,
                 {
                     method: "POST",
                     body: JSON.stringify({ file: base64File }),

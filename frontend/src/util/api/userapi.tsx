@@ -1,9 +1,10 @@
 import Work from "Type/Work.tsx";
+import {STAGE} from "../../config.ts";
 
 const userDetails = async () => {
   try {
     const response = await fetch(
-      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/user",
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/user`,
       {
         method: "GET",
         headers: {
@@ -55,7 +56,7 @@ const setupAccount = async (
   };
   try {
     const response = await fetch(
-      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/setup",
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/setup`,
       {
         method: "POST",
         headers: {
@@ -82,7 +83,7 @@ const setupAccount = async (
 const getHome = async () => {
   try {
     const homeData = await fetch(
-      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/home",
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/home`,
       {
         method: "GET",
         headers: {
@@ -107,7 +108,7 @@ const getHome = async () => {
 const getAbout = async () => {
   try {
     const aboutData = await fetch(
-      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/about",
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/about`,
       {
         method: "GET",
         headers: {
@@ -132,7 +133,7 @@ const getAbout = async () => {
 const getContact = async () => {
   try {
     const contactData = await fetch(
-      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/contact",
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/contact`,
       {
         method: "GET",
         headers: {
@@ -157,7 +158,7 @@ const getContact = async () => {
 const getProjectsPage = async () => {
   try {
     const response = await fetch(
-      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/projects-page",
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/projects-page`,
       {
         method: "GET",
         headers: {
@@ -196,7 +197,7 @@ type JobOperation =
 const jobOperations = async (operation: JobOperation) => {
   try {
     const response = await fetch(
-      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/resume/job",
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/resume/job`,
       {
         method: "POST",
         headers: {

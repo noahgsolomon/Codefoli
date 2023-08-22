@@ -1,5 +1,6 @@
 import PageType from "Type/Pages.tsx";
 import { SectionType } from "Type/Section.tsx";
+import {STAGE} from "../../../../config.ts"
 
 const addRemoveSection = async (
   page: PageType,
@@ -15,7 +16,7 @@ const addRemoveSection = async (
   };
   try {
     const updateFetch = await fetch(
-      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/add-remove-section`,
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/add-remove-section`,
       {
         method: "POST",
         headers: {

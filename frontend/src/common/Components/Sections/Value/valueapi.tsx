@@ -1,3 +1,4 @@
+import {STAGE} from "../../../../config.ts";
 
 
 const changeValue = async (value: {
@@ -7,7 +8,7 @@ const changeValue = async (value: {
 }) => {
   try {
     const response = await fetch(
-        "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/value",
+        `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/value`,
         {
           method: "POST",
           headers: {

@@ -1,3 +1,5 @@
+import {STAGE} from "../../config.ts";
+
 const updateText = async (type: string, text: string, table: string) => {
   const model = {
     type: type,
@@ -6,7 +8,7 @@ const updateText = async (type: string, text: string, table: string) => {
   };
   try {
     const updateFetch = await fetch(
-      "https://f60z27ge89.execute-api.us-east-1.amazonaws.com/prod/text",
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/text`,
       {
         method: "PUT",
         headers: {
