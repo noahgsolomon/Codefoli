@@ -48,11 +48,20 @@ const Home: FC = () => {
               </p>
             </animated.div>
             <animated.div style={imageAnimation}>
-              <img
-                className="mb-5 h-auto w-full transform rounded-lg border-2 border-black shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover md:max-w-screen-lg"
-                src={profileDisplayImg}
-                alt="Introductory visual"
-              />
+              <div className="relative">
+                <a href="https://walter.codefoli.com" target="_blank" rel="noopener noreferrer"
+                   className="text-blue-700 fixed top-1 left-1 md:top-10 text-xs md:text-sm md:left-10 p-3 z-50 bg-white shadow-custom rounded-full border-black border-2 cursor-pointer hover:text-blue-400 hover:shadow-customHover hover:-translate-y-0.5 transition-all">
+                  walter.codefoli.com
+                </a>
+                <a href="https://walter.codefoli.com" target="_blank" rel="noopener noreferrer">
+                  <img
+                      className="mb-5 cursor-pointer h-auto w-full transform rounded-lg border-2 border-black shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover md:max-w-screen-lg"
+                      src={profileDisplayImg}
+                      alt="Introductory visual"
+                  />
+                </a>
+              </div>
+
             </animated.div>
           </div>
         </animated.section>
