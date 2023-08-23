@@ -1,10 +1,17 @@
 import { Link } from "react-router-dom";
-import React, {Dispatch, SetStateAction, useEffect, useMemo, useRef, useState} from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useSpring, animated } from "react-spring";
 import HomeData from "Type/HomeData.tsx";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
 import { updateText } from "api/updatetext.tsx";
-import {handleFileUpload} from "api/uploadimage.tsx";
+import { handleFileUpload } from "api/uploadimage.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 
 const DashboardMain: React.FC<{
@@ -29,7 +36,6 @@ const DashboardMain: React.FC<{
     message: string;
   }>({ visible: false, message: "" });
   const [cacheBuster, setCacheBuster] = useState<string>("");
-
 
   useEffect(() => {
     if (headerOneEdit && headerOneTextareaRef.current) {
@@ -109,7 +115,7 @@ const DashboardMain: React.FC<{
         <StatusBar message={showError.message} color={"bg-red-400"} />
       )}
       {imageLoading && (
-          <StatusBar message={'Uploading image!'} color={"bg-green-500"} />
+        <StatusBar message={"Uploading image!"} color={"bg-green-500"} />
       )}
       <div className="flex flex-col lg:flex-row xl:mx-auto xl:justify-center">
         <animated.div style={headerAnimation}>
@@ -206,13 +212,28 @@ const DashboardMain: React.FC<{
               className="hidden"
               accept=".jpg,.png"
               onChange={async (e) => {
-                await handleFileUpload(e, setImageLoading, setPageData as Dispatch<SetStateAction<AnyPageData>>, 'profile_image', setShowError, setCacheBuster, 'home', 'profile-image');
+                await handleFileUpload(
+                  e,
+                  setImageLoading,
+                  setPageData as Dispatch<SetStateAction<AnyPageData>>,
+                  "profile_image",
+                  setShowError,
+                  setCacheBuster,
+                  "home",
+                  "profile-image"
+                );
               }}
             />
             <div className="h-full w-full overflow-hidden rounded-3xl shadow-customHover">
               <img
                 className={`h-full w-full object-cover`}
-                src={pageData.profile_image + '?date=' + date + '&cache=' + cacheBuster}
+                src={
+                  pageData.profile_image +
+                  "?date=" +
+                  date +
+                  "&cache=" +
+                  cacheBuster
+                }
                 alt="pfp"
               ></img>
             </div>

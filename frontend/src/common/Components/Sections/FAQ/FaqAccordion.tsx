@@ -1,7 +1,5 @@
 import { useState, useRef, FC, SetStateAction, Dispatch } from "react";
-import {
-  changeFaq
-} from "Components/Sections/FAQ/faqapi.tsx";
+import { changeFaq } from "Components/Sections/FAQ/faqapi.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import { FAQType } from "Type/Section.tsx";
 
@@ -38,7 +36,11 @@ const FaqAccordion: FC<AccordionProps> = ({
   };
 
   const handleTitleSubmit = async () => {
-    const updateTitle = await changeFaq({id:id, type:'title', text:titleEditValue});
+    const updateTitle = await changeFaq({
+      id: id,
+      type: "title",
+      text: titleEditValue,
+    });
     if (updateTitle.status === "OK") {
       setPageData((prev) => ({
         ...prev,
@@ -63,7 +65,11 @@ const FaqAccordion: FC<AccordionProps> = ({
   };
 
   const handleContentSubmit = async () => {
-    const updateContent = await changeFaq({id:id, type:'content', text: contentEditValue});
+    const updateContent = await changeFaq({
+      id: id,
+      type: "content",
+      text: contentEditValue,
+    });
     if (updateContent.status === "OK") {
       setPageData((prev) => ({
         ...prev,
@@ -88,7 +94,11 @@ const FaqAccordion: FC<AccordionProps> = ({
   };
 
   const handleRemoveFaq = async () => {
-    const removeFaqFetch = await changeFaq({id: id, operation:'remove', type:'faq'});
+    const removeFaqFetch = await changeFaq({
+      id: id,
+      operation: "remove",
+      type: "faq",
+    });
     if (removeFaqFetch.status === "OK") {
       setPageData((prev) => ({
         ...prev,

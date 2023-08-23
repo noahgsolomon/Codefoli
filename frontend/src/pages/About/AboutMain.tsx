@@ -1,4 +1,10 @@
-import React, {Dispatch, SetStateAction, useMemo, useRef, useState} from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import AboutData from "Type/AboutData.tsx";
 import { Link } from "react-router-dom";
 import Marquee from "Components/Marquee/Marquee.tsx";
@@ -6,7 +12,7 @@ import UserData from "Type/UserData.tsx";
 import { useSpring, animated } from "react-spring";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
 import { updateText } from "api/updatetext.tsx";
-import {handleFileUpload} from "api/uploadimage.tsx";
+import { handleFileUpload } from "api/uploadimage.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 
 const AboutMain: React.FC<{
@@ -22,8 +28,8 @@ const AboutMain: React.FC<{
   const iconThreeFileInput = useRef<HTMLInputElement | null>(null);
   const date = useMemo(() => Date.now(), []);
   const [cacheBusterOne, setCacheBusterOne] = useState<string>("");
-    const [cacheBusterTwo, setCacheBusterTwo] = useState<string>("");
-    const [cacheBusterThree, setCacheBusterThree] = useState<string>("");
+  const [cacheBusterTwo, setCacheBusterTwo] = useState<string>("");
+  const [cacheBusterThree, setCacheBusterThree] = useState<string>("");
 
   const [headerOneEdit, setHeaderOneEdit] = useState(false);
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
@@ -249,21 +255,27 @@ const AboutMain: React.FC<{
               accept=".jpg,.png"
               onChange={async (e) => {
                 await handleFileUpload(
-                    e,
-                    setIconOneLoading,
-                    setPageData as Dispatch<SetStateAction<AnyPageData>>,
-                    "icon_one",
-                    setShowError,
-                    setCacheBusterOne,
-                    'about',
-                    "about-icon-one-upload",
+                  e,
+                  setIconOneLoading,
+                  setPageData as Dispatch<SetStateAction<AnyPageData>>,
+                  "icon_one",
+                  setShowError,
+                  setCacheBusterOne,
+                  "about",
+                  "about-icon-one-upload"
                 );
               }}
             />
             <div className="h-full w-full overflow-hidden rounded-full">
               <img
                 className="h-full w-full object-cover"
-                src={pageData.icon_one + '?date=' + date + '&cache=' + cacheBusterOne}
+                src={
+                  pageData.icon_one +
+                  "?date=" +
+                  date +
+                  "&cache=" +
+                  cacheBusterOne
+                }
                 alt="portfolio"
               />
             </div>
@@ -295,21 +307,27 @@ const AboutMain: React.FC<{
               accept=".jpg,.png"
               onChange={async (e) => {
                 await handleFileUpload(
-                    e,
-                    setIconTwoLoading,
-                    setPageData as Dispatch<SetStateAction<AnyPageData>>,
-                    "icon_two",
-                    setShowError,
-                    setCacheBusterTwo,
-                    'about',
-                    "about-icon-two-upload",
+                  e,
+                  setIconTwoLoading,
+                  setPageData as Dispatch<SetStateAction<AnyPageData>>,
+                  "icon_two",
+                  setShowError,
+                  setCacheBusterTwo,
+                  "about",
+                  "about-icon-two-upload"
                 );
               }}
             />
             <div className="h-full w-full overflow-hidden rounded-full">
               <img
                 className="h-full w-full object-cover"
-                src={pageData.icon_two+ '?date=' + date + '&cache=' + cacheBusterTwo}
+                src={
+                  pageData.icon_two +
+                  "?date=" +
+                  date +
+                  "&cache=" +
+                  cacheBusterTwo
+                }
                 alt="portfolio"
               />
             </div>
@@ -373,21 +391,27 @@ const AboutMain: React.FC<{
                 accept=".jpg,.png"
                 onChange={async (e) => {
                   await handleFileUpload(
-                      e,
+                    e,
                     setIconThreeLoading,
                     setPageData as Dispatch<SetStateAction<AnyPageData>>,
-                      "icon_three",
+                    "icon_three",
                     setShowError,
                     setCacheBusterThree,
-                    'about',
-                    "about-icon-three-upload",
+                    "about",
+                    "about-icon-three-upload"
                   );
                 }}
               />
               <div className="h-full w-full overflow-hidden rounded-3xl border-2 border-black">
                 <img
                   className="h-full w-full object-cover"
-                  src={pageData.icon_three + '?date=' + date + '&cache=' + cacheBusterThree}
+                  src={
+                    pageData.icon_three +
+                    "?date=" +
+                    date +
+                    "&cache=" +
+                    cacheBusterThree
+                  }
                   alt="portfolio"
                 />
               </div>
@@ -441,7 +465,7 @@ const AboutMain: React.FC<{
         })}
       />
       {(iconOneLoading || iconTwoLoading || iconThreeLoading) && (
-          <StatusBar message={'uploading image!'} color={'bg-green-500'} />
+        <StatusBar message={"uploading image!"} color={"bg-green-500"} />
       )}
     </>
   );

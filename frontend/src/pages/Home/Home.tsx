@@ -37,10 +37,7 @@ const Home: FC = () => {
             <animated.div style={headerAnimation}>
               <h1 className="mb-5 text-center text-4xl font-bold md:text-5xl">
                 Welcome to{" "}
-                <span className=" bg-red-500 px-1 text-white">
-                  Codefoli
-                </span>
-                !
+                <span className=" bg-red-500 px-1 text-white">Codefoli</span>!
               </h1>
               <p className="text-bold mb-2 text-center text-2xl">
                 A platform dedicated to helping programmers create stunning
@@ -49,19 +46,26 @@ const Home: FC = () => {
             </animated.div>
             <animated.div style={imageAnimation}>
               <div className="relative">
-                <a href="https://walter.codefoli.com" target="_blank" rel="noopener noreferrer"
-                   className="text-blue-700 fixed top-1 left-1 md:top-10 text-xs md:text-sm md:left-10 p-3 z-50 bg-white shadow-custom rounded-full border-black border-2 cursor-pointer hover:text-blue-400 hover:shadow-customHover hover:-translate-y-0.5 transition-all">
+                <a
+                  href="https://walter.codefoli.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="fixed left-1 top-1 z-50 cursor-pointer rounded-full border-2 border-black bg-white p-3 text-xs text-blue-700 shadow-custom transition-all hover:-translate-y-0.5 hover:text-blue-400 hover:shadow-customHover md:left-10 md:top-10 md:text-sm"
+                >
                   walter.codefoli.com
                 </a>
-                <a href="https://walter.codefoli.com" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://walter.codefoli.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <img
-                      className="mb-5 cursor-pointer h-auto w-full transform rounded-lg border-2 border-black shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover md:max-w-screen-lg"
-                      src={profileDisplayImg}
-                      alt="Introductory visual"
+                    className="mb-5 h-auto w-full transform cursor-pointer rounded-lg border-2 border-black shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover md:max-w-screen-lg"
+                    src={profileDisplayImg}
+                    alt="Introductory visual"
                   />
                 </a>
               </div>
-
             </animated.div>
           </div>
         </animated.section>

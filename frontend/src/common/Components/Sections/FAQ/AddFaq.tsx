@@ -1,13 +1,18 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import AnyPageData from "Type/AnyPageData.tsx";
-import {changeFaq} from "./faqapi.tsx";
+import { changeFaq } from "./faqapi.tsx";
 import { FAQType } from "Type/Section.tsx";
 
 const addFaq: FC<{
   setPageData: Dispatch<SetStateAction<AnyPageData>>;
 }> = ({ setPageData }) => {
   const handleAddFaq = async () => {
-    const addFaqFetch = await changeFaq({title:"Question", content:"Answer", operation:'add', type:'faq'});
+    const addFaqFetch = await changeFaq({
+      title: "Question",
+      content: "Answer",
+      operation: "add",
+      type: "faq",
+    });
     if (addFaqFetch.status === "OK") {
       setPageData((prev) => {
         const updatedSections = prev.sections.map((section) => {

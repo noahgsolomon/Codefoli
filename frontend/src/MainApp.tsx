@@ -96,13 +96,16 @@ const MainApp: React.FC = () => {
     url: "",
     bool: false,
   });
-  const [downloaded, setDownloaded] = useState<{message: string, bool: boolean}>({message: '', bool: false});
+  const [downloaded, setDownloaded] = useState<{
+    message: string;
+    bool: boolean;
+  }>({ message: "", bool: false });
 
   useEffect(() => {
     const authenticatedCheck = async () => {
       const fetchState = await authenticated();
       if (fetchState.status === "OK") {
-        if (fetchState.data !== null){
+        if (fetchState.data !== null) {
           localStorage.setItem("Id", fetchState.data.idToken);
         }
         const user = await userDetails();

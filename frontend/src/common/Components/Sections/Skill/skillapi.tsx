@@ -1,5 +1,4 @@
-import {STAGE} from "../../../../config.ts";
-
+import { STAGE } from "../../../../config.ts";
 
 const changeSkill = async (skill: {
   type: "service" | "language";
@@ -32,6 +31,4 @@ const changeSkill = async (skill: {
   }
 };
 
-export {
-  changeSkill,
-};
+export { changeSkill };

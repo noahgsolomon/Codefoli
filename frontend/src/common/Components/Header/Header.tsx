@@ -49,12 +49,12 @@ const Header: FC<{ authenticated: boolean }> = ({ authenticated }) => {
                 >
                   Projects
                 </Link>
-              <Link
-                to="/contact"
-                className="mx-4 py-1 text-sm no-underline transition-all hover:text-blue-500 sm:text-xl sm:font-extrabold md:mx-10"
-              >
-                Contact
-              </Link>
+                <Link
+                  to="/contact"
+                  className="mx-4 py-1 text-sm no-underline transition-all hover:text-blue-500 sm:text-xl sm:font-extrabold md:mx-10"
+                >
+                  Contact
+                </Link>
               </div>
             </div>
           </>

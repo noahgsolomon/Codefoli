@@ -1,17 +1,20 @@
-import {STAGE} from "../../config.ts";
+import { STAGE } from "../../config.ts";
 
 const deploy = async () => {
   try {
-    const response = await fetch(`https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/deploy`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem("Id")
-      },
-    });
+    const response = await fetch(
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/deploy`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("Id"),
+        },
+      }
+    );
 
     const responseJson = await response.json();
-    console.log(responseJson)
+    console.log(responseJson);
     if (responseJson.status === "OK") {
       return responseJson;
     } else {
@@ -25,13 +28,16 @@ const deploy = async () => {
 
 const checkDeployed = async () => {
   try {
-    const response = await fetch(`https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/deployed`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem("Id")
-      },
-    });
+    const response = await fetch(
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/deployed`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("Id"),
+        },
+      }
+    );
 
     const responseJson = await response.json();
     if (responseJson.status === "OK") {
@@ -43,6 +49,6 @@ const checkDeployed = async () => {
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 export { deploy, checkDeployed };

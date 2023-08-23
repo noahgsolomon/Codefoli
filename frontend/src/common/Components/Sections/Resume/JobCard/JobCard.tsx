@@ -1,15 +1,8 @@
-import {
-  Dispatch,
-  FC,
-  SetStateAction,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { Dispatch, FC, SetStateAction, useMemo, useRef, useState } from "react";
 import UserData from "Type/UserData.tsx";
 import { jobOperations } from "api/userapi.tsx";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
-import {handleFileUpload} from "api/uploadimage.tsx";
+import { handleFileUpload } from "api/uploadimage.tsx";
 const JobCard: FC<{
   companyTitle: string;
   role: string;
@@ -386,28 +379,30 @@ const JobCard: FC<{
             accept=".jpg,.png"
             onChange={async (e) => {
               await handleFileUpload(
-                  e,
+                e,
                 setImageLoading,
                 setUserData,
-                'image',
+                "image",
                 setShowError,
                 setCacheBuster,
-                'work',
+                "work",
                 `job-image-upload-${id}`,
-                  (prev: any) => {
-                    const workToUpdate = prev.work.find((workItem: any) => workItem.id === id);
-                    if (workToUpdate) {
-                      workToUpdate.image = (prev as any).image;
-                    }
-                    return prev;
-                  },
-                  id
+                (prev: any) => {
+                  const workToUpdate = prev.work.find(
+                    (workItem: any) => workItem.id === id
+                  );
+                  if (workToUpdate) {
+                    workToUpdate.image = (prev as any).image;
+                  }
+                  return prev;
+                },
+                id
               );
             }}
           />
           <img
             className={"h-full w-full rounded-full object-cover"}
-            src={image + "?date=" + date + '&cache=' + cacheBuster}
+            src={image + "?date=" + date + "&cache=" + cacheBuster}
             alt={"job photo"}
           />
           <div

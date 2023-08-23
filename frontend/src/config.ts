@@ -1,1 +1,1 @@
-export const STAGE: 'dev' | 'prod' = 'dev';
+export const STAGE: "dev" | "prod" = "dev";

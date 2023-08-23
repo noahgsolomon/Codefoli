@@ -19,8 +19,8 @@ const Projects: FC<{
   deployed: { url: string; bool: boolean };
   setDeploying: (deploying: boolean) => void;
   setDeployed: (deployed: { url: string; bool: boolean }) => void;
-  downloaded: { bool: boolean, message: string };
-  setDownloaded: (downloaded: { bool: boolean, message: string }) => void;
+  downloaded: { bool: boolean; message: string };
+  setDownloaded: (downloaded: { bool: boolean; message: string }) => void;
 }> = ({
   userData,
   setUserData,
@@ -30,7 +30,8 @@ const Projects: FC<{
   setDeployed,
   setDeploying,
   deployed,
-    downloaded, setDownloaded
+  downloaded,
+  setDownloaded,
 }) => {
   const [headerOneEdit, setHeaderOneEdit] = useState(false);
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
@@ -42,7 +43,10 @@ const Projects: FC<{
     pageData.description_one
   );
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const [projectError, setProjectError] = useState<{visible: boolean, message:string}>({visible:false, message:''});
+  const [projectError, setProjectError] = useState<{
+    visible: boolean;
+    message: string;
+  }>({ visible: false, message: "" });
 
   const headerAnimation = useSpring({
     from: { opacity: 0, transform: "translate3d(20px, 0, 0)" },
@@ -176,7 +180,10 @@ const Projects: FC<{
               }
             )}
             {userData.projects.length < 8 && (
-              <AddProjectCard setUserData={setUserData} setProjectError={setProjectError} />
+              <AddProjectCard
+                setUserData={setUserData}
+                setProjectError={setProjectError}
+              />
             )}
           </div>
         </animated.div>
@@ -199,8 +206,12 @@ const Projects: FC<{
         <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
       )}
       <Footer />
-      {downloaded.bool && (<StatusBar message={downloaded.message} color={'bg-green-500'}/>)}
-      {projectError.visible && (<StatusBar message={projectError.message} color={'bg-red-500'} />)}
+      {downloaded.bool && (
+        <StatusBar message={downloaded.message} color={"bg-green-500"} />
+      )}
+      {projectError.visible && (
+        <StatusBar message={projectError.message} color={"bg-red-500"} />
+      )}
     </>
   );
 };

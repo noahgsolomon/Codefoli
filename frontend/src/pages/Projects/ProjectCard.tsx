@@ -1,19 +1,10 @@
-import {
-  Dispatch,
-  FC,
-  SetStateAction,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { Dispatch, FC, SetStateAction, useMemo, useRef, useState } from "react";
 import UserData from "Type/UserData.tsx";
-import {
-  changeProjects,
-} from "./projectspageapi.tsx";
+import { changeProjects } from "./projectspageapi.tsx";
 import ArrowRight from "assets/icons/arrow-right.svg";
 import { Link } from "react-router-dom";
 import { COLORS } from "../../util/colors.ts";
-import {handleFileUpload} from "api/uploadimage.tsx";
+import { handleFileUpload } from "api/uploadimage.tsx";
 
 const ProjectCard: FC<{
   title: string;
@@ -23,7 +14,9 @@ const ProjectCard: FC<{
   id: string;
   languages: string[];
   slug: string;
-  setProjectError: Dispatch<SetStateAction<{visible: boolean, message:string}>>;
+  setProjectError: Dispatch<
+    SetStateAction<{ visible: boolean; message: string }>
+  >;
 }> = ({
   title,
   description,
@@ -32,7 +25,7 @@ const ProjectCard: FC<{
   languages,
   id,
   slug,
-    setProjectError
+  setProjectError,
 }) => {
   const [hovered, setHovered] = useState(false);
   const [removeHover, setRemoveHover] = useState(false);
@@ -53,7 +46,11 @@ const ProjectCard: FC<{
   const [imageLoading, setImageLoading] = useState(false);
   const [cacheBuster, setCacheBuster] = useState("");
   const handleRemoveProject = async () => {
-    const removeProjectFetch = await changeProjects({id: id, operation:'remove', type:'project'});
+    const removeProjectFetch = await changeProjects({
+      id: id,
+      operation: "remove",
+      type: "project",
+    });
     if (removeProjectFetch.status === "OK") {
       setUserData((prev) => ({
         ...prev,
@@ -64,26 +61,30 @@ const ProjectCard: FC<{
   };
 
   const handleTitleSubmit = async () => {
-    if (titleEditValue.length < 1){
+    if (titleEditValue.length < 1) {
       setTitleEdit(false);
       setTitleEditValue(titleValue);
       return;
     }
-    const updateTitleFetch = await changeProjects({text:titleEditValue, id: id, type:'title'});
+    const updateTitleFetch = await changeProjects({
+      text: titleEditValue,
+      id: id,
+      type: "title",
+    });
     console.log(updateTitleFetch);
     if (updateTitleFetch.status === "OK") {
       setUserData((prev) => ({
         ...prev,
         slugs: prev.slugs.map((slugObj) =>
-            slugObj.slug === slug
-                ? { ...slugObj, slug: updateTitleFetch.data }
-                : slugObj
+          slugObj.slug === slug
+            ? { ...slugObj, slug: updateTitleFetch.data }
+            : slugObj
         ),
         projects: prev.projects.map((project) =>
           project.id === id
             ? { ...project, name: titleEditValue, slug: updateTitleFetch.data }
             : project
-        )
+        ),
       }));
       setTitleValue(titleEditValue);
       setTitleEdit(false);
@@ -96,12 +97,16 @@ const ProjectCard: FC<{
   };
 
   const handleDescriptionSubmit = async () => {
-    if (descriptionEditValue.length < 1){
-        setDescriptionEdit(false);
-        setDescriptionEditValue(descriptionValue);
-        return;
+    if (descriptionEditValue.length < 1) {
+      setDescriptionEdit(false);
+      setDescriptionEditValue(descriptionValue);
+      return;
     }
-    const updateDescriptionFetch = await changeProjects({text:descriptionEditValue, id: id, type:'description'});
+    const updateDescriptionFetch = await changeProjects({
+      text: descriptionEditValue,
+      id: id,
+      type: "description",
+    });
     if (updateDescriptionFetch.status === "OK") {
       setUserData((prev) => ({
         ...prev,
@@ -117,7 +122,12 @@ const ProjectCard: FC<{
   };
 
   const handleRemoveLanguage = async (language: string) => {
-    const updateLanguageFetch = await changeProjects({operation:'remove', language: language, type:'language', id:id});
+    const updateLanguageFetch = await changeProjects({
+      operation: "remove",
+      language: language,
+      type: "language",
+      id: id,
+    });
     if (updateLanguageFetch.status === "OK") {
       setUserData((prev) => ({
         ...prev,
@@ -143,7 +153,12 @@ const ProjectCard: FC<{
       setAddProjectLanguageState(false);
       return;
     }
-    const updateLanguageFetch = await changeProjects({operation:'add', language: language, type:'language', id:id});
+    const updateLanguageFetch = await changeProjects({
+      operation: "add",
+      language: language,
+      type: "language",
+      id: id,
+    });
     if (updateLanguageFetch.status === "OK") {
       setUserData((prev) => ({
         ...prev,
@@ -198,27 +213,29 @@ const ProjectCard: FC<{
           accept=".jpg,.png"
           onChange={async (e) => {
             await handleFileUpload(
-                e,
+              e,
               setImageLoading,
               setUserData,
-              'image',
+              "image",
               setProjectError,
-                setCacheBuster,
-                'projects',
-              'projects-image-' + id,
-                (prev: any) => {
-                  const projectToUpdate = prev.projects.find((project: any) => project.id === id);
-                  if (projectToUpdate) {
-                    projectToUpdate.image = (prev as any).image;
-                  }
-                  return prev;
-                },
-                id
+              setCacheBuster,
+              "projects",
+              "projects-image-" + id,
+              (prev: any) => {
+                const projectToUpdate = prev.projects.find(
+                  (project: any) => project.id === id
+                );
+                if (projectToUpdate) {
+                  projectToUpdate.image = (prev as any).image;
+                }
+                return prev;
+              },
+              id
             );
           }}
         />
         <img
-          src={image + "?date=" + date + '&cache=' + cacheBuster}
+          src={image + "?date=" + date + "&cache=" + cacheBuster}
           alt=""
           className={`inline-block h-full w-full transform object-cover transition-all ease-in-out ${
             hovered ? "scale-105" : ""

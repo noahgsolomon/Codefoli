@@ -1,4 +1,4 @@
-import {STAGE} from "../../config.ts";
+import { STAGE } from "../../config.ts";
 
 const login = async (email: string, password: string) => {
   const model = {

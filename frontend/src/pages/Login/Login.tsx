@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { login } from "api/authenticateapi.tsx";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
 import { useSpring, animated } from "react-spring";
-import {STAGE} from "../../config.ts";
+import { STAGE } from "../../config.ts";
 
 const Login: React.FC = () => {
   const [showFields, setShowFields] = useState(false);
@@ -153,22 +153,26 @@ const Login: React.FC = () => {
           <>
             <div className="mt-5 flex flex-col items-center">
               <button
-                className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl border-2  border-white bg-[#4285F4] px-4 py-6 md:px-9 text-lg text-white transition-all hover:-translate-y-1 hover:opacity-90"
+                className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl border-2  border-white bg-[#4285F4] px-4 py-6 text-lg text-white transition-all hover:-translate-y-1 hover:opacity-90 md:px-9"
                 onClick={() => {
-                  window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=80810281685-eqf05nodee3q27j6p0ki7bgvm7qlq1jn.apps.googleusercontent.com&redirect_uri=${STAGE === 'prod' ? 'https://codefoli.com/processing' : 'http://localhost:5173/processing'}&scope=openid%20email%20profile&response_type=code`;
+                  window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=80810281685-eqf05nodee3q27j6p0ki7bgvm7qlq1jn.apps.googleusercontent.com&redirect_uri=${
+                    STAGE === "prod"
+                      ? "https://codefoli.com/processing"
+                      : "http://localhost:5173/processing"
+                  }&scope=openid%20email%20profile&response_type=code`;
                 }}
               >
                 Continue with Google
                 <img
-                    width={'48'}
-                    height={'48'}
-                    className="ml-2 h-auto w-8 rounded-2xl bg-white p-1"
-                    src={'https://img.icons8.com/stickers/100/google-logo.png'}
-                    alt={"google icon"}
+                  width={"48"}
+                  height={"48"}
+                  className="ml-2 h-auto w-8 rounded-2xl bg-white p-1"
+                  src={"https://img.icons8.com/stickers/100/google-logo.png"}
+                  alt={"google icon"}
                 />
               </button>
               <button
-                className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl border-2 border-black px-4 py-4 md:px-9 md:py-6 text-lg text-black transition-all hover:-translate-y-1 hover:opacity-90"
+                className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl border-2 border-black px-4 py-4 text-lg text-black transition-all hover:-translate-y-1 hover:opacity-90 md:px-9 md:py-6"
                 onClick={() => setShowFields(true)}
               >
                 Continue with Email and Password

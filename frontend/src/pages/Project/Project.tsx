@@ -12,15 +12,13 @@ import {
 } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import UserData from "Type/UserData.tsx";
-import {
-  changeProject
-} from "./projectapi.tsx";
+import { changeProject } from "./projectapi.tsx";
 import { useSpring, animated } from "react-spring";
 import ModeButtons from "Components/ModeButtons/ModeButtons.tsx";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
 import DeploymentBar from "Components/DeploymentBar/DeploymentBar.tsx";
-import {changeProjects} from "../Projects/projectspageapi.tsx";
-import {handleFileUpload} from "api/uploadimage.tsx";
+import { changeProjects } from "../Projects/projectspageapi.tsx";
+import { handleFileUpload } from "api/uploadimage.tsx";
 
 const Project: FC<{
   userData: UserData;
@@ -29,8 +27,8 @@ const Project: FC<{
   deployed: { url: string; bool: boolean };
   setDeploying: (deploying: boolean) => void;
   setDeployed: (deployed: { url: string; bool: boolean }) => void;
-  downloaded: { bool: boolean, message: string };
-  setDownloaded: (downloaded: { bool: boolean, message: string }) => void;
+  downloaded: { bool: boolean; message: string };
+  setDownloaded: (downloaded: { bool: boolean; message: string }) => void;
 }> = ({
   userData,
   setUserData,
@@ -38,7 +36,8 @@ const Project: FC<{
   deployed,
   setDeploying,
   setDeployed,
-  downloaded, setDownloaded
+  downloaded,
+  setDownloaded,
 }) => {
   const { slug } = useParams<{ slug: string }>();
 
@@ -119,7 +118,11 @@ const Project: FC<{
   }
 
   const handleHeaderSubmit = async () => {
-    const updateHeader = await changeProject({text:headerEditValue, id: projectData.id, type:'header'});
+    const updateHeader = await changeProject({
+      text: headerEditValue,
+      id: projectData.id,
+      type: "header",
+    });
     if (updateHeader) {
       const updatedSlugs = userData.slugs.map((s) =>
         s.slug === slug ? { ...s, header: headerEditValue } : s
@@ -145,12 +148,15 @@ const Project: FC<{
       setAddProjectLanguageState(false);
       return;
     }
-    const updateLanguages = await changeProjects({operation:'add', language: language, type:'language', id:projectData.id});
+    const updateLanguages = await changeProjects({
+      operation: "add",
+      language: language,
+      type: "language",
+      id: projectData.id,
+    });
     if (updateLanguages) {
       const updatedProjects = userData.projects.map((p) =>
-        p.slug === slug
-          ? { ...p, languages: [...p.languages, language] }
-          : p
+        p.slug === slug ? { ...p, languages: [...p.languages, language] } : p
       );
 
       setUserData((prev) => ({
@@ -165,7 +171,12 @@ const Project: FC<{
   };
 
   const handleRemoveLanguage = async (language: string) => {
-    const updateLanguages = await changeProjects({operation:'remove', language: language, type:'language', id:projectData.id});
+    const updateLanguages = await changeProjects({
+      operation: "remove",
+      language: language,
+      type: "language",
+      id: projectData.id,
+    });
     if (updateLanguages.status === "OK") {
       const updatedProjects = userData.projects.map((p) =>
         p.slug === slug
@@ -182,7 +193,11 @@ const Project: FC<{
   };
 
   const handleDescriptionSubmit = async () => {
-    const updateDescription = await changeProject({text:descriptionEditValue, id: projectData.id, type:'description'});
+    const updateDescription = await changeProject({
+      text: descriptionEditValue,
+      id: projectData.id,
+      type: "description",
+    });
     if (updateDescription) {
       const updatedSlugs = userData.slugs.map((s) =>
         s.slug === slug ? { ...s, description: descriptionEditValue } : s
@@ -199,7 +214,11 @@ const Project: FC<{
   };
 
   const handleAboutSubmit = async () => {
-    const updateAbout = await changeProject({text:aboutEditValue, id: projectData.id, type:'about'});
+    const updateAbout = await changeProject({
+      text: aboutEditValue,
+      id: projectData.id,
+      type: "about",
+    });
     if (updateAbout) {
       const updatedSlugs = userData.slugs.map((s) =>
         s.slug === slug ? { ...s, about: aboutEditValue } : s
@@ -216,7 +235,11 @@ const Project: FC<{
   };
 
   const handleOverviewSubmit = async () => {
-    const updateOverview = await changeProject({text:overviewEditValue, id: projectData.id, type:'overview'});
+    const updateOverview = await changeProject({
+      text: overviewEditValue,
+      id: projectData.id,
+      type: "overview",
+    });
     if (updateOverview) {
       const updatedSlugs = userData.slugs.map((s) =>
         s.slug === slug ? { ...s, overview: overviewEditValue } : s
@@ -233,7 +256,11 @@ const Project: FC<{
   };
 
   const handlePlatformsSubmit = async () => {
-    const updatePlatforms = await changeProject({text:platformsEditValue, id: projectData.id, type:'platforms'});
+    const updatePlatforms = await changeProject({
+      text: platformsEditValue,
+      id: projectData.id,
+      type: "platforms",
+    });
     if (updatePlatforms.status === "OK") {
       const updatedSlugs = userData.slugs.map((s) =>
         s.slug === slug ? { ...s, platforms: platformsEditValue } : s
@@ -250,7 +277,11 @@ const Project: FC<{
   };
 
   const handleLinkSubmit = async () => {
-    const updateLink = await changeProject({text:linkValue, id: projectData.id, type:'link'});
+    const updateLink = await changeProject({
+      text: linkValue,
+      id: projectData.id,
+      type: "link",
+    });
     if (updateLink.status === "OK") {
       const updatedSlugs = userData.slugs.map((s) =>
         s.slug === slug ? { ...s, link: linkValue } : s
@@ -361,27 +392,35 @@ const Project: FC<{
                   accept=".jpg,.png"
                   onChange={async (e) => {
                     await handleFileUpload(
-                        e,
+                      e,
                       setImageLoading,
                       setUserData,
-                      'image',
-                        setShowError,
+                      "image",
+                      setShowError,
                       setCacheBuster,
-                      'project_content',
+                      "project_content",
                       "project-content-" + projectData.id,
-                        (prev: any) => {
-                          const slugToUpdate = prev.slugs.find((slugItem: any) => slugItem.slug === projectData.slug);
-                          if (slugToUpdate) {
-                            slugToUpdate.image = (prev as any).image;
-                          }
-                          return prev;
-                        },
-                      projectData.id,
+                      (prev: any) => {
+                        const slugToUpdate = prev.slugs.find(
+                          (slugItem: any) => slugItem.slug === projectData.slug
+                        );
+                        if (slugToUpdate) {
+                          slugToUpdate.image = (prev as any).image;
+                        }
+                        return prev;
+                      },
+                      projectData.id
                     );
                   }}
                 />
                 <img
-                  src={projectDetails.image + "?date=" + date + '&cache=' + cacheBuster}
+                  src={
+                    projectDetails.image +
+                    "?date=" +
+                    date +
+                    "&cache=" +
+                    cacheBuster
+                  }
                   alt=""
                   className={`block h-full w-full rounded-lg object-cover transition-all ${
                     imageHover ? "scale-105" : ""
@@ -600,8 +639,12 @@ const Project: FC<{
       {deployed.bool && (
         <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
       )}
-      {imageLoading && (<StatusBar message={'uploading image!'} color={'bg-green-500'}/>)}
-      {downloaded.bool && (<StatusBar message={downloaded.message} color={'bg-green-500'}/>)}
+      {imageLoading && (
+        <StatusBar message={"uploading image!"} color={"bg-green-500"} />
+      )}
+      {downloaded.bool && (
+        <StatusBar message={downloaded.message} color={"bg-green-500"} />
+      )}
       <Footer />
     </>
   );

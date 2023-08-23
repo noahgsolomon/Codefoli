@@ -1,8 +1,6 @@
 import { Dispatch, FC, SetStateAction, useState } from "react";
 import { ValueType } from "Type/Section.tsx";
-import {
-  changeValue,
-} from "Components/Sections/Value/valueapi.tsx";
+import { changeValue } from "Components/Sections/Value/valueapi.tsx";
 import { ValuesData, ValuesFormatted } from "Type/Values.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 const ValueCard: FC<{
@@ -24,7 +22,11 @@ const ValueCard: FC<{
     while (currentValues.includes(randomKey as ValuesFormatted)) {
       randomKey = valueKeys[Math.floor(Math.random() * valueKeys.length)];
     }
-    const fetchData = await changeValue({operation: 'update', value:randomKey, before:title.replaceAll(" ", "_")});
+    const fetchData = await changeValue({
+      operation: "update",
+      value: randomKey,
+      before: title.replaceAll(" ", "_"),
+    });
     if (fetchData.status === "OK") {
       setPageData((prev) => {
         const updatedSections = prev.sections.map((section) => {
@@ -58,7 +60,10 @@ const ValueCard: FC<{
   };
 
   const handleRemoveValue = async () => {
-    const removeValueFetch = await changeValue({operation: 'remove', value:title.replaceAll(" ", "_").toUpperCase()});
+    const removeValueFetch = await changeValue({
+      operation: "remove",
+      value: title.replaceAll(" ", "_").toUpperCase(),
+    });
     if (removeValueFetch.status === "OK") {
       setPageData((prev) => ({
         ...prev,

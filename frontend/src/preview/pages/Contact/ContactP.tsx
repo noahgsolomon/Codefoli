@@ -8,8 +8,8 @@ import StatusBar from "Components/StatusBar/StatusBar.tsx";
 import DeploymentBar from "Components/DeploymentBar/DeploymentBar.tsx";
 
 const ContactP: FC<{
-  setDownloaded: (downloaded: {bool: boolean, message: string}) => void;
-  downloaded: {bool: boolean, message: string};
+  setDownloaded: (downloaded: { bool: boolean; message: string }) => void;
+  downloaded: { bool: boolean; message: string };
   pageData: ContactData;
   userData: UserData;
   setUserData: (userData: UserData) => void;
@@ -18,8 +18,8 @@ const ContactP: FC<{
   setDeploying: (deploying: boolean) => void;
   setDeployed: (deployed: { url: string; bool: boolean }) => void;
 }> = ({
-    downloaded,
-    setDownloaded,
+  downloaded,
+  setDownloaded,
   pageData,
   userData,
   setUserData,
@@ -53,7 +53,9 @@ const ContactP: FC<{
       {deployed.bool && (
         <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
       )}
-      {downloaded.bool && (<StatusBar message={downloaded.message} color={'bg-green-500'}/>)}
+      {downloaded.bool && (
+        <StatusBar message={downloaded.message} color={"bg-green-500"} />
+      )}
     </>
   );
 };

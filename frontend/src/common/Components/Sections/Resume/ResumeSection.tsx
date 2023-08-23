@@ -6,7 +6,7 @@ import { ResumeType } from "Type/Section.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import { addRemoveSection } from "Components/Sections/api/sectionapi.tsx";
 import AddJobCard from "Components/Sections/Resume/JobCard/AddJobCard.tsx";
-import {updateText} from "api/updatetext.tsx";
+import { updateText } from "api/updatetext.tsx";
 
 const ResumeSection: React.FC<{
   page: PageType;
@@ -34,7 +34,7 @@ const ResumeSection: React.FC<{
     const updateHeader = await updateText(
       "header_one",
       headerOneEditValue,
-        'resume_section'
+      "resume_section"
     );
     if (updateHeader.status === "OK") {
       setPageData((prev) => ({

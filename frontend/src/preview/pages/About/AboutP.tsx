@@ -8,8 +8,8 @@ import StatusBar from "Components/StatusBar/StatusBar.tsx";
 import DeploymentBar from "Components/DeploymentBar/DeploymentBar.tsx";
 
 const AboutP: FC<{
-  setDownloaded: (downloaded: {bool: boolean, message: string}) => void;
-  downloaded: {bool: boolean, message: string};
+  setDownloaded: (downloaded: { bool: boolean; message: string }) => void;
+  downloaded: { bool: boolean; message: string };
   userData: UserData;
   setUserData: (userData: UserData) => void;
   pageData: AboutData;
@@ -25,8 +25,8 @@ const AboutP: FC<{
   setDeploying,
   deploying,
   setUserData,
-    setDownloaded,
-    downloaded
+  setDownloaded,
+  downloaded,
 }) => {
   return (
     <>
@@ -35,7 +35,7 @@ const AboutP: FC<{
         <SectionsP pageData={pageData} userData={userData} />
       </main>
       <ModeButtonsP
-            setDownloaded={setDownloaded}
+        setDownloaded={setDownloaded}
         deploying={deploying}
         setDeploying={setDeploying}
         setDeployed={setDeployed}
@@ -51,7 +51,9 @@ const AboutP: FC<{
       {deployed.bool && (
         <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
       )}
-      {downloaded.bool && (<StatusBar message={downloaded.message} color={'bg-green-500'}/>)}
+      {downloaded.bool && (
+        <StatusBar message={downloaded.message} color={"bg-green-500"} />
+      )}
     </>
   );
 };

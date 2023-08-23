@@ -1,5 +1,4 @@
-import {STAGE} from "../../../../config.ts";
-
+import { STAGE } from "../../../../config.ts";
 
 const changeValue = async (value: {
   operation: "add" | "remove" | "update";
@@ -8,15 +7,15 @@ const changeValue = async (value: {
 }) => {
   try {
     const response = await fetch(
-        `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/value?request_type=CHANGE_VALUES`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("Id"),
-          },
-          body: JSON.stringify(value),
-        }
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/value?request_type=CHANGE_VALUES`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("Id"),
+        },
+        body: JSON.stringify(value),
+      }
     );
 
     const responseJson = await response.json();
@@ -30,6 +29,5 @@ const changeValue = async (value: {
     console.log(e);
   }
 };
-
 
 export { changeValue };

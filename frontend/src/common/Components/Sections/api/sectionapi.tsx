@@ -1,6 +1,6 @@
 import PageType from "Type/Pages.tsx";
 import { SectionType } from "Type/Section.tsx";
-import {STAGE} from "../../../../config.ts"
+import { STAGE } from "../../../../config.ts";
 
 const addRemoveSection = async (
   page: PageType,

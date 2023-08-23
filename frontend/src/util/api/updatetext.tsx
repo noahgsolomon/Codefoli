@@ -1,4 +1,4 @@
-import {STAGE} from "../../config.ts";
+import { STAGE } from "../../config.ts";
 
 const updateText = async (type: string, text: string, table: string) => {
   const model = {

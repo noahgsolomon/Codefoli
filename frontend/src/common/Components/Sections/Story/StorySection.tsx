@@ -5,7 +5,7 @@ import { addRemoveSection } from "Components/Sections/api/sectionapi.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
 import { updateText } from "api/updatetext.tsx";
-import {handleFileUpload} from "api/uploadimage.tsx";
+import { handleFileUpload } from "api/uploadimage.tsx";
 
 const StorySection: React.FC<{
   page: PageType;
@@ -438,27 +438,33 @@ const StorySection: React.FC<{
               accept=".jpg,.png"
               onChange={async (e) => {
                 await handleFileUpload(
-                    e,
+                  e,
                   setImageLoading,
                   setPageData,
-                  'image_one',
+                  "image_one",
                   setShowError,
                   setCacheBuster,
                   "story_section",
-                    'story-image',
-                    (prev) => {
-                      const sectionToUpdate = prev.sections.find((section) => section.type === "STORY");
-                      if (sectionToUpdate && sectionToUpdate.details) {
-                        (sectionToUpdate.details as StoryType).image_one = (prev as any).image_one;
-                      }
-                      return prev;
+                  "story-image",
+                  (prev) => {
+                    const sectionToUpdate = prev.sections.find(
+                      (section) => section.type === "STORY"
+                    );
+                    if (sectionToUpdate && sectionToUpdate.details) {
+                      (sectionToUpdate.details as StoryType).image_one = (
+                        prev as any
+                      ).image_one;
                     }
-              );
+                    return prev;
+                  }
+                );
               }}
             />
             <div className="h-full w-full overflow-hidden rounded-3xl">
               <img
-                src={details.image_one + "?date=" + date + '&cache=' + cacheBuster}
+                src={
+                  details.image_one + "?date=" + date + "&cache=" + cacheBuster
+                }
                 alt=""
                 className="h-full w-full rounded-3xl object-cover"
               />

@@ -17,8 +17,8 @@ const Dashboard: FC<{
   deployed: { url: string; bool: boolean };
   setDeploying: (deploying: boolean) => void;
   setDeployed: (deployed: { url: string; bool: boolean }) => void;
-  downloaded: { bool: boolean, message: string };
-  setDownloaded: (downloaded: { bool: boolean, message: string }) => void;
+  downloaded: { bool: boolean; message: string };
+  setDownloaded: (downloaded: { bool: boolean; message: string }) => void;
 }> = ({
   pageData,
   userData,
@@ -28,7 +28,8 @@ const Dashboard: FC<{
   setDeploying,
   setDeployed,
   deploying,
-    downloaded, setDownloaded
+  downloaded,
+  setDownloaded,
 }) => {
   return (
     <>
@@ -56,8 +57,10 @@ const Dashboard: FC<{
       {deployed.bool && (
         <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
       )}
-        {downloaded.bool && (<StatusBar message={downloaded.message} color={'bg-green-500'}/>)}
-        <Footer />
+      {downloaded.bool && (
+        <StatusBar message={downloaded.message} color={"bg-green-500"} />
+      )}
+      <Footer />
     </>
   );
 };

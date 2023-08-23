@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef } from "react";
 import Loader from "Components/Loader/Loader.tsx";
-import {STAGE} from "./config.ts";
+import { STAGE } from "./config.ts";
 
 const Processing: FC = () => {
   const hasRun = useRef(false);
@@ -14,7 +14,11 @@ const Processing: FC = () => {
 
     if (code) {
       (async () => {
-        const body = `code=${code}&client_id=80810281685-eqf05nodee3q27j6p0ki7bgvm7qlq1jn.apps.googleusercontent.com&client_secret=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&redirect_uri=${STAGE === 'prod' ? 'https://codefoli.com/processing' : 'http://localhost:5173/processing'}&grant_type=authorization_code`;
+        const body = `code=${code}&client_id=80810281685-eqf05nodee3q27j6p0ki7bgvm7qlq1jn.apps.googleusercontent.com&client_secret=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&redirect_uri=${
+          STAGE === "prod"
+            ? "https://codefoli.com/processing"
+            : "http://localhost:5173/processing"
+        }&grant_type=authorization_code`;
 
         const tokenResponse = await fetch(
           "https://www.googleapis.com/oauth2/v4/token",

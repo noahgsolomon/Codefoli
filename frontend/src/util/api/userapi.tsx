@@ -1,5 +1,5 @@
 import Work from "Type/Work.tsx";
-import {STAGE} from "../../config.ts";
+import { STAGE } from "../../config.ts";
 
 const userDetails = async () => {
   try {

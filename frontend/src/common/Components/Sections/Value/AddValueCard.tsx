@@ -2,7 +2,7 @@ import { ChangeEvent, Dispatch, FC, SetStateAction, useState } from "react";
 import { Values, ValuesFormatted } from "Type/Values.tsx";
 import AnyPageData from "Type/AnyPageData.tsx";
 import { ValueType } from "Type/Section.tsx";
-import {changeValue} from "Components/Sections/Value/valueapi.tsx";
+import { changeValue } from "Components/Sections/Value/valueapi.tsx";
 
 const AddJobCard: FC<{
   setPageData: Dispatch<SetStateAction<AnyPageData>>;
@@ -27,34 +27,35 @@ const AddJobCard: FC<{
 
   const handleAddValue = async (value: string) => {
     const newValue = value.toUpperCase().replaceAll(" ", "_");
-    const addValueFetch = await changeValue({operation: 'add', value: newValue});
+    const addValueFetch = await changeValue({
+      operation: "add",
+      value: newValue,
+    });
     if (addValueFetch.status === "OK") {
       setPageData((prev) => ({
         ...prev,
         sections: prev.sections.map((section) =>
-            section.type === "VALUE" &&
-            "values" in section.details
-                ? {
-                  ...section,
-                  details: {
-                    ...section.details,
-                    values: [
-                      ...section.details.values,
-                      {
-                        value:
-                            newValue as ValuesFormatted,
-                      },
-                    ],
-                  },
-                }
-                : section
+          section.type === "VALUE" && "values" in section.details
+            ? {
+                ...section,
+                details: {
+                  ...section.details,
+                  values: [
+                    ...section.details.values,
+                    {
+                      value: newValue as ValuesFormatted,
+                    },
+                  ],
+                },
+              }
+            : section
         ),
       }));
     }
     setAddValueInput(false);
     setNewValue("");
     setMatchingValues([...allValues]);
-  }
+  };
 
   return (
     <div
