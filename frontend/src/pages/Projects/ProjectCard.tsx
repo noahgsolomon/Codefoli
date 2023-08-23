@@ -51,6 +51,7 @@ const ProjectCard: FC<{
   const [addProjectLanguageState, setAddProjectLanguageState] = useState(false);
   const [languageAddValue, setLanguageAddValue] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
+  const [cacheBuster, setCacheBuster] = useState("");
   const handleRemoveProject = async () => {
     const removeProjectFetch = await changeProjects({id: id, operation:'remove', type:'project'});
     if (removeProjectFetch.status === "OK") {
@@ -202,6 +203,7 @@ const ProjectCard: FC<{
               setUserData,
               'image',
               setProjectError,
+                setCacheBuster,
                 'projects',
               'projects-image-' + id,
                 (prev: any) => {
@@ -216,7 +218,7 @@ const ProjectCard: FC<{
           }}
         />
         <img
-          src={image + "?date=" + date}
+          src={image + "?date=" + date + '&cache=' + cacheBuster}
           alt=""
           className={`inline-block h-full w-full transform object-cover transition-all ease-in-out ${
             hovered ? "scale-105" : ""

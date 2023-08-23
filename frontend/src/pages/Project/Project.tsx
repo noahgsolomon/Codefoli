@@ -66,6 +66,7 @@ const Project: FC<{
   const [descriptionEditValue, setDescriptionEditValue] = useState(
     projectDetails?.description || ""
   );
+  const [cacheBuster, setCacheBuster] = useState("");
   const descriptionTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [aboutEdit, setAboutEdit] = useState(false);
   const [aboutEditValue, setAboutEditValue] = useState(
@@ -91,6 +92,7 @@ const Project: FC<{
     visible: boolean;
     message: string;
   }>({ visible: false, message: "" });
+
   const [imageLoading, setImageLoading] = useState(false);
 
   const headerAnimation = useSpring({
@@ -230,8 +232,6 @@ const Project: FC<{
     setOverviewEdit(false);
   };
 
-  console.log(userData)
-
   const handlePlatformsSubmit = async () => {
     const updatePlatforms = await changeProject({text:platformsEditValue, id: projectData.id, type:'platforms'});
     if (updatePlatforms.status === "OK") {
@@ -366,6 +366,7 @@ const Project: FC<{
                       setUserData,
                       'image',
                         setShowError,
+                      setCacheBuster,
                       'project_content',
                       "project-content-" + projectData.id,
                         (prev: any) => {
@@ -380,7 +381,7 @@ const Project: FC<{
                   }}
                 />
                 <img
-                  src={projectDetails.image + "?date=" + date}
+                  src={projectDetails.image + "?date=" + date + '&cache=' + cacheBuster}
                   alt=""
                   className={`block h-full w-full rounded-lg object-cover transition-all ${
                     imageHover ? "scale-105" : ""
