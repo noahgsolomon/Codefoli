@@ -1,0 +1,3 @@
+08/23/23:
+    - Made imagebucket private as well as website bucket, and only accessible through respective cloudfront distributions
+    - Added a lambda function to invalidate cloudfront cache on imagebucket when a new image is uploaded
