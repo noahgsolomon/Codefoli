@@ -266,7 +266,7 @@ const AboutMain: React.FC<{
                 );
               }}
             />
-            <div className="h-full w-full overflow-hidden rounded-full">
+            <div className="h-full w-full overflow-hidden rounded-full border-2 border-black">
               <img
                 className="h-full w-full object-cover"
                 src={
@@ -318,7 +318,7 @@ const AboutMain: React.FC<{
                 );
               }}
             />
-            <div className="h-full w-full overflow-hidden rounded-full">
+            <div className="h-full w-full overflow-hidden rounded-full border-2 border-black">
               <img
                 className="h-full w-full object-cover"
                 src={

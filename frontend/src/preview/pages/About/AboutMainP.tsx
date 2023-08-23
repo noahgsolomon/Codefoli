@@ -60,7 +60,7 @@ const AboutMainP: FC<{
             style={imageAnimation}
             className="image-wrapper relative order-2 h-[150px] w-[150px] text-center md:order-1 md:self-end"
           >
-            <div className="h-full w-full overflow-hidden rounded-full">
+            <div className="h-full w-full overflow-hidden rounded-full border-2 border-black">
               <img
                 className="h-full w-full object-cover"
                 src={pageData.icon_one + "?date=" + date}
@@ -73,7 +73,7 @@ const AboutMainP: FC<{
             style={imageAnimation}
             className="image-wrapper relative order-last h-[150px] w-[150px] text-center md:self-start"
           >
-            <div className="h-full w-full overflow-hidden rounded-full">
+            <div className="h-full w-full overflow-hidden rounded-full border-2 border-black">
               <img
                 className="h-full w-full object-cover"
                 src={pageData.icon_two + "?date=" + date}
