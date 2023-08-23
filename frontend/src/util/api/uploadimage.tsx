@@ -29,6 +29,8 @@ const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, setImage
 
             const data = await response.json();
 
+            console.log(data)
+
             if (data.status !== "OK") {
                 setImageLoading(false);
                 if (data.status === "ERROR") {
@@ -39,19 +41,6 @@ const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, setImage
                 return;
             }
 
-            setPageData((prev: any) => {
-                if (location) {
-                    return location({
-                        ...prev,
-                        [column]: `${data.data.url}?timestamp=${new Date().getTime()}`,
-                    });
-                } else {
-                    return {
-                        ...prev,
-                        [column]: `${data.data.url}?timestamp=${new Date().getTime()}`,
-                    };
-                }
-            });
             setTimeout(() => setImageLoading(false), 2500);
             let count = 0;
             const intervalId = setInterval(() => {
@@ -59,6 +48,19 @@ const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, setImage
                 count += 1;
                 if (count >= 10) clearInterval(intervalId);
             }, 1000);
+            setPageData((prev: any) => {
+                if (location) {
+                    return location({
+                        ...prev,
+                        [column]: data.data.url,
+                    });
+                } else {
+                    return {
+                        ...prev,
+                        [column]: data.data.url,
+                    };
+                }
+            });
         } catch (error) {
             setImageLoading(false);
             console.error("Error uploading file: ", error);
