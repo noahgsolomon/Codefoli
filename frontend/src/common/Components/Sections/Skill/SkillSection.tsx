@@ -228,7 +228,6 @@ const SkillSection: FC<{
           }}
         >
           <div
-            style={{ marginBottom: (12 - userData.skills.length) * 25 + "px" }}
             className={`min-h-64 mt-5 flex flex-wrap gap-2 rounded-tl-2xl rounded-tr-2xl bg-white px-2 py-2`}
           >
             {userData.skills.map((skill, index) => {
@@ -289,7 +288,8 @@ const SkillSection: FC<{
               </span>
             )}
           </div>
-          <div className="content flex-grow rounded-b-2xl bg-blue p-5">
+          <div className={"flex-grow"}></div>
+          <div className="content h-40 rounded-b-xl bg-blue p-5">
             <h2 className="text-2xl font-bold text-white">{"</>"} Languages</h2>
           </div>
         </div>
