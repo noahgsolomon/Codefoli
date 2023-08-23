@@ -9,7 +9,7 @@ const changeSkill = async (skill: {
 }) => {
   try {
     const response = await fetch(
-      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/skill`,
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/skill?request_type=CHANGE_SKILLS`,
       {
         method: "POST",
         headers: {

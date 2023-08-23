@@ -8,7 +8,7 @@ const updateText = async (type: string, text: string, table: string) => {
   };
   try {
     const updateFetch = await fetch(
-      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/text`,
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/text?request_type=TEXT_UPDATE`,
       {
         method: "PUT",
         headers: {

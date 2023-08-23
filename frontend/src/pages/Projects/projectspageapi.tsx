@@ -9,7 +9,7 @@ const changeProjects = async (
             )) => {
   try {
     const response = await fetch(
-        `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/projects`,
+        `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/projects?request_type=CHANGE_PROJECTS`,
         {
           method: "POST",
           headers: {

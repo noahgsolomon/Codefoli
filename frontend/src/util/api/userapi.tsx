@@ -4,7 +4,7 @@ import {STAGE} from "../../config.ts";
 const userDetails = async () => {
   try {
     const response = await fetch(
-      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/user`,
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/user?request_type=USER`,
       {
         method: "GET",
         headers: {
@@ -83,7 +83,7 @@ const setupAccount = async (
 const getHome = async () => {
   try {
     const homeData = await fetch(
-      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/home`,
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/home?request_type=HOME`,
       {
         method: "GET",
         headers: {
@@ -108,7 +108,7 @@ const getHome = async () => {
 const getAbout = async () => {
   try {
     const aboutData = await fetch(
-      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/about`,
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/about?request_type=ABOUT`,
       {
         method: "GET",
         headers: {
@@ -133,7 +133,7 @@ const getAbout = async () => {
 const getContact = async () => {
   try {
     const contactData = await fetch(
-      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/contact`,
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/contact?request_type=CONTACT`,
       {
         method: "GET",
         headers: {
@@ -158,7 +158,7 @@ const getContact = async () => {
 const getProjectsPage = async () => {
   try {
     const response = await fetch(
-      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/projects-page`,
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/projects-page?request_type=PROJECTS_PAGE`,
       {
         method: "GET",
         headers: {
@@ -197,7 +197,7 @@ type JobOperation =
 const jobOperations = async (operation: JobOperation) => {
   try {
     const response = await fetch(
-      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/resume/job`,
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/resume/job?request_type=CHANGE_JOB`,
       {
         method: "POST",
         headers: {

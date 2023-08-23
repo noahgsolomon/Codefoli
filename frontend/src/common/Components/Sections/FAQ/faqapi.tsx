@@ -3,7 +3,7 @@ import {STAGE} from "../../../../config.ts";
 const changeFaq = async (faq: ({text:string, type: 'title' | 'content', id:string} | {title: string, content: string, operation:'add', type:'faq'} | {id: string, operation:'remove', type:'faq'})) => {
   try {
     const response = await fetch(
-        `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/faq`,
+        `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/faq?request_type=CHANGE_FAQ`,
         {
           method: "POST",
           headers: {

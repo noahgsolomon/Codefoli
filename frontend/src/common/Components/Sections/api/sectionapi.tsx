@@ -16,7 +16,7 @@ const addRemoveSection = async (
   };
   try {
     const updateFetch = await fetch(
-      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/add-remove-section`,
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/add-remove-section?request_type=SECTION`,
       {
         method: "POST",
         headers: {
@@ -28,7 +28,6 @@ const addRemoveSection = async (
     );
 
     const updateFetchJson = await updateFetch.json();
-    console.log(updateFetchJson);
     if (updateFetchJson.status === "OK") {
       return updateFetchJson;
     } else {
