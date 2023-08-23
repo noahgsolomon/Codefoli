@@ -119,7 +119,7 @@ const DashboardMain: React.FC<{
       )}
       <div className="flex flex-col lg:flex-row xl:mx-auto xl:justify-center">
         <animated.div style={headerAnimation}>
-          <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center justify-center font-bold xl:mt-32">
+          <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center justify-center font-bold xl:mt-24">
             {headerOneEdit ? (
               <textarea
                 ref={headerOneTextareaRef}
@@ -199,7 +199,7 @@ const DashboardMain: React.FC<{
         </animated.div>
         <animated.div style={imageAnimation}>
           <div
-            className={`relative mx-auto mt-10 h-[300px] w-[300px] transition-all md:h-[500px] md:w-[500px] lg:mx-0 xl:ml-20 xl:mt-32 ${
+            className={`relative mx-auto mt-10 h-[300px] w-[300px] transition-all md:h-[500px] md:w-[500px] lg:mx-0 xl:ml-20 xl:mt-24 ${
               imageLoading ? "opacity-0" : "opacity-100"
             }`}
             onMouseEnter={() => setImageOneEdit(true)}
@@ -224,7 +224,7 @@ const DashboardMain: React.FC<{
                 );
               }}
             />
-            <div className="h-full w-full overflow-hidden rounded-3xl shadow-customHover">
+            <div className="h-full w-full overflow-hidden rounded-3xl border-2 border-black shadow-customHover">
               <img
                 className={`h-full w-full object-cover`}
                 src={

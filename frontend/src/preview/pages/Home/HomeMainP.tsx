@@ -24,7 +24,7 @@ const HomeMainP: FC<{
     <div className="container mx-auto px-6">
       <div className="flex flex-col lg:flex-row xl:mx-auto xl:justify-center">
         <animated.div style={headerAnimation}>
-          <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center justify-center font-bold xl:mt-32">
+          <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center justify-center font-bold xl:mt-24">
             <h1 className="font-extra-bold max-w-[15ch] text-center text-4xl leading-snug transition-all md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal">
               {pageData.header_one}
             </h1>
@@ -49,9 +49,9 @@ const HomeMainP: FC<{
         </animated.div>
         <animated.div style={imageAnimation}>
           <div
-            className={`relative mx-auto mt-10 h-[300px] w-[300px] transition-all md:h-[500px] md:w-[500px] lg:mx-0 xl:ml-20 xl:mt-32`}
+            className={`relative mx-auto mt-10 h-[300px] w-[300px] transition-all md:h-[500px] md:w-[500px] lg:mx-0 xl:ml-20 xl:mt-24`}
           >
-            <div className="h-full w-full overflow-hidden rounded-3xl shadow-customHover">
+            <div className="h-full w-full overflow-hidden rounded-3xl border-2 border-black shadow-customHover">
               <img
                 className="h-full w-full object-cover"
                 src={pageData.profile_image + "?date=" + date}
