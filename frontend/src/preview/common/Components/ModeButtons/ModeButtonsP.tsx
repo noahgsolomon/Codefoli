@@ -109,26 +109,26 @@ const ModeButtonsP: FC<{
                 {!deploying && !activeDownload ? (
                     <>
                       <a href="/dashboard">
-                        <button className="m-2 flex h-12 w-40 items-center justify-center rounded-3xl border-2 border-black bg-black text-white transition-all hover:-translate-y-0.5 hover:shadow-custom">
+                        <button className="m-2 flex h-10 w-40 items-center justify-center rounded-3xl border-2 border-black bg-black text-white transition-all hover:-translate-y-0.5 hover:shadow-custom">
                           Edit{" "}
                           <AiOutlineEdit fill={"white"} className="ml-2 text-2xl" />
                         </button>
                       </a>
                       <button
-                          className="m-2 flex h-12 w-40 items-center justify-center rounded-3xl border-2 border-black bg-red-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                          className="m-2 flex h-10 w-40 items-center justify-center rounded-3xl border-2 border-black bg-red-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
                           onClick={() => setCodeModalOpen(true)}
                       >
                         Code <FaDownload fill={"white"} className="ml-2" />
                       </button>
                       <button
-                          className="m-2 flex h-12 w-40 items-center justify-center rounded-3xl border-2 border-black bg-blue-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                          className="m-2 flex h-10 w-40 items-center justify-center rounded-3xl border-2 border-black bg-blue-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
                           onClick={async () => await handleDeploy()}
                       >
                         Deploy <FaPaperPlane fill={"white"} className="ml-2" />
                       </button>
                     </>
                 ) : (
-                    <div className={`flex h-12 w-40 items-center justify-center rounded-3xl border-2 border-black ${activeDownload ? 'bg-red-500' : 'bg-blue-500'} text-white transition-all hover:-translate-y-0.5 hover:shadow-custom`}>
+                    <div className={`flex h-10 w-40 items-center justify-center rounded-3xl border-2 border-black ${activeDownload ? 'bg-red-500' : 'bg-blue-500'} text-white transition-all hover:-translate-y-0.5 hover:shadow-custom`}>
                       <svg className="mr-2 h-5 w-5 animate-spin" viewBox="0 0 24 24">
                         <circle
                             className="opacity-25"

@@ -99,7 +99,7 @@ const ModeButtons: FC<{
       <>
         <animated.div
             style={animation}
-            className="fixed bottom-10 left-0 right-0 flex justify-center"
+            className="fixed bottom-6 left-0 right-0 flex justify-center"
         >
           <div
               className="flex flex-col sm:flex-row rounded-3xl border-2 border-black bg-white px-4 py-3 shadow-custom max-w-full sm:max-w-screen-md mx-2"
@@ -109,26 +109,26 @@ const ModeButtons: FC<{
                 {!deploying && !activeDownload ? (
                     <>
                       <a href="/preview">
-                        <button className="m-2 flex h-12 w-40 items-center justify-center rounded-3xl border-2 border-black bg-green-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom">
+                        <button className="m-2 flex h-10 w-40 items-center justify-center rounded-3xl border-2 border-black bg-green-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom">
                           Preview{" "}
                           <AiOutlineEye fill={"white"} className="ml-2 text-2xl" />
                         </button>
                       </a>
                       <button
-                        className="m-2 flex h-12 w-40 items-center justify-center rounded-3xl border-2 border-black bg-red-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                        className="m-2 flex h-10 w-40 items-center justify-center rounded-3xl border-2 border-black bg-red-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
                         onClick={() => setCodeModalOpen(true)}
                     >
                       Code <FaDownload fill={"white"} className="ml-2" />
                     </button>
                       <button
-                          className="m-2 flex h-12 w-40 items-center justify-center rounded-3xl border-2 border-black bg-blue-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                          className="m-2 flex h-10 w-40 items-center justify-center rounded-3xl border-2 border-black bg-blue-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
                           onClick={async () => await handleDeploy()}
                       >
                         Deploy <FaPaperPlane fill={"white"} className="ml-2" />
                       </button>
                     </>
                 ) : (
-                    <div className={`flex h-12 w-40 items-center justify-center rounded-3xl border-2 border-black ${activeDownload ? 'bg-red-500' : 'bg-blue-500'} text-white transition-all hover:-translate-y-0.5 hover:shadow-custom`}>
+                    <div className={`flex h-10 w-40 items-center justify-center rounded-3xl border-2 border-black ${activeDownload ? 'bg-red-500' : 'bg-blue-500'} text-white transition-all hover:-translate-y-0.5 hover:shadow-custom`}>
                       <svg className="mr-2 h-5 w-5 animate-spin" viewBox="0 0 24 24">
                         <circle
                             className="opacity-25"
