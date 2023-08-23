@@ -33,32 +33,29 @@ const Header: FC<{ authenticated: boolean }> = ({ authenticated }) => {
               <div className="lg:mx-10">
                 <Link
                   to="/dashboard"
-                  className="mx-2 py-1 text-sm  no-underline transition-all hover:text-blue-500 sm:text-lg md:mx-10"
+                  className="mx-4 py-1 text-sm  no-underline transition-all hover:text-blue-500 sm:text-xl sm:font-extrabold md:mx-10"
                 >
                   Dashboard
                 </Link>
                 <Link
                   to="/about"
-                  className="mx-2 py-1 text-sm no-underline  transition-all hover:text-blue-500 sm:text-lg md:mx-10"
+                  className="mx-4 py-1 text-sm no-underline  transition-all hover:text-blue-500 sm:text-xl sm:font-extrabold md:mx-10"
                 >
                   About
                 </Link>
                 <Link
                   to="/projects"
-                  className="mx-2 py-1 text-sm no-underline transition-all hover:text-blue-500 sm:text-lg md:mx-10"
+                  className="mx-4 py-1 text-sm no-underline transition-all hover:text-blue-500 sm:text-xl sm:font-extrabold md:mx-10"
                 >
                   Projects
                 </Link>
-              </div>
               <Link
                 to="/contact"
-                className="flex w-14 items-center justify-center rounded-2xl border-2 border-black px-3 py-2 text-white transition-all hover:-translate-y-0.5 hover:border-blue-500 hover:bg-blue-500 md:my-0 md:ml-2"
+                className="mx-4 py-1 text-sm no-underline transition-all hover:text-blue-500 sm:text-xl sm:font-extrabold md:mx-10"
               >
-                <img
-                  src="https://img.icons8.com/cotton/48/handshake--v2.png"
-                  alt="email icon"
-                />
+                Contact
               </Link>
+              </div>
             </div>
           </>
         ) : (
