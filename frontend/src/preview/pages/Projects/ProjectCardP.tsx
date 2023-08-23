@@ -17,7 +17,7 @@ const ProjectCardP: FC<{
   return (
     <Link
       to={`/preview/${slug}`}
-      className="relative mb-5 flex max-w-[400px]  flex-col rounded-2xl border-2 border-black shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover"
+      className="relative mb-5 flex max-w-[400px]  flex-col rounded-xl border-2 border-black shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
