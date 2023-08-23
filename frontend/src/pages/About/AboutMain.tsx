@@ -20,6 +20,10 @@ const AboutMain: React.FC<{
   const iconTwoFileInput = useRef<HTMLInputElement | null>(null);
   const [iconThreeEdit, setIconThreeEdit] = useState<boolean>(false);
   const iconThreeFileInput = useRef<HTMLInputElement | null>(null);
+  const date = useMemo(() => Date.now(), []);
+  const [cacheBusterOne, setCacheBusterOne] = useState<string>("");
+    const [cacheBusterTwo, setCacheBusterTwo] = useState<string>("");
+    const [cacheBusterThree, setCacheBusterThree] = useState<string>("");
 
   const [headerOneEdit, setHeaderOneEdit] = useState(false);
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
@@ -42,7 +46,6 @@ const AboutMain: React.FC<{
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const headerTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const date = useMemo(() => Date.now(), []);
   const [showError, setShowError] = useState<{
     visible: boolean;
     message: string;
@@ -62,8 +65,6 @@ const AboutMain: React.FC<{
     to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
     delay: 300,
   });
-  console.log(pageData)
-  console.log(userData);
   const descriptionAnimation = useSpring({
     from: { opacity: 0, transform: "translate3d(20px, 0, 0)" },
     to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
@@ -253,6 +254,7 @@ const AboutMain: React.FC<{
                     setPageData as Dispatch<SetStateAction<AnyPageData>>,
                     "icon_one",
                     setShowError,
+                    setCacheBusterOne,
                     'about',
                     "about-icon-one-upload",
                 );
@@ -261,7 +263,7 @@ const AboutMain: React.FC<{
             <div className="h-full w-full overflow-hidden rounded-full">
               <img
                 className="h-full w-full object-cover"
-                src={pageData.icon_one + "?date=" + date}
+                src={pageData.icon_one + '?date=' + date + '&cache=' + cacheBusterOne}
                 alt="portfolio"
               />
             </div>
@@ -298,6 +300,7 @@ const AboutMain: React.FC<{
                     setPageData as Dispatch<SetStateAction<AnyPageData>>,
                     "icon_two",
                     setShowError,
+                    setCacheBusterTwo,
                     'about',
                     "about-icon-two-upload",
                 );
@@ -306,7 +309,7 @@ const AboutMain: React.FC<{
             <div className="h-full w-full overflow-hidden rounded-full">
               <img
                 className="h-full w-full object-cover"
-                src={pageData.icon_two + "?date=" + date}
+                src={pageData.icon_two+ '?date=' + date + '&cache=' + cacheBusterTwo}
                 alt="portfolio"
               />
             </div>
@@ -375,6 +378,7 @@ const AboutMain: React.FC<{
                     setPageData as Dispatch<SetStateAction<AnyPageData>>,
                       "icon_three",
                     setShowError,
+                    setCacheBusterThree,
                     'about',
                     "about-icon-three-upload",
                   );
@@ -383,7 +387,7 @@ const AboutMain: React.FC<{
               <div className="h-full w-full overflow-hidden rounded-3xl border-2 border-black">
                 <img
                   className="h-full w-full object-cover"
-                  src={pageData.icon_three + "?date=" + date}
+                  src={pageData.icon_three + '?date=' + date + '&cache=' + cacheBusterThree}
                   alt="portfolio"
                 />
               </div>

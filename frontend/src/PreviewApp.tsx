@@ -120,7 +120,6 @@ const PreviewApp: React.FC = () => {
           localStorage.setItem("Id", fetchState.data.idToken);
         }
         const user = await userDetails();
-        console.log(user);
         if (user.status === "ERROR") {
           localStorage.removeItem("Id");
           localStorage.removeItem("Refresh");
@@ -150,7 +149,6 @@ const PreviewApp: React.FC = () => {
             setContactData(contactFetch);
           }
           if (projectsPageFetch) {
-            console.log(projectsPageFetch);
             setProjectsPageData(projectsPageFetch);
           }
           setUserData(user.data);

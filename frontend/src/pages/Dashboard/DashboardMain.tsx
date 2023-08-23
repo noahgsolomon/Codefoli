@@ -15,20 +15,21 @@ const DashboardMain: React.FC<{
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
     pageData.header_one
   );
+  const date = useMemo(() => new Date().toTimeString(), []);
   const [descriptionOneEdit, setDescriptionOneEdit] = useState(false);
   const [descriptionOneEditValue, setDescriptionOneEditValue] = useState(
     pageData.description_one
   );
   const [imageOneEdit, setImageOneEdit] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
-
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const date = useMemo(() => Date.now(), []);
   const [showError, setShowError] = useState<{
     visible: boolean;
     message: string;
   }>({ visible: false, message: "" });
+  const [cacheBuster, setCacheBuster] = useState<string>("");
+
 
   useEffect(() => {
     if (headerOneEdit && headerOneTextareaRef.current) {
@@ -102,8 +103,6 @@ const DashboardMain: React.FC<{
     to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
     delay: 200,
   });
-
-
   return (
     <div className="container mx-auto px-6">
       {showError.visible && (
@@ -207,13 +206,13 @@ const DashboardMain: React.FC<{
               className="hidden"
               accept=".jpg,.png"
               onChange={async (e) => {
-                await handleFileUpload(e, setImageLoading, setPageData as Dispatch<SetStateAction<AnyPageData>>, 'profile_image', setShowError, 'home', 'profile-image')
+                await handleFileUpload(e, setImageLoading, setPageData as Dispatch<SetStateAction<AnyPageData>>, 'profile_image', setShowError, setCacheBuster, 'home', 'profile-image');
               }}
             />
             <div className="h-full w-full overflow-hidden rounded-3xl shadow-customHover">
               <img
-                className="h-full w-full object-cover"
-                src={pageData.profile_image + "?date=" + date}
+                className={`h-full w-full object-cover`}
+                src={pageData.profile_image + '?date=' + date + '&cache=' + cacheBuster}
                 alt="pfp"
               ></img>
             </div>

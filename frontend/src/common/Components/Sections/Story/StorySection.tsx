@@ -23,6 +23,7 @@ const StorySection: React.FC<{
   const [headerOneEditValue, setHeaderOneEditValue] = useState(
     details.header_one
   );
+  const [cacheBuster, setCacheBuster] = useState<string>("");
   const [bulletOneEdit, setBulletOneEdit] = useState(false);
   const [bulletOneEditValue, setBulletOneEditValue] = useState(
     details.bullet_one
@@ -442,6 +443,7 @@ const StorySection: React.FC<{
                   setPageData,
                   'image_one',
                   setShowError,
+                  setCacheBuster,
                   "story_section",
                     'story-image',
                     (prev) => {
@@ -456,7 +458,7 @@ const StorySection: React.FC<{
             />
             <div className="h-full w-full overflow-hidden rounded-3xl">
               <img
-                src={details.image_one + "?date=" + date}
+                src={details.image_one + "?date=" + date + '&cache=' + cacheBuster}
                 alt=""
                 className="h-full w-full rounded-3xl object-cover"
               />

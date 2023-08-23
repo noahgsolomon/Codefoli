@@ -50,6 +50,7 @@ const JobCard: FC<{
   const [descriptionEditValue, setDescriptionEditValue] =
     useState<string>(description);
   const companyTitleTextareaRef = useRef<HTMLTextAreaElement>(null);
+  const [cacheBuster, setCacheBuster] = useState<string>("");
   const roleTextareaRef = useRef<HTMLTextAreaElement>(null);
   const descriptionTextareaRef = useRef<HTMLTextAreaElement>(null);
   const [startDateEdit, setStartDateEdit] = useState<boolean>(false);
@@ -390,6 +391,7 @@ const JobCard: FC<{
                 setUserData,
                 'image',
                 setShowError,
+                setCacheBuster,
                 'work',
                 `job-image-upload-${id}`,
                   (prev: any) => {
@@ -405,7 +407,7 @@ const JobCard: FC<{
           />
           <img
             className={"h-full w-full rounded-full object-cover"}
-            src={image + "?date=" + date}
+            src={image + "?date=" + date + '&cache=' + cacheBuster}
             alt={"job photo"}
           />
           <div
