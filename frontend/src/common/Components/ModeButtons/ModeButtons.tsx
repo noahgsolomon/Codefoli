@@ -23,6 +23,8 @@ const ModeButtons: FC<{
 }) => {
   const [scrollingDown, setScrollingDown] = useState(false);
   const [codeModalOpen, setCodeModalOpen] = useState(false);
+  const [deployModalOpen, setDeployModalOpen] = useState(false);
+  const [subdomain, setSubdomain] = useState('subdomain');
   const [prevScroll, setPrevScroll] = useState(window.scrollY);
   const thresholdShow = 200;
   const thresholdHide = 0;
@@ -61,13 +63,14 @@ const ModeButtons: FC<{
   });
 
   const modalAnimation = useSpring({
-    opacity: codeModalOpen ? 1 : 0,
+    opacity: (codeModalOpen || deployModalOpen) ? 1 : 0,
     config: { duration: 200 },
   });
 
   const handleDeploy = async () => {
+    setDeployModalOpen(false);
     setDeploying(true);
-    await deploy();
+    await deploy(subdomain);
     let attempts = 0;
     const maxAttempts = 40;
     const interval = setInterval(async () => {
@@ -129,8 +132,8 @@ const ModeButtons: FC<{
                     Code <FaDownload fill={"white"} className="ml-2" />
                   </button>
                   <button
-                    className="m-2 flex h-10 w-40 items-center justify-center rounded-3xl border-2 border-black bg-blue-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
-                    onClick={async () => await handleDeploy()}
+                      className="m-2 flex h-10 w-40 items-center justify-center rounded-3xl border-2 border-black bg-blue-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                      onClick={() => setDeployModalOpen(true)}
                   >
                     Deploy <FaPaperPlane fill={"white"} className="ml-2" />
                   </button>
@@ -212,6 +215,35 @@ const ModeButtons: FC<{
           <button
             className="mt-4 flex w-full justify-center rounded-3xl border-2 border-black bg-red-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
             onClick={() => setCodeModalOpen(false)}
+          >
+            Close
+          </button>
+        </div>
+      </animated.div>
+      <animated.div
+          style={modalAnimation}
+          className={`${
+              deployModalOpen ? "" : "hidden"
+          } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}
+      >
+        <div className="rounded-lg bg-white p-8 shadow-lg flex flex-col justify-center">
+          <h2 className="mb-4 text-2xl font-bold">Deployment Config</h2>
+          <p className={'text-center'}>{subdomain}.codefoli.com</p>
+          <input
+              placeholder={'// subdomain'}
+              className="border-2 border-black rounded-xl px-2 focus:ring-0 focus:outline-none mb-4"
+              onChange={(e) => setSubdomain(e.target.value)}
+          />
+          <button
+              className="mb-2 flex w-full items-center justify-center rounded-3xl border-2 border-black bg-blue-500 px-4 py-3 font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+              onClick={async () => await handleDeploy()}
+          >
+            <FaPaperPlane fill={"white"} className="mr-2" />
+            Deploy Now
+          </button>
+          <button
+              className="mt-4 flex w-full justify-center rounded-3xl border-2 border-black bg-red-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+              onClick={() => setDeployModalOpen(false)}
           >
             Close
           </button>
