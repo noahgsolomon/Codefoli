@@ -2,4 +2,6 @@
     - Made imagebucket private as well as website bucket, and only accessible through respective cloudfront distributions
     - Added a lambda function to invalidate cloudfront cache on imagebucket when a new image is uploaded
     - Added style changes in: About, Home, SkillSection, ProjectCard, Header
+08/24/23:
+    - Subdomain availability checker w/ endpoint and lambda function configured for this logic.
     //TODO change contact on header in download, deploy, and compile & upload into codefoli s3 bucket
