@@ -1,6 +1,6 @@
 import { useState, useEffect, FC } from "react";
 import { useSpring, animated } from "react-spring";
-import { checkDeployed, deploy } from "api/deployapi.tsx";
+import {checkDeployed, deploy, subdomainAvailability} from "api/deployapi.tsx";
 import UserData from "Type/UserData.tsx";
 import { FaDownload, FaPaperPlane } from "react-icons/fa";
 import { AiOutlineEye } from "react-icons/ai";
@@ -25,7 +25,10 @@ const ModeButtons: FC<{
   const [codeModalOpen, setCodeModalOpen] = useState(false);
   const [deployModalOpen, setDeployModalOpen] = useState(false);
   const [subdomain, setSubdomain] = useState('subdomain');
+  const [subdomainChecking, setSubdomainChecking] = useState(false);
+  const [subdomainAvailable, setSubdomainAvailable] = useState(false);
   const [prevScroll, setPrevScroll] = useState(window.scrollY);
+  const [subdomainMessage, setSubdomainMessage] = useState('^ write what subdomain you want');
   const thresholdShow = 200;
   const thresholdHide = 0;
   const [activeDownload, setActiveDownload] = useState(false);
@@ -89,6 +92,26 @@ const ModeButtons: FC<{
       }
     }, 3000);
   };
+
+  const handleCheckSubdomain = async () => {
+    setSubdomainChecking(true);
+    setSubdomainMessage('Checking subdomain availability...')
+    if (subdomain === '') {
+        setSubdomainMessage('Subdomain cannot be empty!');
+        setSubdomainChecking(false);
+        setSubdomainAvailable(false);
+        return;
+    }
+    const subdomainFetch = await subdomainAvailability(subdomain);
+    if (subdomainFetch.status === "OK") {
+      setSubdomainMessage('Subdomain available!');
+      setSubdomainAvailable(true);
+    } else {
+      setSubdomainMessage('Subdomain taken!');
+      setSubdomainAvailable(false);
+    }
+    setSubdomainChecking(false);
+  }
 
   const handleDownloadReactCode = async () => {
     setCodeModalOpen(false);
@@ -229,14 +252,47 @@ const ModeButtons: FC<{
         <div className="rounded-lg bg-white p-8 shadow-lg flex flex-col justify-center">
           <h2 className="mb-4 text-2xl font-bold">Deployment Config</h2>
           <p className={'text-center'}>{subdomain}.codefoli.com</p>
-          <input
-              placeholder={'// subdomain'}
-              className="border-2 border-black rounded-xl px-2 focus:ring-0 focus:outline-none mb-4"
-              onChange={(e) => setSubdomain(e.target.value)}
-          />
+          <div className="flex items-center">
+            <input
+                placeholder={'// subdomain'}
+                className="border-2 border-black rounded-xl px-2 focus:ring-0 focus:outline-none"
+                onChange={(e) => setSubdomain(e.target.value)}
+            />
+            { !subdomainChecking ? (
+                <button
+                    className={'m-2 rounded-xl bg-black text-white px-2 py-1 hover:opacity-80 transition-all'}
+                    onClick={async () => handleCheckSubdomain()}
+                >Check</button>
+            ) : (
+                <div className={'flex items-center justify-center m-2 px-4 py-2 rounded-xl border-black border-2 bg-black'}>
+                  <svg
+                      className="h-5 w-5 animate-spin z-10"
+                      viewBox="0 0 24 24"
+                  >
+                    <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="white"
+                        strokeWidth="4"
+                    ></circle>
+                    <path
+                        className="opacity-75"
+                        fill="white"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                </div>
+            )}
+          </div>
+          <div className={`${subdomainAvailable ? 'text-green-500' : 'text-red-500'}`}>{subdomainMessage}</div>
+
+
           <button
-              className="mb-2 flex w-full items-center justify-center rounded-3xl border-2 border-black bg-blue-500 px-4 py-3 font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+              className={`mb-2 mt-4 ${!subdomainAvailable ? 'bg-gray-500 opacity-50' : 'bg-blue-500'} flex w-full items-center justify-center rounded-3xl border-2 border-black px-4 py-3 font-bold text-white transition-all ${subdomainAvailable ? 'hover:-translate-y-0.5 hover:shadow-custom': ''}`}
               onClick={async () => await handleDeploy()}
+              disabled={!subdomainAvailable}
           >
             <FaPaperPlane fill={"white"} className="mr-2" />
             Deploy Now
