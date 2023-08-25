@@ -44,7 +44,7 @@ const Home: FC = () => {
                 portfolio websites...
               </p>
             </animated.div>
-            <animated.div style={imageAnimation}>
+            <animated.div style={imageAnimation} className={'mx-auto'}>
               <div className="relative">
                 <a
                   href="https://walter.codefoli.com"
