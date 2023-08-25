@@ -2,9 +2,10 @@ import { useState, useEffect, FC } from "react";
 import { useSpring, animated } from "react-spring";
 import {checkDeployed, deploy, subdomainAvailability} from "api/deployapi.tsx";
 import UserData from "Type/UserData.tsx";
-import { FaDownload, FaPaperPlane } from "react-icons/fa";
+import {FaDownload, FaPaperPlane, FaTrash} from "react-icons/fa";
 import { AiOutlineEye } from "react-icons/ai";
 import { download } from "api/downloadapi.tsx";
+import {deleteWebsite} from "api/deletewebsiteapi.tsx";
 
 const ModeButtons: FC<{
   deploying: boolean;
@@ -29,6 +30,7 @@ const ModeButtons: FC<{
   const [subdomainAvailable, setSubdomainAvailable] = useState(false);
   const [prevScroll, setPrevScroll] = useState(window.scrollY);
   const [subdomainMessage, setSubdomainMessage] = useState('^ write what subdomain you want');
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const thresholdShow = 200;
   const thresholdHide = 0;
   const [activeDownload, setActiveDownload] = useState(false);
@@ -64,16 +66,13 @@ const ModeButtons: FC<{
     opacity: scrollingDown ? 1 : 0,
     config: { duration: 100 },
   });
-
-  const modalAnimation = useSpring({
-    opacity: (codeModalOpen || deployModalOpen) ? 1 : 0,
-    config: { duration: 200 },
-  });
-
   const handleDeploy = async () => {
     setDeployModalOpen(false);
     setDeploying(true);
-    await deploy(subdomain);
+    const website = userData.website ? userData.website.replace('https://', '').replace('.codefoli.com', '') : subdomain;
+    console.log(website);
+    console.log(userData.website)
+    await deploy(website);
     let attempts = 0;
     const maxAttempts = 40;
     const interval = setInterval(async () => {
@@ -90,7 +89,7 @@ const ModeButtons: FC<{
           console.log("Max attempts reached, website not yet deployed.");
         }
       }
-    }, 3000);
+    }, 5000);
   };
 
   const handleCheckSubdomain = async () => {
@@ -137,6 +136,14 @@ const ModeButtons: FC<{
       setDownloaded({ bool: false, message: "" });
     }, 3000);
   };
+
+  const handleDeleteWebsite = async () => {
+    const deleteFetch = await deleteWebsite();
+    if (deleteFetch.status === "OK") {
+        setUserData({ ...userData, website: "" });
+        setDeleteModalOpen(false);
+    }
+  }
 
   return (
     <>
@@ -208,8 +215,7 @@ const ModeButtons: FC<{
           </div>
         </div>
       </animated.div>
-      <animated.div
-        style={modalAnimation}
+      <div
         className={`${
           codeModalOpen ? "" : "hidden"
         } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}
@@ -251,74 +257,138 @@ const ModeButtons: FC<{
             Close
           </button>
         </div>
-      </animated.div>
-      <animated.div
-          style={modalAnimation}
+      </div>
+      <div
           className={`${
               deployModalOpen ? "" : "hidden"
           } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}
       >
-        <div className="rounded-lg bg-white p-8 shadow-lg flex flex-col justify-center">
-          <h2 className="mb-4 text-2xl font-bold">Deployment Config</h2>
-          <p className={'text-center'}>{subdomain}.codefoli.com</p>
-          <div className="flex items-center">
-            <input
-                placeholder={'// subdomain'}
-                className="border-2 border-black rounded-xl px-2 focus:ring-0 focus:outline-none"
-                onChange={(e) => setSubdomain(e.target.value)}
-            />
-            { !subdomainChecking ? (
-                <button
-                    className={'m-2 rounded-xl bg-black text-white px-2 py-1 hover:opacity-80 transition-all'}
-                    onClick={async () => handleCheckSubdomain()}
-                >Check</button>
-            ) : (
-                <div className={'flex items-center justify-center m-2 px-4 py-2 rounded-xl border-black border-2 bg-black'}>
-                  <svg
-                      className="h-5 w-5 animate-spin z-10"
-                      viewBox="0 0 24 24"
-                  >
-                    <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="white"
-                        strokeWidth="4"
-                    ></circle>
-                    <path
-                        className="opacity-75"
-                        fill="white"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                </div>
-            )}
+        {!userData.website ? (
+            <div className="rounded-lg bg-white p-8 shadow-lg flex flex-col justify-center">
+              <h2 className="mb-4 text-2xl font-bold">Deployment Config</h2>
+              <p className={'text-center'}>{subdomain}.codefoli.com</p>
+              <div className="flex items-center">
+                <input
+                    placeholder={'// subdomain'}
+                    className="border-2 border-black rounded-xl px-2 focus:ring-0 focus:outline-none"
+                    onChange={(e) => {
+                      setSubdomain(e.target.value);
+                      setSubdomainAvailable(false);
+                      setSubdomainMessage('^ write what subdomain you want')
+                    }}
+                />
+                { !subdomainChecking ? (
+                    <button
+                        className={'m-2 rounded-xl bg-black text-white px-2 py-1 hover:opacity-80 transition-all'}
+                        onClick={async () => handleCheckSubdomain()}
+                    >Check</button>
+                ) : (
+                    <div className={'flex items-center justify-center m-2 px-4 py-2 rounded-xl border-black border-2 bg-black'}>
+                      <svg
+                          className="h-5 w-5 animate-spin z-10"
+                          viewBox="0 0 24 24"
+                      >
+                        <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="white"
+                            strokeWidth="4"
+                        ></circle>
+                        <path
+                            className="opacity-75"
+                            fill="white"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                    </div>
+                )}
+              </div>
+              <div className={`${subdomainAvailable ? 'text-green-500' : 'text-red-500'}`}>{subdomainMessage}</div>
+
+
+              <button
+                  className={`mb-2 mt-4 ${!subdomainAvailable ? 'bg-gray-500 opacity-50' : 'bg-blue-500'} flex w-full items-center justify-center rounded-3xl border-2 border-black px-4 py-3 font-bold text-white transition-all ${subdomainAvailable ? 'hover:-translate-y-0.5 hover:shadow-custom': ''}`}
+                  onClick={async () => await handleDeploy()}
+                  disabled={!subdomainAvailable}
+              >
+                <FaPaperPlane fill={"white"} className="mr-2" />
+                Deploy Now
+              </button>
+              <button
+                  className="mt-4 flex w-full justify-center rounded-3xl border-2 border-black bg-red-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                  onClick={() => {
+                    setDeployModalOpen(false);
+                    setSubdomainAvailable(false);
+                    setSubdomainMessage("^ write what subdomain you want");
+                    setSubdomainChecking(false);
+                  }}
+              >
+                Close
+              </button>
+            </div>
+        ) : (
+            <div className="rounded-lg bg-white p-8 shadow-lg flex flex-col justify-center">
+              <h2 className="mb-4 text-2xl font-bold">Deployment Config</h2>
+              <p className={''}>Current deployment:</p>
+              <a className={'text-center text-blue-500 underline hover:opacity-80 transition-all'} target={'_blank'} href={userData.website}>{userData.website}</a>
+              <div>
+                <p className={''}>status: <span className={'text-green-500'}>online</span></p>
+              </div>
+
+              <button
+                  className={`mb-2 mt-1 bg-blue-500 flex w-full items-center justify-center rounded-3xl border-2 border-black px-4 py-3 font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-custom`}
+                  onClick={async () => await handleDeploy()}
+              >
+                <FaPaperPlane fill={"white"} className="mr-2" />
+                Redeploy
+              </button>
+              <button
+                  className={`mb-2 mt-1 bg-black flex w-full items-center justify-center rounded-3xl border-2 border-black px-4 py-3 font-bold text-white transition-all hover:bg-red-900`}
+                  onClick={() => {
+                    setDeployModalOpen(false);
+                    setDeleteModalOpen(true);
+                  }}
+              >
+                <FaTrash fill={"white"} className="mr-2" />
+                Delete website
+              </button>
+              <button
+                  className="mt-1 flex w-full justify-center rounded-3xl border-2 border-black bg-red-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                  onClick={() => {
+                    setDeployModalOpen(false);
+                    setSubdomainAvailable(false);
+                    setSubdomainMessage("^ write what subdomain you want");
+                    setSubdomainChecking(false);
+                  }}
+              >
+                Close
+              </button>
+            </div>
+        )}
+      </div>
+      {deleteModalOpen && (
+          <div
+              className={`${deleteModalOpen ? '' : 'hidden'} fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}
+          >
+          <div className="rounded-lg bg-white p-8 shadow-lg flex flex-col justify-center">
+            <h2 className="mb-4 text-2xl font-bold max-w-[20ch] ">Are you sure you want to delete this website?</h2>
+            <button
+                className="mt-4 flex w-full justify-center rounded-3xl border-2 border-black bg-green-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                onClick={async () => handleDeleteWebsite()}
+            >
+              Yes!
+            </button>
+            <button
+                className="mt-4 flex w-full justify-center rounded-3xl border-2 border-black bg-red-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                onClick={() => setDeleteModalOpen(false)}
+            >
+              Close
+            </button>
           </div>
-          <div className={`${subdomainAvailable ? 'text-green-500' : 'text-red-500'}`}>{subdomainMessage}</div>
-
-
-          <button
-              className={`mb-2 mt-4 ${!subdomainAvailable ? 'bg-gray-500 opacity-50' : 'bg-blue-500'} flex w-full items-center justify-center rounded-3xl border-2 border-black px-4 py-3 font-bold text-white transition-all ${subdomainAvailable ? 'hover:-translate-y-0.5 hover:shadow-custom': ''}`}
-              onClick={async () => await handleDeploy()}
-              disabled={!subdomainAvailable}
-          >
-            <FaPaperPlane fill={"white"} className="mr-2" />
-            Deploy Now
-          </button>
-          <button
-              className="mt-4 flex w-full justify-center rounded-3xl border-2 border-black bg-red-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
-              onClick={() => {
-                setDeployModalOpen(false);
-                setSubdomainAvailable(false);
-                setSubdomainMessage("^ write what subdomain you want");
-                setSubdomainChecking(false);
-              }}
-          >
-            Close
-          </button>
-        </div>
-      </animated.div>
+          </div>
+      )}
     </>
   );
 };
