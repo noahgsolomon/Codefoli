@@ -102,6 +102,13 @@ const ModeButtons: FC<{
         setSubdomainAvailable(false);
         return;
     }
+    const validSubdomainPattern = /^[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]$/;
+    if (!validSubdomainPattern.test(subdomain) || subdomain.length < 2) {
+      setSubdomainMessage('Subdomain contains invalid characters!');
+      setSubdomainChecking(false);
+      setSubdomainAvailable(false);
+      return;
+    }
     const subdomainFetch = await subdomainAvailability(subdomain);
     if (subdomainFetch.status === "OK") {
       setSubdomainMessage('Subdomain available!');
@@ -237,7 +244,9 @@ const ModeButtons: FC<{
           </button>
           <button
             className="mt-4 flex w-full justify-center rounded-3xl border-2 border-black bg-red-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
-            onClick={() => setCodeModalOpen(false)}
+            onClick={() => {
+              setCodeModalOpen(false);
+            }}
           >
             Close
           </button>
@@ -299,7 +308,12 @@ const ModeButtons: FC<{
           </button>
           <button
               className="mt-4 flex w-full justify-center rounded-3xl border-2 border-black bg-red-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
-              onClick={() => setDeployModalOpen(false)}
+              onClick={() => {
+                setDeployModalOpen(false);
+                setSubdomainAvailable(false);
+                setSubdomainMessage("^ write what subdomain you want");
+                setSubdomainChecking(false);
+              }}
           >
             Close
           </button>
