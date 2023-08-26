@@ -119,7 +119,7 @@ const DashboardMain: React.FC<{
       )}
       <div className="flex flex-col lg:flex-row xl:mx-auto xl:justify-center">
         <animated.div style={headerAnimation}>
-          <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center justify-center font-bold xl:mt-24">
+          <div className="mx-auto mt-10  max-w-2xl font-bold xl:mt-32">
             {headerOneEdit ? (
               <textarea
                 ref={headerOneTextareaRef}
@@ -144,8 +144,7 @@ const DashboardMain: React.FC<{
               />
             ) : (
               <h1
-                className="font-extra-bold max-w-[15ch] cursor-pointer select-none text-center text-4xl leading-snug transition-all hover:opacity-50 md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal"
-                onClick={() => setHeaderOneEdit(true)}
+                  className="font-extra-bold hover:opacity-50 cursor-pointer mx-auto max-w-[15ch] text-center text-4xl leading-snug transition-all md:text-5xl md:leading-relaxed lg:mx-0 lg:text-left xl:text-6xl xl:leading-normal"                onClick={() => setHeaderOneEdit(true)}
               >
                 {pageData.header_one}
               </h1>
@@ -175,14 +174,13 @@ const DashboardMain: React.FC<{
               />
             ) : (
               <p
-                className="max-w-[35ch] cursor-pointer select-none text-center text-base opacity-60 transition-all hover:opacity-50 xl:max-w-[50ch] xl:text-left"
-                onClick={() => setDescriptionOneEdit(true)}
+                  className="mx-auto max-w-[35ch] hover:opacity-50 cursor-pointer text-center text-base opacity-60 transition-all lg:mx-0 lg:text-left xl:max-w-[50ch]"                onClick={() => setDescriptionOneEdit(true)}
               >
                 {pageData.description_one}
               </p>
             )}
           </div>
-          <div className="mx-auto mt-5 flex justify-center xl:justify-start">
+          <div className="mt-5 whitespace-nowrap text-center lg:text-left">
             <Link
               to="/contact"
               className="mr-4 rounded-xl border-2 border-black bg-black px-6 py-4 font-bold text-white transition-all hover:-translate-y-0.5 hover:border-blue-500 hover:bg-blue-500"
