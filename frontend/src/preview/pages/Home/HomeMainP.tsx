@@ -24,18 +24,18 @@ const HomeMainP: FC<{
     <div className="container mx-auto px-6">
       <div className="flex flex-col lg:flex-row xl:mx-auto xl:justify-center">
         <animated.div style={headerAnimation}>
-          <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center justify-center font-bold xl:mt-24">
-            <h1 className="font-extra-bold max-w-[15ch] text-center text-4xl leading-snug transition-all md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal">
+          <div className="mx-auto mt-10  max-w-2xl font-bold xl:mt-32">
+            <h1 className="font-extra-bold mx-auto max-w-[15ch] text-center text-4xl leading-snug transition-all md:text-5xl md:leading-relaxed lg:mx-0 lg:text-left xl:text-6xl xl:leading-normal">
               {pageData.header_one}
             </h1>
-            <p className="max-w-[35ch] text-center text-base opacity-60 transition-all xl:max-w-[50ch] xl:text-left">
+            <p className="mx-auto max-w-[35ch] text-center text-base opacity-60 transition-all lg:mx-0 lg:text-left xl:max-w-[50ch]">
               {pageData.description_one}
             </p>
           </div>
-          <div className="mx-auto mt-5 flex justify-center xl:justify-start">
+          <div className="mt-5 whitespace-nowrap text-center lg:text-left">
             <Link
               to="/preview/contact"
-              className="mr-4 rounded-xl border-2 border-black bg-black px-6 py-4 font-bold text-white transition-all hover:-translate-y-0.5 hover:border-blue-500 hover:bg-blue-500"
+              className="mr-4 rounded-xl border-2 border-black bg-black px-4 py-2 font-bold text-white transition-all hover:-translate-y-0.5 hover:border-blue-500 hover:bg-blue-500 lg:px-6 lg:py-4"
             >
               Get in touch
             </Link>

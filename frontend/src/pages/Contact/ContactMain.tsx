@@ -98,7 +98,7 @@ const ContactMain: FC<{
       <div className="container mx-auto my-20 max-w-screen-lg px-5">
         <div className="wrapper items-center gap-10 md:flex">
           <animated.div
-            style={animationProps}
+            style={{...animationProps, minWidth: "20rem"}}
             className="content mx-auto max-w-lg md:mx-0"
           >
             {headerOneEdit ? (

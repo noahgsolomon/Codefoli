@@ -157,19 +157,19 @@ const ModeButtons: FC<{
               {!deploying && !activeDownload ? (
                 <>
                   <a href="/preview">
-                    <button className="m-2 flex h-10 w-40 items-center justify-center rounded-3xl border-2 border-black bg-green-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom">
+                    <button className="m-2 flex px-6 py-2 items-center justify-center rounded-3xl border-2 border-black bg-green-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom">
                       Preview{" "}
                       <AiOutlineEye fill={"white"} className="ml-2 text-2xl" />
                     </button>
                   </a>
                   <button
-                    className="m-2 flex h-10 w-40 items-center justify-center rounded-3xl border-2 border-black bg-red-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                    className="m-2 flex px-6 py-2 items-center justify-center rounded-3xl border-2 border-black bg-red-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
                     onClick={() => setCodeModalOpen(true)}
                   >
                     Code <FaDownload fill={"white"} className="ml-2" />
                   </button>
                   <button
-                      className="m-2 flex h-10 w-40 items-center justify-center rounded-3xl border-2 border-black bg-blue-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                      className="m-2 flex px-6 py-2 items-center justify-center rounded-3xl border-2 border-black bg-blue-500 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
                       onClick={() => setDeployModalOpen(true)}
                   >
                     Deploy <FaPaperPlane fill={"white"} className="ml-2" />
@@ -177,7 +177,7 @@ const ModeButtons: FC<{
                 </>
               ) : (
                 <div
-                  className={`flex h-10 w-40 items-center justify-center rounded-3xl border-2 border-black ${
+                  className={`flex px-6 py-2 items-center justify-center rounded-3xl border-2 border-black ${
                     activeDownload ? "bg-red-500" : "bg-blue-500"
                   } text-white transition-all hover:-translate-y-0.5 hover:shadow-custom`}
                 >
