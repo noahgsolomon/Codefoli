@@ -1,16 +1,7 @@
-import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import {FC} from "react";
 
-const HeaderP: React.FC = () => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(false);
-  }, []);
-
-  if (loading) {
-    return <></>;
-  }
+const HeaderP: FC = () => {
 
   return (
     <header
