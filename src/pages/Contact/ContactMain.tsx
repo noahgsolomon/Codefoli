@@ -98,8 +98,8 @@ const ContactMain: FC<{
       <div className="container mx-auto my-20 max-w-screen-lg px-5">
         <div className="wrapper items-center gap-10 md:flex">
           <animated.div
-              style={animationProps}
-            className="content md:min-w-[25rem] mx-auto max-w-lg md:mx-0"
+            style={animationProps}
+            className="content mx-auto max-w-lg md:mx-0 md:min-w-[25rem]"
           >
             {headerOneEdit ? (
               <textarea

@@ -144,7 +144,8 @@ const DashboardMain: React.FC<{
               />
             ) : (
               <h1
-                  className="font-extra-bold hover:opacity-50 cursor-pointer mx-auto max-w-[15ch] text-center text-4xl leading-snug transition-all md:text-5xl md:leading-relaxed lg:mx-0 lg:text-left xl:text-6xl xl:leading-normal"                onClick={() => setHeaderOneEdit(true)}
+                className="font-extra-bold mx-auto max-w-[15ch] cursor-pointer text-center text-4xl leading-snug transition-all hover:opacity-50 md:text-5xl md:leading-relaxed lg:mx-0 lg:text-left xl:text-6xl xl:leading-normal"
+                onClick={() => setHeaderOneEdit(true)}
               >
                 {pageData.header_one}
               </h1>
@@ -174,7 +175,8 @@ const DashboardMain: React.FC<{
               />
             ) : (
               <p
-                  className="mx-auto max-w-[35ch] hover:opacity-50 cursor-pointer text-center text-base opacity-60 transition-all lg:mx-0 lg:text-left xl:max-w-[50ch]"                onClick={() => setDescriptionOneEdit(true)}
+                className="mx-auto max-w-[35ch] cursor-pointer text-center text-base opacity-60 transition-all hover:opacity-50 lg:mx-0 lg:text-left xl:max-w-[50ch]"
+                onClick={() => setDescriptionOneEdit(true)}
               >
                 {pageData.description_one}
               </p>

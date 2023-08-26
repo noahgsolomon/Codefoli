@@ -34,7 +34,8 @@ const DeploymentBar: FC<{
       style={animate}
       className={`fixed left-1/2 z-50 transform rounded-xl border-2 border-black bg-blue-500 px-3 text-lg text-white md:px-6 md:py-3 md:text-2xl md:font-bold`}
     >
-      Deployment successful! Please wait 5 minutes for deployment to propagate...
+      Deployment successful! Please wait 5 minutes for deployment to
+      propagate...
       <a
         className={
           "px-1 font-bold underline transition-all hover:text-yellow-300"

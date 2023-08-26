@@ -10,7 +10,7 @@ const deploy = async (subdomain: string) => {
           "Content-Type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("Id"),
         },
-        body: JSON.stringify({subdomain: subdomain}),
+        body: JSON.stringify({ subdomain: subdomain }),
       }
     );
 
@@ -30,14 +30,14 @@ const deploy = async (subdomain: string) => {
 const subdomainAvailability = async (subdomain: string) => {
   try {
     const response = await fetch(
-        `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/subdomain?subdomain=${subdomain}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("Id"),
-          },
-        }
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/subdomain?subdomain=${subdomain}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("Id"),
+        },
+      }
     );
 
     const responseJson = await response.json();
@@ -51,7 +51,6 @@ const subdomainAvailability = async (subdomain: string) => {
     console.log(e);
   }
 };
-
 
 const checkDeployed = async () => {
   try {

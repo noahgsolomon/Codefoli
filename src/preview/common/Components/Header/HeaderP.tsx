@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-import {FC} from "react";
+import { FC } from "react";
 
 const HeaderP: FC = () => {
-
   return (
     <header
       className={`relative z-40 mx-5 flex items-center justify-center py-5 font-bold transition-all ease-linear md:flex-row`}
