@@ -33,15 +33,16 @@ const Login: React.FC = () => {
   });
 
   return (
+      <>
     <animated.div
       style={loginAnimation}
-      className="flex items-center justify-center bg-gray-50 p-4"
+      className="flex items-center justify-center p-4"
     >
-      <div className="mt-20 w-[700px] max-w-[100%] rounded-xl border-2 border-black bg-gray-100 p-10 text-center shadow-custom transition-all">
-        <h2 className="mb-10 text-3xl">
-          <span className="bg-blue-500 px-1 text-white">Codefolio</span>
+      <div className="mt-20 w-[700px] max-w-[100%] rounded-xl border-2 border-black  p-10 text-center shadow-custom  transition-all">
+        <h2 className="mb-10 text-4xl">
+          <span className="bg-blue-500 px-2 font-bold text-white">Codefolio</span>
         </h2>
-        <p className="text-gray-500">Log in to your account</p>
+        <p className="opacity-80">Log in to your account</p>
 
         {showFields ? (
           <>
@@ -68,7 +69,7 @@ const Login: React.FC = () => {
                   id="email"
                   placeholder="// example@gmail.com"
                   value={email}
-                  className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0
+                  className={`mb-4 mt-2 w-full placeholder:dark:text-gray-200  placeholder:text-gray-800 rounded-xl border-2 border-black bg-white dark:bg-[#1a1a1a] p-3 pl-10 placeholder-black shadow-custom  ring-transparent hover:shadow-customHover  focus:border-black focus:ring-0
                        ${emailError ? "border-red-500" : ""}`}
                   onChange={(e) => {
                     setEmailError(false);
@@ -96,7 +97,7 @@ const Login: React.FC = () => {
                   id="password"
                   placeholder="// jeffbezos123"
                   value={password}
-                  className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 
+                  className={`mb-4 mt-2 w-full rounded-xl  border-2 border-black placeholder:dark:text-gray-200 placeholder:text-gray-800 bg-white dark:bg-[#1a1a1a] p-3 pl-10 placeholder-black shadow-custom  ring-transparent hover:shadow-customHover  focus:border-black focus:ring-0 
                       ${passwordError ? "border-red-500" : ""}`}
                   onChange={(e) => {
                     setPasswordError(false);
@@ -115,10 +116,10 @@ const Login: React.FC = () => {
             </div>
 
             <button
-              className={`mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl px-9 py-6 text-lg transition-all hover:opacity-90 ${
+              className={`mb-3 flex w-full bg-blue-500 cursor-pointer text-white items-center justify-center rounded-2xl px-9 py-6 text-lg transition-all hover:-translate-y-0.5 ${
                 email.length > 4 && password.length > 5
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-200 text-gray-500"
+                  ? "opacity-100"
+                  : "opacity-10"
               }`}
               onClick={async () => {
                 if (email.length < 5 || password.length < 6) {
@@ -153,7 +154,7 @@ const Login: React.FC = () => {
           <>
             <div className="mt-5 flex flex-col items-center">
               <button
-                className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl border-2  border-white bg-[#4285F4] px-4 py-6 text-lg text-white transition-all hover:-translate-y-1 hover:opacity-90 md:px-9"
+                className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl bg-[#4285F4] px-4 py-6 text-lg text-white transition-all hover:-translate-y-1 hover:opacity-90 md:px-9"
                 onClick={() => {
                   window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=80810281685-eqf05nodee3q27j6p0ki7bgvm7qlq1jn.apps.googleusercontent.com&redirect_uri=${
                     STAGE === "prod"
@@ -172,7 +173,7 @@ const Login: React.FC = () => {
                 />
               </button>
               <button
-                className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl border-2 border-black px-4 py-4 text-lg text-black transition-all hover:-translate-y-1 hover:opacity-90 md:px-9 md:py-6"
+                className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl border-2 border-black  px-4 py-4 text-lg transition-all hover:-translate-y-1 hover:opacity-90 md:px-9 md:py-6"
                 onClick={() => setShowFields(true)}
               >
                 Continue with Email and Password
@@ -186,12 +187,13 @@ const Login: React.FC = () => {
           </>
         )}
       </div>
-      {emailError || passwordError ? (
-        <StatusBar message={"Invalid credentials"} color={"bg-red-500"} />
-      ) : (
-        <></>
-      )}
     </animated.div>
+        {emailError || passwordError ? (
+            <StatusBar message={"Invalid credentials"} color={"bg-red-500"} />
+        ) : (
+            <></>
+        )}
+        </>
   );
 };
 export default Login;

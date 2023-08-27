@@ -41,9 +41,9 @@ const Register: React.FC = () => {
   return (
     <animated.div
       style={registerAnimation}
-      className="flex items-center justify-center bg-gray-50 p-4"
+      className="flex items-center justify-center p-4"
     >
-      <div className="mt-10 w-[700px] max-w-[100%] rounded-xl border-2 border-black bg-gray-100 p-10 text-center shadow-custom transition-all">
+      <div className="mt-10 w-[700px] max-w-[100%] rounded-xl border-2 border-black  p-10 text-center shadow-custom transition-all">
         <h2 className="mb-12 text-3xl">
           <p>
             <span className="bg-blue-500 px-1 text-white">Register</span> for
@@ -61,7 +61,7 @@ const Register: React.FC = () => {
                 id="name"
                 placeholder="// John Doe"
                 value={fullName}
-                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 
+                className={`mb-4 mt-2 w-full rounded-xl dark:bg-[#1a1a1a] placeholder:dark:text-gray-200 placeholder:text-gray-800 border-2 border-black  p-3 pl-10 shadow-custom ring-transparent transition-shadow   hover:shadow-customHover focus:ring-0 
                       ${fullNameError ? "border-red-500" : ""}`}
                 onChange={(e) => {
                   setFullNameError(false);
@@ -87,7 +87,7 @@ const Register: React.FC = () => {
                 id="email"
                 placeholder="// example@gmail.com"
                 value={email}
-                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0
+                className={`mb-4 mt-2 w-full rounded-xl dark:bg-[#1a1a1a]   border-2 placeholder:dark:text-gray-200 placeholder:text-gray-800 border-black  p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0
                        ${emailError ? "border-red-500" : ""}`}
                 onChange={(e) => {
                   setEmailError(false);
@@ -114,7 +114,7 @@ const Register: React.FC = () => {
                 id="password"
                 placeholder="// jeffbezos123"
                 value={password}
-                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0 
+                className={`mb-4 mt-2 w-full rounded-xl border-2 placeholder:dark:text-gray-200 placeholder:text-gray-800 border-black  p-3 pl-10 placeholder-black dark:bg-[#1a1a1a] shadow-custom ring-transparent  transition-all  hover:shadow-customHover focus:ring-0 
                       ${passwordError ? "border-red-500" : ""}`}
                 onChange={(e) => {
                   setPasswordError(false);
@@ -133,10 +133,10 @@ const Register: React.FC = () => {
           </div>
         </form>
         <button
-          className={`mt-3 flex w-full cursor-pointer items-center justify-center rounded-2xl px-4 py-6 text-lg transition-all hover:opacity-90 md:px-9 ${
+          className={`mt-3 flex w-full text-white bg-blue-500 cursor-pointer items-center justify-center rounded-2xl px-4 py-6 text-lg transition-all hover:-translate-y-0.5 md:px-9 ${
             fullName.length > 0 && email.length > 4 && password.length > 5
-              ? "bg-blue-600 text-white"
-              : "bg-gray-200 text-gray-500"
+              ? "opacity-100"
+              : "opacity-10"
           }`}
           onClick={async () => {
             if (
@@ -177,7 +177,7 @@ const Register: React.FC = () => {
         </button>
         <p className="my-1 text-gray-500">or</p>
         <button
-          className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl border-2  border-white bg-[#4285F4] px-4 py-6 text-lg text-white transition-all hover:-translate-y-1 hover:opacity-90 md:px-9"
+          className="mb-3 flex w-full cursor-pointer items-center justify-center rounded-2xl bg-blue-500 px-4 py-6 text-lg text-white transition-all hover:-translate-y-1 hover:opacity-90 md:px-9"
           onClick={() => {
             window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=80810281685-eqf05nodee3q27j6p0ki7bgvm7qlq1jn.apps.googleusercontent.com&redirect_uri=${
               STAGE === "prod"
