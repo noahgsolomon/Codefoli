@@ -220,7 +220,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
     <div className="my-5 flex flex-col items-center justify-center">
       <div className="mb-10 text-4xl font-bold">
         Let's set up your{" "}
-        <span className="bg-red-500 px-1 py-1">Page</span>!
+        <span className="bg-red-500 px-1 py-1 text-white">Page</span>!
       </div>
       {page === 0 && (
         <form
@@ -429,7 +429,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
             <button
               onClick={() => incrementPage()}
               className={
-                "bg- mt-3 flex cursor-pointer text-white dark:text-gray-800 dark:bg-gray-200 dark:hover:opacity-80 items-center justify-center rounded-2xl px-8 py-3 text-base font-bold transition-all "}
+                "bg- mt-3 flex cursor-pointer text-white bg-black hover:opacity-80 dark:text-gray-800 dark:bg-gray-200 dark:hover:opacity-80 items-center justify-center rounded-2xl px-8 py-3 text-base font-bold transition-all "}
             >
               Next
             </button>
@@ -638,7 +638,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
             <button
               onClick={() => incrementPage()}
               className={
-                "mt-3 flex cursor-pointer dark:bg-gray-200 dark:hover:opacity-80 items-center justify-center rounded-2xl px-8 py-3 text-base text-white dark:text-gray-800 font-bold transition-all "}
+                "mt-3 flex cursor-pointer dark:bg-gray-200 bg-black hover:opacity-80 dark:hover:opacity-80 items-center justify-center rounded-2xl px-8 py-3 text-base text-white dark:text-gray-800 font-bold transition-all "}
             >
               Next
             </button>
