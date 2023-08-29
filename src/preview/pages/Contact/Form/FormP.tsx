@@ -40,7 +40,7 @@ const FormP: FC<{
             type="text"
             placeholder="Subject"
             name="subject"
-            className="w-full rounded-lg border-2 border-black px-5  py-2 font-bold transition ease-in hover:shadow-custom focus:border-current focus:ring-0 active:shadow-custom"
+            className="w-full rounded-lg border-2 border-black px-5  py-2 font-bold transition-all dark:bg-[#1a1a1a] hover:shadow-custom focus:border-current focus:ring-0 active:shadow-custom"
             onChange={handleChange}
             required
           />
@@ -55,7 +55,7 @@ const FormP: FC<{
           <textarea
             name="message"
             placeholder="Your Message"
-            className="w-full rounded-lg border-2 border-black px-5 py-2 font-bold transition ease-in hover:shadow-custom focus:border-current focus:ring-0 active:shadow-custom"
+            className="w-full rounded-lg border-2 border-black px-5 py-2 font-bold transition-all dark:bg-[#1a1a1a] hover:shadow-custom focus:border-current focus:ring-0 active:shadow-custom"
             rows={4}
             cols={100}
             onChange={handleChange}
@@ -67,7 +67,7 @@ const FormP: FC<{
         href={`mailto:${userData.email}?subject=${encodeURIComponent(
           formData.subject
         )}&body=${encodeURIComponent(formData.message)}`}
-        className="w-full rounded-lg bg-black px-5 py-2 font-bold text-white transition ease-in hover:-translate-y-1 hover:bg-blue-500 focus:border-current focus:ring-0 md:w-auto"
+        className="w-full rounded-lg bg-black px-5 py-2 font-bold text-white transition-all hover:-translate-y-1 hover:bg-blue-500 focus:border-current focus:ring-0 md:w-auto"
       >
         Send Message
       </a>
