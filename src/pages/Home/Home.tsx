@@ -33,7 +33,7 @@ const Home: FC = () => {
           style={headerAnimation}
           className="intro-section mb-10 px-5"
         >
-          <div className="home-container mx-auto my-10 max-w-screen-lg  px-5 text-gray-800">
+          <div className="home-container mx-auto my-10 max-w-screen-lg  px-5">
             <animated.div style={headerAnimation}>
               <h1 className="mb-5 text-center text-4xl font-bold md:text-5xl">
                 Welcome to{" "}
@@ -107,32 +107,6 @@ const Home: FC = () => {
             backgroundColor="blue"
           />
         </section>
-
-        {/*<section className="testimonial-section mb-10 px-5">*/}
-        {/*  <div className="mx-auto my-10 max-w-screen-lg  px-5">*/}
-        {/*    <h2 className="mb-5 text-center text-2xl font-bold md:text-4xl">*/}
-        {/*      What Our{" "}*/}
-        {/*      <span className="highlight-users bg-blue-500 px-1 text-white">*/}
-        {/*        Users*/}
-        {/*      </span>{" "}*/}
-        {/*      Say*/}
-        {/*    </h2>*/}
-
-        {/*    <TestimonialCard*/}
-        {/*      imageUrl={user2PfpImg}*/}
-        {/*      description="Codefoli made building my portfolio a breeze. It truly*/}
-        {/*          represents my skills and work."*/}
-        {/*      userName="Michael Tikhonovsky"*/}
-        {/*    />*/}
-        {/*    <TestimonialCard*/}
-        {/*      imageUrl={userPfpImg}*/}
-        {/*      description="With Codefoli, I was able to create a professional portfolio in*/}
-        {/*          no time."*/}
-        {/*      userName="David Mann"*/}
-        {/*      reverse*/}
-        {/*    />*/}
-        {/*  </div>*/}
-        {/*</section>*/}
 
         <section className="mb-10 px-5">
           <div className="mx-auto my-10 max-w-screen-lg  px-5">
