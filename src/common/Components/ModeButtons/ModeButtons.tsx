@@ -160,7 +160,7 @@ const ModeButtons: FC<{
         style={animation}
         className="fixed bottom-6 left-0 right-0 flex justify-center"
       >
-        <div className="mx-2 flex max-w-full flex-col rounded-3xl border-2 border-black bg-white px-4 py-3 shadow-custom sm:max-w-screen-md sm:flex-row">
+        <div className="mx-2 flex max-w-full flex-col rounded-3xl border-2 border-black bg-white dark:bg-[#0d0d0d] px-4 py-3 shadow-custom sm:max-w-screen-md sm:flex-row">
           <div className="flex flex-col items-center justify-center">
             <div className="flex flex-wrap justify-center">
               {!deploying && !activeDownload ? (
@@ -229,7 +229,7 @@ const ModeButtons: FC<{
           codeModalOpen ? "" : "hidden"
         } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}
       >
-        <div className="rounded-lg bg-white p-8 shadow-lg">
+        <div className="rounded-lg bg-white dark:bg-[#1a1a1a] p-8 shadow-lg">
           <h2 className="mb-4 text-2xl font-bold">Download Code</h2>
           <button
             className="mb-2 flex w-full items-center justify-center rounded-3xl border-2 border-black bg-blue-500 px-4 py-3 font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
@@ -273,13 +273,13 @@ const ModeButtons: FC<{
         } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}
       >
         {!userData.website ? (
-          <div className="flex flex-col justify-center rounded-lg bg-white p-8 shadow-lg">
+          <div className="flex flex-col justify-center rounded-lg bg-white dark:bg-[#1a1a1a] p-8 shadow-lg">
             <h2 className="mb-4 text-2xl font-bold">Deployment Config</h2>
             <p className={"text-center"}>{subdomain}.codefoli.com</p>
             <div className="flex items-center">
               <input
                 placeholder={"// subdomain"}
-                className="rounded-xl border-2 border-black px-2 focus:outline-none focus:ring-0"
+                className="rounded-xl dark:bg-[#0d0d0d] border-2 border-black px-2 focus:outline-none focus:ring-0"
                 onChange={(e) => {
                   setSubdomain(e.target.value);
                   setSubdomainAvailable(false);
@@ -357,7 +357,7 @@ const ModeButtons: FC<{
             </button>
           </div>
         ) : (
-          <div className="flex flex-col justify-center rounded-lg bg-white p-8 shadow-lg">
+          <div className="flex flex-col justify-center rounded-lg bg-white dark:bg-[#1a1a1a] p-8 shadow-lg">
             <h2 className="mb-4 text-2xl font-bold">Deployment Config</h2>
             <p className={""}>Current deployment:</p>
             <a
