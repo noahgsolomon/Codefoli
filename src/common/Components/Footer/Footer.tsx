@@ -1,11 +1,11 @@
 const Footer = () => {
   return (
-    <footer className="bg-black">
+    <footer className="bg-[#0d0d0d]">
       <div className="mx-auto max-w-screen-xl px-4  pb-2 pt-2 lg:px-8 lg:pt-6">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
             <div className="flex justify-center  sm:justify-start">
-              <h2 className="bg-red-500 text-4xl font-bold text-white">
+              <h2 className="bg-red-500 px-2 text-4xl font-bold text-white">
                 Codefoli
               </h2>
             </div>
