@@ -32,13 +32,13 @@ const ProjectCardP: FC<{
           }`}
         />
       </div>
-      <div className="content rounded-2xl bg-white p-5">
+      <div className="bg-white dark:bg-[#0d0d0d] p-5">
         <h2 className="mb-5  text-2xl font-bold leading-snug transition-all">
           {title}
         </h2>
         <p className="text-base transition-all">{description}</p>
       </div>
-      <div className="inline-block bg-white px-5 py-2 text-sm font-bold">
+      <div className="inline-block bg-white px-5 py-2 dark:bg-[#0d0d0d] text-sm font-bold">
         Learn more{" "}
         <img
           src={ArrowRight + "?date=" + date}
@@ -48,7 +48,7 @@ const ProjectCardP: FC<{
           } inline-block transition-all`}
         />
       </div>
-      <div className={`rounded-b-lg bg-white px-5 py-2`}>
+      <div className={`rounded-b-lg bg-white px-5 dark:bg-[#0d0d0d] py-2`}>
         {languages.map((language, index) => (
           <span
             className={`mb-2 mr-2 inline-block  rounded-lg px-3 text-white transition-all hover:-translate-y-0.5 ${COLORS[index]} py-2 text-sm`}

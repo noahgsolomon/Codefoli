@@ -249,7 +249,7 @@ const ProjectCard: FC<{
           click to upload image
         </div>
       </div>
-      <div className="content rounded-2xl bg-white p-5">
+      <div className="bg-white dark:bg-[#0d0d0d] p-5">
         {titleEdit ? (
           <textarea
             ref={titleTextareaRef}
@@ -316,7 +316,7 @@ const ProjectCard: FC<{
       </div>
       <Link
         to={`/${slug}`}
-        className="inline-block bg-white px-5 py-2 text-sm font-bold"
+        className="inline-block bg-white dark:bg-[#0d0d0d] px-5 py-2 text-sm font-bold"
       >
         Learn more{" "}
         <img
@@ -327,7 +327,7 @@ const ProjectCard: FC<{
           } inline-block transition-all`}
         />
       </Link>
-      <div className={`rounded-b-lg bg-white px-5 py-2`}>
+      <div className={`rounded-b-lg dark:bg-[#0d0d0d] px-5 py-2`}>
         {languages.map((language, index) => (
           <span
             className={`mb-2 mr-2 inline-block cursor-pointer rounded-lg px-3 text-white transition-all hover:-translate-y-0.5 ${
@@ -345,7 +345,7 @@ const ProjectCard: FC<{
         ))}
         {hovered && languages.length < 8 && !addProjectLanguageState && (
           <div
-            className={`mb-2 mr-2 inline-block cursor-pointer rounded-lg bg-gray-300 px-3 py-2 text-sm text-white transition-all hover:-translate-y-0.5`}
+            className={`mb-2 mr-2 inline-block cursor-pointer rounded-lg bg-gray-300 px-3 py-2 text-sm text-white transition-all hover:bg-green-500 hover:-translate-y-0.5`}
             onClick={() => setAddProjectLanguageState(true)}
           >
             +
@@ -354,7 +354,7 @@ const ProjectCard: FC<{
         {addProjectLanguageState && (
           <input
             type="text"
-            className="mb-2 mr-2 inline-block cursor-pointer rounded-lg px-3 py-2 text-sm shadow-custom transition-all hover:-translate-y-0.5 focus:outline-none"
+            className="mb-2 mr-2 dark:bg-[#1a1a1a] inline-block cursor-pointer rounded-lg px-3 py-2 text-sm shadow-custom transition-all hover:-translate-y-0.5 focus:outline-none"
             value={languageAddValue}
             onChange={(e) => setLanguageAddValue(e.target.value)}
             onBlur={() => {
