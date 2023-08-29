@@ -73,7 +73,7 @@ const AddServiceCard: React.FC<{
               type="text"
               id="services"
               value={newService}
-              className="rounded-xl border-2 border-black p-3 text-center text-black placeholder-black"
+              className="rounded-xl border-2 border-black p-3 text-center dark:bg-[#0d0d0d]"
               placeholder="Enter service"
               autoFocus={true}
               onChange={(e) => handleNewServiceChange(e)}
@@ -83,10 +83,10 @@ const AddServiceCard: React.FC<{
                 {matchingServices.map((service) => (
                   <div
                     key={service}
-                    className="m-1 inline-block cursor-pointer rounded-full border-b border-gray-300 bg-black transition-all hover:-translate-y-0.5 hover:opacity-90"
+                    className="m-1 inline-block cursor-pointer rounded-full bg-black dark:bg-gray-50 transition-all hover:-translate-y-0.5 hover:opacity-90"
                     onClick={async () => await handleAddService(service)}
                   >
-                    <span className="px-2 text-white">{service}</span>
+                    <span className="px-2 text-white dark:text-gray-800">{service}</span>
                   </div>
                 ))}
               </div>
