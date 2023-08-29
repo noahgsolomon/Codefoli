@@ -371,7 +371,7 @@ const Project: FC<{
             </animated.div>
             <animated.div style={imageAnimation}>
               <div
-                className={`relative overflow-hidden rounded-lg border-2 border-black bg-white p-2 shadow-custom transition-all lg:h-[600px]
+                className={`relative overflow-hidden rounded-lg border-2 border-black bg-white dark:bg-[#0d0d0d] p-2 shadow-custom transition-all lg:h-[600px]
                 ${imageLoading ? "opacity-0" : "opacity-100"}`}
                 onMouseEnter={() => {
                   setImageEdit(true);
@@ -500,7 +500,7 @@ const Project: FC<{
                 </p>
               )}
             </div>
-            <div className="card grid gap-2 rounded-lg border-2 border-black bg-white p-2 shadow-custom lg:col-span-2">
+            <div className="card grid gap-2 rounded-lg border-2 border-black bg-white dark:bg-[#1a1a1a] p-2 shadow-custom lg:col-span-2">
               <h2 className="text-2xl font-bold">Information</h2>
               <ul className="list-disc pl-5">
                 <div className="li-wrapper">
@@ -557,7 +557,7 @@ const Project: FC<{
                     projectData.languages.length < 8 &&
                     !addProjectLanguageState && (
                       <div
-                        className={`mb-2 mr-2 inline-block cursor-pointer rounded-lg bg-gray-300 px-3 py-2 text-sm text-white transition-all hover:-translate-y-0.5`}
+                        className={`mb-2 mr-2 inline-block cursor-pointer hover:bg-green-500 rounded-lg bg-gray-300 px-3 py-2 text-sm text-white transition-all hover:-translate-y-0.5`}
                         onClick={() => setAddProjectLanguageState(true)}
                       >
                         +
@@ -566,7 +566,7 @@ const Project: FC<{
                   {addProjectLanguageState && (
                     <input
                       type="text"
-                      className="mb-2 mr-2 inline-block cursor-pointer rounded-lg px-3 py-2 text-sm shadow-custom transition-all hover:-translate-y-0.5 focus:outline-none"
+                      className="mb-2 mr-2 inline-block cursor-pointer rounded-lg px-3 py-2 dark:bg-[#1a1a1a] text-sm shadow-custom transition-all hover:-translate-y-0.5 focus:outline-none"
                       value={languageAddValue}
                       onChange={(e) => setLanguageAddValue(e.target.value)}
                       onBlur={() => {
@@ -604,7 +604,7 @@ const Project: FC<{
               </a>
               <input
                 type="text"
-                className="mb-2 mr-2 inline-block rounded-lg px-3 py-2 text-sm shadow-custom transition-all hover:-translate-y-0.5 focus:outline-none"
+                className="mb-2 mr-2 inline-block dark:bg-[#1a1a1a] rounded-lg px-3 py-2 text-sm shadow-custom transition-all hover:-translate-y-0.5 focus:outline-none"
                 value={linkValue}
                 placeholder={"change link"}
                 onChange={(e) => setLinkValue(e.target.value)}

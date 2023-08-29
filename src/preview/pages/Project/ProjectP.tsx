@@ -78,7 +78,7 @@ const ProjectP: FC<{
             </animated.div>
             <animated.div style={imageAnimation}>
               <div
-                className={`relative overflow-hidden rounded-lg border-2 border-black bg-white p-2 shadow-custom transition-all lg:h-[600px]`}
+                className={`relative overflow-hidden rounded-lg dark:bg-[#0d0d0d] border-2 border-black bg-white p-2 shadow-custom transition-all lg:h-[600px]`}
               >
                 <img
                   src={projectDetails.image}
@@ -100,7 +100,7 @@ const ProjectP: FC<{
                 {projectDetails.description}
               </p>
             </div>
-            <div className="card grid gap-2 rounded-lg border-2 border-black bg-white p-2 shadow-custom lg:col-span-2">
+            <div className="card grid gap-2 rounded-lg border-2 border-black dark:bg-[#1a1a1a] bg-white p-2 shadow-custom lg:col-span-2">
               <h2 className="text-2xl font-bold">Information</h2>
               <ul className="list-disc pl-5">
                 <div className="li-wrapper">
