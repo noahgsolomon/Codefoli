@@ -91,13 +91,12 @@ const ServiceCard: React.FC<{
           />
         </div>
       )}
-      <div className="content rounded-2xl bg-white p-5">
+      <div className="flex-grow rounded-b-xl bg-white dark:bg-[#0d0d0d] p-5">
         <h2 className="title text-2xl font-bold">
           {title.replaceAll("_", " ")}
         </h2>
         <p className="description text-base">{description}</p>
       </div>
-      <div className="flex-grow rounded-2xl bg-white"></div>
     </div>
   );
 };
