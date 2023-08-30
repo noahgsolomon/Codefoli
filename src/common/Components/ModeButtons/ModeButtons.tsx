@@ -6,10 +6,11 @@ import {
   subdomainAvailability,
 } from "api/deployapi.tsx";
 import UserData from "Type/UserData.tsx";
-import { FaDownload, FaPaperPlane, FaTrash } from "react-icons/fa";
+import {FaDownload, FaGlobe, FaPaperPlane, FaTrash} from "react-icons/fa";
 import { AiOutlineEye } from "react-icons/ai";
 import { download } from "api/downloadapi.tsx";
 import { deleteWebsite } from "api/deletewebsiteapi.tsx";
+import {IoIosCloud} from "react-icons/io";
 
 const ModeButtons: FC<{
   deploying: boolean;
@@ -29,6 +30,7 @@ const ModeButtons: FC<{
   const [scrollingDown, setScrollingDown] = useState(false);
   const [codeModalOpen, setCodeModalOpen] = useState(false);
   const [deployModalOpen, setDeployModalOpen] = useState(false);
+  const [importedDomainModalOpen, setImportedDomainModalOpen] = useState(false);
   const [subdomain, setSubdomain] = useState("subdomain");
   const [subdomainChecking, setSubdomainChecking] = useState(false);
   const [subdomainAvailable, setSubdomainAvailable] = useState(false);
@@ -36,6 +38,10 @@ const ModeButtons: FC<{
   const [subdomainMessage, setSubdomainMessage] = useState(
     "^ write what subdomain you want"
   );
+  const [importedDomainLoading, setImportedDomainLoading] = useState(false);
+  const [importedDomainError, setImportedDomainError] = useState(false);
+  const [importedDomainSuccess, setImportedDomainSuccess] = useState(false);
+  const [importedDomain, setImportedDomain] = useState("");
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const thresholdShow = 200;
   const thresholdHide = 0;
@@ -80,7 +86,7 @@ const ModeButtons: FC<{
       : subdomain;
     console.log(website);
     console.log(userData.website);
-    await deploy(website);
+    await deploy({ subdomain: website, custom_domain: null });
     let attempts = 0;
     const maxAttempts = 40;
     const interval = setInterval(async () => {
@@ -152,6 +158,32 @@ const ModeButtons: FC<{
       setUserData({ ...userData, website: "" });
       setDeleteModalOpen(false);
     }
+  };
+
+  const invalidDomain = (domain: string) => {
+    const domainRegex = /^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/
+    return !domainRegex.test(domain);
+  };
+
+  const handleDeployCustomDomain = async () => {
+    setImportedDomainLoading(true);
+    if (importedDomain === "" || invalidDomain(importedDomain)) {
+      setImportedDomainError(true);
+      setImportedDomainLoading(false);
+      return;
+    }
+    const deployFetch = await deploy({
+      subdomain: null,
+      custom_domain: importedDomain,
+    });
+    if (deployFetch.status === "OK") {
+      setImportedDomainSuccess(true);
+      setImportedDomainError(false);
+    }
+    else {
+      setImportedDomainError(false);
+    }
+    setImportedDomainLoading(false);
   };
 
   return (
@@ -345,6 +377,16 @@ const ModeButtons: FC<{
               Deploy Now
             </button>
             <button
+                className={`bg-black flex w-full items-center justify-center rounded-3xl border-2 border-yellow-500 px-4 py-3 font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-custom`}
+                onClick={() => {
+                  setImportedDomainModalOpen(true);
+                  setDeployModalOpen(false);
+                }}
+            >
+              <FaGlobe fill={"white"} className="mr-2" />
+              Deploy on custom domain
+            </button>
+            <button
               className="mt-4 flex w-full justify-center rounded-3xl border-2 border-black bg-red-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
               onClick={() => {
                 setDeployModalOpen(false);
@@ -412,7 +454,7 @@ const ModeButtons: FC<{
             deleteModalOpen ? "" : "hidden"
           } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}
         >
-          <div className="flex flex-col justify-center rounded-lg bg-white p-8 shadow-lg">
+          <div className="flex flex-col justify-center rounded-lg bg-white dark:bg-[#1a1a1a] p-8 shadow-lg">
             <h2 className="mb-4 max-w-[20ch] text-2xl font-bold ">
               Are you sure you want to delete this website?
             </h2>
@@ -430,6 +472,63 @@ const ModeButtons: FC<{
             </button>
           </div>
         </div>
+      )}
+      {importedDomainModalOpen && (
+          <div
+              className={`${
+                  importedDomainModalOpen ? "" : "hidden"
+              } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}>
+            <div className="bg-white dark:bg-[#1a1a1a] rounded p-6 w-1/2">
+              <h2 className="text-2xl font-bold">Custom Domain</h2>
+              <p className={'text-sm opacity-50 mb-4'}>include subdomain (e.g., www)</p>
+              <input
+                  type="text"
+                  onChange={(e) => setImportedDomain(e.target.value)}
+                  placeholder="www.mydomain.com"
+                  className="border-2 border-black rounded-xl px-2 py-1 dark:bg-[#0d0d0d] w-full mb-4"
+              />
+              <p className={`text-sm opacity-50 mb-4 text-red-500 ${importedDomainError ? '' : 'hidden'}`}>invalid domain!</p>
+              <p className={`text-sm opacity-50 mb-4 text-green-500 ${importedDomainSuccess ? '' : 'hidden'}`}>imported domain!</p>
+              {!importedDomainLoading ? (<button
+                  className="flex w-full justify-center items-center rounded-3xl border-2 bg-blue-500 border-black px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                  onClick={async () => await handleDeployCustomDomain()}
+              >
+                <IoIosCloud fill={"white"} className="mr-2" />Deploy
+              </button>) : (
+                  <div className={"fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50"}>
+                    <svg
+                        className="mr-2 h-10 w-10 animate-spin rounded-full border-2 border-gray-200 dark:border-gray-300"
+                        viewBox="0 0 24 24"
+                    >
+                      <circle
+                          className="rainbow-stroke"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          strokeWidth="4"
+                          fill={localStorage.getItem('theme') === 'light' ? 'white' : '#1a1a1a'}
+                      ></circle>
+                      <path
+                          className="opacity-75"
+                          fill={'white'}
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                  </div>
+                  )}
+              <button
+                  className="mt-4 flex w-full justify-center rounded-3xl border-2 border-black bg-red-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                  onClick={() => {
+                    setImportedDomainModalOpen(false);
+                    setImportedDomain('');
+                    setImportedDomainError(false);
+                    setImportedDomainSuccess(false);
+                  }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
       )}
     </>
   );
