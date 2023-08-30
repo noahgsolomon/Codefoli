@@ -1,6 +1,6 @@
 import { STAGE } from "../../config.ts";
 
-const deploy = async (subdomain: string) => {
+const deploy = async ({ subdomain, custom_domain }: { subdomain: string | null, custom_domain: string | null }) => {
   try {
     const response = await fetch(
       `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/deploy`,
@@ -10,7 +10,7 @@ const deploy = async (subdomain: string) => {
           "Content-Type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("Id"),
         },
-        body: JSON.stringify({ subdomain: subdomain }),
+        body: JSON.stringify({ subdomain: subdomain, custom_domain: custom_domain }),
       }
     );
 
