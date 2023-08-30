@@ -36,7 +36,7 @@ const ModeButtons: FC<{
   const [subdomainAvailable, setSubdomainAvailable] = useState(false);
   const [prevScroll, setPrevScroll] = useState(window.scrollY);
   const [subdomainMessage, setSubdomainMessage] = useState(
-    "^ write what subdomain you want"
+    ""
   );
   const [importedDomainLoading, setImportedDomainLoading] = useState(false);
   const [importedDomainError, setImportedDomainError] = useState(false);
@@ -315,7 +315,7 @@ const ModeButtons: FC<{
                 onChange={(e) => {
                   setSubdomain(e.target.value);
                   setSubdomainAvailable(false);
-                  setSubdomainMessage("^ write what subdomain you want");
+                  setSubdomainMessage("");
                 }}
               />
               {!subdomainChecking ? (
@@ -391,7 +391,7 @@ const ModeButtons: FC<{
               onClick={() => {
                 setDeployModalOpen(false);
                 setSubdomainAvailable(false);
-                setSubdomainMessage("^ write what subdomain you want");
+                setSubdomainMessage("");
                 setSubdomainChecking(false);
               }}
             >
@@ -439,7 +439,7 @@ const ModeButtons: FC<{
               onClick={() => {
                 setDeployModalOpen(false);
                 setSubdomainAvailable(false);
-                setSubdomainMessage("^ write what subdomain you want");
+                setSubdomainMessage("");
                 setSubdomainChecking(false);
               }}
             >
