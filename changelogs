@@ -4,9 +4,13 @@
       if this certificate exists already if so for now denies it
     - Sends the message to deployment queue, which is polled by the ec2 instance, which checks if it is a custom domain request
       and if so, it creates the SSL certificate, as well as the Cloudfront distribution,
-      and adds to the custom domain sqs queue a mapping between the domain name, distribution id and the ssl id
+      and adds to the custom domain sqs queue a message of the domain name, distribution id s3 name and the ssl id
       in a message.
     - poller is the same ec2 instance but a different process, which polls the custom domain sqs queue, and if it finds a message,
       it checks if the ssl certificate is valid yet, if so, it sets the cname domain value as the domain name, and
       the ssl certificate value as the ssl certificate. It then invalidates the cloudfront distribution cache
         and then adds the domain name to the database, and then deletes the message from the queue.
+    -  I should also mention this poller checks if the messages are over 24?hrs, if so, it removes the cloudfront distribution,
+    the s3 bucket, and the ssl certificate, as well as removes the message from the sqs queue. Also, the poller grabs all messages every
+     x mins maybe 5 or10 because we need this task not to bog down the ec2 instance, and for all instances not over 24 hrs old, and not valid,
+     they must remain in the queue.
