@@ -478,14 +478,14 @@ const ModeButtons: FC<{
               className={`${
                   importedDomainModalOpen ? "" : "hidden"
               } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}>
-            <div className="bg-white dark:bg-[#1a1a1a] rounded p-6 w-1/2">
+            <div className="bg-white max-w-[400px] dark:bg-[#1a1a1a] rounded-lg p-6 w-1/2">
               <h2 className="text-2xl font-bold">Custom Domain</h2>
               <p className={'text-sm opacity-50 mb-4'}>include subdomain (e.g., www)</p>
               <input
                   type="text"
                   onChange={(e) => setImportedDomain(e.target.value)}
                   placeholder="www.mydomain.com"
-                  className="border-2 border-black rounded-xl px-2 py-1 dark:bg-[#0d0d0d] w-full mb-4"
+                  className="border-2 border-black rounded-xl px-2 transition-all py-1 dark:bg-[#0d0d0d] w-full mb-16"
               />
               <p className={`text-sm opacity-50 mb-4 text-red-500 ${importedDomainError ? '' : 'hidden'}`}>invalid domain!</p>
               <p className={`text-sm opacity-50 mb-4 text-green-500 ${importedDomainSuccess ? '' : 'hidden'}`}>imported domain!</p>
