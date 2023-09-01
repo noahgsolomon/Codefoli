@@ -126,13 +126,13 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
     setSubmitted(true);
     const postData = await setupAccount(
       userData.name,
-      company,
-      location,
+        (!company || company === '') ? 'company' : company,
+        (!location || location === '') ? 'somewhere' : location,
       selectedSkills.map((skill) => skill.skill),
       work.map((item) => item.work),
       projects.map((item) => item.project),
-      profession,
-      about,
+        (!profession || profession === '') ? 'something' : profession,
+        (!about || about === '') ? 'about...' : about,
       selectedServices.map((service) =>
         service.service
           .toUpperCase()
