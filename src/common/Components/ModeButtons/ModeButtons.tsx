@@ -1,6 +1,7 @@
 import { useState, useEffect, FC } from "react";
 import { useSpring, animated } from "react-spring";
 import {
+  checkCustomDomainDetails,
   checkDeployed,
   deploy,
   subdomainAvailability,
@@ -38,6 +39,7 @@ const ModeButtons: FC<{
   const [subdomainMessage, setSubdomainMessage] = useState(
     ""
   );
+  const [customDomainCreatedModalOpen, setCustomDomainCreatedModalOpen] = useState(false);
   const [importedDomainLoading, setImportedDomainLoading] = useState(false);
   const [importedDomainError, setImportedDomainError] = useState(false);
   const [importedDomainSuccess, setImportedDomainSuccess] = useState(false);
@@ -86,7 +88,7 @@ const ModeButtons: FC<{
       : subdomain;
     console.log(website);
     console.log(userData.website);
-    await deploy({ subdomain: website, custom_domain: null });
+    await deploy({ subdomain: website, custom_domain: null, distribution: null });
     let attempts = 0;
     const maxAttempts = 40;
     const interval = setInterval(async () => {
@@ -172,19 +174,58 @@ const ModeButtons: FC<{
       setImportedDomainLoading(false);
       return;
     }
-    const deployFetch = await deploy({
+    await deploy({
       subdomain: null,
       custom_domain: importedDomain,
+      distribution: null
     });
-    if (deployFetch.status === "OK") {
-      setImportedDomainSuccess(true);
-      setImportedDomainError(false);
-    }
-    else {
-      setImportedDomainError(false);
-    }
-    setImportedDomainLoading(false);
+
+    let attempts = 0;
+    const maxAttempts = 40;
+    const interval = setInterval(async () => {
+      const deployed = await checkCustomDomainDetails();
+      if (deployed.status === "OK") {
+        clearInterval(interval);
+        setImportedDomainLoading(false);
+        setImportedDomainSuccess(true);
+        setCustomDomainCreatedModalOpen(true);
+        setImportedDomainError(false);
+        setImportedDomainModalOpen(false);
+        setUserData({ ...userData, website: deployed.data.website, cname_name: deployed.data.cname_name, cname_value: deployed.data.cname_value, distribution: deployed.data.distribution});
+      } else {
+        attempts++;
+        if (attempts >= maxAttempts) {
+          setImportedDomainLoading(false);
+          clearInterval(interval);
+          setImportedDomainError(false);
+          console.log("Max attempts reached, website not yet deployed.");
+        }
+      }
+    }, 5000);
   };
+
+  const handleCustomRedeploy = async () => {
+    setDeploying(true);
+    setDeployModalOpen(false);
+    await deploy({subdomain: null, custom_domain: userData.website.replace("https://", ""), distribution: userData.distribution});
+    let attempts = 0;
+    const maxAttempts = 40;
+    const interval = setInterval(async () => {
+      const deployed = await checkDeployed();
+      if (deployed.status === "OK") {
+        clearInterval(interval);
+        setDeployed({ url: deployed.data, bool: true });
+        setDeploying(false);
+        setUserData({ ...userData, website: deployed.data });
+      } else {
+        attempts++;
+        if (attempts >= maxAttempts) {
+          clearInterval(interval);
+          console.log("Max attempts reached, website not yet deployed.");
+        }
+      }
+    }, 5000);
+  }
 
   return (
     <>
@@ -245,13 +286,20 @@ const ModeButtons: FC<{
               )}
             </div>
             <div>
-              <a
+              { userData.website && userData.cname_value && userData.cname_name && userData.cname_value ?
+                  (
+                      <p className={'text-blue-500 underline cursor-pointer hover:opacity-50 transition-all'} onClick={() => setCustomDomainCreatedModalOpen(true)}>
+                        DNS Records
+                      </p>
+                  ) : (
+                      <a
                 href={userData.website}
                 className="break-all text-sm text-blue-500 underline transition-all hover:text-yellow-500"
                 target={"_blank"}
               >
                 {userData.website}
               </a>
+                  )}
             </div>
           </div>
         </div>
@@ -398,6 +446,58 @@ const ModeButtons: FC<{
               Close
             </button>
           </div>
+        ) : userData.website && userData.cname_value && userData.cname_name && userData.distribution ? (
+            <div className="flex flex-col justify-center rounded-lg bg-white dark:bg-[#1a1a1a] p-8 shadow-lg">
+              <h2 className="mb-4 text-2xl font-bold">Deployment Config</h2>
+              <p className={""}>Current deployment:</p>
+              <p className={'text-blue-500 transition-all hover:opacity-50 underline cursor-pointer'} onClick={() => {
+                setDeployModalOpen(false);
+                setCustomDomainCreatedModalOpen(true);
+              }}>DNS Records</p>
+              <a
+                  className={
+                    "text-center text-blue-500 transition-all hover:opacity-80"
+                  }
+                  target={"_blank"}
+                  href={userData.website}
+              >
+                {userData.website}
+              </a>
+              <div>
+                <p className={""}>
+                  status: <span className={"text-yellow-500"}>custom website</span>
+                </p>
+              </div>
+
+              <button
+                  className={`mb-2 mt-1 flex w-full items-center justify-center rounded-3xl border-2 border-black bg-blue-500 px-4 py-3 font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-custom`}
+                  onClick={async () => await handleCustomRedeploy()}
+              >
+                <FaPaperPlane fill={"white"} className="mr-2" />
+                Redeploy
+              </button>
+              {/*<button*/}
+              {/*    className={`mb-2 mt-1 flex w-full items-center justify-center rounded-3xl border-2 border-black bg-black px-4 py-3 font-bold text-white transition-all hover:bg-red-900`}*/}
+              {/*    onClick={() => {*/}
+              {/*      setDeployModalOpen(false);*/}
+              {/*      setDeleteModalOpen(true);*/}
+              {/*    }}*/}
+              {/*>*/}
+              {/*  <FaTrash fill={"white"} className="mr-2" />*/}
+              {/*  Delete website*/}
+              {/*</button>*/}
+              <button
+                  className="mt-1 flex w-full justify-center rounded-3xl border-2 border-black bg-red-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                  onClick={() => {
+                    setDeployModalOpen(false);
+                    setSubdomainAvailable(false);
+                    setSubdomainMessage("");
+                    setSubdomainChecking(false);
+                  }}
+              >
+                Close
+              </button>
+            </div>
         ) : (
           <div className="flex flex-col justify-center rounded-lg bg-white dark:bg-[#1a1a1a] p-8 shadow-lg">
             <h2 className="mb-4 text-2xl font-bold">Deployment Config</h2>
@@ -495,7 +595,9 @@ const ModeButtons: FC<{
               >
                 <IoIosCloud fill={"white"} className="mr-2" />Deploy
               </button>) : (
-                  <div className={"fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50"}>
+                  <div className={"fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center flex-col bg-gray-600 bg-opacity-50"}>
+                    <h2 className={'font-bold text-3xl'}>Getting your website ready...</h2>
+                    <p className={'mb-4'}>Please stay here. est. time: 1 minute</p>
                     <svg
                         className="mr-2 h-10 w-10 animate-spin rounded-full border-2 border-gray-200 dark:border-gray-300"
                         viewBox="0 0 24 24"
@@ -523,6 +625,52 @@ const ModeButtons: FC<{
                     setImportedDomain('');
                     setImportedDomainError(false);
                     setImportedDomainSuccess(false);
+                  }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+      )}
+      {customDomainCreatedModalOpen && (
+          <div
+              className={`${
+                  customDomainCreatedModalOpen ? "" : "hidden"
+              } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}>
+            <div className="bg-white dark:bg-[#1a1a1a] rounded-lg p-6 ">
+                <p className={'text-5xl font-bold'}>Add these records to your DNS</p>
+              <p className={'opacity-80 mb-4'}>Please allow <span className={'underline'}>24 hours</span> for these changes to take affect depending on your provider</p>
+              <table className="min-w-full divide-y divide-gray-200 border-2 border-white">
+                <thead className="font-bold">
+                <tr>
+                  <th className="px-4 py-2 border-r"> </th>
+                  <th className="px-4 py-2 border-r text-blue-500">Entry 1</th>
+                  <th className="px-4 py-2 text-green-500">Entry 2</th>
+                </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                <tr>
+                  <th className="px-4 py-2 border-r">Record Type</th>
+                  <td className="px-4 py-2 border-r text-lg break-words w-1/4 text-blue-500">CNAME</td>
+                  <td className="px-4 py-2 text-lg break-words w-1/4 text-green-500">CNAME</td>
+                </tr>
+                <tr>
+                  <th className="px-4 py-2 border-r">Name</th>
+                  <td className="px-4 py-2 border-r text-lg break-words w-1/4 text-blue-500">{userData.website}</td>
+                  <td className="px-4 py-2 text-lg break-words w-1/4 text-green-500">{userData.cname_name}</td>
+                </tr>
+                <tr>
+                  <th className="px-4 py-2 border-r">Value</th>
+                  <td className="px-4 py-2 border-r text-lg break-words w-2/5 text-blue-500">{userData.distribution}</td>
+                  <td className="px-4 py-2 text-lg break-words w-2/5 text-green-500">{userData.cname_value}</td>
+                </tr>
+                </tbody>
+              </table>
+
+              <button
+                  className="mt-4 flex w-full justify-center rounded-3xl border-2 border-black bg-red-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                  onClick={() => {
+                    setCustomDomainCreatedModalOpen(false);
                   }}
               >
                 Close
