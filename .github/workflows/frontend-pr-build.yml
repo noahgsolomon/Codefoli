@@ -21,22 +21,19 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache-dependency-path: frontend/package-lock.json
+          cache-dependency-path: package-lock.json
           cache: "npm"
 
       # Install Packages
       - name: Install Packages
-        working-directory: frontend
         run: npm install
 
       # Run Lint
       - name: Run Lint
-        working-directory: frontend
         run: npm run lint
 
       # Build App
       - name: Build App
-        working-directory: frontend
         run: npm run build
 
       # Upload Artifact
@@ -44,4 +41,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: artifact-frontend
-          path: frontend/dist
+          path: dist

@@ -1,4 +1,5 @@
 import { STAGE } from "../../config.ts";
+import { LOCALSTORAGE_ID_KEY } from "../../util/constants";
 
 const download = async () => {
   try {
@@ -7,7 +8,7 @@ const download = async () => {
       {
         method: "GET",
         headers: {
-          Authorization: "Bearer " + localStorage.getItem("Id"),
+          Authorization: "Bearer " + localStorage.getItem(LOCALSTORAGE_ID_KEY),
         },
       }
     );

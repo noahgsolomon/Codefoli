@@ -21,6 +21,7 @@ import ProjectsP from "./preview/pages/Projects/ProjectsP.tsx";
 import ProjectP from "./preview/pages/Project/ProjectP.tsx";
 import AboutP from "./preview/pages/About/AboutP.tsx";
 import NotFoundP from "./preview/pages/NotFound/NotFoundP.tsx";
+import { LOCALSTORAGE_ID_KEY, LOCALSTORAGE_REFRESH_KEY, LOCALSTORAGE_ROLE_KEY } from "./util/constants";
 
 const PreviewApp: React.FC = () => {
   const navigate = useNavigate();
@@ -123,12 +124,12 @@ const PreviewApp: React.FC = () => {
       const fetchState = await authenticated();
       if (fetchState.status === "OK") {
         if (fetchState.data !== null) {
-          localStorage.setItem("Id", fetchState.data.idToken);
+          localStorage.setItem(LOCALSTORAGE_ID_KEY, fetchState.data.idToken);
         }
         const user = await userDetails();
         if (user.status === "ERROR") {
-          localStorage.removeItem("Id");
-          localStorage.removeItem("Refresh");
+          localStorage.removeItem(LOCALSTORAGE_ID_KEY);
+          localStorage.removeItem(LOCALSTORAGE_REFRESH_KEY);
           window.location.href = "/login";
         }
         if (user.data.role === "NEWBIE") {
@@ -166,7 +167,7 @@ const PreviewApp: React.FC = () => {
       } else {
         const path = window.location.pathname;
         if (path !== "/login" && path !== "/register" && path !== "/") {
-          localStorage.removeItem("role");
+          localStorage.removeItem(LOCALSTORAGE_ROLE_KEY);
           navigate("/login");
         }
       }

@@ -1,4 +1,5 @@
 import { FC, useMemo } from "react";
+import { LOCALSTORAGE_THEME_KEY, LIGHT_THEME_KEY } from "../../../util/constants";
 
 const Loader: FC = () => {
   const facts = [
@@ -87,7 +88,7 @@ const Loader: FC = () => {
               cy="12"
               r="10"
               strokeWidth="4"
-              fill={localStorage.getItem('theme') === 'light' ? 'white' : '#1a1a1a'}
+              fill={localStorage.getItem(LOCALSTORAGE_THEME_KEY) === LIGHT_THEME_KEY ? 'white' : '#1a1a1a'}
             ></circle>
             <path
               className="opacity-75"

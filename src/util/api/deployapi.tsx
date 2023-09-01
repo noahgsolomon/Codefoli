@@ -1,4 +1,5 @@
 import { STAGE } from "../../config.ts";
+import { LOCALSTORAGE_ID_KEY } from "../../util/constants";
 
 const deploy = async ({ subdomain, custom_domain, distribution }: { subdomain: string | null, custom_domain: string | null, distribution: string | null }) => {
   try {
@@ -8,7 +9,7 @@ const deploy = async ({ subdomain, custom_domain, distribution }: { subdomain: s
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("Id"),
+          Authorization: "Bearer " + localStorage.getItem(LOCALSTORAGE_ID_KEY),
         },
         body: JSON.stringify({ subdomain: subdomain, custom_domain: custom_domain, distribution: distribution }),
       }
@@ -35,7 +36,7 @@ const subdomainAvailability = async (subdomain: string) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("Id"),
+          Authorization: "Bearer " + localStorage.getItem(LOCALSTORAGE_ID_KEY),
         },
       }
     );
@@ -60,7 +61,7 @@ const checkDeployed = async () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("Id"),
+          Authorization: "Bearer " + localStorage.getItem(LOCALSTORAGE_ID_KEY),
         },
       }
     );
@@ -85,7 +86,7 @@ const checkCustomDomainDetails = async () => {
             method: "GET",
             headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("Id"),
+            Authorization: "Bearer " + localStorage.getItem(LOCALSTORAGE_ID_KEY),
             },
         }
         );
