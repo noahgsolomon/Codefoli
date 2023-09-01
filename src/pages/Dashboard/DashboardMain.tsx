@@ -117,9 +117,9 @@ const DashboardMain: React.FC<{
       {imageLoading && (
         <StatusBar message={"Uploading image!"} color={"bg-green-500"} />
       )}
-      <div className="flex flex-col justify-center md:flex-row">
-        <animated.div style={headerAnimation}>
-          <div className="mx-auto mt-10 mr-10 max-w-2xl font-bold xl:mt-32">
+      <div className="flex flex-col justify-center md:flex-row mx-10">
+        <animated.div style={headerAnimation} className={'md:mr-10'}>
+          <div className="mx-auto mt-10 max-w-2xl font-bold xl:mt-32">
             {headerOneEdit ? (
               <textarea
                 ref={headerOneTextareaRef}
@@ -144,7 +144,7 @@ const DashboardMain: React.FC<{
               />
             ) : (
               <h1
-                className="font-extra-bold mx-auto max-w-[15ch] cursor-pointer text-center text-4xl leading-snug transition-all hover:opacity-50 md:text-5xl md:leading-relaxed lg:mx-0 lg:text-left xl:text-6xl xl:leading-normal"
+                className="font-extra-bold mx-auto max-w-[15ch] cursor-pointer text-center text-4xl leading-snug transition-all hover:opacity-50 md:text-5xl md:leading-relaxed md:flex:mx-0 md:text-left xl:text-6xl xl:leading-normal"
                 onClick={() => setHeaderOneEdit(true)}
               >
                 {pageData.header_one}
@@ -175,14 +175,14 @@ const DashboardMain: React.FC<{
               />
             ) : (
               <p
-                className="mx-auto max-w-[35ch] cursor-pointer text-center text-base opacity-60 transition-all hover:opacity-50 lg:mx-0 lg:text-left xl:max-w-[50ch]"
+                className="mx-auto max-w-[35ch] cursor-pointer text-center text-base opacity-60 transition-all hover:opacity-50 md:mx-0 md:text-left xl:max-w-[50ch]"
                 onClick={() => setDescriptionOneEdit(true)}
               >
                 {pageData.description_one}
               </p>
             )}
           </div>
-          <div className="mt-5 whitespace-nowrap text-center lg:text-left">
+          <div className="mt-5 whitespace-nowrap text-center md:text-left">
             <Link
               to="/contact"
               className="mr-4 rounded-xl border-2 border-black bg-black px-6 py-4 font-bold text-white transition-all hover:-translate-y-0.5 hover:border-blue-500 hover:bg-blue-500"
