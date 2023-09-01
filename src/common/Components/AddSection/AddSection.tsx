@@ -29,11 +29,11 @@ const AddSection: React.FC<{
         <span className="text-lg font-bold text-white">+</span>
       </button>
       {isOpen && (
-        <div className="absolute top-full z-10 w-48 rounded border-2 border-black bg-white py-2 shadow-custom transition-all">
+        <div className="absolute top-full z-10 w-48 rounded border-2 border-black bg-white dark:bg-[#1a1a1a] py-2 shadow-custom transition-all">
           {sections.map((section, index) => (
             <button
               key={index}
-              className="text-normal block w-full rounded px-4 py-2 text-gray-900 transition-all hover:underline"
+              className="text-normal block w-full rounded px-4 py-2 transition-all hover:underline"
               onClick={async () => {
                 const addSectionFetch = await addRemoveSection(
                   page,
