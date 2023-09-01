@@ -158,16 +158,16 @@ const AboutMain: React.FC<{
 
   return (
     <>
-      <div className="container mx-auto my-20 max-w-screen-lg px-5">
+      <div className="mx-auto my-20 px-5">
         {showError.visible && (
           <StatusBar message={showError.message} color={"bg-red-400"} />
         )}
-        <section className="about mb-20 grid grid-cols-2 justify-center gap-10 md:h-[400px] md:grid-cols-5">
+        <section className="flex justify-center flex-col">
           <animated.div
             style={headerAnimation}
-            className="col-span-2 flex flex-col justify-center md:order-2 md:col-span-3"
+            className="flex flex-col justify-centers"
           >
-            <div>
+            <div className={'flex justify-center'}>
               {headerOneEdit ? (
                 <textarea
                   ref={headerOneTextareaRef}
@@ -183,21 +183,22 @@ const AboutMain: React.FC<{
                       await handleHeaderOneSubmit();
                     }
                   }}
-                  className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-5xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-7xl"
+                  className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent mb-5 max-w-[15ch] mx-auto text-center text-5xl font-bold md:text-7xl leading-snug outline-none focus:outline-none focus:ring-0"
                   autoFocus
                   onFocus={(e) => e.currentTarget.select()}
                   maxLength={50}
+                  rows={5}
                 />
               ) : (
                 <h2
-                  className="mb-5 cursor-pointer select-none text-center text-5xl font-bold transition-all hover:opacity-50 md:text-7xl"
+                  className="cursor-pointer select-none transition-all hover:opacity-50 mb-5 max-w-[15ch] mx-auto text-center text-5xl font-bold md:text-7xl"
                   onClick={() => setHeaderOneEdit(true)}
                 >
                   {pageData.header_one}
                 </h2>
               )}
             </div>
-            <div className="ml-5">
+            <div className={'flex justify-center'}>
               {descriptionOneEdit ? (
                 <textarea
                   ref={descriptionOneTextareaRef}
@@ -213,7 +214,7 @@ const AboutMain: React.FC<{
                       await handleDescriptionOneSubmit();
                     }
                   }}
-                  className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-2xl font-semibold leading-snug outline-none focus:outline-none focus:ring-0"
+                  className=" w-full resize-none appearance-none overflow-hidden border-none bg-transparent  mb-5 max-w-[40ch]  mx-auto text-center text-2xl font-semibold transition-all leading-snug outline-none focus:outline-none focus:ring-0"
                   style={{ minHeight: "8em" }}
                   autoFocus
                   onFocus={(e) => e.currentTarget.select()}
@@ -221,7 +222,7 @@ const AboutMain: React.FC<{
                 />
               ) : (
                 <p
-                  className="mb-5 cursor-pointer select-none text-center text-2xl font-semibold transition-all hover:opacity-50"
+                  className="cursor-pointer select-none hover:opacity-50 mb-5 max-w-[40ch]  mx-auto text-center text-2xl font-semibold transition-all"
                   onClick={() => setDescriptionOneEdit(true)}
                 >
                   {pageData.description_one}
@@ -237,108 +238,110 @@ const AboutMain: React.FC<{
               </Link>
             </div>
           </animated.div>
-          <animated.div
-            style={imageAnimation}
-            className={`image-wrapper relative order-2 h-[150px] w-[150px] text-center md:order-1 md:self-end ${
-              iconOneLoading ? "opacity-0" : "opacity-100"
-            }`}
-            onMouseEnter={() => setIconOneEdit(true)}
-            onMouseLeave={() => setIconOneEdit(false)}
-            onClick={() => {
-              iconOneFileInput.current && iconOneFileInput.current.click();
-            }}
-          >
-            <input
-              type="file"
-              ref={iconOneFileInput}
-              className="hidden"
-              accept=".jpg,.png"
-              onChange={async (e) => {
-                await handleFileUpload(
-                  e,
-                  setIconOneLoading,
-                  setPageData as Dispatch<SetStateAction<AnyPageData>>,
-                  "icon_one",
-                  setShowError,
-                  setCacheBusterOne,
-                  "about",
-                  "about-icon-one-upload"
-                );
-              }}
-            />
-            <div className="h-full w-full overflow-hidden rounded-full border-2 border-black">
-              <img
-                className="h-full w-full object-cover"
-                src={
-                  pageData.icon_one +
-                  "?date=" +
-                  date +
-                  "&cache=" +
-                  cacheBusterOne
-                }
-                alt="portfolio"
-              />
-            </div>
-
-            <div
-              className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-full border-8 border-dashed border-black bg-white text-xl font-bold text-black transition-all ${
-                iconOneEdit ? "opacity-50" : "opacity-0"
+          <div className={'flex justify-between md:mx-12 lg:mx-32'}>
+            <animated.div
+              style={imageAnimation}
+              className={`image-wrapper relative order-2 h-[150px] w-[150px] text-center md:order-1 md:self-end ${
+                iconOneLoading ? "opacity-0" : "opacity-100"
               }`}
-            >
-              click to upload image
-            </div>
-          </animated.div>
-
-          <animated.div
-            style={imageAnimation}
-            className={`image-wrapper relative order-last h-[150px] w-[150px] text-center md:self-start ${
-              iconTwoLoading ? "opacity-0" : "opacity-100"
-            }`}
-            onMouseEnter={() => setIconTwoEdit(true)}
-            onMouseLeave={() => setIconTwoEdit(false)}
-            onClick={() =>
-              iconTwoFileInput.current && iconTwoFileInput.current.click()
-            }
-          >
-            <input
-              type="file"
-              ref={iconTwoFileInput}
-              className="hidden"
-              accept=".jpg,.png"
-              onChange={async (e) => {
-                await handleFileUpload(
-                  e,
-                  setIconTwoLoading,
-                  setPageData as Dispatch<SetStateAction<AnyPageData>>,
-                  "icon_two",
-                  setShowError,
-                  setCacheBusterTwo,
-                  "about",
-                  "about-icon-two-upload"
-                );
+              onMouseEnter={() => setIconOneEdit(true)}
+              onMouseLeave={() => setIconOneEdit(false)}
+              onClick={() => {
+                iconOneFileInput.current && iconOneFileInput.current.click();
               }}
-            />
-            <div className="h-full w-full overflow-hidden rounded-full border-2 border-black">
-              <img
-                className="h-full w-full object-cover"
-                src={
-                  pageData.icon_two +
-                  "?date=" +
-                  date +
-                  "&cache=" +
-                  cacheBusterTwo
-                }
-                alt="portfolio"
-              />
-            </div>
-            <div
-              className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-full border-8 border-dashed border-black bg-white text-xl font-bold text-black transition-all ${
-                iconTwoEdit ? "opacity-50" : "opacity-0"
-              }`}
             >
-              click to upload image
-            </div>
-          </animated.div>
+              <input
+                type="file"
+                ref={iconOneFileInput}
+                className="hidden"
+                accept=".jpg,.png"
+                onChange={async (e) => {
+                  await handleFileUpload(
+                    e,
+                    setIconOneLoading,
+                    setPageData as Dispatch<SetStateAction<AnyPageData>>,
+                    "icon_one",
+                    setShowError,
+                    setCacheBusterOne,
+                    "about",
+                    "about-icon-one-upload"
+                  );
+                }}
+              />
+              <div className="h-full w-full overflow-hidden rounded-full border-2 border-black">
+                <img
+                  className="h-full w-full object-cover"
+                  src={
+                    pageData.icon_one +
+                    "?date=" +
+                    date +
+                    "&cache=" +
+                    cacheBusterOne
+                  }
+                  alt="portfolio"
+                />
+              </div>
+
+              <div
+                className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-full border-8 border-dashed border-black bg-white text-xl font-bold text-black transition-all ${
+                  iconOneEdit ? "opacity-50" : "opacity-0"
+                }`}
+              >
+                click to upload image
+              </div>
+            </animated.div>
+
+            <animated.div
+              style={imageAnimation}
+              className={`image-wrapper relative order-last h-[150px] w-[150px] text-center md:self-start ${
+                iconTwoLoading ? "opacity-0" : "opacity-100"
+              }`}
+              onMouseEnter={() => setIconTwoEdit(true)}
+              onMouseLeave={() => setIconTwoEdit(false)}
+              onClick={() =>
+                iconTwoFileInput.current && iconTwoFileInput.current.click()
+              }
+            >
+              <input
+                type="file"
+                ref={iconTwoFileInput}
+                className="hidden"
+                accept=".jpg,.png"
+                onChange={async (e) => {
+                  await handleFileUpload(
+                    e,
+                    setIconTwoLoading,
+                    setPageData as Dispatch<SetStateAction<AnyPageData>>,
+                    "icon_two",
+                    setShowError,
+                    setCacheBusterTwo,
+                    "about",
+                    "about-icon-two-upload"
+                  );
+                }}
+              />
+              <div className="h-full w-full overflow-hidden rounded-full border-2 border-black">
+                <img
+                  className="h-full w-full object-cover"
+                  src={
+                    pageData.icon_two +
+                    "?date=" +
+                    date +
+                    "&cache=" +
+                    cacheBusterTwo
+                  }
+                  alt="portfolio"
+                />
+              </div>
+              <div
+                className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-full border-8 border-dashed border-black bg-white text-xl font-bold text-black transition-all ${
+                  iconTwoEdit ? "opacity-50" : "opacity-0"
+                }`}
+              >
+                click to upload image
+              </div>
+            </animated.div>
+          </div>
         </section>
       </div>
       <animated.section style={descriptionAnimation} className="story mb-20">
