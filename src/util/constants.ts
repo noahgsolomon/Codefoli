@@ -1,8 +1,8 @@
-const LOCALSTORAGE_REMOVE_GITHUB_KEY: string = "removeGithub"
-const LOCALSTORAGE_THEME_KEY: string = "theme"
-const LOCALSTORAGE_ID_KEY: string = "Id"
-const LOCALSTORAGE_REFRESH_KEY: string = "Refresh"
-const LOCALSTORAGE_ROLE_KEY: string = "role"
+const LOCALSTORAGE_REMOVE_GITHUB_KEY = "removeGithub"
+const LOCALSTORAGE_THEME_KEY = "theme"
+const LOCALSTORAGE_ID_KEY = "Id"
+const LOCALSTORAGE_REFRESH_KEY = "Refresh"
+const LOCALSTORAGE_ROLE_KEY = "role"
 
 const DARK_THEME_KEY = 'dark'
 const LIGHT_THEME_KEY = 'light'
