@@ -21,10 +21,9 @@ const HomeMainP: FC<{
   const date = useMemo(() => Date.now(), []);
 
   return (
-    <div className="container mx-auto px-6">
-      <div className="flex flex-col lg:flex-row xl:mx-auto xl:justify-center">
+      <div className="flex flex-col justify-center md:flex-row">
         <animated.div style={headerAnimation}>
-          <div className="mx-auto mt-10  max-w-2xl font-bold xl:mt-32">
+          <div className="mx-auto mt-10 mr-10 max-w-2xl font-bold xl:mt-32">
             <h1 className="font-extra-bold mx-auto max-w-[15ch] text-center text-4xl leading-snug transition-all md:text-5xl md:leading-relaxed lg:mx-0 lg:text-left xl:text-6xl xl:leading-normal">
               {pageData.header_one}
             </h1>
@@ -49,7 +48,7 @@ const HomeMainP: FC<{
         </animated.div>
         <animated.div style={imageAnimation}>
           <div
-            className={`relative mx-auto mt-10 h-[300px] w-[300px] transition-all md:h-[500px] md:w-[500px] lg:mx-0 xl:ml-20 xl:mt-24`}
+            className={`relative mx-auto mt-10 transition-all lg:h-[500px] w-[350px] h-[350px] lg:w-[500px] xl:mt-24`}
           >
             <div className="h-full w-full overflow-hidden rounded-3xl border-2 border-black shadow-customHover">
               <img
@@ -61,7 +60,6 @@ const HomeMainP: FC<{
           </div>
         </animated.div>
       </div>
-    </div>
   );
 };
 

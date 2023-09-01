@@ -110,16 +110,16 @@ const DashboardMain: React.FC<{
     delay: 200,
   });
   return (
-    <div className="container mx-auto px-6">
+      <>
       {showError.visible && (
         <StatusBar message={showError.message} color={"bg-red-400"} />
       )}
       {imageLoading && (
         <StatusBar message={"Uploading image!"} color={"bg-green-500"} />
       )}
-      <div className="flex flex-col lg:flex-row xl:mx-auto xl:justify-center">
+      <div className="flex flex-col justify-center md:flex-row">
         <animated.div style={headerAnimation}>
-          <div className="mx-auto mt-10  max-w-2xl font-bold xl:mt-32">
+          <div className="mx-auto mt-10 mr-10 max-w-2xl font-bold xl:mt-32">
             {headerOneEdit ? (
               <textarea
                 ref={headerOneTextareaRef}
@@ -199,7 +199,7 @@ const DashboardMain: React.FC<{
         </animated.div>
         <animated.div style={imageAnimation}>
           <div
-            className={`relative mx-auto mt-10 h-[300px] w-[300px] transition-all md:h-[500px] md:w-[500px] lg:mx-0 xl:ml-20 xl:mt-24 ${
+            className={`relative mx-auto mt-10 transition-all lg:h-[500px] w-[350px] h-[350px] lg:w-[500px] xl:mt-24 ${
               imageLoading ? "opacity-0" : "opacity-100"
             }`}
             onMouseEnter={() => setImageOneEdit(true)}
@@ -247,7 +247,7 @@ const DashboardMain: React.FC<{
           </div>
         </animated.div>
       </div>
-    </div>
+    </>
   );
 };
 
