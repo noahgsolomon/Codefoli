@@ -656,7 +656,7 @@ const ModeButtons: FC<{
                 </tr>
                 <tr>
                   <th className="px-4 py-2 border-r">Name</th>
-                  <td className="px-4 py-2 border-r text-lg break-words w-1/4 text-blue-500">{userData.website}</td>
+                  <td className="px-4 py-2 border-r text-lg break-words w-1/4 text-blue-500">{userData.website.replace('https://', '')}</td>
                   <td className="px-4 py-2 text-lg break-words w-1/4 text-green-500">{userData.cname_name}</td>
                 </tr>
                 <tr>
