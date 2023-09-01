@@ -1,12 +1,13 @@
 import { FC, useState } from "react";
+import { LOCALSTORAGE_REMOVE_GITHUB_KEY } from "../../../util/constants";
 
 const Github: FC = () => {
   const [isGithubRemoved, setIsGithubRemoved] = useState(
-    localStorage.getItem("removeGithub") === "true"
+    localStorage.getItem(LOCALSTORAGE_REMOVE_GITHUB_KEY) === "true"
   );
   const [hover, setHover] = useState(false);
   const handleRemoveGithub = () => {
-    localStorage.setItem("removeGithub", "true");
+    localStorage.setItem(LOCALSTORAGE_REMOVE_GITHUB_KEY, "true");
     setIsGithubRemoved(true);
   };
 

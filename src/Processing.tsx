@@ -1,6 +1,7 @@
 import { FC, useEffect, useRef } from "react";
 import Loader from "Components/Loader/Loader.tsx";
 import { STAGE } from "./config.ts";
+import { LOCALSTORAGE_ID_KEY, LOCALSTORAGE_REFRESH_KEY } from "./util/constants";
 
 const Processing: FC = () => {
   const hasRun = useRef(false);
@@ -59,8 +60,8 @@ const Processing: FC = () => {
         );
         const responseBody = await response.json();
         if (responseBody.status === "OK") {
-          localStorage.setItem("Id", responseBody.data.idToken);
-          localStorage.setItem("Refresh", responseBody.data.refreshToken);
+          localStorage.setItem(LOCALSTORAGE_ID_KEY, responseBody.data.idToken);
+          localStorage.setItem(LOCALSTORAGE_REFRESH_KEY, responseBody.data.refreshToken);
           window.location.href = "/";
         }
       })();

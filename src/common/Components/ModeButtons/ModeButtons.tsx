@@ -12,6 +12,7 @@ import { AiOutlineEye } from "react-icons/ai";
 import { download } from "api/downloadapi.tsx";
 import { deleteWebsite } from "api/deletewebsiteapi.tsx";
 import {IoIosCloud} from "react-icons/io";
+import { LIGHT_THEME_KEY, LOCALSTORAGE_THEME_KEY } from "../../../util/constants";
 
 const ModeButtons: FC<{
   deploying: boolean;
@@ -608,7 +609,7 @@ const ModeButtons: FC<{
                           cy="12"
                           r="10"
                           strokeWidth="4"
-                          fill={localStorage.getItem('theme') === 'light' ? 'white' : '#1a1a1a'}
+                          fill={localStorage.getItem(LOCALSTORAGE_THEME_KEY) === LIGHT_THEME_KEY ? 'white' : '#1a1a1a'}
                       ></circle>
                       <path
                           className="opacity-75"

@@ -2,6 +2,8 @@ import React, { Dispatch, SetStateAction } from "react";
 import AnyPageData from "Type/AnyPageData.tsx";
 import UserData from "Type/UserData.tsx";
 import { STAGE } from "../../config.ts";
+import { LOCALSTORAGE_ID_KEY } from "../../util/constants";
+
 const handleFileUpload = async (
   e: React.ChangeEvent<HTMLInputElement>,
   setImageLoading: Dispatch<SetStateAction<boolean>>,
@@ -37,7 +39,7 @@ const handleFileUpload = async (
           body: JSON.stringify({ file: base64File }),
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("Id"),
+            Authorization: "Bearer " + localStorage.getItem(LOCALSTORAGE_ID_KEY),
           },
         }
       );

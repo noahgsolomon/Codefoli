@@ -1,4 +1,5 @@
 import { STAGE } from "../../config.ts";
+import { LOCALSTORAGE_ID_KEY } from "../../util/constants";
 
 const updateText = async (type: string, text: string, table: string) => {
   const model = {
@@ -13,7 +14,7 @@ const updateText = async (type: string, text: string, table: string) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("Id"),
+          Authorization: "Bearer " + localStorage.getItem(LOCALSTORAGE_ID_KEY),
         },
         body: JSON.stringify(model),
       }

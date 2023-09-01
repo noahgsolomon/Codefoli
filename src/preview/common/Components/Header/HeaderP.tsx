@@ -1,10 +1,11 @@
 import {Link} from "react-router-dom";
 import {FC, useState} from "react";
 import {toggleTheme} from "../../../../util/toggleTheme.ts";
+import { LOCALSTORAGE_THEME_KEY, LIGHT_THEME_KEY, DARK_THEME_KEY } from "../../../../util/constants";
 
 const HeaderP: FC = () => {
 
-  const [theme, setTheme] = useState<'light' | 'dark'>(localStorage.getItem('theme') as ('light' | 'dark') || 'light');
+  const [theme, setTheme] = useState<typeof LIGHT_THEME_KEY | typeof DARK_THEME_KEY>(localStorage.getItem(LOCALSTORAGE_THEME_KEY) as (typeof LIGHT_THEME_KEY | typeof DARK_THEME_KEY) || LIGHT_THEME_KEY);
 
   return (
       <header
@@ -42,9 +43,9 @@ const HeaderP: FC = () => {
                 <div
                     onClick={() => {
                       toggleTheme();
-                      setTheme(localStorage.getItem('theme') as ('light' | 'dark') || 'light');
+                      setTheme(localStorage.getItem(LOCALSTORAGE_THEME_KEY) as (typeof LIGHT_THEME_KEY | typeof DARK_THEME_KEY) || typeof LIGHT_THEME_KEY);
                     }}>
-                  {theme === 'light' ? (
+                  {theme === LIGHT_THEME_KEY ? (
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5 cursor-pointer transition-all fill-yellow-500 hover:opacity-80">
                         <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.844a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06 1.06l1.59-1.591a.75.75 0 00-1.061-1.06l-1.59 1.591z" />
                       </svg>

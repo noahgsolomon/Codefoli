@@ -7,6 +7,7 @@ import Project from "Type/Project.tsx";
 import { Services } from "Type/Services.tsx";
 import UserData from "Type/UserData.tsx";
 import StatusBar from "Components/StatusBar/StatusBar.tsx";
+import { LOCALSTORAGE_ROLE_KEY } from "../../util/constants";
 
 const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
   const [page, setPage] = useState(0);
@@ -98,8 +99,8 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
 
   useEffect(() => {
     if (
-      localStorage.getItem("role") &&
-      localStorage.getItem("role") === "NEWBIE"
+      localStorage.getItem(LOCALSTORAGE_ROLE_KEY) &&
+      localStorage.getItem(LOCALSTORAGE_ROLE_KEY) === "NEWBIE"
     ) {
       setCompany(userData.company || "");
       setLocation(userData.location || "");

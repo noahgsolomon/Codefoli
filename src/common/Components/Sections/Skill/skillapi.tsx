@@ -1,4 +1,5 @@
 import { STAGE } from "../../../../config.ts";
+import { LOCALSTORAGE_ID_KEY } from "../../../../util/constants";
 
 const changeSkill = async (skill: {
   type: "service" | "language";
@@ -13,7 +14,7 @@ const changeSkill = async (skill: {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("Id"),
+          Authorization: "Bearer " + localStorage.getItem(LOCALSTORAGE_ID_KEY),
         },
         body: JSON.stringify(skill),
       }

@@ -1,4 +1,5 @@
 import { STAGE } from "../../config.ts";
+import { LOCALSTORAGE_ID_KEY } from "../../util/constants";
 
 const deleteWebsite = async () => {
   try {
@@ -8,7 +9,7 @@ const deleteWebsite = async () => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("Id"),
+          Authorization: "Bearer " + localStorage.getItem(LOCALSTORAGE_ID_KEY),
         },
       }
     );

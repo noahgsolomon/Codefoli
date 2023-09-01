@@ -1,4 +1,5 @@
 import { STAGE } from "../../config.ts";
+import { LOCALSTORAGE_ID_KEY } from "../../util/constants";
 
 const changeProjects = async (
   projects:
@@ -25,7 +26,7 @@ const changeProjects = async (
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("Id"),
+          Authorization: "Bearer " + localStorage.getItem(LOCALSTORAGE_ID_KEY),
         },
         body: JSON.stringify(projects),
       }

@@ -1,13 +1,15 @@
+import { DARK_THEME_KEY, LIGHT_THEME_KEY, LOCALSTORAGE_THEME_KEY } from "./constants";
+
 export const toggleTheme = () => {
 
-    if (document.body.classList.contains('dark')) {
-        document.body.classList.remove('dark');
-        document.body.classList.add('light');
-        window.localStorage.setItem('theme', 'light');
+    if (document.body.classList.contains(DARK_THEME_KEY)) {
+        document.body.classList.remove(DARK_THEME_KEY);
+        document.body.classList.add(LIGHT_THEME_KEY);
+        window.localStorage.setItem(LOCALSTORAGE_THEME_KEY, LIGHT_THEME_KEY);
     }
     else {
-        document.body.classList.add('dark');
-        document.body.classList.remove('light');
-        window.localStorage.setItem('theme', 'dark');
+        document.body.classList.add(DARK_THEME_KEY);
+        document.body.classList.remove(LIGHT_THEME_KEY);
+        window.localStorage.setItem(LOCALSTORAGE_THEME_KEY, DARK_THEME_KEY);
     }
 }
