@@ -11,6 +11,9 @@ type UserData = {
   location: string;
   profession: string;
   website: string;
+  cname_name: string;
+  cname_value: string;
+  distribution: string;
   projects: Project[];
   services: Services[];
   skills: Skills[];
