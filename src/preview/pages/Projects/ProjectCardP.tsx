@@ -58,7 +58,7 @@ const ProjectCardP: FC<{
           </span>
         ))}
       </div>
-      <div className=" flex-grow rounded-2xl bg-white"></div>
+      <div className=" flex-grow rounded-b-lg bg-white dark:bg-[#0d0d0d]"></div>
     </Link>
   );
 };

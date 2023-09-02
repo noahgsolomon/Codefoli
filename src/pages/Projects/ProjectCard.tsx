@@ -1,7 +1,6 @@
 import { Dispatch, FC, SetStateAction, useMemo, useRef, useState } from "react";
 import UserData from "Type/UserData.tsx";
 import { changeProjects } from "./projectspageapi.tsx";
-import ArrowRight from "assets/icons/arrow-right.svg";
 import { Link } from "react-router-dom";
 import { COLORS } from "../../util/colors.ts";
 import { handleFileUpload } from "api/uploadimage.tsx";
@@ -319,15 +318,8 @@ const ProjectCard: FC<{
         className="inline-block bg-white dark:bg-[#0d0d0d] px-5 py-2 text-sm font-bold"
       >
         Learn more{" "}
-        <img
-          src={ArrowRight}
-          alt=""
-          className={`${
-            hovered ? "translate-x-1" : ""
-          } inline-block transition-all`}
-        />
       </Link>
-      <div className={`rounded-b-lg dark:bg-[#0d0d0d] px-5 py-2`}>
+      <div className={`dark:bg-[#0d0d0d] rounded-b-lg bg-white px-5 py-2`}>
         {languages.map((language, index) => (
           <span
             className={`mb-2 mr-2 inline-block cursor-pointer rounded-lg px-3 text-white transition-all hover:-translate-y-0.5 ${
@@ -374,7 +366,7 @@ const ProjectCard: FC<{
           />
         )}
       </div>
-      <div className=" flex-grow rounded-2xl bg-white"></div>
+      <div className=" flex-grow rounded-b-lg bg-white dark:bg-[#0d0d0d]"></div>
     </div>
   );
 };
