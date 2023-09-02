@@ -45,7 +45,6 @@ export const Services = [
   "Software Architecture",
   "User Research",
   "Investor Pitches",
-  "Software Maintenance",
   "Scalability Optimization",
   "Payment Gateway Integration",
   "Custom Solutions",
@@ -291,11 +290,6 @@ export const ServiceData: ServiceDataType = {
     description:
         "I prepare and present investor pitches to help secure funding for your venture.",
     image: "https://img.icons8.com/external-flaticons-lineal-color-flat-icons/800/external-pitch-influencer-marketing-flaticons-lineal-color-flat-icons.png",
-  },
-  SOFTWARE_MAINTENANCE: {
-    description:
-        "I offer software maintenance services to keep your software up-to-date and secure.",
-    image: "https://img.icons8.com/cotton/800/maintenance.png",
   },
   SCALABILITY_OPTIMIZATION: {
     description:
