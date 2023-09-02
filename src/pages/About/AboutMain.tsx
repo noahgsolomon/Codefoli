@@ -165,7 +165,7 @@ const AboutMain: React.FC<{
         <section className="flex justify-center flex-col">
           <animated.div
             style={headerAnimation}
-            className="flex flex-col justify-centers"
+            className="flex flex-col justify-center"
           >
             <div className={'flex justify-center'}>
               {headerOneEdit ? (
