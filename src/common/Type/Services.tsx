@@ -30,7 +30,30 @@ export const Services = [
   "Hardware Development",
   "Software Training",
   "Blockchain Development",
+  "API Development",
+  "IoT Development",
+  "Video Editing",
+  "Audio Engineering",
+  "Web Analytics",
+  "Sales Funnel Optimization",
+  "Frontend Optimization",
+  "Social Media Management",
+  "Email Marketing",
+  "Penetration Testing",
+  "System Auditing",
+  "Legacy System Migration",
+  "Software Architecture",
+  "User Research",
+  "Investor Pitches",
+  "Software Maintenance",
+  "Scalability Optimization",
+  "Payment Gateway Integration",
+  "Custom Solutions",
+  "Code Review",
+  "UI Component Design",
+  "Performance Monitoring"
 ];
+
 type ServiceDataType = {
   [key: string]: {
     description: string;
@@ -194,6 +217,117 @@ export const ServiceData: ServiceDataType = {
       "Ensure the quality and reliability of your software products through my rigorous quality assurance processes.",
     image: "https://img.icons8.com/cotton/800/000000/apple--v1.png",
   },
+  API_DEVELOPMENT: {
+    description:
+        "I develop robust APIs to enable seamless integration and functionality across systems.",
+    image: "https://img.icons8.com/external-vectorslab-flat-vectorslab/800/external-Api-servers-and-databases-vectorslab-flat-vectorslab.png",
+  },
+  IOT_DEVELOPMENT: {
+    description:
+        "I offer IoT development services for connected devices and smart solutions.",
+    image: "https://img.icons8.com/external-filled-outline-wichaiwi/800/external-iot-internet-of-things-filled-outline-wichaiwi-10.png",
+  },
+  VIDEO_EDITING: {
+    description:
+        "I provide video editing services to produce high-quality video content for various needs.",
+    image: "https://img.icons8.com/pulsar-color/800/video-trimming.png",
+  },
+  AUDIO_ENGINEERING: {
+    description:
+        "From podcast editing to sound design, I offer comprehensive audio engineering services.",
+    image: "https://img.icons8.com/plasticine/800/audio-wave--v1.png",
+  },
+  WEB_ANALYTICS: {
+    description:
+        "I analyze web data to provide actionable insights for improving user experience and conversions.",
+    image: "https://img.icons8.com/external-flatarticons-blue-flatarticons/800/external-web-analytics-digital-marketing-flatarticons-blue-flatarticons.png",
+  },
+  SALES_FUNNEL_OPTIMIZATION: {
+    description:
+        "I optimize sales funnels to increase conversion rates and customer lifetime value.",
+    image: "https://img.icons8.com/stickers/800/empty-filter.png",
+  },
+  FRONTEND_OPTIMIZATION: {
+    description:
+        "I enhance the speed and user experience of web applications through frontend optimizations.",
+    image: "https://img.icons8.com/plasticine/800/code--v2.png",
+  },
+  SOCIAL_MEDIA_MANAGEMENT: {
+    description:
+        "I manage and grow your social media profiles to increase brand awareness and engagement.",
+    image: "https://img.icons8.com/external-filled-outline-design-circle/800/external-Social-Media-Management-digital-marketing-filled-outline-design-circle.png",
+  },
+  EMAIL_MARKETING: {
+    description:
+        "I execute effective email marketing campaigns for customer acquisition and retention.",
+    image: "https://img.icons8.com/pulsar-color/800/email-marketing.png",
+  },
+  PENETRATION_TESTING: {
+    description:
+        "I provide penetration testing services to identify vulnerabilities in your systems.",
+    image: "https://img.icons8.com/dusk/800/hacker.png",
+  },
+  SYSTEM_AUDITING: {
+    description:
+        "I conduct system audits to assess performance, security, and compliance.",
+    image: "https://img.icons8.com/dusk/800/system-information.png",
+  },
+  LEGACY_SYSTEM_MIGRATION: {
+    description:
+        "I facilitate the migration from legacy systems to modern platforms without data loss.",
+    image: "https://img.icons8.com/fluency/800/data-migration.png",
+  },
+  SOFTWARE_ARCHITECTURE: {
+    description:
+        "I design software architecture that is scalable, maintainable, and aligned with business goals.",
+    image: "https://img.icons8.com/external-flaticons-lineal-color-flat-icons/800/external-architecture-3d-printing-flaticons-lineal-color-flat-icons.png",
+  },
+  USER_RESEARCH: {
+    description:
+        "I conduct user research to inform design and development processes.",
+    image: "https://img.icons8.com/fluency/800/case-study.png",
+  },
+  INVESTOR_PITCHES: {
+    description:
+        "I prepare and present investor pitches to help secure funding for your venture.",
+    image: "https://img.icons8.com/external-flaticons-lineal-color-flat-icons/800/external-pitch-influencer-marketing-flaticons-lineal-color-flat-icons.png",
+  },
+  SOFTWARE_MAINTENANCE: {
+    description:
+        "I offer software maintenance services to keep your software up-to-date and secure.",
+    image: "https://img.icons8.com/cotton/800/maintenance.png",
+  },
+  SCALABILITY_OPTIMIZATION: {
+    description:
+        "I optimize your software solutions to scale effortlessly with growing user demand.",
+    image: "https://img.icons8.com/external-flaticons-lineal-color-flat-icons/800/external-scalability-data-analytics-flaticons-lineal-color-flat-icons-2.png",
+  },
+  PAYMENT_GATEWAY_INTEGRATION: {
+    description:
+        "I integrate secure and efficient payment gateways for seamless financial transactions.",
+    image: "https://img.icons8.com/office/800/online-payment-.png",
+  },
+  CUSTOM_SOLUTIONS: {
+    description:
+        "I offer custom development solutions tailored specifically to meet your unique requirements.",
+    image: "https://img.icons8.com/external-ddara-lineal-color-ddara/800/external-problem-solving-managements-ddara-lineal-color-ddara-1.png",
+  },
+  CODE_REVIEW: {
+    description:
+        "I conduct code reviews to ensure best practices and high-quality code.",
+    image: "https://img.icons8.com/external-flaticons-lineal-color-flat-icons/800/external-code-review-agile-flaticons-lineal-color-flat-icons-2.png",
+  },
+  UI_COMPONENT_DESIGN: {
+    description:
+        "I design reusable UI components for scalable and maintainable applications.",
+    image: "https://img.icons8.com/dusk/800/web-design.png",
+  },
+  PERFORMANCE_MONITORING: {
+    description:
+        "I monitor system performance to ensure optimal uptime and user experience.",
+    image: "https://img.icons8.com/dusk/800/dashboard.png",
+  },
+
 };
 
 export type Services = (typeof Services)[number];
