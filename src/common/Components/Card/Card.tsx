@@ -12,7 +12,7 @@ const Card = ({ ImageUrl, title, description }: Props) => {
       {ImageUrl &&
         (typeof ImageUrl === "string" ? (
           <img
-            className={`h-64 w-96 border-8 border-gray-50 object-cover transition-all`}
+            className={`h-64 w-96 border-8 border-gray-50 dark:border-[#0d0d0d] object-cover transition-all`}
             src={ImageUrl}
             alt=""
           />

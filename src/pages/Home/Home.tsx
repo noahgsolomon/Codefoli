@@ -1,11 +1,13 @@
-import { FC } from "react";
+import {FC, useEffect, useState} from "react";
 import { useSpring, animated } from "react-spring";
 import { FiCode, FiLayout } from "react-icons/fi";
 import profileDisplayImg from "assets/profiledisplay.png";
+import profileDisplayImgDark from "assets/profiledisplay-dark.png";
 
 import Footer from "Components/Footer/Footer";
 import Card from "Components/Card/Card";
 import Banner from "Components/Banner/Banner";
+import {DARK_THEME_KEY, LOCALSTORAGE_THEME_KEY} from "../../util/constants.ts";
 
 const Home: FC = () => {
   const headerAnimation = useSpring({
@@ -25,6 +27,20 @@ const Home: FC = () => {
     to: { opacity: 1, transform: "translate3d(0, 0, 0)" },
     delay: 300,
   });
+
+  const [currentTheme, setCurrentTheme] = useState(localStorage.getItem(LOCALSTORAGE_THEME_KEY));
+
+  useEffect(() => {
+    const themeChangeListener = () => {
+      setCurrentTheme(localStorage.getItem('theme'));
+    };
+
+    window.addEventListener('themeChanged', themeChangeListener);
+
+    return () => {
+      window.removeEventListener('themeChanged', themeChangeListener);
+    };
+  }, []);
 
   return (
     <>
@@ -50,7 +66,7 @@ const Home: FC = () => {
                   href="https://walter.codefoli.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="fixed left-1 top-1 z-50 cursor-pointer rounded-full border-2 border-black bg-white p-3 text-xs text-blue-700 shadow-custom transition-all hover:-translate-y-0.5 hover:text-blue-400 hover:shadow-customHover md:left-10 md:top-10 md:text-sm"
+                  className="fixed left-1 top-1 z-50 cursor-pointer rounded-full border-2 border-black bg-white dark:bg-[#1a1a1a] p-3 text-xs text-blue-700 shadow-custom transition-all hover:-translate-y-0.5 hover:text-blue-400 hover:shadow-customHover md:left-10 md:top-10 md:text-sm"
                 >
                   walter.codefoli.com
                 </a>
@@ -61,7 +77,7 @@ const Home: FC = () => {
                 >
                   <img
                     className="mb-5 h-auto w-full transform cursor-pointer rounded-lg border-2 border-black shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover md:max-w-screen-lg"
-                    src={profileDisplayImg}
+                    src={currentTheme === DARK_THEME_KEY ? profileDisplayImgDark : profileDisplayImg}
                     alt="Introductory visual"
                   />
                 </a>
@@ -78,17 +94,17 @@ const Home: FC = () => {
               <Card
                 title="Professional Design"
                 description="Create a professional and personalized portfolio website"
-                ImageUrl="/assets/images/professional-website.png"
+                ImageUrl={currentTheme === DARK_THEME_KEY ? "/assets/images/professional-website-dark.png" : "/assets/images/professional-website.png"}
               />
               <Card
                 title="Add Your Skills"
                 description="Showcase your projects, skills, and accomplishments"
-                ImageUrl="/assets/images/skills.png"
+                ImageUrl={currentTheme === DARK_THEME_KEY ? "/assets/images/skills-dark.png" : "/assets/images/skills.png"}
               />
               <Card
                 title="Easy To Edit"
                 description="Easily update and maintain your portfolio over time"
-                ImageUrl="/assets/images/easy-to-edit.png"
+                ImageUrl={currentTheme === DARK_THEME_KEY ? "/assets/images/easy-to-edit-dark.png" : "/assets/images/easy-to-edit.png"}
               />
             </div>
           </div>
