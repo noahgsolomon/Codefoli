@@ -16,7 +16,7 @@ const Footer = () => {
             <ul className="mt-8 flex justify-center gap-6 sm:justify-start md:gap-8">
               <li>
                 <a
-                  href="https://github.com/noahgsolomon/codefolio"
+                  href="https://github.com/noahgsolomon/codefoli"
                   rel="noreferrer"
                   target="_blank"
                   className="text-white transition hover:text-blue-500"
