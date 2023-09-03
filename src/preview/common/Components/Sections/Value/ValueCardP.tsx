@@ -24,7 +24,7 @@ const ValueCardP: FC<{
           />
         </div>
       )}
-      <div className="rounded-b-2xl bg-white dark:bg-[#0d0d0d] p-5">
+      <div className="rounded-b-2xl bg-white p-5 dark:bg-[#0d0d0d]">
         <h2 className="title text-2xl font-bold">{title}</h2>
         <p className="description text-base">{description}</p>
       </div>

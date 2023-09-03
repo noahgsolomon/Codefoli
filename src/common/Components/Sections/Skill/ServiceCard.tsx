@@ -91,7 +91,7 @@ const ServiceCard: React.FC<{
           />
         </div>
       )}
-      <div className="flex-grow rounded-b-xl bg-white dark:bg-[#0d0d0d] p-5">
+      <div className="flex-grow rounded-b-xl bg-white p-5 dark:bg-[#0d0d0d]">
         <h2 className="title text-2xl font-bold">
           {title.replaceAll("_", " ")}
         </h2>

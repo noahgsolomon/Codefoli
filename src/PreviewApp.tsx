@@ -21,7 +21,11 @@ import ProjectsP from "./preview/pages/Projects/ProjectsP.tsx";
 import ProjectP from "./preview/pages/Project/ProjectP.tsx";
 import AboutP from "./preview/pages/About/AboutP.tsx";
 import NotFoundP from "./preview/pages/NotFound/NotFoundP.tsx";
-import { LOCALSTORAGE_ID_KEY, LOCALSTORAGE_REFRESH_KEY, LOCALSTORAGE_ROLE_KEY } from "./util/constants";
+import {
+  LOCALSTORAGE_ID_KEY,
+  LOCALSTORAGE_REFRESH_KEY,
+  LOCALSTORAGE_ROLE_KEY,
+} from "./util/constants";
 
 const PreviewApp: React.FC = () => {
   const navigate = useNavigate();
@@ -34,9 +38,9 @@ const PreviewApp: React.FC = () => {
     location: "",
     profession: "",
     website: "",
-    cname_name: '',
-    cname_value: '',
-    distribution: '',
+    cname_name: "",
+    cname_value: "",
+    distribution: "",
     projects: [],
     skills: [],
     work: [],

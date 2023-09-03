@@ -1,5 +1,8 @@
 import { STAGE } from "../../config.ts";
-import { LOCALSTORAGE_ID_KEY, LOCALSTORAGE_REFRESH_KEY } from "../../util/constants";
+import {
+  LOCALSTORAGE_ID_KEY,
+  LOCALSTORAGE_REFRESH_KEY,
+} from "../../util/constants";
 
 const login = async (email: string, password: string) => {
   const model = {
@@ -23,7 +26,10 @@ const login = async (email: string, password: string) => {
 
     if (responseBody.status === "OK") {
       localStorage.setItem(LOCALSTORAGE_ID_KEY, responseBody.data.idToken);
-      localStorage.setItem(LOCALSTORAGE_REFRESH_KEY, responseBody.data.refreshToken);
+      localStorage.setItem(
+        LOCALSTORAGE_REFRESH_KEY,
+        responseBody.data.refreshToken
+      );
       return responseBody;
     } else {
       return responseBody;
@@ -56,7 +62,10 @@ const register = async (name: string, email: string, password: string) => {
 
     if (responseBody.status === "OK") {
       localStorage.setItem(LOCALSTORAGE_ID_KEY, responseBody.data.idToken);
-      localStorage.setItem(LOCALSTORAGE_REFRESH_KEY, responseBody.data.refreshToken);
+      localStorage.setItem(
+        LOCALSTORAGE_REFRESH_KEY,
+        responseBody.data.refreshToken
+      );
       return responseBody;
     } else {
       console.log(response);

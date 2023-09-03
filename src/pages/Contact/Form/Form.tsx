@@ -40,7 +40,7 @@ const Form: FC<{
             type="text"
             placeholder="Subject"
             name="subject"
-            className="w-full rounded-lg border-2 border-black px-5  py-2 font-bold transition-all dark:bg-[#1a1a1a] hover:shadow-custom focus:border-current focus:ring-0 active:shadow-custom"
+            className="w-full rounded-lg border-2 border-black px-5  py-2 font-bold transition-all hover:shadow-custom focus:border-current focus:ring-0 active:shadow-custom dark:bg-[#1a1a1a]"
             onChange={handleChange}
             required
           />
@@ -55,7 +55,7 @@ const Form: FC<{
           <textarea
             name="message"
             placeholder="Your Message"
-            className="w-full rounded-lg border-2 border-black px-5 py-2 font-bold transition-all dark:bg-[#1a1a1a] hover:shadow-custom focus:border-current focus:ring-0 active:shadow-custom"
+            className="w-full rounded-lg border-2 border-black px-5 py-2 font-bold transition-all hover:shadow-custom focus:border-current focus:ring-0 active:shadow-custom dark:bg-[#1a1a1a]"
             rows={4}
             cols={100}
             onChange={handleChange}

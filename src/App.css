@@ -56,7 +56,7 @@
 }
 
 body {
-  @apply font-sans text-lg font-medium leading-loose font-family-onest-regular;
+  @apply font-family-onest-regular font-sans text-lg font-medium leading-loose;
 }
 
 body.dark {

@@ -16,7 +16,7 @@ const SkillSectionP: FC<{
         {details.header_one}
       </h2>
       <div className="mx-10 grid justify-center gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:mx-80">
-        <div className="card relative mb-5 flex max-w-[400px] dark:bg-[#1a1a1a] flex-col rounded-2xl border-2 border-black bg-white shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover">
+        <div className="card relative mb-5 flex max-w-[400px] flex-col rounded-2xl border-2 border-black bg-white shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover dark:bg-[#1a1a1a]">
           <div
             className={`min-h-64 flex flex-wrap gap-2 rounded-tl-2xl rounded-tr-2xl px-2 py-2`}
           >
@@ -31,7 +31,7 @@ const SkillSectionP: FC<{
               );
             })}
           </div>
-          <div className={"md:flex-grow h-[200px]"}></div>
+          <div className={"h-[200px] md:flex-grow"}></div>
           <div className="h-40 rounded-b-xl bg-blue-500 p-5">
             <h2 className="text-2xl font-bold text-white">{"</>"} Languages</h2>
           </div>

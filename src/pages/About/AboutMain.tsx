@@ -162,12 +162,12 @@ const AboutMain: React.FC<{
         {showError.visible && (
           <StatusBar message={showError.message} color={"bg-red-400"} />
         )}
-        <section className="flex justify-center flex-col">
+        <section className="flex flex-col justify-center">
           <animated.div
             style={headerAnimation}
             className="flex flex-col justify-center"
           >
-            <div className={'flex justify-center'}>
+            <div className={"flex justify-center"}>
               {headerOneEdit ? (
                 <textarea
                   ref={headerOneTextareaRef}
@@ -183,7 +183,7 @@ const AboutMain: React.FC<{
                       await handleHeaderOneSubmit();
                     }
                   }}
-                  className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent mb-5 max-w-[15ch] mx-auto text-center text-5xl font-bold md:text-7xl leading-snug outline-none focus:outline-none focus:ring-0"
+                  className="mx-auto mb-5 w-full max-w-[15ch] resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-5xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-7xl"
                   autoFocus
                   onFocus={(e) => e.currentTarget.select()}
                   maxLength={50}
@@ -191,14 +191,14 @@ const AboutMain: React.FC<{
                 />
               ) : (
                 <h2
-                  className="cursor-pointer select-none transition-all hover:opacity-50 mb-5 max-w-[15ch] mx-auto text-center text-5xl font-bold md:text-7xl"
+                  className="mx-auto mb-5 max-w-[15ch] cursor-pointer select-none text-center text-5xl font-bold transition-all hover:opacity-50 md:text-7xl"
                   onClick={() => setHeaderOneEdit(true)}
                 >
                   {pageData.header_one}
                 </h2>
               )}
             </div>
-            <div className={'flex justify-center'}>
+            <div className={"flex justify-center"}>
               {descriptionOneEdit ? (
                 <textarea
                   ref={descriptionOneTextareaRef}
@@ -214,7 +214,7 @@ const AboutMain: React.FC<{
                       await handleDescriptionOneSubmit();
                     }
                   }}
-                  className=" w-full resize-none appearance-none overflow-hidden border-none bg-transparent  mb-5 max-w-[40ch]  mx-auto text-center text-2xl font-semibold transition-all leading-snug outline-none focus:outline-none focus:ring-0"
+                  className=" mx-auto mb-5 w-full max-w-[40ch] resize-none appearance-none  overflow-hidden border-none  bg-transparent text-center text-2xl font-semibold leading-snug outline-none transition-all focus:outline-none focus:ring-0"
                   style={{ minHeight: "8em" }}
                   autoFocus
                   onFocus={(e) => e.currentTarget.select()}
@@ -222,7 +222,7 @@ const AboutMain: React.FC<{
                 />
               ) : (
                 <p
-                  className="cursor-pointer select-none hover:opacity-50 mb-5 max-w-[40ch]  mx-auto text-center text-2xl font-semibold transition-all"
+                  className="mx-auto mb-5 max-w-[40ch] cursor-pointer select-none  text-center text-2xl font-semibold transition-all hover:opacity-50"
                   onClick={() => setDescriptionOneEdit(true)}
                 >
                   {pageData.description_one}
@@ -238,7 +238,7 @@ const AboutMain: React.FC<{
               </Link>
             </div>
           </animated.div>
-          <div className={'flex justify-between md:mx-12 lg:mx-32'}>
+          <div className={"flex justify-between md:mx-12 lg:mx-32"}>
             <animated.div
               style={imageAnimation}
               className={`image-wrapper relative order-2 h-[150px] w-[150px] text-center md:order-1 md:self-end ${

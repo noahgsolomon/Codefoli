@@ -26,7 +26,11 @@ import Project from "./pages/Project/Project.tsx";
 import Github from "Components/Github/Github.tsx";
 import ProjectsPageData from "Type/ProjectsPageData.tsx";
 import NotFound from "./NotFound.tsx";
-import { LOCALSTORAGE_ID_KEY, LOCALSTORAGE_REFRESH_KEY, LOCALSTORAGE_ROLE_KEY } from "./util/constants";
+import {
+  LOCALSTORAGE_ID_KEY,
+  LOCALSTORAGE_REFRESH_KEY,
+  LOCALSTORAGE_ROLE_KEY,
+} from "./util/constants";
 
 const MainApp: React.FC = () => {
   const navigate = useNavigate();
@@ -43,9 +47,9 @@ const MainApp: React.FC = () => {
     projects: [],
     skills: [],
     website: "",
-    cname_name: '',
-    cname_value: '',
-    distribution: '',
+    cname_name: "",
+    cname_value: "",
+    distribution: "",
     work: [],
     role: "NEWBIE",
     about: "",

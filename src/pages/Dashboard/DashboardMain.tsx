@@ -110,15 +110,15 @@ const DashboardMain: React.FC<{
     delay: 200,
   });
   return (
-      <>
+    <>
       {showError.visible && (
         <StatusBar message={showError.message} color={"bg-red-400"} />
       )}
       {imageLoading && (
         <StatusBar message={"Uploading image!"} color={"bg-green-500"} />
       )}
-      <div className="flex flex-col justify-center md:flex-row mx-10">
-        <animated.div style={headerAnimation} className={'md:mr-10'}>
+      <div className="mx-10 flex flex-col justify-center md:flex-row">
+        <animated.div style={headerAnimation} className={"md:mr-10"}>
           <div className="mx-auto mt-10 max-w-2xl font-bold xl:mt-32">
             {headerOneEdit ? (
               <textarea
@@ -144,7 +144,7 @@ const DashboardMain: React.FC<{
               />
             ) : (
               <h1
-                className="font-extra-bold mx-auto max-w-[15ch] cursor-pointer text-center text-4xl leading-snug transition-all hover:opacity-50 md:text-5xl md:leading-relaxed md:flex:mx-0 md:text-left xl:text-6xl xl:leading-normal"
+                className="font-extra-bold md:flex:mx-0 mx-auto max-w-[15ch] cursor-pointer text-center text-4xl leading-snug transition-all hover:opacity-50 md:text-left md:text-5xl md:leading-relaxed xl:text-6xl xl:leading-normal"
                 onClick={() => setHeaderOneEdit(true)}
               >
                 {pageData.header_one}
@@ -199,7 +199,7 @@ const DashboardMain: React.FC<{
         </animated.div>
         <animated.div style={imageAnimation}>
           <div
-            className={`relative mx-auto mt-10 transition-all lg:h-[500px] w-[350px] h-[350px] lg:w-[500px] xl:mt-24 ${
+            className={`relative mx-auto mt-10 h-[350px] w-[350px] transition-all lg:h-[500px] lg:w-[500px] xl:mt-24 ${
               imageLoading ? "opacity-0" : "opacity-100"
             }`}
             onMouseEnter={() => setImageOneEdit(true)}

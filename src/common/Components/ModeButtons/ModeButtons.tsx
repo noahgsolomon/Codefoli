@@ -7,12 +7,15 @@ import {
   subdomainAvailability,
 } from "api/deployapi.tsx";
 import UserData from "Type/UserData.tsx";
-import {FaDownload, FaGlobe, FaPaperPlane, FaTrash} from "react-icons/fa";
+import { FaDownload, FaGlobe, FaPaperPlane, FaTrash } from "react-icons/fa";
 import { AiOutlineEye } from "react-icons/ai";
 import { download } from "api/downloadapi.tsx";
 import { deleteWebsite } from "api/deletewebsiteapi.tsx";
-import {IoIosCloud} from "react-icons/io";
-import { LIGHT_THEME_KEY, LOCALSTORAGE_THEME_KEY } from "../../../util/constants";
+import { IoIosCloud } from "react-icons/io";
+import {
+  LIGHT_THEME_KEY,
+  LOCALSTORAGE_THEME_KEY,
+} from "../../../util/constants";
 
 const ModeButtons: FC<{
   deploying: boolean;
@@ -37,10 +40,9 @@ const ModeButtons: FC<{
   const [subdomainChecking, setSubdomainChecking] = useState(false);
   const [subdomainAvailable, setSubdomainAvailable] = useState(false);
   const [prevScroll, setPrevScroll] = useState(window.scrollY);
-  const [subdomainMessage, setSubdomainMessage] = useState(
-    ""
-  );
-  const [customDomainCreatedModalOpen, setCustomDomainCreatedModalOpen] = useState(false);
+  const [subdomainMessage, setSubdomainMessage] = useState("");
+  const [customDomainCreatedModalOpen, setCustomDomainCreatedModalOpen] =
+    useState(false);
   const [importedDomainLoading, setImportedDomainLoading] = useState(false);
   const [importedDomainError, setImportedDomainError] = useState(false);
   const [importedDomainSuccess, setImportedDomainSuccess] = useState(false);
@@ -89,7 +91,11 @@ const ModeButtons: FC<{
       : subdomain;
     console.log(website);
     console.log(userData.website);
-    await deploy({ subdomain: website, custom_domain: null, distribution: null });
+    await deploy({
+      subdomain: website,
+      custom_domain: null,
+      distribution: null,
+    });
     let attempts = 0;
     const maxAttempts = 40;
     const interval = setInterval(async () => {
@@ -164,7 +170,8 @@ const ModeButtons: FC<{
   };
 
   const invalidDomain = (domain: string) => {
-    const domainRegex = /^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/
+    const domainRegex =
+      /^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/;
     return !domainRegex.test(domain);
   };
 
@@ -178,7 +185,7 @@ const ModeButtons: FC<{
     await deploy({
       subdomain: null,
       custom_domain: importedDomain,
-      distribution: null
+      distribution: null,
     });
 
     let attempts = 0;
@@ -192,7 +199,13 @@ const ModeButtons: FC<{
         setCustomDomainCreatedModalOpen(true);
         setImportedDomainError(false);
         setImportedDomainModalOpen(false);
-        setUserData({ ...userData, website: deployed.data.website, cname_name: deployed.data.cname_name, cname_value: deployed.data.cname_value, distribution: deployed.data.distribution});
+        setUserData({
+          ...userData,
+          website: deployed.data.website,
+          cname_name: deployed.data.cname_name,
+          cname_value: deployed.data.cname_value,
+          distribution: deployed.data.distribution,
+        });
       } else {
         attempts++;
         if (attempts >= maxAttempts) {
@@ -208,7 +221,11 @@ const ModeButtons: FC<{
   const handleCustomRedeploy = async () => {
     setDeploying(true);
     setDeployModalOpen(false);
-    await deploy({subdomain: null, custom_domain: userData.website.replace("https://", ""), distribution: userData.distribution});
+    await deploy({
+      subdomain: null,
+      custom_domain: userData.website.replace("https://", ""),
+      distribution: userData.distribution,
+    });
     let attempts = 0;
     const maxAttempts = 40;
     const interval = setInterval(async () => {
@@ -226,7 +243,7 @@ const ModeButtons: FC<{
         }
       }
     }, 5000);
-  }
+  };
 
   return (
     <>
@@ -234,7 +251,7 @@ const ModeButtons: FC<{
         style={animation}
         className="fixed bottom-6 left-0 right-0 flex justify-center"
       >
-        <div className="mx-2 flex max-w-full flex-col rounded-3xl border-2 border-black bg-white dark:bg-[#0d0d0d] px-4 py-3 shadow-custom sm:max-w-screen-md sm:flex-row">
+        <div className="mx-2 flex max-w-full flex-col rounded-3xl border-2 border-black bg-white px-4 py-3 shadow-custom dark:bg-[#0d0d0d] sm:max-w-screen-md sm:flex-row">
           <div className="flex flex-col items-center justify-center">
             <div className="flex flex-wrap justify-center">
               {!deploying && !activeDownload ? (
@@ -287,20 +304,27 @@ const ModeButtons: FC<{
               )}
             </div>
             <div>
-              { userData.website && userData.cname_value && userData.cname_name && userData.cname_value ?
-                  (
-                      <p className={'text-blue-500 underline cursor-pointer hover:opacity-50 transition-all'} onClick={() => setCustomDomainCreatedModalOpen(true)}>
-                        DNS Records
-                      </p>
-                  ) : (
-                      <a
-                href={userData.website}
-                className="break-all text-sm text-blue-500 underline transition-all hover:text-yellow-500"
-                target={"_blank"}
-              >
-                {userData.website}
-              </a>
-                  )}
+              {userData.website &&
+              userData.cname_value &&
+              userData.cname_name &&
+              userData.cname_value ? (
+                <p
+                  className={
+                    "cursor-pointer text-blue-500 underline transition-all hover:opacity-50"
+                  }
+                  onClick={() => setCustomDomainCreatedModalOpen(true)}
+                >
+                  DNS Records
+                </p>
+              ) : (
+                <a
+                  href={userData.website}
+                  className="break-all text-sm text-blue-500 underline transition-all hover:text-yellow-500"
+                  target={"_blank"}
+                >
+                  {userData.website}
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -310,7 +334,7 @@ const ModeButtons: FC<{
           codeModalOpen ? "" : "hidden"
         } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}
       >
-        <div className="rounded-lg bg-white dark:bg-[#1a1a1a] p-8 shadow-lg">
+        <div className="rounded-lg bg-white p-8 shadow-lg dark:bg-[#1a1a1a]">
           <h2 className="mb-4 text-2xl font-bold">Download Code</h2>
           <button
             className="mb-2 flex w-full items-center justify-center rounded-3xl border-2 border-black bg-blue-500 px-4 py-3 font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
@@ -354,13 +378,13 @@ const ModeButtons: FC<{
         } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}
       >
         {!userData.website ? (
-          <div className="flex flex-col justify-center rounded-lg bg-white dark:bg-[#1a1a1a] p-8 shadow-lg">
+          <div className="flex flex-col justify-center rounded-lg bg-white p-8 shadow-lg dark:bg-[#1a1a1a]">
             <h2 className="mb-4 text-2xl font-bold">Deployment Config</h2>
             <p className={"text-center"}>{subdomain}.codefoli.com</p>
             <div className="flex items-center">
               <input
                 placeholder={"// subdomain"}
-                className="rounded-xl dark:bg-[#0d0d0d] border-2 border-black px-2 focus:outline-none focus:ring-0"
+                className="rounded-xl border-2 border-black px-2 focus:outline-none focus:ring-0 dark:bg-[#0d0d0d]"
                 onChange={(e) => {
                   setSubdomain(e.target.value);
                   setSubdomainAvailable(false);
@@ -426,11 +450,11 @@ const ModeButtons: FC<{
               Deploy Now
             </button>
             <button
-                className={`bg-black flex w-full items-center justify-center rounded-3xl border-2 border-yellow-500 px-4 py-3 font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-custom`}
-                onClick={() => {
-                  setImportedDomainModalOpen(true);
-                  setDeployModalOpen(false);
-                }}
+              className={`flex w-full items-center justify-center rounded-3xl border-2 border-yellow-500 bg-black px-4 py-3 font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-custom`}
+              onClick={() => {
+                setImportedDomainModalOpen(true);
+                setDeployModalOpen(false);
+              }}
             >
               <FaGlobe fill={"white"} className="mr-2" />
               Deploy on custom domain
@@ -447,60 +471,71 @@ const ModeButtons: FC<{
               Close
             </button>
           </div>
-        ) : userData.website && userData.cname_value && userData.cname_name && userData.distribution ? (
-            <div className="flex flex-col justify-center rounded-lg bg-white dark:bg-[#1a1a1a] p-8 shadow-lg">
-              <h2 className="mb-4 text-2xl font-bold">Deployment Config</h2>
-              <p className={""}>Current deployment:</p>
-              <p className={'text-blue-500 transition-all hover:opacity-50 underline cursor-pointer'} onClick={() => {
+        ) : userData.website &&
+          userData.cname_value &&
+          userData.cname_name &&
+          userData.distribution ? (
+          <div className="flex flex-col justify-center rounded-lg bg-white p-8 shadow-lg dark:bg-[#1a1a1a]">
+            <h2 className="mb-4 text-2xl font-bold">Deployment Config</h2>
+            <p className={""}>Current deployment:</p>
+            <p
+              className={
+                "cursor-pointer text-blue-500 underline transition-all hover:opacity-50"
+              }
+              onClick={() => {
                 setDeployModalOpen(false);
                 setCustomDomainCreatedModalOpen(true);
-              }}>DNS Records</p>
-              <a
-                  className={
-                    "text-center text-blue-500 transition-all hover:opacity-80"
-                  }
-                  target={"_blank"}
-                  href={userData.website}
-              >
-                {userData.website}
-              </a>
-              <div>
-                <p className={""}>
-                  status: <span className={"text-yellow-500"}>custom website</span>
-                </p>
-              </div>
-
-              <button
-                  className={`mb-2 mt-1 flex w-full items-center justify-center rounded-3xl border-2 border-black bg-blue-500 px-4 py-3 font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-custom`}
-                  onClick={async () => await handleCustomRedeploy()}
-              >
-                <FaPaperPlane fill={"white"} className="mr-2" />
-                Redeploy
-              </button>
-              {/*<button*/}
-              {/*    className={`mb-2 mt-1 flex w-full items-center justify-center rounded-3xl border-2 border-black bg-black px-4 py-3 font-bold text-white transition-all hover:bg-red-900`}*/}
-              {/*    onClick={() => {*/}
-              {/*      setDeployModalOpen(false);*/}
-              {/*      setDeleteModalOpen(true);*/}
-              {/*    }}*/}
-              {/*>*/}
-              {/*  <FaTrash fill={"white"} className="mr-2" />*/}
-              {/*  Delete website*/}
-              {/*</button>*/}
-              <button
-                  className="mt-1 flex w-full justify-center rounded-3xl border-2 border-black bg-red-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
-                  onClick={() => {
-                    setDeployModalOpen(false);
-                    setSubdomainAvailable(false);
-                    setSubdomainMessage("");
-                    setSubdomainChecking(false);
-                  }}
-              >
-                Close
-              </button>
+              }}
+            >
+              DNS Records
+            </p>
+            <a
+              className={
+                "text-center text-blue-500 transition-all hover:opacity-80"
+              }
+              target={"_blank"}
+              href={userData.website}
+            >
+              {userData.website}
+            </a>
+            <div>
+              <p className={""}>
+                status:{" "}
+                <span className={"text-yellow-500"}>custom website</span>
+              </p>
             </div>
+
+            <button
+              className={`mb-2 mt-1 flex w-full items-center justify-center rounded-3xl border-2 border-black bg-blue-500 px-4 py-3 font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-custom`}
+              onClick={async () => await handleCustomRedeploy()}
+            >
+              <FaPaperPlane fill={"white"} className="mr-2" />
+              Redeploy
+            </button>
+            {/*<button*/}
+            {/*    className={`mb-2 mt-1 flex w-full items-center justify-center rounded-3xl border-2 border-black bg-black px-4 py-3 font-bold text-white transition-all hover:bg-red-900`}*/}
+            {/*    onClick={() => {*/}
+            {/*      setDeployModalOpen(false);*/}
+            {/*      setDeleteModalOpen(true);*/}
+            {/*    }}*/}
+            {/*>*/}
+            {/*  <FaTrash fill={"white"} className="mr-2" />*/}
+            {/*  Delete website*/}
+            {/*</button>*/}
+            <button
+              className="mt-1 flex w-full justify-center rounded-3xl border-2 border-black bg-red-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+              onClick={() => {
+                setDeployModalOpen(false);
+                setSubdomainAvailable(false);
+                setSubdomainMessage("");
+                setSubdomainChecking(false);
+              }}
+            >
+              Close
+            </button>
+          </div>
         ) : (
-          <div className="flex flex-col justify-center rounded-lg bg-white dark:bg-[#1a1a1a] p-8 shadow-lg">
+          <div className="flex flex-col justify-center rounded-lg bg-white p-8 shadow-lg dark:bg-[#1a1a1a]">
             <h2 className="mb-4 text-2xl font-bold">Deployment Config</h2>
             <p className={""}>Current deployment:</p>
             <a
@@ -555,7 +590,7 @@ const ModeButtons: FC<{
             deleteModalOpen ? "" : "hidden"
           } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}
         >
-          <div className="flex flex-col justify-center rounded-lg bg-white dark:bg-[#1a1a1a] p-8 shadow-lg">
+          <div className="flex flex-col justify-center rounded-lg bg-white p-8 shadow-lg dark:bg-[#1a1a1a]">
             <h2 className="mb-4 max-w-[20ch] text-2xl font-bold ">
               Are you sure you want to delete this website?
             </h2>
@@ -575,109 +610,156 @@ const ModeButtons: FC<{
         </div>
       )}
       {importedDomainModalOpen && (
-          <div
-              className={`${
-                  importedDomainModalOpen ? "" : "hidden"
-              } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}>
-            <div className="bg-white max-w-[400px] dark:bg-[#1a1a1a] rounded-lg p-6 w-1/2">
-              <h2 className="text-2xl font-bold">Custom Domain</h2>
-              <p className={'text-sm opacity-50 mb-4'}>include subdomain (e.g., www)</p>
-              <input
-                  type="text"
-                  onChange={(e) => setImportedDomain(e.target.value)}
-                  placeholder="www.mydomain.com"
-                  className="border-2 border-black rounded-xl px-2 transition-all py-1 dark:bg-[#0d0d0d] w-full mb-16"
-              />
-              <p className={`text-sm opacity-50 mb-4 text-red-500 ${importedDomainError ? '' : 'hidden'}`}>invalid domain!</p>
-              <p className={`text-sm opacity-50 mb-4 text-green-500 ${importedDomainSuccess ? '' : 'hidden'}`}>imported domain!</p>
-              {!importedDomainLoading ? (<button
-                  className="flex w-full justify-center items-center rounded-3xl border-2 bg-blue-500 border-black px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
-                  onClick={async () => await handleDeployCustomDomain()}
-              >
-                <IoIosCloud fill={"white"} className="mr-2" />Deploy
-              </button>) : (
-                  <div className={"fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center flex-col bg-gray-600 bg-opacity-50"}>
-                    <h2 className={'font-bold text-3xl'}>Getting your website ready...</h2>
-                    <p className={'mb-4'}>Please stay here. est. time: 1 minute</p>
-                    <svg
-                        className="mr-2 h-10 w-10 animate-spin rounded-full border-2 border-gray-200 dark:border-gray-300"
-                        viewBox="0 0 24 24"
-                    >
-                      <circle
-                          className="rainbow-stroke"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          strokeWidth="4"
-                          fill={localStorage.getItem(LOCALSTORAGE_THEME_KEY) === LIGHT_THEME_KEY ? 'white' : '#1a1a1a'}
-                      ></circle>
-                      <path
-                          className="opacity-75"
-                          fill={'white'}
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                  </div>
-                  )}
+        <div
+          className={`${
+            importedDomainModalOpen ? "" : "hidden"
+          } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}
+        >
+          <div className="w-1/2 max-w-[400px] rounded-lg bg-white p-6 dark:bg-[#1a1a1a]">
+            <h2 className="text-2xl font-bold">Custom Domain</h2>
+            <p className={"mb-4 text-sm opacity-50"}>
+              include subdomain (e.g., www)
+            </p>
+            <input
+              type="text"
+              onChange={(e) => setImportedDomain(e.target.value)}
+              placeholder="www.mydomain.com"
+              className="mb-16 w-full rounded-xl border-2 border-black px-2 py-1 transition-all dark:bg-[#0d0d0d]"
+            />
+            <p
+              className={`mb-4 text-sm text-red-500 opacity-50 ${
+                importedDomainError ? "" : "hidden"
+              }`}
+            >
+              invalid domain!
+            </p>
+            <p
+              className={`mb-4 text-sm text-green-500 opacity-50 ${
+                importedDomainSuccess ? "" : "hidden"
+              }`}
+            >
+              imported domain!
+            </p>
+            {!importedDomainLoading ? (
               <button
-                  className="mt-4 flex w-full justify-center rounded-3xl border-2 border-black bg-red-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
-                  onClick={() => {
-                    setImportedDomainModalOpen(false);
-                    setImportedDomain('');
-                    setImportedDomainError(false);
-                    setImportedDomainSuccess(false);
-                  }}
+                className="flex w-full items-center justify-center rounded-3xl border-2 border-black bg-blue-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                onClick={async () => await handleDeployCustomDomain()}
               >
-                Close
+                <IoIosCloud fill={"white"} className="mr-2" />
+                Deploy
               </button>
-            </div>
+            ) : (
+              <div
+                className={
+                  "fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex flex-col items-center justify-center bg-gray-600 bg-opacity-50"
+                }
+              >
+                <h2 className={"text-3xl font-bold"}>
+                  Getting your website ready...
+                </h2>
+                <p className={"mb-4"}>Please stay here. est. time: 1 minute</p>
+                <svg
+                  className="mr-2 h-10 w-10 animate-spin rounded-full border-2 border-gray-200 dark:border-gray-300"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="rainbow-stroke"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    strokeWidth="4"
+                    fill={
+                      localStorage.getItem(LOCALSTORAGE_THEME_KEY) ===
+                      LIGHT_THEME_KEY
+                        ? "white"
+                        : "#1a1a1a"
+                    }
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill={"white"}
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+              </div>
+            )}
+            <button
+              className="mt-4 flex w-full justify-center rounded-3xl border-2 border-black bg-red-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+              onClick={() => {
+                setImportedDomainModalOpen(false);
+                setImportedDomain("");
+                setImportedDomainError(false);
+                setImportedDomainSuccess(false);
+              }}
+            >
+              Close
+            </button>
           </div>
+        </div>
       )}
       {customDomainCreatedModalOpen && (
-          <div
-              className={`${
-                  customDomainCreatedModalOpen ? "" : "hidden"
-              } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}>
-            <div className="bg-white dark:bg-[#1a1a1a] rounded-lg p-6 ">
-                <p className={'text-5xl font-bold'}>Add these records to your DNS</p>
-              <p className={'opacity-80 mb-4'}>Please allow <span className={'underline'}>24 hours</span> for these changes to take affect depending on your provider</p>
-              <table className="min-w-full divide-y divide-gray-200 border-2 border-white">
-                <thead className="font-bold">
+        <div
+          className={`${
+            customDomainCreatedModalOpen ? "" : "hidden"
+          } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}
+        >
+          <div className="rounded-lg bg-white p-6 dark:bg-[#1a1a1a] ">
+            <p className={"text-5xl font-bold"}>
+              Add these records to your DNS
+            </p>
+            <p className={"mb-4 opacity-80"}>
+              Please allow <span className={"underline"}>24 hours</span> for
+              these changes to take affect depending on your provider
+            </p>
+            <table className="min-w-full divide-y divide-gray-200 border-2 border-white">
+              <thead className="font-bold">
                 <tr>
-                  <th className="px-4 py-2 border-r"> </th>
-                  <th className="px-4 py-2 border-r text-blue-500">Entry 1</th>
+                  <th className="border-r px-4 py-2"> </th>
+                  <th className="border-r px-4 py-2 text-blue-500">Entry 1</th>
                   <th className="px-4 py-2 text-green-500">Entry 2</th>
                 </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
+              </thead>
+              <tbody className="divide-y divide-gray-200">
                 <tr>
-                  <th className="px-4 py-2 border-r">Record Type</th>
-                  <td className="px-4 py-2 border-r text-lg break-words w-1/4 text-blue-500">CNAME</td>
-                  <td className="px-4 py-2 text-lg break-words w-1/4 text-green-500">CNAME</td>
+                  <th className="border-r px-4 py-2">Record Type</th>
+                  <td className="w-1/4 break-words border-r px-4 py-2 text-lg text-blue-500">
+                    CNAME
+                  </td>
+                  <td className="w-1/4 break-words px-4 py-2 text-lg text-green-500">
+                    CNAME
+                  </td>
                 </tr>
                 <tr>
-                  <th className="px-4 py-2 border-r">Name</th>
-                  <td className="px-4 py-2 border-r text-lg break-words w-1/4 text-blue-500">{userData.website.replace('https://', '')}</td>
-                  <td className="px-4 py-2 text-lg break-words w-1/4 text-green-500">{userData.cname_name}</td>
+                  <th className="border-r px-4 py-2">Name</th>
+                  <td className="w-1/4 break-words border-r px-4 py-2 text-lg text-blue-500">
+                    {userData.website.replace("https://", "")}
+                  </td>
+                  <td className="w-1/4 break-words px-4 py-2 text-lg text-green-500">
+                    {userData.cname_name}
+                  </td>
                 </tr>
                 <tr>
-                  <th className="px-4 py-2 border-r">Value</th>
-                  <td className="px-4 py-2 border-r text-lg break-words w-2/5 text-blue-500">{userData.distribution}</td>
-                  <td className="px-4 py-2 text-lg break-words w-2/5 text-green-500">{userData.cname_value}</td>
+                  <th className="border-r px-4 py-2">Value</th>
+                  <td className="w-2/5 break-words border-r px-4 py-2 text-lg text-blue-500">
+                    {userData.distribution}
+                  </td>
+                  <td className="w-2/5 break-words px-4 py-2 text-lg text-green-500">
+                    {userData.cname_value}
+                  </td>
                 </tr>
-                </tbody>
-              </table>
+              </tbody>
+            </table>
 
-              <button
-                  className="mt-4 flex w-full justify-center rounded-3xl border-2 border-black bg-red-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
-                  onClick={() => {
-                    setCustomDomainCreatedModalOpen(false);
-                  }}
-              >
-                Close
-              </button>
-            </div>
+            <button
+              className="mt-4 flex w-full justify-center rounded-3xl border-2 border-black bg-red-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+              onClick={() => {
+                setCustomDomainCreatedModalOpen(false);
+              }}
+            >
+              Close
+            </button>
           </div>
+        </div>
       )}
     </>
   );

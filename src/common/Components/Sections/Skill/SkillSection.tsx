@@ -213,7 +213,7 @@ const SkillSection: FC<{
       )}
       <div className="mx-10 grid justify-center gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:mx-80">
         <div
-          className="card relative mb-5 flex max-w-[400px] flex-col rounded-2xl border-2 border-black bg-white dark:bg-[#1a1a1a] shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover"
+          className="card relative mb-5 flex max-w-[400px] flex-col rounded-2xl border-2 border-black bg-white shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover dark:bg-[#1a1a1a]"
           onMouseEnter={() => {
             if (preview) {
               return;
@@ -256,21 +256,23 @@ const SkillSection: FC<{
                     setNewSkill("");
                   }}
                   onChange={handleNewSkillChange}
-                  className="inline-flex items-center dark:bg-[#1a1a1a] justify-center rounded-lg px-3 py-2 text-sm shadow-custom transition-all hover:shadow-customHover"
+                  className="inline-flex items-center justify-center rounded-lg px-3 py-2 text-sm shadow-custom transition-all hover:shadow-customHover dark:bg-[#1a1a1a]"
                   style={{ width: "fit-content" }}
                 />
                 {newSkill && matchingSkills.length > 0 && (
-                  <div className="absolute left-0 z-10 mt-2 max-h-60 w-full overflow-y-auto overflow-x-hidden rounded border-2 border-black dark:border-gray-200 bg-white dark:bg-[#1a1a1a] pt-5">
+                  <div className="absolute left-0 z-10 mt-2 max-h-60 w-full overflow-y-auto overflow-x-hidden rounded border-2 border-black bg-white pt-5 dark:border-gray-200 dark:bg-[#1a1a1a]">
                     {matchingSkills.map((skill, index) => (
                       <div
                         key={index}
-                        className="m-1 inline-block cursor-pointer rounded-full bg-black dark:bg-gray-50 p-2 transition-all hover:-translate-y-0.5 hover:opacity-90"
+                        className="m-1 inline-block cursor-pointer rounded-full bg-black p-2 transition-all hover:-translate-y-0.5 hover:opacity-90 dark:bg-gray-50"
                         onMouseDown={async (e) => {
                           e.preventDefault();
                           await handleAddSkill(skill);
                         }}
                       >
-                        <span className="px-2 text-white dark:text-gray-800">{skill}</span>
+                        <span className="px-2 text-white dark:text-gray-800">
+                          {skill}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -288,7 +290,7 @@ const SkillSection: FC<{
               </span>
             )}
           </div>
-          <div className={"md:flex-grow h-[200px]"}></div>
+          <div className={"h-[200px] md:flex-grow"}></div>
           <div className="content h-36 rounded-b-xl bg-blue-500 p-5">
             <h2 className="text-2xl font-bold text-white">{"</>"} Languages</h2>
           </div>

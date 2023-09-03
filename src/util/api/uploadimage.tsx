@@ -39,7 +39,8 @@ const handleFileUpload = async (
           body: JSON.stringify({ file: base64File }),
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem(LOCALSTORAGE_ID_KEY),
+            Authorization:
+              "Bearer " + localStorage.getItem(LOCALSTORAGE_ID_KEY),
           },
         }
       );

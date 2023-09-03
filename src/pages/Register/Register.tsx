@@ -61,7 +61,7 @@ const Register: React.FC = () => {
                 id="name"
                 placeholder="// John Doe"
                 value={fullName}
-                className={`mb-4 mt-2 w-full rounded-xl dark:bg-[#1a1a1a] placeholder:dark:text-gray-200 placeholder:text-gray-800 border-2 border-black  p-3 pl-10 shadow-custom ring-transparent transition-shadow   hover:shadow-customHover focus:ring-0 
+                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 pl-10 shadow-custom  ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:ring-0   dark:bg-[#1a1a1a] placeholder:dark:text-gray-200 
                       ${fullNameError ? "border-red-500" : ""}`}
                 onChange={(e) => {
                   setFullNameError(false);
@@ -87,7 +87,7 @@ const Register: React.FC = () => {
                 id="email"
                 placeholder="// example@gmail.com"
                 value={email}
-                className={`mb-4 mt-2 w-full rounded-xl dark:bg-[#1a1a1a]   border-2 placeholder:dark:text-gray-200 placeholder:text-gray-800 border-black  p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow hover:shadow-customHover focus:border-black focus:ring-0
+                className={`mb-4 mt-2 w-full rounded-xl border-2   border-black p-3 pl-10 placeholder-black  shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200
                        ${emailError ? "border-red-500" : ""}`}
                 onChange={(e) => {
                   setEmailError(false);
@@ -114,7 +114,7 @@ const Register: React.FC = () => {
                 id="password"
                 placeholder="// jeffbezos123"
                 value={password}
-                className={`mb-4 mt-2 w-full rounded-xl border-2 placeholder:dark:text-gray-200 placeholder:text-gray-800 border-black  p-3 pl-10 placeholder-black dark:bg-[#1a1a1a] shadow-custom ring-transparent  transition-all  hover:shadow-customHover focus:ring-0 
+                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 pl-10  placeholder-black shadow-custom ring-transparent transition-all placeholder:text-gray-800 hover:shadow-customHover  focus:ring-0  dark:bg-[#1a1a1a] placeholder:dark:text-gray-200 
                       ${passwordError ? "border-red-500" : ""}`}
                 onChange={(e) => {
                   setPasswordError(false);
@@ -133,7 +133,7 @@ const Register: React.FC = () => {
           </div>
         </form>
         <button
-          className={`mt-3 flex w-full text-white bg-blue-500 cursor-pointer items-center justify-center rounded-2xl px-4 py-6 text-lg transition-all hover:-translate-y-0.5 md:px-9 ${
+          className={`mt-3 flex w-full cursor-pointer items-center justify-center rounded-2xl bg-blue-500 px-4 py-6 text-lg text-white transition-all hover:-translate-y-0.5 md:px-9 ${
             fullName.length > 0 && email.length > 4 && password.length > 5
               ? "opacity-100"
               : "opacity-10"
