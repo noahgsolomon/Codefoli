@@ -1,6 +1,1 @@
-- Home page changes to accommodate dark theme
-- More services to select from
-- Added necessary changes to deploy and download
-- Properly clean the inputs from the users before writing their files.
-This was already implemented but not for break lines but it is now.
-- Theme event so that things that need to manually be updated when the local storage theme item updates.
+- In progress making text areas match the original elements.
