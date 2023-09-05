@@ -283,11 +283,20 @@ const JobCard: FC<{
                   }
                 }
               }}
-              className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent px-5 pt-5 text-3xl font-bold leading-relaxed outline-none focus:outline-none focus:ring-0"
+              className="p-0 m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent px-5 pt-5 text-3xl font-bold leading-relaxed outline-none focus:outline-none focus:ring-0"
               autoFocus
-              onFocus={(e) => e.target.select()}
-              rows={1}
-              maxLength={25}
+              onInput={(e) => {
+                const target = e.target as HTMLTextAreaElement;
+                target.style.height = '';
+                target.style.height = `${target.scrollHeight}px`;
+              }}
+              onFocus={(e) => {
+                const target = e.target as HTMLTextAreaElement;
+                target.style.height = '';
+                target.style.height = `${target.scrollHeight}px`;
+                e.currentTarget.select();
+              }}
+              maxLength={100}
             />
           ) : (
             <h2
@@ -315,11 +324,20 @@ const JobCard: FC<{
                     }
                   }
                 }}
-                className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent font-bold leading-relaxed outline-none focus:outline-none focus:ring-0"
+                className="p-0 m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent font-bold leading-relaxed outline-none focus:outline-none focus:ring-0"
                 autoFocus
-                onFocus={(e) => e.target.select()}
-                rows={1}
-                maxLength={25}
+                onInput={(e) => {
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = '';
+                  target.style.height = `${target.scrollHeight}px`;
+                }}
+                onFocus={(e) => {
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = '';
+                  target.style.height = `${target.scrollHeight}px`;
+                  e.currentTarget.select();
+                }}
+                maxLength={100}
               />
             ) : (
               <h2
@@ -346,10 +364,19 @@ const JobCard: FC<{
                     }
                   }
                 }}
-                className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg leading-loose outline-none focus:outline-none focus:ring-0"
+                className="p-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg leading-loose outline-none focus:outline-none focus:ring-0"
                 autoFocus
-                onFocus={(e) => e.target.select()}
-                rows={4}
+                onInput={(e) => {
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = '';
+                  target.style.height = `${target.scrollHeight}px`;
+                }}
+                onFocus={(e) => {
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = '';
+                  target.style.height = `${target.scrollHeight}px`;
+                  e.currentTarget.select();
+                }}
                 maxLength={255}
               />
             ) : (
@@ -416,36 +443,38 @@ const JobCard: FC<{
       </div>
 
       <div
-        className={`flew-row flex ${
+        className={`flew-row flex text-lg p-5 ${
           active
-            ? "duration active rounded-b-lg border-t-2 border-black bg-yellow-500 p-5 font-bold"
-            : "duration rounded-b-lg border-t-2 border-black p-5 font-bold"
+            ? "duration active rounded-b-lg border-t-2 border-black bg-yellow-500 font-bold"
+            : "duration rounded-b-lg border-t-2 border-black font-bold"
         }`}
       >
         {startDateEdit ? (
-          <textarea
-            ref={startDateTextareaRef}
-            value={startDateEditValue}
-            onChange={(e) => setStartDateEditValue(e.target.value)}
-            onBlur={() => {
-              setStartDateEditValue(startDate);
-              setStartDateEdit(false);
-            }}
-            onKeyDown={async (e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                if (startDateEditValue.length > 0) {
-                  await handleStartDateSubmit();
-                }
-              }
-            }}
-            autoFocus
-            onFocus={(e) => e.target.select()}
-            className="resize-none appearance-none overflow-hidden border-none bg-transparent outline-none focus:outline-none focus:ring-0"
-          />
+              <textarea
+                  ref={startDateTextareaRef}
+                  value={startDateEditValue}
+                  onChange={(e) => setStartDateEditValue(e.target.value)}
+                  onBlur={() => {
+                    setStartDateEditValue(startDate);
+                    setStartDateEdit(false);
+                  }}
+                  onKeyDown={async (e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      if (startDateEditValue.length > 0) {
+                        await handleStartDateSubmit();
+                      }
+                    }
+                  }}
+                  autoFocus
+                  onFocus={(e) => e.target.select()}
+                  className="p-0 resize-none appearance-none text-lg overflow-hidden border-none bg-transparent outline-none focus:outline-none focus:ring-0"
+                  rows={1}
+                  maxLength={20}
+              />
         ) : (
           <p
-            className={"transition-all hover:cursor-pointer hover:opacity-50"}
+            className={"transition-all text-lg hover:cursor-pointer hover:opacity-50"}
             onClick={() => setStartDateEdit(true)}
           >
             {startDateValue}
@@ -471,11 +500,13 @@ const JobCard: FC<{
             }}
             autoFocus
             onFocus={(e) => e.target.select()}
-            className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent outline-none focus:outline-none focus:ring-0"
+            rows={1}
+            maxLength={20}
+            className="p-0 w-full text-lg resize-none appearance-none overflow-hidden border-none bg-transparent outline-none focus:outline-none focus:ring-0"
           />
         ) : (
           <p
-            className={"transition-all hover:cursor-pointer hover:opacity-50"}
+            className={"transition-all hover:cursor-pointer text-lg hover:opacity-50"}
             onClick={() => setEndDateEdit(true)}
           >
             {endDateValue}
