@@ -38,7 +38,6 @@ const AddJobCard: FC<{
         }
         onClick={() => handleAddJob()}
       >
-        <h2 className={"text-2xl"}>Add job</h2>
         <p className={"text-5xl"}>+</p>
       </div>
     </div>
