@@ -196,10 +196,18 @@ const SkillSection: FC<{
               await handleHeaderOneSubmit();
             }
           }}
-          className="mb-10 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-2xl font-bold leading-relaxed outline-none focus:outline-none focus:ring-0"
+          className="p-0 mb-10 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-2xl font-bold leading-relaxed outline-none focus:outline-none focus:ring-0"
           autoFocus
+          onInput={(e) => {
+            const target = e.target as HTMLTextAreaElement;
+            target.style.height = '';
+            target.style.height = `${target.scrollHeight}px`;
+          }}
           onFocus={(e) => {
-            e.target.select();
+            const target = e.target as HTMLTextAreaElement;
+            target.style.height = '';
+            target.style.height = `${target.scrollHeight}px`;
+            e.currentTarget.select();
           }}
           maxLength={50}
         />
