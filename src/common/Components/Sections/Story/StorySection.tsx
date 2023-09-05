@@ -271,10 +271,18 @@ const StorySection: React.FC<{
                   await handleHeaderOneSubmit();
                 }
               }}
-              className="mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-4xl font-bold text-white outline-none focus:outline-none focus:ring-0 md:text-5xl md:leading-tight"
+              className="p-0 mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-4xl font-bold text-white outline-none focus:outline-none focus:ring-0 md:text-5xl md:leading-tight"
               autoFocus
+              onInput={(e) => {
+                const target = e.target as HTMLTextAreaElement;
+                target.style.height = '';
+                target.style.height = `${target.scrollHeight}px`;
+              }}
               onFocus={(e) => {
-                e.target.select();
+                const target = e.target as HTMLTextAreaElement;
+                target.style.height = '';
+                target.style.height = `${target.scrollHeight}px`;
+                e.currentTarget.select();
               }}
               maxLength={50}
             />
@@ -301,17 +309,24 @@ const StorySection: React.FC<{
                   await handleDescriptionOneSubmit();
                 }
               }}
-              className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
+              className="p-0 mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
               autoFocus
-              onFocus={(e) => {
-                e.target.select();
+              onInput={(e) => {
+                const target = e.target as HTMLTextAreaElement;
+                target.style.height = '';
+                target.style.height = `${target.scrollHeight}px`;
               }}
-              rows={10}
+              onFocus={(e) => {
+                const target = e.target as HTMLTextAreaElement;
+                target.style.height = '';
+                target.style.height = `${target.scrollHeight}px`;
+                e.currentTarget.select();
+              }}
               maxLength={500}
             />
           ) : (
             <p
-              className="description cursor-pointer select-none text-lg font-semibold text-white transition-all hover:opacity-50"
+              className="cursor-pointer select-none text-lg font-semibold text-white transition-all hover:opacity-50"
               onClick={() => setDescriptionOneEdit(true)}
             >
               {details.description_one}
@@ -336,10 +351,18 @@ const StorySection: React.FC<{
                       await handleBulletOneSubmit();
                     }
                   }}
-                  className="w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
+                  className="p-0 w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
                   autoFocus
+                  onInput={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                  }}
                   onFocus={(e) => {
-                    e.target.select();
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                    e.currentTarget.select();
                   }}
                   maxLength={250}
                 />
@@ -369,10 +392,18 @@ const StorySection: React.FC<{
                       await handleBulletTwoSubmit();
                     }
                   }}
-                  className="w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
+                  className="p-0 w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
                   autoFocus
+                  onInput={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                  }}
                   onFocus={(e) => {
-                    e.target.select();
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                    e.currentTarget.select();
                   }}
                   maxLength={250}
                 />
@@ -402,10 +433,18 @@ const StorySection: React.FC<{
                       await handleBulletThreeSubmit();
                     }
                   }}
-                  className="w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
+                  className="p-0 w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
                   autoFocus
+                  onInput={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                  }}
                   onFocus={(e) => {
-                    e.target.select();
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                    e.currentTarget.select();
                   }}
                   maxLength={250}
                 />
