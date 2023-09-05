@@ -1,1 +1,3 @@
-- In progress making text areas match the original elements.
+- Changed custom domain queue to a database table considering we need to poll all
+    the rows (pending custom domain ssl certificates) in the queue every 10 minutes and because you can only
+    poll 10 messages at a time in sqs. The work load does not need a queue.
