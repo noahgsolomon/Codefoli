@@ -169,29 +169,38 @@ const AboutMain: React.FC<{
           >
             <div className={"flex justify-center"}>
               {headerOneEdit ? (
-                <textarea
-                  ref={headerOneTextareaRef}
-                  value={headerOneEditValue}
-                  onChange={(e) => setHeaderOneEditValue(e.target.value)}
-                  onBlur={() => {
-                    setHeaderOneEditValue(pageData.header_one);
-                    setHeaderOneEdit(false);
-                  }}
-                  onKeyDown={async (e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      await handleHeaderOneSubmit();
-                    }
-                  }}
-                  className="mx-auto mb-5 w-full max-w-[15ch] resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-5xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-7xl"
-                  autoFocus
-                  onFocus={(e) => e.currentTarget.select()}
-                  maxLength={50}
-                  rows={5}
-                />
+                    <textarea
+                        ref={headerOneTextareaRef}
+                        value={headerOneEditValue}
+                        onInput={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = '';
+                          target.style.height = `${target.scrollHeight}px`;
+                        }}
+                        onFocus={(e) => {
+                          const target = e.target as HTMLTextAreaElement;
+                          target.style.height = '';
+                          target.style.height = `${target.scrollHeight}px`;
+                          e.currentTarget.select();
+                        }}
+                        onChange={(e) => setHeaderOneEditValue(e.target.value)}
+                        onBlur={() => {
+                          setHeaderOneEditValue(pageData.header_one);
+                          setHeaderOneEdit(false);
+                        }}
+                        onKeyDown={async (e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            await handleHeaderOneSubmit();
+                          }
+                        }}
+                        className="p-0 mb-5 w-full mx-auto max-w-[15ch] resize-none appearance-none overflow-hidden border-none bg-transparent text-5xl text-center font-bold outline-none focus:outline-none focus:ring-0 md:text-7xl leading-snug"
+                        autoFocus
+                        maxLength={50}
+                    />
               ) : (
                 <h2
-                  className="mx-auto mb-5 max-w-[15ch] cursor-pointer select-none text-center text-5xl font-bold transition-all hover:opacity-50 md:text-7xl"
+                  className="mx-auto mb-5 max-w-[15ch] cursor-pointer select-none text-center text-5xl font-bold transition-all hover:opacity-50 md:text-7xl leading-snug"
                   onClick={() => setHeaderOneEdit(true)}
                 >
                   {pageData.header_one}
@@ -208,16 +217,25 @@ const AboutMain: React.FC<{
                     setDescriptionOneEditValue(pageData.description_one);
                     setDescriptionOneEdit(false);
                   }}
+                  onInput={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                  }}
+                  onFocus={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                    e.currentTarget.select();
+                  }}
                   onKeyDown={async (e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
                       await handleDescriptionOneSubmit();
                     }
                   }}
-                  className=" mx-auto mb-5 w-full max-w-[40ch] resize-none appearance-none  overflow-hidden border-none  bg-transparent text-center text-2xl font-semibold leading-snug outline-none transition-all focus:outline-none focus:ring-0"
-                  style={{ minHeight: "8em" }}
+                  className="p-0 mx-auto mb-5 w-full max-w-[40ch] resize-none appearance-none  overflow-hidden border-none  bg-transparent text-center text-2xl font-semibold leading-snug outline-none transition-all focus:outline-none focus:ring-0"
                   autoFocus
-                  onFocus={(e) => e.currentTarget.select()}
                   maxLength={250}
                 />
               ) : (
@@ -363,14 +381,24 @@ const AboutMain: React.FC<{
                       await handleHeaderTwoSubmit();
                     }
                   }}
-                  className="mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-4xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 lg:text-left lg:text-6xl lg:leading-tight"
+                  className="p-0 mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-4xl font-bold outline-none focus:outline-none focus:ring-0 md:text-left lg:text-5xl"
                   autoFocus
-                  onFocus={(e) => e.currentTarget.select()}
+                  onInput={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                  }}
+                  onFocus={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                    e.currentTarget.select();
+                  }}
                   maxLength={50}
                 />
               ) : (
                 <h2
-                  className="mb-8 cursor-pointer select-none text-center text-4xl font-bold transition-all hover:opacity-50 lg:text-left lg:text-6xl lg:leading-tight"
+                  className="mb-8 cursor-pointer text-center text-4xl font-bold transition-all hover:opacity-50 md:text-left lg:text-5xl"
                   onClick={() => setHeaderTwoEdit(true)}
                 >
                   {pageData.header_two}
@@ -441,16 +469,24 @@ const AboutMain: React.FC<{
                     await handleDescriptionTwoSubmit();
                   }
                 }}
-                className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-2xl font-semibold leading-snug outline-none focus:outline-none focus:ring-0"
-                style={{ minHeight: "8em" }}
+                className="p-0 mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-2xl font-semibold leading-snug outline-none focus:outline-none focus:ring-0"
                 autoFocus
-                rows={15}
-                onFocus={(e) => e.currentTarget.select()}
+                onInput={(e) => {
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = '';
+                  target.style.height = `${target.scrollHeight}px`;
+                }}
+                onFocus={(e) => {
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = '';
+                  target.style.height = `${target.scrollHeight}px`;
+                  e.currentTarget.select();
+                }}
                 maxLength={500}
               />
             ) : (
               <p
-                className="mb-5 cursor-pointer select-none text-2xl font-semibold transition-all hover:opacity-50"
+                className="mb-5 cursor-pointer select-none text-2xl font-semibold transition-all hover:opacity-50 leading-snug"
                 onClick={() => setDescriptionTwoEdit(true)}
               >
                 {pageData.description_two}
