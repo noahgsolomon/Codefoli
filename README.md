@@ -2,7 +2,9 @@
 
 Codefoli is a portfolio website building platform and **free hosting solution** designed for programmers. Offering a seamless experience for showcasing your coding skills and projects. Enjoy the balance of a standardized and customizable portfolio creation. 
 
-🌟 **Check out Walter White's portfolio!** [🔗 walter.codefoli.com](http://walter.codefoli.com)
+🌟 **Build and host your Portfolio for _FREE_ today ->** [🔗 codefoli.com](https://codefoli.com)
+
+💊 **Check out Walter White's portfolio!** [🔗 walter.codefoli.com](https://walter.codefoli.com)
 
 <!-- Row 1 -->
 <p float="left">
