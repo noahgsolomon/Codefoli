@@ -121,27 +121,30 @@ const DashboardMain: React.FC<{
         <animated.div style={headerAnimation} className={"md:mr-10"}>
           <div className="mx-auto mt-10 max-w-2xl font-bold xl:mt-32">
             {headerOneEdit ? (
-              <textarea
-                ref={headerOneTextareaRef}
-                value={headerOneEditValue}
-                onChange={(e) => setHeaderOneEditValue(e.target.value)}
-                onBlur={() => {
-                  setHeaderOneEditValue(pageData.header_one);
-                  setHeaderOneEdit(false);
-                }}
-                onKeyDown={async (e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    await handleHeaderOneSubmit();
-                  }
-                }}
-                className="font-extra-bold w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-4xl leading-snug outline-none focus:outline-none focus:ring-0 md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal"
-                autoFocus
-                onFocus={(e) => {
-                  e.target.select();
-                }}
-                maxLength={50}
-              />
+                <div className={'flex justify-center md:justify-normal'}>
+                <textarea
+                    ref={headerOneTextareaRef}
+                    value={headerOneEditValue}
+                    onChange={(e) => setHeaderOneEditValue(e.target.value)}
+                    onBlur={() => {
+                      setHeaderOneEditValue(pageData.header_one);
+                      setHeaderOneEdit(false);
+                    }}
+                    onKeyDown={async (e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        await handleHeaderOneSubmit();
+                      }
+                    }}
+                    className="p-0 font-extra-bold w-full mx-auto  max-w-[15ch] resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-4xl md:text-left leading-snug outline-none focus:outline-none focus:ring-0 md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal"
+                    autoFocus
+                    onFocus={(e) => {
+                      e.target.select();
+                    }}
+                    maxLength={50}
+                />
+                </div>
+
             ) : (
               <h1
                 className="font-extra-bold md:flex:mx-0 mx-auto max-w-[15ch] cursor-pointer text-center text-4xl leading-snug transition-all hover:opacity-50 md:text-left md:text-5xl md:leading-relaxed xl:text-6xl xl:leading-normal"
@@ -151,36 +154,39 @@ const DashboardMain: React.FC<{
               </h1>
             )}
             {descriptionOneEdit ? (
-              <textarea
-                ref={descriptionOneTextareaRef}
-                value={descriptionOneEditValue}
-                onChange={(e) => setDescriptionOneEditValue(e.target.value)}
-                onBlur={() => {
-                  setDescriptionOneEditValue(pageData.description_one);
-                  setDescriptionOneEdit(false);
-                }}
-                onKeyDown={async (e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    await handleDescriptionOneSubmit();
-                    setDescriptionOneEdit(false);
-                  }
-                }}
-                className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-base opacity-60 outline-none focus:outline-none focus:ring-0 xl:max-w-[50ch] xl:text-left"
-                autoFocus
-                onFocus={(e) => {
-                  e.target.select();
-                }}
-                maxLength={250}
-              />
+                <div className={'flex justify-center md:justify-normal'}>
+                  <textarea
+                      ref={descriptionOneTextareaRef}
+                      value={descriptionOneEditValue}
+                      onChange={(e) => setDescriptionOneEditValue(e.target.value)}
+                      onBlur={() => {
+                        setDescriptionOneEditValue(pageData.description_one);
+                        setDescriptionOneEdit(false);
+                      }}
+                      onKeyDown={async (e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          await handleDescriptionOneSubmit();
+                          setDescriptionOneEdit(false);
+                        }
+                      }}
+                      className="w-full mx-auto max-w-[35ch] resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-base opacity-60 md:mx-0 md:text-left outline-none focus:outline-none focus:ring-0 xl:max-w-[50ch]"
+                      autoFocus
+                      onFocus={(e) => {
+                        e.target.select();
+                      }}
+                      maxLength={250}
+                  />
+                </div>
             ) : (
-              <p
-                className="mx-auto max-w-[35ch] cursor-pointer text-center text-base opacity-60 transition-all hover:opacity-50 md:mx-0 md:text-left xl:max-w-[50ch]"
-                onClick={() => setDescriptionOneEdit(true)}
-              >
-                {pageData.description_one}
-              </p>
+                <p
+                    className="mx-auto max-w-[35ch] cursor-pointer text-center text-base opacity-60 transition-all hover:opacity-50 md:mx-0 md:text-left xl:max-w-[50ch]"
+                    onClick={() => setDescriptionOneEdit(true)}
+                >
+                  {pageData.description_one}
+                </p>
             )}
+
           </div>
           <div className="mt-5 whitespace-nowrap text-center md:text-left">
             <Link
