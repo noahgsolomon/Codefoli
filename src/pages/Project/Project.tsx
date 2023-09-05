@@ -322,10 +322,18 @@ const Project: FC<{
                       await handleHeaderSubmit();
                     }
                   }}
-                  className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-4xl font-bold leading-snug outline-none focus:outline-none focus:ring-0"
+                  className="p-0 m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-4xl font-bold leading-snug outline-none focus:outline-none focus:ring-0"
                   autoFocus
+                  onInput={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                  }}
                   onFocus={(e) => {
-                    e.target.select();
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                    e.currentTarget.select();
                   }}
                   maxLength={25}
                 />
@@ -356,9 +364,18 @@ const Project: FC<{
                   }}
                   className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-lg font-semibold leading-loose outline-none focus:outline-none focus:ring-0"
                   autoFocus
-                  onFocus={(e) => e.currentTarget.select()}
+                  onInput={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                  }}
+                  onFocus={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                    e.currentTarget.select();
+                  }}
                   maxLength={500}
-                  rows={4}
                 />
               ) : (
                 <p
@@ -458,9 +475,18 @@ const Project: FC<{
                   }}
                   className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-3xl font-bold leading-loose outline-none focus:outline-none focus:ring-0"
                   autoFocus
-                  onFocus={(e) => e.currentTarget.select()}
-                  maxLength={25}
-                  rows={1}
+                  onInput={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                  }}
+                  onFocus={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                    e.currentTarget.select();
+                  }}
+                  maxLength={50}
                 />
               ) : (
                 <h2
@@ -487,9 +513,17 @@ const Project: FC<{
                   }}
                   className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-lg font-semibold leading-loose outline-none focus:outline-none focus:ring-0"
                   autoFocus
-                  onFocus={(e) => e.currentTarget.select()}
-                  maxLength={2000}
-                  rows={15}
+                  onInput={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                  }}
+                  onFocus={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                    e.currentTarget.select();
+                  }}                  maxLength={2000}
                 />
               ) : (
                 <p
@@ -522,9 +556,18 @@ const Project: FC<{
                       }}
                       className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-lg font-normal leading-loose outline-none focus:outline-none focus:ring-0"
                       autoFocus
-                      onFocus={(e) => e.currentTarget.select()}
+                      onInput={(e) => {
+                        const target = e.target as HTMLTextAreaElement;
+                        target.style.height = '';
+                        target.style.height = `${target.scrollHeight}px`;
+                      }}
+                      onFocus={(e) => {
+                        const target = e.target as HTMLTextAreaElement;
+                        target.style.height = '';
+                        target.style.height = `${target.scrollHeight}px`;
+                        e.currentTarget.select();
+                      }}
                       maxLength={50}
-                      rows={1}
                     />
                   ) : (
                     <p
