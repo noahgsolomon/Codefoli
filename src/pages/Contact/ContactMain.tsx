@@ -116,9 +116,19 @@ const ContactMain: FC<{
                     await handleHeaderOneSubmit();
                   }
                 }}
-                className=" w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-5xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-left md:text-6xl"
+                className="p-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-5xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-left md:text-6xl"
                 autoFocus
-                onFocus={(e) => e.currentTarget.select()}
+                onInput={(e) => {
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = '';
+                  target.style.height = `${target.scrollHeight}px`;
+                }}
+                onFocus={(e) => {
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = '';
+                  target.style.height = `${target.scrollHeight}px`;
+                  e.currentTarget.select();
+                }}
                 maxLength={50}
               />
             ) : (
@@ -144,15 +154,24 @@ const ContactMain: FC<{
                     await handleDescriptionOneSubmit();
                   }
                 }}
-                className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-lg leading-snug outline-none focus:outline-none focus:ring-0 md:text-left"
+                className="p-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-xl text-center outline-none focus:outline-none focus:ring-0 md:text-left leading-relaxed"
                 autoFocus
-                onFocus={(e) => e.currentTarget.select()}
+                onInput={(e) => {
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = '';
+                  target.style.height = `${target.scrollHeight}px`;
+                }}
+                onFocus={(e) => {
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = '';
+                  target.style.height = `${target.scrollHeight}px`;
+                  e.currentTarget.select();
+                }}
                 maxLength={250}
-                rows={10}
               />
             ) : (
               <p
-                className="cursor-pointer select-none text-center transition-all hover:opacity-50 md:text-left"
+                className="cursor-pointer text-xl text-center transition-all hover:opacity-50 md:text-left leading-relaxed"
                 onClick={() => setDescriptionOneEdit(true)}
               >
                 {pageData.description_one}
@@ -182,10 +201,12 @@ const ContactMain: FC<{
                             await handleEmailSubmit();
                           }
                         }}
-                        className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-lg leading-snug outline-none focus:outline-none focus:ring-0"
+                        className="p-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg leading-snug outline-none focus:outline-none focus:ring-0"
                         autoFocus
-                        onFocus={(e) => e.currentTarget.select()}
-                        maxLength={30}
+                        onFocus={(e) => {
+                          e.currentTarget.select();
+                        }}
+                        maxLength={40}
                         rows={1}
                       />
                     ) : (
@@ -220,9 +241,11 @@ const ContactMain: FC<{
                           await handlePhoneSubmit();
                         }
                       }}
-                      className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-lg leading-snug outline-none focus:outline-none focus:ring-0"
+                      className="p-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg leading-snug outline-none focus:outline-none focus:ring-0"
                       autoFocus
-                      onFocus={(e) => e.currentTarget.select()}
+                      onFocus={(e) => {
+                        e.currentTarget.select();
+                      }}
                       maxLength={30}
                       rows={1}
                     />
