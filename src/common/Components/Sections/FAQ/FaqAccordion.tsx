@@ -159,16 +159,24 @@ const FaqAccordion: FC<AccordionProps> = ({
                 await handleTitleSubmit();
               }
             }}
-            className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-1 text-lg font-semibold leading-relaxed outline-none focus:outline-none focus:ring-0"
+            className=" w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-1 text-lg font-semibold leading-relaxed outline-none focus:outline-none focus:ring-0"
             autoFocus
+            onInput={(e) => {
+              const target = e.target as HTMLTextAreaElement;
+              target.style.height = '';
+              target.style.height = `${target.scrollHeight}px`;
+            }}
             onFocus={(e) => {
-              e.target.select();
+              const target = e.target as HTMLTextAreaElement;
+              target.style.height = '';
+              target.style.height = `${target.scrollHeight}px`;
+              e.currentTarget.select();
             }}
             maxLength={50}
           />
         ) : (
           <h4
-            className="cursor-pointer select-none p-1 font-semibold transition-all hover:opacity-50"
+            className="cursor-pointer select-none p-1 text-lg font-semibold transition-all hover:opacity-50"
             onClick={(e) => {
               e.stopPropagation();
               setTitleEdit(true);
@@ -231,14 +239,22 @@ const FaqAccordion: FC<AccordionProps> = ({
             }}
             className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-4 text-lg leading-relaxed outline-none focus:outline-none focus:ring-0"
             autoFocus
+            onInput={(e) => {
+              const target = e.target as HTMLTextAreaElement;
+              target.style.height = '';
+              target.style.height = `${target.scrollHeight}px`;
+            }}
             onFocus={(e) => {
-              e.target.select();
+              const target = e.target as HTMLTextAreaElement;
+              target.style.height = '';
+              target.style.height = `${target.scrollHeight}px`;
+              e.currentTarget.select();
             }}
             maxLength={250}
           />
         ) : (
           <p
-            className="cursor-pointer p-4 transition-all hover:rounded-full hover:opacity-50"
+            className="cursor-pointer p-4 transition-all text-lg hover:rounded-full hover:opacity-50"
             onClick={(e) => {
               e.stopPropagation();
               setContentEdit(true);

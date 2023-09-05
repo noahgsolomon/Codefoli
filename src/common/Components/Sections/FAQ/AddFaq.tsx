@@ -40,8 +40,7 @@ const addFaq: FC<{
       onClick={async () => await handleAddFaq()}
     >
       <div className={"flex flex-col items-center justify-center"}>
-        <h2 className={"text-2xl"}>Add FAQ card</h2>
-        <p className={"text-4xl"}>+</p>
+        <p className={"text-4xl py-2"}>+</p>
       </div>
     </div>
   );
