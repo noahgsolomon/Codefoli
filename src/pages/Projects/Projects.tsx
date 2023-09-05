@@ -108,16 +108,16 @@ const Projects: FC<{
                       await handleHeaderOneSubmit();
                     }
                   }}
-                  className="p-0 mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-3xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-5xl lg:text-6xl"
+                  className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-3xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-5xl lg:text-6xl"
                   autoFocus
                   onInput={(e) => {
                     const target = e.target as HTMLTextAreaElement;
-                    target.style.height = '';
+                    target.style.height = "";
                     target.style.height = `${target.scrollHeight}px`;
                   }}
                   onFocus={(e) => {
                     const target = e.target as HTMLTextAreaElement;
-                    target.style.height = '';
+                    target.style.height = "";
                     target.style.height = `${target.scrollHeight}px`;
                     e.currentTarget.select();
                   }}
@@ -146,16 +146,16 @@ const Projects: FC<{
                       await handleDescriptionOneSubmit();
                     }
                   }}
-                  className="p-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-lg outline-none focus:outline-none focus:ring-0"
+                  className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-lg outline-none focus:outline-none focus:ring-0"
                   autoFocus
                   onInput={(e) => {
                     const target = e.target as HTMLTextAreaElement;
-                    target.style.height = '';
+                    target.style.height = "";
                     target.style.height = `${target.scrollHeight}px`;
                   }}
                   onFocus={(e) => {
                     const target = e.target as HTMLTextAreaElement;
-                    target.style.height = '';
+                    target.style.height = "";
                     target.style.height = `${target.scrollHeight}px`;
                     e.currentTarget.select();
                   }}
@@ -163,7 +163,7 @@ const Projects: FC<{
                 />
               ) : (
                 <p
-                  className="cursor-pointer select-none text-center font-semibold text-lg transition-all hover:opacity-50"
+                  className="cursor-pointer select-none text-center text-lg font-semibold transition-all hover:opacity-50"
                   onClick={() => setDescriptionOneEdit(true)}
                 >
                   {pageData.description_one}

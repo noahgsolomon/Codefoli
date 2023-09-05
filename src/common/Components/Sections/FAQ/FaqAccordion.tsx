@@ -163,12 +163,12 @@ const FaqAccordion: FC<AccordionProps> = ({
             autoFocus
             onInput={(e) => {
               const target = e.target as HTMLTextAreaElement;
-              target.style.height = '';
+              target.style.height = "";
               target.style.height = `${target.scrollHeight}px`;
             }}
             onFocus={(e) => {
               const target = e.target as HTMLTextAreaElement;
-              target.style.height = '';
+              target.style.height = "";
               target.style.height = `${target.scrollHeight}px`;
               e.currentTarget.select();
             }}
@@ -241,12 +241,12 @@ const FaqAccordion: FC<AccordionProps> = ({
             autoFocus
             onInput={(e) => {
               const target = e.target as HTMLTextAreaElement;
-              target.style.height = '';
+              target.style.height = "";
               target.style.height = `${target.scrollHeight}px`;
             }}
             onFocus={(e) => {
               const target = e.target as HTMLTextAreaElement;
-              target.style.height = '';
+              target.style.height = "";
               target.style.height = `${target.scrollHeight}px`;
               e.currentTarget.select();
             }}
@@ -254,7 +254,7 @@ const FaqAccordion: FC<AccordionProps> = ({
           />
         ) : (
           <p
-            className="cursor-pointer p-4 transition-all text-lg hover:rounded-full hover:opacity-50"
+            className="cursor-pointer p-4 text-lg transition-all hover:rounded-full hover:opacity-50"
             onClick={(e) => {
               e.stopPropagation();
               setContentEdit(true);

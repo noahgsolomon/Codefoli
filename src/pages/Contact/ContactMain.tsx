@@ -116,16 +116,16 @@ const ContactMain: FC<{
                     await handleHeaderOneSubmit();
                   }
                 }}
-                className="p-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-5xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-left md:text-6xl"
+                className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-5xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-left md:text-6xl"
                 autoFocus
                 onInput={(e) => {
                   const target = e.target as HTMLTextAreaElement;
-                  target.style.height = '';
+                  target.style.height = "";
                   target.style.height = `${target.scrollHeight}px`;
                 }}
                 onFocus={(e) => {
                   const target = e.target as HTMLTextAreaElement;
-                  target.style.height = '';
+                  target.style.height = "";
                   target.style.height = `${target.scrollHeight}px`;
                   e.currentTarget.select();
                 }}
@@ -154,16 +154,16 @@ const ContactMain: FC<{
                     await handleDescriptionOneSubmit();
                   }
                 }}
-                className="p-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-xl text-center outline-none focus:outline-none focus:ring-0 md:text-left leading-relaxed"
+                className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-xl leading-relaxed outline-none focus:outline-none focus:ring-0 md:text-left"
                 autoFocus
                 onInput={(e) => {
                   const target = e.target as HTMLTextAreaElement;
-                  target.style.height = '';
+                  target.style.height = "";
                   target.style.height = `${target.scrollHeight}px`;
                 }}
                 onFocus={(e) => {
                   const target = e.target as HTMLTextAreaElement;
-                  target.style.height = '';
+                  target.style.height = "";
                   target.style.height = `${target.scrollHeight}px`;
                   e.currentTarget.select();
                 }}
@@ -171,7 +171,7 @@ const ContactMain: FC<{
               />
             ) : (
               <p
-                className="cursor-pointer text-xl text-center transition-all hover:opacity-50 md:text-left leading-relaxed"
+                className="cursor-pointer text-center text-xl leading-relaxed transition-all hover:opacity-50 md:text-left"
                 onClick={() => setDescriptionOneEdit(true)}
               >
                 {pageData.description_one}
@@ -201,7 +201,7 @@ const ContactMain: FC<{
                             await handleEmailSubmit();
                           }
                         }}
-                        className="p-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg leading-snug outline-none focus:outline-none focus:ring-0"
+                        className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-lg leading-snug outline-none focus:outline-none focus:ring-0"
                         autoFocus
                         onFocus={(e) => {
                           e.currentTarget.select();
@@ -241,7 +241,7 @@ const ContactMain: FC<{
                           await handlePhoneSubmit();
                         }
                       }}
-                      className="p-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg leading-snug outline-none focus:outline-none focus:ring-0"
+                      className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-lg leading-snug outline-none focus:outline-none focus:ring-0"
                       autoFocus
                       onFocus={(e) => {
                         e.currentTarget.select();

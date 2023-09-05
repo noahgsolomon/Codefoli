@@ -271,16 +271,16 @@ const StorySection: React.FC<{
                   await handleHeaderOneSubmit();
                 }
               }}
-              className="p-0 mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-4xl font-bold text-white outline-none focus:outline-none focus:ring-0 md:text-5xl md:leading-tight"
+              className="mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-4xl font-bold text-white outline-none focus:outline-none focus:ring-0 md:text-5xl md:leading-tight"
               autoFocus
               onInput={(e) => {
                 const target = e.target as HTMLTextAreaElement;
-                target.style.height = '';
+                target.style.height = "";
                 target.style.height = `${target.scrollHeight}px`;
               }}
               onFocus={(e) => {
                 const target = e.target as HTMLTextAreaElement;
-                target.style.height = '';
+                target.style.height = "";
                 target.style.height = `${target.scrollHeight}px`;
                 e.currentTarget.select();
               }}
@@ -309,16 +309,16 @@ const StorySection: React.FC<{
                   await handleDescriptionOneSubmit();
                 }
               }}
-              className="p-0 mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
+              className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
               autoFocus
               onInput={(e) => {
                 const target = e.target as HTMLTextAreaElement;
-                target.style.height = '';
+                target.style.height = "";
                 target.style.height = `${target.scrollHeight}px`;
               }}
               onFocus={(e) => {
                 const target = e.target as HTMLTextAreaElement;
-                target.style.height = '';
+                target.style.height = "";
                 target.style.height = `${target.scrollHeight}px`;
                 e.currentTarget.select();
               }}
@@ -351,16 +351,16 @@ const StorySection: React.FC<{
                       await handleBulletOneSubmit();
                     }
                   }}
-                  className="p-0 w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
+                  className="w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent p-0 pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
                   autoFocus
                   onInput={(e) => {
                     const target = e.target as HTMLTextAreaElement;
-                    target.style.height = '';
+                    target.style.height = "";
                     target.style.height = `${target.scrollHeight}px`;
                   }}
                   onFocus={(e) => {
                     const target = e.target as HTMLTextAreaElement;
-                    target.style.height = '';
+                    target.style.height = "";
                     target.style.height = `${target.scrollHeight}px`;
                     e.currentTarget.select();
                   }}
@@ -392,16 +392,16 @@ const StorySection: React.FC<{
                       await handleBulletTwoSubmit();
                     }
                   }}
-                  className="p-0 w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
+                  className="w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent p-0 pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
                   autoFocus
                   onInput={(e) => {
                     const target = e.target as HTMLTextAreaElement;
-                    target.style.height = '';
+                    target.style.height = "";
                     target.style.height = `${target.scrollHeight}px`;
                   }}
                   onFocus={(e) => {
                     const target = e.target as HTMLTextAreaElement;
-                    target.style.height = '';
+                    target.style.height = "";
                     target.style.height = `${target.scrollHeight}px`;
                     e.currentTarget.select();
                   }}
@@ -433,16 +433,16 @@ const StorySection: React.FC<{
                       await handleBulletThreeSubmit();
                     }
                   }}
-                  className="p-0 w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
+                  className="w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent p-0 pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
                   autoFocus
                   onInput={(e) => {
                     const target = e.target as HTMLTextAreaElement;
-                    target.style.height = '';
+                    target.style.height = "";
                     target.style.height = `${target.scrollHeight}px`;
                   }}
                   onFocus={(e) => {
                     const target = e.target as HTMLTextAreaElement;
-                    target.style.height = '';
+                    target.style.height = "";
                     target.style.height = `${target.scrollHeight}px`;
                     e.currentTarget.select();
                   }}

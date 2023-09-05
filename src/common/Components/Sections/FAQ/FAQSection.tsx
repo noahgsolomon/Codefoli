@@ -146,16 +146,16 @@ const FAQSection: FC<{
                   await handleHeaderOneSubmit();
                 }
               }}
-              className="p-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-2xl font-bold leading-relaxed outline-none focus:outline-none focus:ring-0 md:text-5xl"
+              className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-2xl font-bold leading-relaxed outline-none focus:outline-none focus:ring-0 md:text-5xl"
               autoFocus
               onInput={(e) => {
                 const target = e.target as HTMLTextAreaElement;
-                target.style.height = '';
+                target.style.height = "";
                 target.style.height = `${target.scrollHeight}px`;
               }}
               onFocus={(e) => {
                 const target = e.target as HTMLTextAreaElement;
-                target.style.height = '';
+                target.style.height = "";
                 target.style.height = `${target.scrollHeight}px`;
                 e.currentTarget.select();
               }}
@@ -184,16 +184,16 @@ const FAQSection: FC<{
                   await handleDescriptionOneSubmit();
                 }
               }}
-              className="p-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-lg text-center leading-relaxed outline-none focus:outline-none focus:ring-0"
+              className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-lg leading-relaxed outline-none focus:outline-none focus:ring-0"
               autoFocus
               onInput={(e) => {
                 const target = e.target as HTMLTextAreaElement;
-                target.style.height = '';
+                target.style.height = "";
                 target.style.height = `${target.scrollHeight}px`;
               }}
               onFocus={(e) => {
                 const target = e.target as HTMLTextAreaElement;
-                target.style.height = '';
+                target.style.height = "";
                 target.style.height = `${target.scrollHeight}px`;
                 e.currentTarget.select();
               }}

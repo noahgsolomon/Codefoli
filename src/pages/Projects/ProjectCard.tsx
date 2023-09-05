@@ -264,16 +264,16 @@ const ProjectCard: FC<{
                 await handleTitleSubmit();
               }
             }}
-            className="p-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-2xl font-bold leading-snug outline-none focus:outline-none focus:ring-0"
+            className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-2xl font-bold leading-snug outline-none focus:outline-none focus:ring-0"
             autoFocus
             onInput={(e) => {
               const target = e.target as HTMLTextAreaElement;
-              target.style.height = '';
+              target.style.height = "";
               target.style.height = `${target.scrollHeight}px`;
             }}
             onFocus={(e) => {
               const target = e.target as HTMLTextAreaElement;
-              target.style.height = '';
+              target.style.height = "";
               target.style.height = `${target.scrollHeight}px`;
               e.currentTarget.select();
             }}
@@ -304,19 +304,20 @@ const ProjectCard: FC<{
                 await handleDescriptionSubmit();
               }
             }}
-            className="p-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-base leading-snug outline-none focus:outline-none focus:ring-0"
+            className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-base leading-snug outline-none focus:outline-none focus:ring-0"
             autoFocus
             onInput={(e) => {
               const target = e.target as HTMLTextAreaElement;
-              target.style.height = '';
+              target.style.height = "";
               target.style.height = `${target.scrollHeight}px`;
             }}
             onFocus={(e) => {
               const target = e.target as HTMLTextAreaElement;
-              target.style.height = '';
+              target.style.height = "";
               target.style.height = `${target.scrollHeight}px`;
               e.currentTarget.select();
-            }}            maxLength={250}
+            }}
+            maxLength={250}
           />
         ) : (
           <p
