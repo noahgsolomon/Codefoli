@@ -108,12 +108,20 @@ const Projects: FC<{
                       await handleHeaderOneSubmit();
                     }
                   }}
-                  className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-3xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-5xl lg:text-6xl"
+                  className="p-0 mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-3xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-5xl lg:text-6xl"
                   autoFocus
-                  onFocus={(e) => {
-                    e.target.select();
+                  onInput={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
                   }}
-                  maxLength={25}
+                  onFocus={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                    e.currentTarget.select();
+                  }}
+                  maxLength={50}
                 />
               ) : (
                 <h1
@@ -138,15 +146,24 @@ const Projects: FC<{
                       await handleDescriptionOneSubmit();
                     }
                   }}
-                  className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-lg leading-snug outline-none focus:outline-none focus:ring-0"
+                  className="p-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent text-center text-lg outline-none focus:outline-none focus:ring-0"
                   autoFocus
-                  onFocus={(e) => e.currentTarget.select()}
+                  onInput={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                  }}
+                  onFocus={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = '';
+                    target.style.height = `${target.scrollHeight}px`;
+                    e.currentTarget.select();
+                  }}
                   maxLength={250}
-                  rows={3}
                 />
               ) : (
                 <p
-                  className="cursor-pointer select-none text-center font-semibold transition-all hover:opacity-50"
+                  className="cursor-pointer select-none text-center font-semibold text-lg transition-all hover:opacity-50"
                   onClick={() => setDescriptionOneEdit(true)}
                 >
                   {pageData.description_one}
