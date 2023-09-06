@@ -9,7 +9,7 @@ import {
 
 const Header: FC<{ authenticated: boolean }> = ({ authenticated }) => {
   const location = useLocation();
-  const blank = ["/setup"].includes(location.pathname);
+  const blank = ["/setup", "/newsletter"].includes(location.pathname);
 
   const [theme, setTheme] = useState<
     typeof LIGHT_THEME_KEY | typeof DARK_THEME_KEY
