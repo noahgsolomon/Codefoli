@@ -1,51 +1,65 @@
 import {useState} from "react";
-import {addEmail} from "Components/Footer/newsletterapi.tsx";
+import {addEmail} from "../../../pages/Newsletter/newsletterapi.tsx";
 
 const Footer = () => {
   const [email, setEmail] = useState('');
   const [emailAdded, setEmailAdded] = useState(false);
+  const [emailChange, setEmailChange] = useState(false);
   const handleSubscribe = async () => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (email.match(emailRegex)) {
       const addEmailFetch = await addEmail(email);
+      console.log(addEmailFetch);
       if (addEmailFetch.status === "OK") {
         setEmail("");
         setEmailAdded(true);
+        setTimeout(() => {
+          localStorage.setItem('newsletter', 'true');
+        }, 1000);
       }
     }
   };
 
   return (
     <footer className="bg-[#0d0d0d] relative mt-20">
-      <div className="p-6 absolute -top-20 left-1/2 transform -translate-x-1/2">
+      <div className={`p-6 absolute -top-20 left-1/2 transform -translate-x-1/2`}>
           <div className="mx-auto w-[300px] md:w-[400px] p-6 rounded-lg border-2 border-black shadow-custom bg-white dark:bg-[#1a1a1a] flex flex-col justify-between items-center">
               <div className="font-bold text-xl">Subscribe to our newsletter</div>
               <p className="mb-4 opacity-60 text-base">Win prizes, and get access to free hosting</p>
               <div className="flex flex-col w-full">
-                <div className="md:relative flex flex-col justify-center items-center">
-                  <input
-                      type="email"
-                      className="dark:bg-[#1a1a1a] mb-4 shadow-custom transition-all hover:shadow-customHover w-full h-12 border-2 border-black rounded-lg py-8"
-                      placeholder="Enter your email"
-                      onChange={(e) => setEmail(e.target.value)}
-                      value={email}
-                  />
-                  <button
-                      className="text-base md:absolute md:right-0 md:top-8 md:transform md:-translate-y-1/2 h-12 px-4 bg-blue-500 hover:opacity-80 transition-all text-white rounded-lg mr-2"
-                      onClick={async () => await handleSubscribe}
-                  >
-                    Subscribe 🎉
-                  </button>
-                </div>
+                {localStorage.getItem('newsletter') === 'true' && !emailChange ? (
+                    <>
+                      <p className={'text-green-500 text-center'}>subscribed!</p>
+                      <div className={'text-base text-blue-500 underline hover:opacity-80 transition-all text-center cursor-pointer'} onClick={() => setEmailChange(true)}>add new email</div>
+                    </>
+                ) :(
+                <>
+                    <div className="md:relative flex flex-col justify-center items-center">
+                      <input
+                          type="email"
+                          className="dark:bg-[#1a1a1a] mb-4 shadow-custom transition-all hover:shadow-customHover w-full h-12 border-2 border-black rounded-lg py-8"
+                          placeholder="Enter your email"
+                          onChange={(e) => setEmail(e.target.value)}
+                          value={email}
+                      />
+                      <button
+                          className="text-base md:absolute md:right-0 md:top-8 md:transform md:-translate-y-1/2 h-12 px-4 bg-blue-500 hover:opacity-80 transition-all text-white rounded-lg mr-2"
+                          onClick={async () => await handleSubscribe()}
+                      >
+                        Subscribe 🎉
+                      </button>
+                    </div>
+                    {emailAdded ? (
+                      <p className={'text-green-500 opacity-60 text-xs'}>Email added! Welcome to the family! 🎉 - Noah</p>
+                      ) : (
+                      <p className={'text-red-500 opacity-60 text-xs'}>P.S. your support means the world to me ❤ - Noah</p>
+                      )
+                      }
+                </>
+                )}
               </div>
-            {emailAdded ? (
-                    <p className={'text-green-500 opacity-60 text-xs'}>Email added! Welcome to the family! 🎉 - Noah</p>
-            ) : (
-                <p className={'text-red-500 opacity-60 text-xs'}>P.S. your support means the world to me ❤ - Noah</p>
-            )
-            }
           </div>
-        </div>
+      </div>
       <div className="mx-auto max-w-screen-xl px-4  pb-2 pt-2 lg:px-8 lg:pt-6">
         <div className="mt-72 md:mt-32 grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
