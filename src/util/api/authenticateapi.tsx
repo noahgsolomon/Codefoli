@@ -2,7 +2,7 @@ import { STAGE } from "../../config.ts";
 import {
   LOCALSTORAGE_ID_KEY,
   LOCALSTORAGE_REFRESH_KEY,
-} from "../../util/constants";
+} from "../constants.ts";
 
 const login = async (email: string, password: string) => {
   const model = {
