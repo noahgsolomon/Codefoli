@@ -19,7 +19,7 @@ const Register: React.FC = () => {
     const registerRequest = await register(fullName, email, password);
     console.log(registerRequest);
     if (registerRequest.status === "OK") {
-      window.location.href = "/setup";
+      localStorage.getItem('newsletter') ? window.location.href = "/setup" : window.location.href = "/newsletter";
     } else {
       setEmailError(true);
       setPasswordError(true);

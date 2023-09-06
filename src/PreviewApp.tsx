@@ -137,8 +137,8 @@ const PreviewApp: React.FC = () => {
           window.location.href = "/login";
         }
         if (user.data.role === "NEWBIE") {
-          if (window.location.pathname !== "/setup") {
-            navigate("/setup");
+          if (window.location.pathname !== "/setup" && window.location.pathname !== "/newsletter") {
+            localStorage.getItem('newsletter') ? navigate("/setup") : navigate("/newsletter");
           }
           setUserData(user);
         } else {
