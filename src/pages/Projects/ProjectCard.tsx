@@ -317,7 +317,7 @@ const ProjectCard: FC<{
               target.style.height = `${target.scrollHeight}px`;
               e.currentTarget.select();
             }}
-            maxLength={250}
+            maxLength={100}
           />
         ) : (
           <p

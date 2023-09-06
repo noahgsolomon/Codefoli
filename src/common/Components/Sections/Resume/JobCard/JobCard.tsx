@@ -296,7 +296,7 @@ const JobCard: FC<{
                 target.style.height = `${target.scrollHeight}px`;
                 e.currentTarget.select();
               }}
-              maxLength={100}
+              maxLength={50}
             />
           ) : (
             <h2
@@ -337,7 +337,7 @@ const JobCard: FC<{
                   target.style.height = `${target.scrollHeight}px`;
                   e.currentTarget.select();
                 }}
-                maxLength={100}
+                maxLength={25}
               />
             ) : (
               <h2
@@ -377,7 +377,7 @@ const JobCard: FC<{
                   target.style.height = `${target.scrollHeight}px`;
                   e.currentTarget.select();
                 }}
-                maxLength={255}
+                maxLength={100}
               />
             ) : (
               <p

@@ -238,6 +238,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                 type="text"
                 id="profession"
                 value={profession}
+                maxLength={25}
                 placeholder="// Graphic Designer"
                 className={`mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
                 onChange={(e) => setProfession(e.target.value)}
@@ -260,6 +261,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                 type="text"
                 id="company"
                 value={company}
+                maxLength={50}
                 placeholder="// Monsters Inc."
                 className={`mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
                 onChange={(e) => setCompany(e.target.value)}
@@ -282,6 +284,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                 type="text"
                 id="location"
                 value={location}
+                maxLength={25}
                 placeholder="// Hong Kong, China"
                 className={`mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
                 onChange={(e) => setLocation(e.target.value)}
@@ -304,6 +307,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                 id="about"
                 placeholder="// Please write a short description about yourself"
                 value={about}
+                maxLength={250}
                 className={`mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
                 onChange={(e) => setAbout(e.target.value)}
               />
@@ -327,6 +331,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                   type="text"
                   id="skills"
                   value={skillSearch}
+                  maxLength={25}
                   className={`mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
                   onChange={(e) => setSkillsSkillSearch(e.target.value)}
                   disabled={selectedSkills.length >= 12}
@@ -384,6 +389,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                   type="text"
                   id="services"
                   value={serviceSearch}
+                  maxLength={25}
                   className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
                   onChange={(e) => setServicesSearch(e.target.value)}
                   disabled={selectedServices.length >= 4}
@@ -500,6 +506,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                   id="company"
                   placeholder="// Facebook"
                   value={addWork.company}
+                  maxLength={50}
                   className={`mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
                   onChange={(e) =>
                     setAddWork({ ...addWork, company: e.target.value })
@@ -516,6 +523,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                   id="position"
                   placeholder="// the CEO"
                   value={addWork.position}
+                  maxLength={25}
                   className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
                   onChange={(e) =>
                     setAddWork({ ...addWork, position: e.target.value })
@@ -530,6 +538,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                   type="text"
                   id="start-date"
                   placeholder="// 12/30/12"
+                  maxLength={25}
                   value={addWork.start_date}
                   className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
                   onChange={(e) =>
@@ -547,6 +556,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                   id="end-date"
                   placeholder="// 6/09/23 or current"
                   value={addWork.end_date}
+                  maxLength={25}
                   className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
                   onChange={(e) =>
                     setAddWork({ ...addWork, end_date: e.target.value })
@@ -562,6 +572,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                   id="description"
                   placeholder="Please write a short description of your job."
                   value={addWork.description}
+                  maxLength={100}
                   className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
                   onChange={(e) =>
                     setAddWork({ ...addWork, description: e.target.value })
@@ -719,6 +730,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                     id="name"
                     placeholder="// Mojo Compiler"
                     value={addProject.name}
+                    maxLength={25}
                     className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
                     onChange={(e) => {
                       setAddProject({
@@ -739,6 +751,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                     placeholder="// Mojo"
                     value={addProject.languages[0]}
                     className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
+                    maxLength={25}
                     onChange={(e) => {
                       setAddProject({
                         ...addProject,
@@ -756,6 +769,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                     id="date"
                     placeholder="// 01/06/21 or current"
                     value={addProject.updatedAt}
+                    maxLength={25}
                     className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
                     onChange={(e) => {
                       setAddProject({
@@ -775,6 +789,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                     placeholder="Please write a short description of your project."
                     value={addProject.description}
                     className={`mb-4 mt-2 max-h-52 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
+                    maxLength={100}
                     onChange={(e) => {
                       setAddProject({
                         ...addProject,
