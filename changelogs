@@ -1,3 +1,6 @@
-- Changed custom domain queue to a database table considering we need to poll all
-    the rows (pending custom domain ssl certificates) in the queue every 10 minutes and because you can only
-    poll 10 messages at a time in sqs. The work load does not need a queue.
+- 16 hrs wasted :(
+
+Basically a scaling problem, since aws has account limits for each service, and i use a fair bit for each user but i was trying to use only 1 s3 bucket cloudfront distro, and ssl certificate to handle all subdomain hosting, but it ended up being super convoluted since each users app is a single page app as well, so for now I'm just sticking with the current s3 bucket, cloudfront distro for every deployment
+
+  Which works perfect and is best for all users, just hits that scalability problem which I think I handle w/ this current architecture till around 1,000 active deployments, then I'll need to end up making what I was trying to get setup work
+  do u know the worst part? This worked perfectly yesterday, and then an hour later, literally never even touched my account before and after, it stopped working! So for now, we're back on the previous deployment architecture
