@@ -151,7 +151,7 @@ const Home: FC = () => {
               Codefoli{" "}
               <span className="bg-indigo-500 px-1 text-white">Features</span>
             </h2>
-            <div className="flex flex-wrap items-stretch justify-evenly md:space-x-10">
+            <div className="flex flex-wrap items-stretch justify-evenly">
               <Card
                 ImageUrl={FiLayout}
                 title="Customizable Templates"
