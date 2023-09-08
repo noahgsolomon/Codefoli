@@ -45,6 +45,7 @@ const MainApp: React.FC = () => {
     company: "",
     location: "",
     profession: "",
+    verified: false,
     projects: [],
     skills: [],
     website: "",
@@ -194,6 +195,8 @@ const MainApp: React.FC = () => {
   if (loading) {
     return <Loader />;
   }
+
+  console.log(userData)
 
   return (
     <>

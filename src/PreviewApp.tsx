@@ -37,6 +37,7 @@ const PreviewApp: React.FC = () => {
     company: "",
     location: "",
     profession: "",
+    verified: false,
     website: "",
     cname_name: "",
     cname_value: "",

@@ -10,6 +10,7 @@ type UserData = {
   company: string;
   location: string;
   profession: string;
+  verified: boolean;
   website: string;
   cname_name: string;
   cname_value: string;
