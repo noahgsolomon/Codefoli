@@ -249,7 +249,7 @@ const ModeButtons: FC<{
     <>
       <animated.div
         style={animation}
-        className="fixed bottom-6 left-0 right-0 flex justify-center z-50"
+        className="fixed bottom-6 left-0 right-0 flex justify-center z-30"
       >
         <div className="mx-2 flex max-w-full flex-col rounded-3xl border-2 border-black bg-white px-4 py-3 shadow-custom dark:bg-[#0d0d0d] sm:max-w-screen-md sm:flex-row">
           <div className="flex flex-col items-center justify-center">
