@@ -21,7 +21,7 @@ const HomeMainP: FC<{
   const date = useMemo(() => Date.now(), []);
 
   return (
-    <div className="mx-10 flex flex-col justify-center md:flex-row">
+    <div className="mx-4 md:mx-10 flex flex-col justify-center md:flex-row">
       <animated.div style={headerAnimation} className={"md:mr-10"}>
         <div className="mx-auto mt-10 max-w-2xl font-bold xl:mt-32">
           <h1 className="font-extra-bold mx-auto max-w-[15ch] text-center text-4xl leading-snug transition-all md:mx-0 md:text-left md:text-5xl md:leading-relaxed xl:text-6xl xl:leading-normal">
