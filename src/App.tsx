@@ -9,6 +9,7 @@ import {
   DARK_THEME_KEY,
   LIGHT_THEME_KEY,
 } from "./util/constants";
+import Verify from "./Verify.tsx";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -26,6 +27,7 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/processing" element={<Processing />} />
+        <Route path="/verify" element={<Verify />} />
         <Route path="/*" element={<MainApp />} />
         <Route path="/preview/*" element={<PreviewApp />} />
       </Routes>

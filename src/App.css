@@ -45,6 +45,28 @@
   }
 }
 
+@keyframes green-stroke {
+  0% {
+    stroke: #2ecc71;
+  }
+  25% {
+    stroke: #27ae60;
+  }
+  50% {
+    stroke: #229954;
+  }
+  75% {
+    stroke: #1e824c;
+  }
+  100% {
+    stroke: #2ecc71;
+  }
+}
+
+.green-stroke {
+  animation: green-stroke 3s infinite linear;
+}
+
 .rainbow-stroke {
   animation: rainbow 3s linear infinite;
 }
