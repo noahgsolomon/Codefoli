@@ -6,7 +6,7 @@ Codefoli is a portfolio website building platform and **free hosting solution** 
 
 💊 **Check out Walter White's portfolio!** [🔗 walter.codefoli.com](https://walter.codefoli.com)
 
-😏 **Check out my portfolio!** [🔗 walter.codefoli.com](https://walter.codefoli.com)
+😏 **Check out my portfolio!** [🔗 noahgsolomon.com](https://www.noahgsolomon.com)
 
 
 <!-- Row 1 -->
