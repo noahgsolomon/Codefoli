@@ -6,6 +6,9 @@ Codefoli is a portfolio website building platform and **free hosting solution** 
 
 💊 **Check out Walter White's portfolio!** [🔗 walter.codefoli.com](https://walter.codefoli.com)
 
+😏 **Check out my portfolio!** [🔗 walter.codefoli.com](https://walter.codefoli.com)
+
+
 <!-- Row 1 -->
 <p float="left">
   <img src="https://github.com/noahgsolomon/Codefoli/assets/111200060/abda3113-f687-4027-aab9-f012aa8111a1" width="300" />
@@ -37,5 +40,7 @@ Codefolio leverages robust, flexible architecture for a seamless experience. Ove
 - 🏗 **Backend Integration**: AWS API Gateway for dynamic content and functionality.
 - ⚙️ **Serverless Functions**: AWS Lambda for backend ops.
 - 🧑‍💻 **User Profile Deployment**: SQS queue and EC2 manage user profile deployment to individual buckets.
+- 
+**Join our discord**: https://discord.gg/JXKx5HwAQK
 
 Any inquiries, comments, or concerns? Reach out to **support@codefoli.com**
