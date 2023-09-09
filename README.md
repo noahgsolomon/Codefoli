@@ -40,7 +40,7 @@ Codefolio leverages robust, flexible architecture for a seamless experience. Ove
 - 🏗 **Backend Integration**: AWS API Gateway for dynamic content and functionality.
 - ⚙️ **Serverless Functions**: AWS Lambda for backend ops.
 - 🧑‍💻 **User Profile Deployment**: SQS queue and EC2 manage user profile deployment to individual buckets.
-- 
+
 **Join our discord**: https://discord.gg/JXKx5HwAQK
 
 Any inquiries, comments, or concerns? Reach out to **support@codefoli.com**
