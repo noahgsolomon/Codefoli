@@ -1,4 +1,4 @@
-import { useState, useEffect, FC } from "react";
+import {useState, useEffect, FC, useMemo} from "react";
 import { useSpring, animated } from "react-spring";
 import {
   checkCustomDomainDetails,
@@ -51,6 +51,8 @@ const ModeButtons: FC<{
   const thresholdShow = 200;
   const thresholdHide = 0;
   const [activeDownload, setActiveDownload] = useState(false);
+
+  const placeholder = useMemo(() => true, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -377,7 +379,7 @@ const ModeButtons: FC<{
           deployModalOpen ? "" : "hidden"
         } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}
       >
-        {!userData.verified ? (
+        {!placeholder ? ( //!userData.verified
             <div className="flex flex-col justify-center rounded-lg bg-white p-8 shadow-lg dark:bg-[#1a1a1a]">
               <h2 className="text-2xl font-bold">Email verification required</h2>
               <p className={"text-center opacity-60 text-base mb-4"}>{userData.email}</p>
