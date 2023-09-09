@@ -331,10 +331,16 @@ const ProjectCard: FC<{
         )}
       </div>
       <Link
-        to={`/${slug}`}
-        className="inline-block bg-white px-5 py-2 text-sm font-bold dark:bg-[#0d0d0d]"
-      >
+          to={`/${slug}`}
+          className="inline-block bg-white px-5 py-2 dark:bg-[#0d0d0d] text-sm font-bold">
         Learn more{" "}
+        <div
+            className={`${
+              hovered ? "translate-x-1" : ""
+            } inline-block transition-all`}
+        >
+          →
+        </div>
       </Link>
       <div className={`rounded-b-lg bg-white px-5 py-2 dark:bg-[#0d0d0d]`}>
         {languages.map((language, index) => (

@@ -1,5 +1,4 @@
-import { FC, useMemo, useState } from "react";
-import ArrowRight from "assets/icons/arrow-right.svg";
+import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { COLORS } from "../../../util/colors.ts";
 
@@ -11,8 +10,6 @@ const ProjectCardP: FC<{
   slug: string;
 }> = ({ title, description, image, languages, slug }) => {
   const [hovered, setHovered] = useState(false);
-
-  const date = useMemo(() => Date.now(), []);
 
   return (
     <Link
@@ -38,15 +35,16 @@ const ProjectCardP: FC<{
         </h2>
         <p className="text-base transition-all">{description}</p>
       </div>
-      <div className="inline-block bg-white px-5 py-2 text-sm font-bold dark:bg-[#0d0d0d]">
+      <div
+          className="inline-block bg-white px-5 py-2 dark:bg-[#0d0d0d] text-sm font-bold">
         Learn more{" "}
-        <img
-          src={ArrowRight + "?date=" + date}
-          alt=""
-          className={`${
-            hovered ? "translate-x-1" : ""
-          } inline-block transition-all`}
-        />
+        <div
+            className={`${
+                hovered ? "translate-x-1" : ""
+            } inline-block transition-all`}
+        >
+          →
+        </div>
       </div>
       <div className={`rounded-b-lg bg-white px-5 py-2 dark:bg-[#0d0d0d]`}>
         {languages.map((language, index) => (
