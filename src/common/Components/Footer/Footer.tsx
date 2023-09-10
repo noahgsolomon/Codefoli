@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {addEmail} from "../../../pages/Newsletter/newsletterapi.tsx";
+import {Link} from "react-router-dom";
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -50,9 +51,9 @@ const Footer = () => {
                       </button>
                     </div>
                     {emailAdded ? (
-                      <p className={'text-green-500 opacity-60 text-xs'}>Email added! Welcome to the family! 🎉 - Noah</p>
+                      <p className={'text-green-500 opacity-60 text-xs'}>Email added! Welcome to the family! 🎉</p>
                       ) : (
-                      <p className={'text-red-500 opacity-60 text-xs'}>P.S. your support means the world to me ❤ - Noah</p>
+                      <p className={'text-red-500 opacity-60 text-xs'}>Your support helps us keep going!</p>
                       )
                       }
                 </>
@@ -60,20 +61,21 @@ const Footer = () => {
               </div>
           </div>
       </div>
+      <div className={'pt-72 md:pt-32'}></div>
+      <div className="flex justify-center sm:justify-start">
+        <h2 className="bg-red-500 px-2 text-4xl font-bold text-white">
+          Codefoli
+        </h2>
+      </div>
       <div className="mx-auto max-w-screen-xl px-4  pb-2 pt-2 lg:px-8 lg:pt-6">
-        <div className="mt-72 md:mt-32 grid grid-cols-1 gap-8 lg:grid-cols-3">
-          <div>
-            <div className="flex justify-center  sm:justify-start">
-              <h2 className="bg-red-500 px-2 text-4xl font-bold text-white">
-                Codefoli
-              </h2>
-            </div>
+        <div className="flex flex-col md:flex-row items-center">
+          <div className={'mr-10'}>
 
-            <p className="mt-6 text-center leading-relaxed text-white  sm:text-left">
+            <p className="mt-6 text-center leading-relaxed text-white md:text-left">
               Here for you to showcase your projects and skills to the world.
             </p>
-            <div className={'z-40 text-blue-500 hover:opacity-80 cursor-pointer transition-all'}>support@codefoli.com</div>
-            <ul className="mt-8 flex justify-center gap-6 sm:justify-start md:gap-8">
+            <div className={'z-40 text-blue-500 hover:opacity-80 cursor-pointer transition-all text-center md:text-left'}>support@codefoli.com</div>
+            <ul className="mb-8 md:mb-0 md:mt-8 flex justify-center gap-6 md:justify-start md:gap-8">
               <li className={'z-40'}>
                 <a
                     href="https://github.com/noahgsolomon/codefoli"
@@ -138,6 +140,10 @@ const Footer = () => {
                 </a>
               </li>
             </ul>
+          </div>
+          <div>
+            <Link to={'/analytics'}
+                className={'font-bold cursor-pointer text-blue-500 hover:opacity-80 transition-all underline'}>Analytics</Link>
           </div>
         </div>
       </div>
