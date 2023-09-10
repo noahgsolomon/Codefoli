@@ -55,9 +55,9 @@ const Newsletter: FC = () => {
                     </div>
                 </div>
                 {emailAdded ? (
-                    <p className={'text-green-500 opacity-60 text-xs'}>Email added! Welcome to the family! 🎉 - Noah</p>
+                    <p className={'text-green-500 opacity-60 text-xs'}>Email added! Welcome to the family! 🎉</p>
                 ) : (
-                    <p className={'text-red-500 opacity-60 text-xs'}>P.S. your support means the world to me ❤ - Noah</p>
+                    <p className={'text-red-500 opacity-60 text-xs'}>Your support helps us keep going!</p>
                 )
                 }
                 <div className={'mt-2 text-blue-500 text-base underline hover:opacity-80 transition-all cursor-pointer'}
