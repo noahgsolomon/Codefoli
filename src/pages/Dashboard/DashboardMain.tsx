@@ -117,7 +117,7 @@ const DashboardMain: React.FC<{
       {imageLoading && (
         <StatusBar message={"Uploading image!"} color={"bg-green-500"} />
       )}
-      <div className="mx-4 md:mx-10 flex flex-col justify-center md:flex-row">
+      <div className="mx-4 flex flex-col justify-center md:mx-10 md:flex-row">
         <animated.div style={headerAnimation} className={"md:mr-10"}>
           <div className="mx-auto mt-10 max-w-2xl font-bold xl:mt-32">
             {headerOneEdit ? (

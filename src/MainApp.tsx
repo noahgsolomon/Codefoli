@@ -125,8 +125,13 @@ const MainApp: React.FC = () => {
           window.location.href = "/login";
         }
         if (user.data.role === "NEWBIE") {
-          if (window.location.pathname !== "/setup" && window.location.pathname !== "/newsletter") {
-            localStorage.getItem('newsletter') === 'true' ? navigate("/setup") : navigate("/newsletter");
+          if (
+            window.location.pathname !== "/setup" &&
+            window.location.pathname !== "/newsletter"
+          ) {
+            localStorage.getItem("newsletter") === "true"
+              ? navigate("/setup")
+              : navigate("/newsletter");
           }
           setAuthenticatedUser(true);
           setUserData(user);

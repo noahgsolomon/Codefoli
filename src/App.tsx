@@ -30,7 +30,7 @@ const App: React.FC = () => {
         <Route path="/processing" element={<Processing />} />
         <Route path="/verify" element={<Verify />} />
         {/*<Route path={"/origin"} element={<Origin />}/>*/}
-        <Route path={"analytics"} element={<Analytics />}/>
+        <Route path={"analytics"} element={<Analytics />} />
         {/*<Route path={"/architecture"} element={<Architecture />}/>*/}
         <Route path="/*" element={<MainApp />} />
         <Route path="/preview/*" element={<PreviewApp />} />

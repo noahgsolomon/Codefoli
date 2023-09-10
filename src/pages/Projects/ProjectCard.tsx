@@ -331,13 +331,14 @@ const ProjectCard: FC<{
         )}
       </div>
       <Link
-          to={`/${slug}`}
-          className="inline-block bg-white px-5 py-2 dark:bg-[#0d0d0d] text-sm font-bold">
+        to={`/${slug}`}
+        className="inline-block bg-white px-5 py-2 text-sm font-bold dark:bg-[#0d0d0d]"
+      >
         Learn more{" "}
         <div
-            className={`${
-              hovered ? "translate-x-1" : ""
-            } inline-block transition-all`}
+          className={`${
+            hovered ? "translate-x-1" : ""
+          } inline-block transition-all`}
         >
           →
         </div>
