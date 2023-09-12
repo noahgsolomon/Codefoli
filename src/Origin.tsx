@@ -87,7 +87,7 @@ const Origin: FC = () => {
         <h1 className={"mb-20 text-center text-6xl font-bold"}>Origin</h1>
         <div
           className={
-            "mb-10 flex flex-col justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
+            "mx-10 md:mx-20 mb-10 flex flex-col justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
           }
         >
           <div className={"lg:max-w-[40%]"}>
@@ -104,14 +104,14 @@ const Origin: FC = () => {
           <div className={"lg:w-[400px] xl:w-[500px]"}>
             <img
               className={"w-full rounded-xl border-2 border-black"}
-              src={"./src/assets/codefolilogo.png"}
+              src={"https://images.codefoli.com/codefolilogo.png"}
               alt={"idea genesis image"}
             />
           </div>
         </div>
         <div
           className={
-            "mb-10 flex flex-col justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
+            "mx-10 md:mx-20 mb-10 flex flex-col justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
           }
         >
           <div className={"lg:max-w-[40%]"}>
@@ -136,7 +136,7 @@ const Origin: FC = () => {
         </div>
         <div
           className={
-            "flex flex-col justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
+            "mx-10 md:mx-20 flex flex-col justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
           }
         >
           <div className={"lg:max-w-[40%]"}>
