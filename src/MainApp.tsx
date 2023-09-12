@@ -31,7 +31,6 @@ import {
   LOCALSTORAGE_REFRESH_KEY,
   LOCALSTORAGE_ROLE_KEY,
 } from "./util/constants";
-import Newsletter from "./pages/Newsletter/Newsletter.tsx";
 
 const MainApp: React.FC = () => {
   const navigate = useNavigate();
@@ -126,12 +125,9 @@ const MainApp: React.FC = () => {
         }
         if (user.data.role === "NEWBIE") {
           if (
-            window.location.pathname !== "/setup" &&
-            window.location.pathname !== "/newsletter"
+            window.location.pathname !== "/setup"
           ) {
-            localStorage.getItem("newsletter") === "true"
-              ? navigate("/setup")
-              : navigate("/newsletter");
+            navigate("/setup");
           }
           setAuthenticatedUser(true);
           setUserData(user);
@@ -160,7 +156,7 @@ const MainApp: React.FC = () => {
           }
           setUserData(user.data);
           const path = window.location.pathname;
-          if (path === "/" || path === "/login" || path === "/register" || path === "/newsletter" || path === "/setup") {
+          if (path === "/" || path === "/login" || path === "/register" || path === "/setup") {
             navigate("/dashboard");
           }
         }
@@ -278,7 +274,6 @@ const MainApp: React.FC = () => {
             />
           }
         />
-        <Route path="/newsletter" element={<Newsletter />} />
         <Route path="/:slug" element={<ProjectOr404 />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
