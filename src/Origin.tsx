@@ -93,16 +93,12 @@ const Origin: FC = () => {
           <div className={"lg:max-w-[40%]"}>
             <h2 className={"text-4xl"}>Idea Genesis</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Accusantium aliquam aperiam deserunt enim ex facilis, illo ipsum
-              maxime nemo non nulla odit perspiciatis quasi, saepe sed sunt
-              temporibus unde, velit Lorem ipsum dolor sit amet, consectetur
-              adipisicing elit. Accusantium aliquam aperiam deserunt enim ex
-              facilis, illo ipsum maxime nemo non nulla odit perspiciatis quasi,
-              saepe sed sunt temporibus unde, velit Lorem ipsum dolor sit amet,
-              consectetur adipisicing elit. Accusantium aliquam aperiam deserunt
-              enim ex facilis, illo ipsum maxime nemo non nulla odit
-              perspiciatis quasi, saepe sed sunt temporibus unde, velit
+              The inspiration for Codefoli stemmed from gaps in existing portfolio building options tailored to developers. While generalized site
+              builders existed, they lacked features specifically designed for programmer needs. At best, they required manual integration of
+              custom code samples and projects. And hosting options were either expensive or technically complex for most students and early career
+              coders. There was an unmet need for an easy yet robust platform combining portfolio creation with free hosting—providing end-to-end
+              solutions for programmers to showcase their work. With this problem and user segment in mind, Codefoli was envisioned as a frictionless
+              portfolio builder and host designed by developers, for developers.
             </p>
           </div>
           <div className={"lg:w-[400px] xl:w-[500px]"}>
@@ -121,16 +117,11 @@ const Origin: FC = () => {
           <div className={"lg:max-w-[40%]"}>
             <h2 className={"text-4xl"}>Gaps Filled</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Accusantium aliquam aperiam deserunt enim ex facilis, illo ipsum
-              maxime nemo non nulla odit perspiciatis quasi, saepe sed sunt
-              temporibus unde, velit Lorem ipsum dolor sit amet, consectetur
-              adipisicing elit. Accusantium aliquam aperiam deserunt enim ex
-              facilis, illo ipsum maxime nemo non nulla odit perspiciatis quasi,
-              saepe sed sunt temporibus unde, velit Lorem ipsum dolor sit amet,
-              consectetur adipisicing elit. Accusantium aliquam aperiam deserunt
-              enim ex facilis, illo ipsum maxime nemo non nulla odit
-              perspiciatis quasi, saepe sed sunt temporibus unde, velit
+              Codefoli fills three core gaps in portfolio solutions for coders. Firstly, seamless
+              integration of code snippets, project highlights, and technical details—critical for developer portfolios—yet absent
+              on most platforms. Secondly, free and automated hosting removes financial and technical hurdles. Thirdly, downloadable source
+              code enables full customization aligned with developer needs. Codefoli combines these must-have features
+              into a unified platform providing the ideal portfolio experience for programmers at any stage of their journey.
             </p>
           </div>
           <div className={"lg:w-[400px] xl:w-[500px]"}>
@@ -151,16 +142,13 @@ const Origin: FC = () => {
           <div className={"lg:max-w-[40%]"}>
             <h2 className={"text-4xl"}>Journey</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Accusantium aliquam aperiam deserunt enim ex facilis, illo ipsum
-              maxime nemo non nulla odit perspiciatis quasi, saepe sed sunt
-              temporibus unde, velit Lorem ipsum dolor sit amet, consectetur
-              adipisicing elit. Accusantium aliquam aperiam deserunt enim ex
-              facilis, illo ipsum maxime nemo non nulla odit perspiciatis quasi,
-              saepe sed sunt temporibus unde, velit Lorem ipsum dolor sit amet,
-              consectetur adipisicing elit. Accusantium aliquam aperiam deserunt
-              enim ex facilis, illo ipsum maxime nemo non nulla odit
-              perspiciatis quasi, saepe sed sunt temporibus unde, velit
+              Codefoli's journey began by identifying portfolio pain points faced by coders.
+              With developers in mind, Codefoli set out to eliminate these frictions through tailored solutions
+              like easy code integration. Technically, Codefoli started as a simple React application but quickly
+              evolved into a robust cloud architecture for reliability and scalability. New features like customizable
+              layouts, dark mode, analytics, and a marketplace were prioritized based on direct coder feedback.
+              But our mission remains the same—to empower programmers at any career stage to create portfolios as unique as their skills.
+              There’s more ground to cover, but the journey thus far reaffirms that Codefoli is for developers, by developers.
             </p>
           </div>
           <div className={"lg:w-[400px] xl:w-[500px]"}>
