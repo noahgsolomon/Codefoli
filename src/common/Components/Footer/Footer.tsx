@@ -23,7 +23,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative mt-20 bg-[#0d0d0d]">
+    <footer className="relative mt-20 bg-[#0d0d0d] z-40 ">
       <div
         className={`absolute -top-20 left-1/2 -translate-x-1/2 transform p-6`}
       >
@@ -100,26 +100,26 @@ const Footer = () => {
         </div>
       </div>
       <div className={"pt-72 md:pt-32"}></div>
-      <div className="flex justify-center sm:justify-start">
-        <h2 className="bg-red-500 px-2 text-4xl font-bold text-white">
-          Codefoli
-        </h2>
-      </div>
       <div className="mx-auto max-w-screen-xl px-4  pb-2 pt-2 lg:px-8 lg:pt-6">
-        <div className="flex flex-col items-center md:flex-row">
-          <div className={"mr-10"}>
+        <div className="flex flex-col justify-between items-center md:flex-row">
+          <div className={"md:mr-10"}>
+            <div className="flex justify-center md:justify-start">
+              <h2 className="bg-red-500 px-2 text-4xl font-bold text-white">
+                Codefoli
+              </h2>
+            </div>
             <p className="mt-6 text-center leading-relaxed text-white md:text-left">
               Here for you to showcase your projects and skills to the world.
             </p>
             <div
               className={
-                "z-40 cursor-pointer text-center text-blue-500 transition-all hover:opacity-80 md:text-left"
+                " cursor-pointer text-center text-blue-500 transition-all hover:opacity-80 md:text-left"
               }
             >
               support@codefoli.com
             </div>
             <ul className="mb-8 flex justify-center gap-6 md:mb-0 md:mt-8 md:justify-start md:gap-8">
-              <li className={"z-40"}>
+              <li >
                 <a
                   href="https://github.com/noahgsolomon/codefoli"
                   rel="noreferrer"
@@ -141,7 +141,7 @@ const Footer = () => {
                   </svg>
                 </a>
               </li>
-              <li className={"z-40"}>
+              <li >
                 <a
                   href="https://discord.gg/JXKx5HwAQK"
                   rel="noreferrer"
@@ -163,7 +163,7 @@ const Footer = () => {
                   </svg>
                 </a>
               </li>
-              <li className={"z-40"}>
+              <li >
                 <a
                   href="https://twitter.com/codefoli"
                   rel="noreferrer"
@@ -201,15 +201,32 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div>
+          <div className={'flex justify-center gap-5'}>
             <Link
-              to={"/analytics"}
-              className={
-                "cursor-pointer font-bold text-blue-500 underline transition-all hover:opacity-80"
-              }
+                to={"/newsletter"}
+                className={
+                  "cursor-pointer font-bold text-blue-500 underline transition-all p-2 rounded hover:opacity-80"
+                }
             >
-              Analytics
+              📰 Newsletter
             </Link>
+            <Link
+                to={"/analytics"}
+                className={
+                  "cursor-pointer font-bold text-blue-500 underline transition-all p-2 rounded hover:opacity-80"
+                }
+            >
+              📊 Analytics
+            </Link>
+            <Link
+                to={"/origin"}
+                className={
+                  "cursor-pointer font-bold text-blue-500 underline transition-all p-2 rounded hover:opacity-80"
+                }
+            >
+              🌍 Origin
+            </Link>
+
           </div>
         </div>
       </div>
