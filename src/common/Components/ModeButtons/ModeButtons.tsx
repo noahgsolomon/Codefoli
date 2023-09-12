@@ -1,4 +1,4 @@
-import { useState, useEffect, FC, useMemo } from "react";
+import { useState, useEffect, FC } from "react";
 import { useSpring, animated } from "react-spring";
 import {
   checkCustomDomainDetails,
@@ -13,9 +13,10 @@ import { download } from "api/downloadapi.tsx";
 import { deleteWebsite } from "api/deletewebsiteapi.tsx";
 import { IoIosCloud } from "react-icons/io";
 import {
-  LIGHT_THEME_KEY,
+  LIGHT_THEME_KEY, LOCALSTORAGE_ID_KEY,
   LOCALSTORAGE_THEME_KEY,
 } from "../../../util/constants";
+import {STAGE} from "../../../config.ts";
 
 const ModeButtons: FC<{
   deploying: boolean;
@@ -51,8 +52,6 @@ const ModeButtons: FC<{
   const thresholdShow = 200;
   const thresholdHide = 0;
   const [activeDownload, setActiveDownload] = useState(false);
-
-  const placeholder = useMemo(() => true, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -247,6 +246,26 @@ const ModeButtons: FC<{
     }, 5000);
   };
 
+  const handleResendVerificationEmail = async () => {
+    const response = await fetch(
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/resend-verification`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem(LOCALSTORAGE_ID_KEY),
+          "Content-Type": "application/json",
+        }
+      }
+    );
+    const responseJson = await response.json();
+    if (responseJson.status === "OK") {
+      console.log("email sent");
+    } else {
+      console.log(responseJson.message);
+    }
+    setDeployModalOpen(false);
+  }
+
   return (
     <>
       <animated.div
@@ -379,7 +398,7 @@ const ModeButtons: FC<{
           deployModalOpen ? "" : "hidden"
         } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}
       >
-        {!placeholder ? ( //!userData.verified
+        {!userData.verified ? ( //!userData.verified
           <div className="flex flex-col justify-center rounded-lg bg-white p-8 shadow-lg dark:bg-[#1a1a1a]">
             <h2 className="text-2xl font-bold">Email verification required</h2>
             <p className={"mb-4 text-center text-base opacity-60"}>
@@ -389,6 +408,7 @@ const ModeButtons: FC<{
               className={
                 "cursor-pointer text-center text-blue-500 underline transition-all hover:opacity-80"
               }
+              onClick={async () => await handleResendVerificationEmail()}
             >
               resend verification email
             </div>
