@@ -160,7 +160,7 @@ const MainApp: React.FC = () => {
           }
           setUserData(user.data);
           const path = window.location.pathname;
-          if (path === "/" || path === "/login" || path === "/register") {
+          if (path === "/" || path === "/login" || path === "/register" || path === "/newsletter" || path === "/setup") {
             navigate("/dashboard");
           }
         }
