@@ -11,6 +11,7 @@ import {
 } from "./util/constants";
 import Verify from "./Verify.tsx";
 import Analytics from "./Analytics.tsx";
+import Unsubscribing from "./Unsubscribing.tsx";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -29,6 +30,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/processing" element={<Processing />} />
         <Route path="/verify" element={<Verify />} />
+        <Route path="/unsubscribe" element={<Unsubscribing />} />
         {/*<Route path={"/origin"} element={<Origin />}/>*/}
         <Route path={"analytics"} element={<Analytics />} />
         {/*<Route path={"/architecture"} element={<Architecture />}/>*/}
