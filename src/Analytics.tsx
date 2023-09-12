@@ -155,7 +155,7 @@ const Analytics: FC = () => {
           </div>
         </div>
       </header>
-      <div className="mb-32">
+      <div>
         <h1 className={"text-center text-6xl font-bold"}>Analytics</h1>
         {loading ? (
           <div className={"mt-20 flex justify-center"}>
