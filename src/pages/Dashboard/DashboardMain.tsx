@@ -55,7 +55,7 @@ const DashboardMain: React.FC<{
   ]);
 
   const handleHeaderOneSubmit = async () => {
-    if (headerOneEditValue.length > 50 || headerOneEditValue.length < 1) {
+    if (headerOneEditValue.length > 100 || headerOneEditValue.length < 1) {
       setHeaderOneEditValue(pageData.header_one);
       return;
     }
@@ -74,7 +74,7 @@ const DashboardMain: React.FC<{
 
   const handleDescriptionOneSubmit = async () => {
     if (
-      descriptionOneEditValue.length > 250 ||
+      descriptionOneEditValue.length > 1000 ||
       descriptionOneEditValue.length < 1
     ) {
       setDescriptionOneEdit(false);
@@ -141,7 +141,7 @@ const DashboardMain: React.FC<{
                   onFocus={(e) => {
                     e.target.select();
                   }}
-                  maxLength={50}
+                  maxLength={100}
                 />
               </div>
             ) : (
@@ -174,7 +174,7 @@ const DashboardMain: React.FC<{
                   onFocus={(e) => {
                     e.target.select();
                   }}
-                  maxLength={250}
+                  maxLength={1000}
                 />
               </div>
             ) : (
