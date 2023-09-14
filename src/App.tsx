@@ -14,6 +14,7 @@ import Analytics from "./Analytics.tsx";
 import Unsubscribing from "./Unsubscribing.tsx";
 import Origin from "./Origin.tsx";
 import Newsletter from "./pages/Newsletter/Newsletter.tsx";
+import Architecture from "./Architecture.tsx";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -49,7 +50,7 @@ const App: React.FC = () => {
         <Route path="/unsubscribe" element={<Unsubscribing />} />
         <Route path={"/origin"} element={<Origin />}/>
         <Route path={"analytics"} element={<Analytics />} />
-        {/*<Route path={"/architecture"} element={<Architecture />}/>*/}
+        <Route path={"/architecture"} element={<Architecture />}/>
         <Route path="/github" element={<RedirectToGitHub />} />
         <Route path="/discord" element={<RedirectToDiscord />} />
         <Route path="/newsletter" element={<Newsletter />} />
