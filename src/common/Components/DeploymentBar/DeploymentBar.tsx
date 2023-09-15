@@ -15,16 +15,17 @@ const DeploymentBar: FC<{
 
   useEffect(() => {
     setShow(true);
+    let setTimer: NodeJS.Timeout | undefined;
+
     const timer = setTimeout(() => {
       setShow(false);
-      const setTimer = setTimeout(() => {
+      setTimer = setTimeout(() => {
         setDeployed({ url: "", bool: false });
       }, 1000);
-      return () => {
-        clearTimeout(setTimer);
-      };
     }, 5000);
+
     return () => {
+      clearTimeout(setTimer);
       clearTimeout(timer);
     };
   }, [setDeployed]);
@@ -32,16 +33,14 @@ const DeploymentBar: FC<{
   return (
     <animated.div
       style={animate}
-      className={`fixed left-1/2 z-50 transform rounded-xl border-2 border-black bg-blue-500 px-3 text-lg text-white md:px-6 md:py-3 md:text-2xl md:font-bold`}
+      className="fixed left-1/2 z-50 transform rounded-xl border-2 border-black bg-blue-500 px-3 text-lg text-white md:px-6 md:py-3 md:text-2xl md:font-bold"
     >
       Deployment successful! Please wait 5 minutes for deployment to
       propagate...
       <a
-        className={
-          "px-1 font-bold underline transition-all hover:text-yellow-300"
-        }
+        className="px-1 font-bold underline transition-all hover:text-yellow-300"
         href={url}
-        target={"_blank"}
+        target="_blank"
         rel="noopener noreferrer"
       >
         {url}

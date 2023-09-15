@@ -33,7 +33,7 @@ const AddProjectCard: FC<{
   return (
     <div
       className="mb-5 flex max-w-[400px] flex-grow cursor-pointer rounded-2xl border-8 border-dashed border-black p-24 opacity-50 transition-all hover:-translate-y-0.5"
-      onClick={async () => await handleAddProject()}
+      onClick={handleAddProject}
     >
       <div className={"flex w-full flex-col items-center justify-center"}>
         <h2 className={"text-3xl"}>Add Project</h2>

@@ -160,14 +160,14 @@ const AboutMain: React.FC<{
     <>
       <div className="mx-auto my-20 px-5">
         {showError.visible && (
-          <StatusBar message={showError.message} color={"bg-red-400"} />
+          <StatusBar message={showError.message} color="bg-red-400" />
         )}
         <section className="flex flex-col justify-center">
           <animated.div
             style={headerAnimation}
             className="flex flex-col justify-center"
           >
-            <div className={"flex justify-center"}>
+            <div className="flex justify-center">
               {headerOneEdit ? (
                 <textarea
                   ref={headerOneTextareaRef}
@@ -188,10 +188,10 @@ const AboutMain: React.FC<{
                     setHeaderOneEditValue(pageData.header_one);
                     setHeaderOneEdit(false);
                   }}
-                  onKeyDown={async (e) => {
+                  onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
-                      await handleHeaderOneSubmit();
+                      handleHeaderOneSubmit();
                     }
                   }}
                   className="mx-auto mb-5 w-full max-w-[15ch] resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-5xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-7xl"
@@ -207,7 +207,7 @@ const AboutMain: React.FC<{
                 </h2>
               )}
             </div>
-            <div className={"flex justify-center"}>
+            <div className="flex justify-center">
               {descriptionOneEdit ? (
                 <textarea
                   ref={descriptionOneTextareaRef}
@@ -228,10 +228,10 @@ const AboutMain: React.FC<{
                     target.style.height = `${target.scrollHeight}px`;
                     e.currentTarget.select();
                   }}
-                  onKeyDown={async (e) => {
+                  onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
-                      await handleDescriptionOneSubmit();
+                      handleDescriptionOneSubmit();
                     }
                   }}
                   className="mx-auto mb-5 w-full max-w-[40ch] resize-none appearance-none overflow-hidden  border-none bg-transparent  p-0 text-center text-2xl font-semibold leading-snug outline-none transition-all focus:outline-none focus:ring-0"
@@ -273,8 +273,8 @@ const AboutMain: React.FC<{
                 ref={iconOneFileInput}
                 className="hidden"
                 accept=".jpg,.png"
-                onChange={async (e) => {
-                  await handleFileUpload(
+                onChange={(e) => {
+                  handleFileUpload(
                     e,
                     setIconOneLoading,
                     setPageData as Dispatch<SetStateAction<AnyPageData>>,
@@ -325,8 +325,8 @@ const AboutMain: React.FC<{
                 ref={iconTwoFileInput}
                 className="hidden"
                 accept=".jpg,.png"
-                onChange={async (e) => {
-                  await handleFileUpload(
+                onChange={(e) => {
+                  handleFileUpload(
                     e,
                     setIconTwoLoading,
                     setPageData as Dispatch<SetStateAction<AnyPageData>>,
@@ -375,10 +375,10 @@ const AboutMain: React.FC<{
                     setHeaderTwoEditValue(pageData.header_two);
                     setHeaderTwoEdit(false);
                   }}
-                  onKeyDown={async (e) => {
+                  onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
-                      await handleHeaderTwoSubmit();
+                      handleHeaderTwoSubmit();
                     }
                   }}
                   className="mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-4xl font-bold outline-none focus:outline-none focus:ring-0 md:text-left lg:text-5xl"
@@ -420,8 +420,8 @@ const AboutMain: React.FC<{
                 ref={iconThreeFileInput}
                 className="hidden"
                 accept=".jpg,.png"
-                onChange={async (e) => {
-                  await handleFileUpload(
+                onChange={(e) => {
+                  handleFileUpload(
                     e,
                     setIconThreeLoading,
                     setPageData as Dispatch<SetStateAction<AnyPageData>>,
@@ -463,10 +463,10 @@ const AboutMain: React.FC<{
                   setDescriptionTwoEditValue(pageData.description_two);
                   setDescriptionTwoEdit(false);
                 }}
-                onKeyDown={async (e) => {
+                onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
-                    await handleDescriptionTwoSubmit();
+                    handleDescriptionTwoSubmit();
                   }
                 }}
                 className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-2xl font-semibold leading-snug outline-none focus:outline-none focus:ring-0"

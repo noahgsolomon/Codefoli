@@ -20,8 +20,8 @@ const FaqAccordionP: FC<{
       onClick={HandleOpening}
       className="relative mb-5 rounded-lg border-2 border-black transition ease-in hover:-translate-y-1 hover:shadow-customHover"
     >
-      <div className={" flex cursor-pointer justify-between p-4"}>
-        <h4 className=" select-none p-1 font-semibold transition-all">
+      <div className="flex cursor-pointer justify-between p-4">
+        <h4 className="select-none p-1 font-semibold transition-all">
           {title}
         </h4>
         {isOpened ? (
@@ -61,7 +61,7 @@ const FaqAccordionP: FC<{
         style={{ height: height }}
         className=" overflow-hidden transition-all duration-200"
       >
-        <p className=" p-4 transition-all hover:rounded-full ">{content}</p>
+        <p className="p-4 transition-all hover:rounded-full">{content}</p>
       </div>
     </div>
   );

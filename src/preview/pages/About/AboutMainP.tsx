@@ -56,7 +56,7 @@ const AboutMainP: FC<{
               </Link>
             </div>
           </animated.div>
-          <div className={"flex justify-between md:mx-12 lg:mx-32"}>
+          <div className="flex justify-between md:mx-12 lg:mx-32">
             <animated.div
               style={imageAnimation}
               className="image-wrapper relative order-2 h-[150px] w-[150px] text-center"

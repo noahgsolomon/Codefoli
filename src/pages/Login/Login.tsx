@@ -123,12 +123,12 @@ const Login: React.FC = () => {
                     ? "opacity-100"
                     : "opacity-10"
                 }`}
-                onClick={async () => {
+                onClick={() => {
                   if (email.length < 5 || password.length < 6) {
                     return;
                   }
                   if (loginClicked || emailError || passwordError) return;
-                  await handleLogin();
+                  handleLogin();
                 }}
               >
                 {loginClicked ? (

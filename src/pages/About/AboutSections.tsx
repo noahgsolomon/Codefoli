@@ -64,7 +64,7 @@ const AboutSections: React.FC<{
                 "bullet_three" in details &&
                 "image_one" in details ? (
                   <StorySection
-                    page={"ABOUT"}
+                    page="ABOUT"
                     key={index}
                     details={details}
                     setPageData={
@@ -79,7 +79,7 @@ const AboutSections: React.FC<{
                 "header_one" in details ? (
                   <ResumeSection
                     key={index}
-                    page={"ABOUT"}
+                    page="ABOUT"
                     details={details}
                     setPageData={
                       setPageData as Dispatch<SetStateAction<AnyPageData>>
@@ -100,7 +100,7 @@ const AboutSections: React.FC<{
                       setPageData as Dispatch<SetStateAction<AnyPageData>>
                     }
                     key={index}
-                    page={"ABOUT"}
+                    page="ABOUT"
                     details={details}
                     order={section.details.page_order}
                   />
@@ -116,7 +116,7 @@ const AboutSections: React.FC<{
                       setPageData as Dispatch<SetStateAction<AnyPageData>>
                     }
                     key={index}
-                    page={"ABOUT"}
+                    page="ABOUT"
                     details={details}
                     order={section.details.page_order}
                   />
@@ -130,7 +130,7 @@ const AboutSections: React.FC<{
             <AddSection
               key={`add-${index}`}
               sections={availableSectionTypes}
-              page={"ABOUT"}
+              page="ABOUT"
               setPageData={
                 setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>
               }
@@ -144,7 +144,7 @@ const AboutSections: React.FC<{
           setPageData as React.Dispatch<React.SetStateAction<AnyPageData>>
         }
         sections={availableSectionTypes}
-        page={"ABOUT"}
+        page="ABOUT"
         order={pageData.sections.length + 1}
       />
     </>

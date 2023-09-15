@@ -168,7 +168,7 @@ const SkillSection: FC<{
     >
       {removeSkill && (
         <div
-          className={` absolute inset-0 z-10 bg-red-300 opacity-25 transition-all`}
+          className="absolute inset-0 z-10 bg-red-300 opacity-25 transition-all"
         ></div>
       )}
       <button
@@ -177,7 +177,7 @@ const SkillSection: FC<{
         } absolute right-10 top-0 z-20 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onMouseEnter={() => setRemoveSkill(true)}
         onMouseLeave={() => setRemoveSkill(false)}
-        onClick={async () => await handleRemoveSection()}
+        onClick={handleRemoveSection}
       >
         -
       </button>
@@ -190,10 +190,10 @@ const SkillSection: FC<{
             setHeaderOneEditValue(details.header_one);
             setHeaderOneEdit(false);
           }}
-          onKeyDown={async (e) => {
+          onKeyDown={(e) => {
             if (e.key === "Enter") {
               e.preventDefault();
-              await handleHeaderOneSubmit();
+              handleHeaderOneSubmit();
             }
           }}
           className="mb-10 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-2xl font-bold leading-relaxed outline-none focus:outline-none focus:ring-0"
@@ -236,7 +236,7 @@ const SkillSection: FC<{
           }}
         >
           <div
-            className={`min-h-64 flex flex-wrap gap-2 rounded-tl-2xl rounded-tr-2xl px-2 py-2`}
+            className="min-h-64 flex flex-wrap gap-2 rounded-tl-2xl rounded-tr-2xl px-2 py-2"
           >
             {userData.skills.map((skill, index) => {
               return (
@@ -247,7 +247,7 @@ const SkillSection: FC<{
                   } ${
                     !preview ? "hover:bg-red-500 hover:line-through" : ""
                   } py-2 text-sm`}
-                  onClick={async () => await handleRemoveSkill(skill)}
+                  onClick={() => handleRemoveSkill(skill)}
                 >
                   {skill}
                 </span>

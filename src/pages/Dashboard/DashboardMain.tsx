@@ -130,10 +130,10 @@ const DashboardMain: React.FC<{
                     setHeaderOneEditValue(pageData.header_one);
                     setHeaderOneEdit(false);
                   }}
-                  onKeyDown={async (e) => {
+                  onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
-                      await handleHeaderOneSubmit();
+                      handleHeaderOneSubmit();
                     }
                   }}
                   className="font-extra-bold mx-auto w-full max-w-[15ch]  resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-4xl leading-snug outline-none focus:outline-none focus:ring-0 md:text-left md:text-5xl md:leading-relaxed xl:text-left xl:text-6xl xl:leading-normal"
@@ -215,8 +215,8 @@ const DashboardMain: React.FC<{
               ref={fileInput}
               className="hidden"
               accept=".jpg,.png"
-              onChange={async (e) => {
-                await handleFileUpload(
+              onChange={(e) => {
+                handleFileUpload(
                   e,
                   setImageLoading,
                   setPageData as Dispatch<SetStateAction<AnyPageData>>,
@@ -230,7 +230,7 @@ const DashboardMain: React.FC<{
             />
             <div className="h-full w-full overflow-hidden rounded-3xl border-2 border-black shadow-customHover">
               <img
-                className={`h-full w-full object-cover`}
+                className="h-full w-full object-cover"
                 src={
                   pageData.profile_image +
                   "?date=" +

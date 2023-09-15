@@ -19,7 +19,7 @@ const ProjectCardP: FC<{
       onMouseLeave={() => setHovered(false)}
     >
       <div
-        className={`image-wrapper relative h-[400px] overflow-hidden rounded-t-lg transition-all`}
+        className="image-wrapper relative h-[400px] overflow-hidden rounded-t-lg transition-all"
       >
         <img
           src={image}
@@ -45,7 +45,7 @@ const ProjectCardP: FC<{
           →
         </div>
       </div>
-      <div className={`rounded-b-lg bg-white px-5 py-2 dark:bg-[#0d0d0d]`}>
+      <div className="rounded-b-lg bg-white px-5 py-2 dark:bg-[#0d0d0d]">
         {languages.map((language, index) => (
           <span
             className={`mb-2 mr-2 inline-block  rounded-lg px-3 text-white transition-all hover:-translate-y-0.5 ${COLORS[index]} py-2 text-sm`}
@@ -55,7 +55,7 @@ const ProjectCardP: FC<{
           </span>
         ))}
       </div>
-      <div className=" flex-grow rounded-b-lg bg-white dark:bg-[#0d0d0d]"></div>
+      <div className="flex-grow rounded-b-lg bg-white dark:bg-[#0d0d0d]"></div>
     </Link>
   );
 };

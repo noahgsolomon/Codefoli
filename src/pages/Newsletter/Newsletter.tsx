@@ -42,7 +42,7 @@ const Newsletter: FC = () => {
   return (
       <>
       <header
-          className={`relative z-40 mx-5 mb-20 flex items-center py-5 font-bold transition-all`}
+          className="relative z-40 mx-5 mb-20 flex items-center py-5 font-bold transition-all"
       >
         <div className="mx-auto flex w-full max-w-[50rem] flex-row flex-wrap items-center justify-center rounded-xl border-2 border-black px-4 py-3 shadow-custom transition-all bg-gray-50 dark:bg-[#1a1a1a] sm:justify-between">
           <Link
@@ -101,16 +101,16 @@ const Newsletter: FC = () => {
               className="mb-4 h-12 w-full rounded-lg border-2 border-black py-8 shadow-custom transition-all hover:shadow-customHover dark:bg-[#1a1a1a]"
               placeholder="Enter your email"
               onChange={(e) => setEmail(e.target.value)}
-              onKeyDown={async (e) => {
+              onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  await handleSubscribe();
+                  handleSubscribe();
                 }
               }}
               value={email}
             />
             <button
                 className="mr-2 h-12 rounded-lg bg-blue-500 px-4 text-base text-white transition-all hover:opacity-80 md:absolute md:right-0 md:top-8 md:-translate-y-1/2 md:transform"
-                onClick={async () => await handleSubscribe()}
+                onClick={handleSubscribe}
                 disabled={subscribeLoading}
             >
               {subscribeLoading ? <svg

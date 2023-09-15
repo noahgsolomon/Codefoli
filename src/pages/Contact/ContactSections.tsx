@@ -51,7 +51,7 @@ const ContactSections: FC<{
                     setPageData={
                       setPageData as Dispatch<SetStateAction<AnyPageData>>
                     }
-                    page={"CONTACT"}
+                    page="CONTACT"
                     order={section.details.page_order}
                   />
                 ) : null;
@@ -64,7 +64,7 @@ const ContactSections: FC<{
                 "bullet_three" in details &&
                 "image_one" in details ? (
                   <StorySection
-                    page={"CONTACT"}
+                    page="CONTACT"
                     key={index}
                     details={details}
                     setPageData={
@@ -79,7 +79,7 @@ const ContactSections: FC<{
                 "header_one" in details ? (
                   <ResumeSection
                     key={index}
-                    page={"CONTACT"}
+                    page="CONTACT"
                     details={details}
                     setPageData={
                       setPageData as Dispatch<SetStateAction<AnyPageData>>
@@ -116,7 +116,7 @@ const ContactSections: FC<{
                       setPageData as Dispatch<SetStateAction<AnyPageData>>
                     }
                     key={index}
-                    page={"CONTACT"}
+                    page="CONTACT"
                     details={details}
                     order={section.details.page_order}
                   />
@@ -129,7 +129,7 @@ const ContactSections: FC<{
             <AddSection
               key={`add-${index}`}
               sections={availableSectionTypes}
-              page={"CONTACT"}
+              page="CONTACT"
               setPageData={setPageData as Dispatch<SetStateAction<AnyPageData>>}
               order={section.details.page_order}
             />,
@@ -139,7 +139,7 @@ const ContactSections: FC<{
       <AddSection
         setPageData={setPageData as Dispatch<SetStateAction<AnyPageData>>}
         sections={availableSectionTypes}
-        page={"CONTACT"}
+        page="CONTACT"
         order={pageData.sections.length + 1}
       />
     </>

@@ -30,15 +30,13 @@ const AddJobCard: FC<{
 
   return (
     <div
-      className={`relative mb-8 h-64 rounded-lg border-8 border-dashed border-black opacity-50 transition-all hover:-translate-y-0.5`}
+      className="relative mb-8 h-64 rounded-lg border-8 border-dashed border-black opacity-50 transition-all hover:-translate-y-0.5"
     >
       <div
-        className={
-          "flex h-full w-full flex-col items-center justify-center hover:cursor-pointer"
-        }
-        onClick={() => handleAddJob()}
+        className="flex h-full w-full flex-col items-center justify-center hover:cursor-pointer"
+        onClick={handleAddJob}
       >
-        <p className={"text-5xl"}>+</p>
+        <p className="text-5xl">+</p>
       </div>
     </div>
   );

@@ -49,7 +49,7 @@ const FaqAccordion: FC<AccordionProps> = ({
             ? {
                 ...section,
                 details: {
-                  ...(section.details as FAQType),
+                  ...section.details,
                   faq: (section.details as FAQType).faq.map((faqItem) =>
                     faqItem.id === id
                       ? { ...faqItem, question: titleEditValue }
@@ -78,7 +78,7 @@ const FaqAccordion: FC<AccordionProps> = ({
             ? {
                 ...section,
                 details: {
-                  ...(section.details as FAQType),
+                  ...section.details,
                   faq: (section.details as FAQType).faq.map((faqItem) =>
                     faqItem.id === id
                       ? { ...faqItem, answer: contentEditValue }
@@ -107,7 +107,7 @@ const FaqAccordion: FC<AccordionProps> = ({
             ? {
                 ...section,
                 details: {
-                  ...(section.details as FAQType),
+                  ...section.details,
                   faq: (section.details as FAQType).faq.filter(
                     (faqItem) => faqItem.id !== id
                   ),
@@ -138,7 +138,7 @@ const FaqAccordion: FC<AccordionProps> = ({
         } absolute -right-3 -top-3 z-20 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onMouseEnter={() => setRemoveHover(true)}
         onMouseLeave={() => setRemoveHover(false)}
-        onClick={async () => await handleRemoveFaq()}
+        onClick={handleRemoveFaq}
       >
         -
       </button>
@@ -153,10 +153,10 @@ const FaqAccordion: FC<AccordionProps> = ({
               setTitleEditValue(title);
               setTitleEdit(false);
             }}
-            onKeyDown={async (e) => {
+            onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                await handleTitleSubmit();
+                handleTitleSubmit();
               }
             }}
             className=" w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-1 text-lg font-semibold leading-relaxed outline-none focus:outline-none focus:ring-0"
@@ -220,7 +220,7 @@ const FaqAccordion: FC<AccordionProps> = ({
       <div
         ref={contentElement}
         style={{ height: height }}
-        className=" overflow-hidden transition-all duration-200"
+        className="overflow-hidden transition-all duration-200"
       >
         {contentEdit ? (
           <textarea
@@ -231,10 +231,10 @@ const FaqAccordion: FC<AccordionProps> = ({
               setContentEditValue(content);
               setContentEdit(false);
             }}
-            onKeyDown={async (e) => {
+            onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                await handleContentSubmit();
+                handleContentSubmit();
               }
             }}
             className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-4 text-lg leading-relaxed outline-none focus:outline-none focus:ring-0"
