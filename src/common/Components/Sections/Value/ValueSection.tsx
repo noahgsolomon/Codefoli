@@ -127,7 +127,7 @@ const ValueSection: React.FC<{
         } absolute right-10 top-0 z-20 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onMouseEnter={() => setRemoveValueSection(true)}
         onMouseLeave={() => setRemoveValueSection(false)}
-        onClick={async () => await handleSectionRemove()}
+        onClick={handleSectionRemove}
       >
         -
       </button>
@@ -141,10 +141,10 @@ const ValueSection: React.FC<{
               setHeaderOneEditValue(details.header_one);
               setHeaderOneEdit(false);
             }}
-            onKeyDown={async (e) => {
+            onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                await handleHeaderOneSubmit();
+                handleHeaderOneSubmit();
               }
             }}
             className="mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-3xl font-bold leading-relaxed outline-none focus:outline-none focus:ring-0"
@@ -179,10 +179,10 @@ const ValueSection: React.FC<{
               setDescriptionOneEditValue(details.description_one);
               setDescriptionEdit(false);
             }}
-            onKeyDown={async (e) => {
+            onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                await handleDescriptionOneSubmit();
+                handleDescriptionOneSubmit();
               }
             }}
             className="mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-lg font-semibold leading-relaxed outline-none focus:outline-none focus:ring-0"

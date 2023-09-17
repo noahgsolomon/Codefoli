@@ -1,4 +1,4 @@
-import { useState, useEffect, FC } from "react";
+import { useState, useEffect, FC, useRef } from "react";
 import { useSpring, animated } from "react-spring";
 import {
   checkCustomDomainDetails,
@@ -52,6 +52,17 @@ const ModeButtons: FC<{
   const thresholdShow = 200;
   const thresholdHide = 0;
   const [activeDownload, setActiveDownload] = useState(false);
+  const tmIds = useRef<{
+    tmDownloadId?: NodeJS.Timeout, // created by setTimeout
+    tmCheckDeployId?: NodeJS.Timeout, // created by setInterval
+  }>({});
+
+  useEffect(() => {
+    () => {
+      clearTimeout(tmIds.current.tmDownloadId);
+      clearInterval(tmIds.current.tmCheckDeployId);
+    }
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -150,10 +161,11 @@ const ModeButtons: FC<{
       bool: true,
       message: "Generating react code... est. time: 11 seconds",
     });
-    setTimeout(() => {
+    tmIds.current.tmDownloadId = setTimeout(() => {
       setDownloaded({ bool: false, message: "" });
     }, 3000);
     await download();
+    clearTimeout(tmIds.current.tmDownloadId);
     setDownloaded({ bool: true, message: "React code downloaded!" });
     setActiveDownload(false);
     setTimeout(() => {
@@ -191,10 +203,10 @@ const ModeButtons: FC<{
 
     let attempts = 0;
     const maxAttempts = 40;
-    const interval = setInterval(async () => {
+    tmIds.current.tmCheckDeployId = setInterval(async () => {
       const deployed = await checkCustomDomainDetails();
       if (deployed.status === "OK") {
-        clearInterval(interval);
+        clearInterval(tmIds.current.tmCheckDeployId);
         setImportedDomainLoading(false);
         setImportedDomainSuccess(true);
         setCustomDomainCreatedModalOpen(true);
@@ -211,7 +223,7 @@ const ModeButtons: FC<{
         attempts++;
         if (attempts >= maxAttempts) {
           setImportedDomainLoading(false);
-          clearInterval(interval);
+          clearInterval(tmIds.current.tmCheckDeployId);
           setImportedDomainError(false);
           console.log("Max attempts reached, website not yet deployed.");
         }
@@ -229,17 +241,17 @@ const ModeButtons: FC<{
     });
     let attempts = 0;
     const maxAttempts = 40;
-    const interval = setInterval(async () => {
+    tmIds.current.tmCheckDeployId = setInterval(async () => {
       const deployed = await checkDeployed();
       if (deployed.status === "OK") {
-        clearInterval(interval);
+        clearInterval(tmIds.current.tmCheckDeployId);
         setDeployed({ url: deployed.data, bool: true });
         setDeploying(false);
         setUserData({ ...userData, website: deployed.data });
       } else {
         attempts++;
         if (attempts >= maxAttempts) {
-          clearInterval(interval);
+          clearInterval(tmIds.current.tmCheckDeployId);
           console.log("Max attempts reached, website not yet deployed.");
         }
       }
@@ -341,7 +353,7 @@ const ModeButtons: FC<{
                 <a
                   href={userData.website}
                   className="break-all text-sm text-blue-500 underline transition-all hover:text-yellow-500"
-                  target={"_blank"}
+                  target="_blank"
                 >
                   {userData.website}
                 </a>
@@ -361,10 +373,10 @@ const ModeButtons: FC<{
             className="mb-2 flex w-full items-center justify-center rounded-3xl border-2 border-black bg-blue-500 px-4 py-3 font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
             onClick={handleDownloadReactCode}
           >
-            <FaDownload fill={"white"} className="mr-2" />
+            <FaDownload fill="white" className="mr-2" />
             Download your React Code
             <img
-              className={"ml-2"}
+              className="ml-2"
               width="36"
               height="36"
               src="https://img.icons8.com/color/64/react-native.png"
@@ -401,14 +413,12 @@ const ModeButtons: FC<{
         {!userData.verified ? ( //!userData.verified
           <div className="flex flex-col justify-center rounded-lg bg-white p-8 shadow-lg dark:bg-[#1a1a1a]">
             <h2 className="text-2xl font-bold">Email verification required</h2>
-            <p className={"mb-4 text-center text-base opacity-60"}>
+            <p className="mb-4 text-center text-base opacity-60">
               {userData.email}
             </p>
             <div
-              className={
-                "cursor-pointer text-center text-blue-500 underline transition-all hover:opacity-80"
-              }
-              onClick={async () => await handleResendVerificationEmail()}
+              className="cursor-pointer text-center text-blue-500 underline transition-all hover:opacity-80"
+              onClick={handleResendVerificationEmail}
             >
               resend verification email
             </div>
@@ -443,10 +453,8 @@ const ModeButtons: FC<{
                   />
                   {!subdomainChecking ? (
                     <button
-                      className={
-                        "m-2 rounded-xl bg-black px-2 py-1 text-white transition-all hover:opacity-80"
-                      }
-                      onClick={async () => handleCheckSubdomain()}
+                      className="m-2 rounded-xl bg-black px-2 py-1 text-white transition-all hover:opacity-80"
+                      onClick={handleCheckSubdomain}
                     >
                       Check
                     </button>

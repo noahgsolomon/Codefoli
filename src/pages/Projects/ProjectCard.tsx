@@ -210,8 +210,8 @@ const ProjectCard: FC<{
           ref={imageFileInput}
           className="hidden"
           accept=".jpg,.png"
-          onChange={async (e) => {
-            await handleFileUpload(
+          onChange={(e) => {
+            handleFileUpload(
               e,
               setImageLoading,
               setUserData,
@@ -258,10 +258,10 @@ const ProjectCard: FC<{
               setTitleEditValue(titleValue);
               setTitleEdit(false);
             }}
-            onKeyDown={async (e) => {
+            onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                await handleTitleSubmit();
+                handleTitleSubmit();
               }
             }}
             className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-2xl font-bold leading-snug outline-none focus:outline-none focus:ring-0"
@@ -298,10 +298,10 @@ const ProjectCard: FC<{
               setDescriptionEditValue(descriptionValue);
               setDescriptionEdit(false);
             }}
-            onKeyDown={async (e) => {
+            onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                await handleDescriptionSubmit();
+                handleDescriptionSubmit();
               }
             }}
             className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-base leading-snug outline-none focus:outline-none focus:ring-0"
@@ -343,7 +343,7 @@ const ProjectCard: FC<{
           →
         </div>
       </Link>
-      <div className={`rounded-b-lg bg-white px-5 py-2 dark:bg-[#0d0d0d]`}>
+      <div className="rounded-b-lg bg-white px-5 py-2 dark:bg-[#0d0d0d]">
         {languages.map((language, index) => (
           <span
             className={`mb-2 mr-2 inline-block cursor-pointer rounded-lg px-3 text-white transition-all hover:-translate-y-0.5 ${

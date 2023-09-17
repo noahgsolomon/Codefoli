@@ -103,7 +103,7 @@ const ValueCard: FC<{
         } absolute -right-3 -top-3 z-20 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onMouseEnter={() => setRemoveHover(true)}
         onMouseLeave={() => setRemoveHover(false)}
-        onClick={async () => await handleRemoveValue()}
+        onClick={() => handleRemoveValue()}
       >
         -
       </button>
@@ -111,7 +111,7 @@ const ValueCard: FC<{
         className={`${
           hovered ? "opacity-100" : "hidden"
         } absolute -right-3 top-12 z-10 rounded-2xl bg-blue-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
-        onClick={async () => await handleRandomizeValue()}
+        onClick={() => handleRandomizeValue()}
       >
         ↻
       </button>

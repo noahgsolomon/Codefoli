@@ -48,9 +48,9 @@ const App: React.FC = () => {
         <Route path="/processing" element={<Processing />} />
         <Route path="/verify" element={<Verify />} />
         <Route path="/unsubscribe" element={<Unsubscribing />} />
-        <Route path={"/origin"} element={<Origin />}/>
-        <Route path={"analytics"} element={<Analytics />} />
-        <Route path={"/architecture"} element={<Architecture />}/>
+        <Route path="/origin" element={<Origin />}/>
+        <Route path="analytics" element={<Analytics />} />
+        <Route path="/architecture" element={<Architecture />}/>
         <Route path="/github" element={<RedirectToGitHub />} />
         <Route path="/discord" element={<RedirectToDiscord />} />
         <Route path="/newsletter" element={<Newsletter />} />

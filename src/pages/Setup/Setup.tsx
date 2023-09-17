@@ -240,7 +240,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                 value={profession}
                 maxLength={25}
                 placeholder="// Graphic Designer"
-                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
+                className="mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200"
                 onChange={(e) => setProfession(e.target.value)}
               />
               <img
@@ -263,7 +263,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                 value={company}
                 maxLength={50}
                 placeholder="// Monsters Inc."
-                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
+                className="mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200"
                 onChange={(e) => setCompany(e.target.value)}
               />
               <img
@@ -286,7 +286,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                 value={location}
                 maxLength={25}
                 placeholder="// Hong Kong, China"
-                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
+                className="mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200"
                 onChange={(e) => setLocation(e.target.value)}
               />
               <img
@@ -308,7 +308,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                 placeholder="// Please write a short description about yourself"
                 value={about}
                 maxLength={250}
-                className={`mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
+                className="mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200"
                 onChange={(e) => setAbout(e.target.value)}
               />
               <img
@@ -332,7 +332,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                   id="skills"
                   value={skillSearch}
                   maxLength={25}
-                  className={`mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
+                  className="mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200"
                   onChange={(e) => setSkillsSkillSearch(e.target.value)}
                   disabled={selectedSkills.length >= 12}
                 />
@@ -368,10 +368,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
             {selectedSkills.map((skill) => (
               <div
                 key={skill.skill}
-                className={
-                  "m-1 inline-block cursor-pointer rounded-full p-2 transition-all hover:-translate-y-0.5 hover:opacity-90 " +
-                  skill.color
-                }
+                className={`m-1 inline-block cursor-pointer rounded-full p-2 transition-all hover:-translate-y-0.5 hover:opacity-90 ${skill.color}`}
                 onClick={() => removeSkill(skill.skill)}
               >
                 <span className="px-2 text-white">{skill.skill}</span>
@@ -390,7 +387,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                   id="services"
                   value={serviceSearch}
                   maxLength={25}
-                  className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
+                  className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200"
                   onChange={(e) => setServicesSearch(e.target.value)}
                   disabled={selectedServices.length >= 4}
                 />
@@ -426,10 +423,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
             {selectedServices.map((service) => (
               <div
                 key={service.service}
-                className={
-                  "m-1 inline-block cursor-pointer rounded-full p-2 transition-all hover:-translate-y-0.5 hover:opacity-90 " +
-                  service.color
-                }
+                className={`m-1 inline-block cursor-pointer rounded-full p-2 transition-all hover:-translate-y-0.5 hover:opacity-90 ${service.color}`}
                 onClick={() => removeService(service.service)}
               >
                 <span className="px-2 text-white">{service.service}</span>
@@ -439,9 +433,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
           <div className="flex justify-end">
             <button
               onClick={() => incrementPage()}
-              className={
-                "bg- mt-3 flex cursor-pointer items-center justify-center rounded-2xl bg-black px-8 py-3 text-base font-bold text-white transition-all hover:opacity-80 dark:bg-gray-200 dark:text-gray-800 dark:hover:opacity-80 "
-              }
+              className="bg- mt-3 flex cursor-pointer items-center justify-center rounded-2xl bg-black px-8 py-3 text-base font-bold text-white transition-all hover:opacity-80 dark:bg-gray-200 dark:text-gray-800 dark:hover:opacity-80"
             >
               Next
             </button>
@@ -507,7 +499,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                   placeholder="// Facebook"
                   value={addWork.company}
                   maxLength={50}
-                  className={`mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
+                  className="mb-4 mt-2 w-full rounded-xl border-2 border-black p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200"
                   onChange={(e) =>
                     setAddWork({ ...addWork, company: e.target.value })
                   }
@@ -524,7 +516,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                   placeholder="// the CEO"
                   value={addWork.position}
                   maxLength={25}
-                  className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
+                  className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200"
                   onChange={(e) =>
                     setAddWork({ ...addWork, position: e.target.value })
                   }
@@ -540,7 +532,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                   placeholder="// 12/30/12"
                   maxLength={25}
                   value={addWork.start_date}
-                  className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
+                  className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200"
                   onChange={(e) =>
                     setAddWork({ ...addWork, start_date: e.target.value })
                   }
@@ -557,7 +549,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                   placeholder="// 6/09/23 or current"
                   value={addWork.end_date}
                   maxLength={25}
-                  className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
+                  className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200"
                   onChange={(e) =>
                     setAddWork({ ...addWork, end_date: e.target.value })
                   }
@@ -573,7 +565,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                   placeholder="Please write a short description of your job."
                   value={addWork.description}
                   maxLength={100}
-                  className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
+                  className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200"
                   onChange={(e) =>
                     setAddWork({ ...addWork, description: e.target.value })
                   }
@@ -596,9 +588,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                   Cancel
                 </button>
                 <button
-                  className={
-                    "mt-3 flex cursor-pointer items-center justify-center rounded-2xl bg-black px-8 py-3 text-base font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-green-500 active:translate-y-0.5 dark:bg-gray-50 dark:text-gray-800 dark:hover:bg-green-500"
-                  }
+                  className="mt-3 flex cursor-pointer items-center justify-center rounded-2xl bg-black px-8 py-3 text-base font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-green-500 active:translate-y-0.5 dark:bg-gray-50 dark:text-gray-800 dark:hover:bg-green-500"
                   onClick={() => {
                     if (addWork.company === "") {
                       return;
@@ -629,7 +619,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
           )}
           {work.length < 1 && (
             <div
-              className={`mb-4 rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all hover:-translate-y-0.5 dark:bg-[#1a1a1a]`}
+              className="mb-4 rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all hover:-translate-y-0.5 dark:bg-[#1a1a1a]"
             >
               <div className="flex flex-row justify-between">
                 <h3 className="mb-2 bg-blue-500 px-2 py-1 font-bold text-white">
@@ -663,9 +653,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
             </button>
             <button
               onClick={() => incrementPage()}
-              className={
-                "mt-3 flex cursor-pointer items-center justify-center rounded-2xl bg-black px-8 py-3 text-base font-bold text-white transition-all hover:opacity-80 dark:bg-gray-200 dark:text-gray-800 dark:hover:opacity-80 "
-              }
+              className="mt-3 flex cursor-pointer items-center justify-center rounded-2xl bg-black px-8 py-3 text-base font-bold text-white transition-all hover:opacity-80 dark:bg-gray-200 dark:text-gray-800 dark:hover:opacity-80"
             >
               Next
             </button>
@@ -731,7 +719,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                     placeholder="// Mojo Compiler"
                     value={addProject.name}
                     maxLength={25}
-                    className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
+                    className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200"
                     onChange={(e) => {
                       setAddProject({
                         ...addProject,
@@ -750,7 +738,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                     id="language"
                     placeholder="// Mojo"
                     value={addProject.languages[0]}
-                    className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
+                    className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200"
                     maxLength={25}
                     onChange={(e) => {
                       setAddProject({
@@ -770,7 +758,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                     placeholder="// 01/06/21 or current"
                     value={addProject.updatedAt}
                     maxLength={25}
-                    className={`mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
+                    className="mb-4 mt-2 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200"
                     onChange={(e) => {
                       setAddProject({
                         ...addProject,
@@ -788,7 +776,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                     id="description"
                     placeholder="Please write a short description of your project."
                     value={addProject.description}
-                    className={`mb-4 mt-2 max-h-52 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200`}
+                    className="mb-4 mt-2 max-h-52 w-full rounded-xl border-2 border-black bg-white p-3 placeholder-black shadow-custom ring-transparent transition-shadow placeholder:text-gray-800 hover:shadow-customHover focus:border-black focus:ring-0 dark:bg-[#1a1a1a] placeholder:dark:text-gray-200"
                     maxLength={100}
                     onChange={(e) => {
                       setAddProject({
@@ -817,9 +805,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                     Cancel
                   </button>
                   <button
-                    className={
-                      "mt-3 flex cursor-pointer items-center justify-center rounded-2xl bg-black px-8 py-3 text-base font-bold text-white transition-all hover:bg-green-500 active:translate-y-0.5 dark:bg-gray-50 dark:text-gray-800 dark:hover:bg-green-500"
-                    }
+                    className="mt-3 flex cursor-pointer items-center justify-center rounded-2xl bg-black px-8 py-3 text-base font-bold text-white transition-all hover:bg-green-500 active:translate-y-0.5 dark:bg-gray-50 dark:text-gray-800 dark:hover:bg-green-500"
                     onClick={() => {
                       if (addProject.name === "") return;
                       setProjects([
@@ -849,7 +835,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
             )}
             {projects.length < 1 && (
               <div
-                className={`mb-4 rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all hover:-translate-y-0.5 dark:bg-[#1a1a1a]`}
+                className="mb-4 rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all hover:-translate-y-0.5 dark:bg-[#1a1a1a]"
               >
                 <div className="flex flex-row justify-between">
                   <h3 className="mb-2 bg-red-500 px-2 py-1 font-bold text-white">
@@ -882,10 +868,8 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
                 Back
               </button>
               <button
-                onClick={async () => await submitSetup()}
-                className={
-                  "mt-3 flex cursor-pointer items-center justify-center rounded-2xl bg-black px-8 py-3 text-base font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-blue-500 dark:bg-gray-50 dark:text-gray-800 dark:hover:-translate-y-0.5 dark:hover:bg-blue-500"
-                }
+                onClick={submitSetup}
+                className="mt-3 flex cursor-pointer items-center justify-center rounded-2xl bg-black px-8 py-3 text-base font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-blue-500 dark:bg-gray-50 dark:text-gray-800 dark:hover:-translate-y-0.5 dark:hover:bg-blue-500"
               >
                 {submitted ? (
                   <svg
@@ -916,8 +900,8 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
       )}
       {submitted && (
         <StatusBar
-          message={"Submitted! We are getting your profile ready!"}
-          color={"bg-green-500"}
+          message="Submitted! We are getting your profile ready!"
+          color="bg-green-500"
         />
       )}
     </div>

@@ -116,7 +116,7 @@ const Analytics: FC = () => {
       >
         <div className="mx-auto flex w-full max-w-[50rem] flex-row flex-wrap items-center justify-center rounded-xl border-2 border-black px-4 py-3 shadow-custom transition-all dark:bg-[#1a1a1a] sm:justify-between">
           <Link
-            to={"/"}
+            to="/"
             className="cursor-pointer select-none px-1 text-4xl text-gray-800 transition-all hover:-translate-y-0.5 dark:text-gray-50"
           >
             Codefoli
@@ -156,7 +156,7 @@ const Analytics: FC = () => {
         </div>
       </header>
       <div>
-        <h1 className={"text-center text-6xl font-bold"}>Analytics</h1>
+        <h1 className="text-center text-6xl font-bold">Analytics</h1>
         {loading ? (
           <div className={"mt-20 flex justify-center"}>
             <svg
@@ -178,7 +178,7 @@ const Analytics: FC = () => {
               ></circle>
               <path
                 className="opacity-75"
-                fill={"white"}
+                fill="white"
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
@@ -189,45 +189,45 @@ const Analytics: FC = () => {
             <div className={"mb-20 flex justify-center gap-10"}>
               <button
                 className={"text-2xl font-bold transition-all hover:opacity-60"}
-                onClick={async () => await changeDate(-1)}
+                onClick={() => changeDate(-1)}
               >
                 {"<"}
               </button>
               <button
                 className={"text-2xl font-bold transition-all hover:opacity-60"}
-                onClick={async () => await changeDate(+1)}
+                onClick={() => changeDate(+1)}
               >
                 {">"}
               </button>
             </div>
-            <div className={'flex flex-wrap justify-center gap-10 mx-10 mb-48'}>
-              <div className={'transition-all px-6 py-6 bg-blue-50 dark:bg-blue-900 border-2 border-blue-500 dark:border-blue-300 shadow-custom hover:shadow-customHover rounded-xl'}>
-                <h2 className={'font-bold text-2xl dark:text-white'}>👥 <span className={'underline text-blue-500 dark:text-blue-300'}>Total</span> # of users:</h2>
-                <p className={'text-blue-500 dark:text-blue-300 text-center mt-4 text-3xl font-bold'}>{userCount}</p>
+            <div className="flex flex-wrap justify-center gap-10 mx-10 mb-48">
+              <div className="transition-all px-6 py-6 bg-blue-50 dark:bg-blue-900 border-2 border-blue-500 dark:border-blue-300 shadow-custom hover:shadow-customHover rounded-xl">
+                <h2 className="font-bold text-2xl dark:text-white">👥 <span className="underline text-blue-500 dark:text-blue-300">Total</span> # of users:</h2>
+                <p className="text-blue-500 dark:text-blue-300 text-center mt-4 text-3xl font-bold">{userCount}</p>
               </div>
-              <div className={'transition-all px-6 py-6 bg-yellow-50 dark:bg-yellow-900 border-2 border-yellow-500 dark:border-yellow-300 shadow-custom hover:shadow-customHover rounded-xl'}>
-                <h2 className={'font-bold text-2xl dark:text-white'}>🗓 Users registered <span className={'underline text-yellow-500 dark:text-yellow-300'}>today</span>:</h2>
-                <p className={'text-yellow-500 dark:text-yellow-300 text-center mt-4 text-3xl font-bold'}>{registers}</p>
+              <div className="transition-all px-6 py-6 bg-yellow-50 dark:bg-yellow-900 border-2 border-yellow-500 dark:border-yellow-300 shadow-custom hover:shadow-customHover rounded-xl">
+                <h2 className="font-bold text-2xl dark:text-white">🗓 Users registered <span className="underline text-yellow-500 dark:text-yellow-300">today</span>:</h2>
+                <p className="text-yellow-500 dark:text-yellow-300 text-center mt-4 text-3xl font-bold">{registers}</p>
               </div>
-              <div className={'transition-all px-6 py-6 bg-green-50 dark:bg-green-900 border-2 border-green-500 dark:border-green-300 shadow-custom hover:shadow-customHover rounded-xl'}>
-                <h2 className={'font-bold text-2xl dark:text-white'}>🚀 Deployments today:</h2>
-                <p className={'text-green-500 dark:text-green-300 text-center mt-4 text-3xl font-bold'}>{deployments}</p>
+              <div className="transition-all px-6 py-6 bg-green-50 dark:bg-green-900 border-2 border-green-500 dark:border-green-300 shadow-custom hover:shadow-customHover rounded-xl">
+                <h2 className="font-bold text-2xl dark:text-white">🚀 Deployments today:</h2>
+                <p className="text-green-500 dark:text-green-300 text-center mt-4 text-3xl font-bold">{deployments}</p>
               </div>
-              <div className={'transition-all px-6 py-6 bg-purple-50 dark:bg-purple-900 border-2 border-purple-500 dark:border-purple-300 shadow-custom hover:shadow-customHover rounded-xl'}>
-                <h2 className={'font-bold text-2xl dark:text-white'}>📥 Downloads today:</h2>
-                <p className={'text-purple-500 dark:text-purple-300 text-center mt-4 text-3xl font-bold'}>{downloads}</p>
+              <div className="transition-all px-6 py-6 bg-purple-50 dark:bg-purple-900 border-2 border-purple-500 dark:border-purple-300 shadow-custom hover:shadow-customHover rounded-xl">
+                <h2 className="font-bold text-2xl dark:text-white">📥 Downloads today:</h2>
+                <p className="text-purple-500 dark:text-purple-300 text-center mt-4 text-3xl font-bold">{downloads}</p>
               </div>
-              <div className={'transition-all px-6 py-6 bg-red-50 dark:bg-red-900 border-2 border-red-500 dark:border-red-300 shadow-custom hover:shadow-customHover rounded-xl'}>
-                <h2 className={'font-bold text-2xl dark:text-white'}>📈 Daily active users:</h2>
-                <p className={'text-red-500 dark:text-red-300 text-center mt-4 text-3xl font-bold'}>{dailyActiveUsers}</p>
+              <div className="transition-all px-6 py-6 bg-red-50 dark:bg-red-900 border-2 border-red-500 dark:border-red-300 shadow-custom hover:shadow-customHover rounded-xl">
+                <h2 className="font-bold text-2xl dark:text-white">📈 Daily active users:</h2>
+                <p className="text-red-500 dark:text-red-300 text-center mt-4 text-3xl font-bold">{dailyActiveUsers}</p>
               </div>
-              <div className={'transition-all px-6 py-6 bg-orange-50 dark:bg-orange-900 border-2 border-orange-500 dark:border-orange-300 shadow-custom hover:shadow-customHover rounded-xl'}>
-                <h2 className={'font-bold text-2xl dark:text-white'}>📰 Newsletter sub count:</h2>
-                <p className={'text-orange-500 dark:text-orange-300 text-center mt-4 text-3xl font-bold'}>{newsLetterCount}</p>
+              <div className="transition-all px-6 py-6 bg-orange-50 dark:bg-orange-900 border-2 border-orange-500 dark:border-orange-300 shadow-custom hover:shadow-customHover rounded-xl">
+                <h2 className="font-bold text-2xl dark:text-white">📰 Newsletter sub count:</h2>
+                <p className="text-orange-500 dark:text-orange-300 text-center mt-4 text-3xl font-bold">{newsLetterCount}</p>
               </div>
-              <div className={'transition-all px-6 py-6 bg-indigo-50 dark:bg-indigo-900 border-2 border-indigo-500 dark:border-indigo-300 shadow-custom hover:shadow-customHover rounded-xl'}>
-                <h2 className={'font-bold text-2xl dark:text-white'}>📅 Newsletter count today:</h2>
-                <p className={'text-indigo-500 dark:text-indigo-300 text-center mt-4 text-3xl font-bold'}>{newsLetterToday}</p>
+              <div className="transition-all px-6 py-6 bg-indigo-50 dark:bg-indigo-900 border-2 border-indigo-500 dark:border-indigo-300 shadow-custom hover:shadow-customHover rounded-xl">
+                <h2 className="font-bold text-2xl dark:text-white">📅 Newsletter count today:</h2>
+                <p className="text-indigo-500 dark:text-indigo-300 text-center mt-4 text-3xl font-bold">{newsLetterToday}</p>
               </div>
             </div>
             <Footer />

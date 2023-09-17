@@ -22,7 +22,7 @@ const ContactMain: FC<{
             style={animationProps}
             className="content mx-auto max-w-lg md:mx-0"
           >
-            <h2 className="  text-center text-5xl font-bold transition-all md:text-left md:text-6xl">
+            <h2 className="text-center text-5xl font-bold transition-all md:text-left md:text-6xl">
               {pageData.header_one}
             </h2>
             <p className=" transition-all md:text-left">
@@ -42,9 +42,7 @@ const ContactMain: FC<{
                       className="w-full transition-all"
                     >
                       <p
-                        className={
-                          "transition-all hover:text-blue-500 hover:opacity-80"
-                        }
+                        className="transition-all hover:text-blue-500 hover:opacity-80"
                       >
                         {userData.email}
                       </p>
@@ -63,9 +61,7 @@ const ContactMain: FC<{
                     className="w-full transition-all"
                   >
                     <p
-                      className={
-                        "transition-all hover:text-blue-500 hover:opacity-80"
-                      }
+                      className="transition-all hover:text-blue-500 hover:opacity-80"
                     >
                       {userData.phone}
                     </p>

@@ -227,11 +227,11 @@ const JobCard: FC<{
       onMouseLeave={() => setHover(false)}
     >
       {showError.visible && (
-        <StatusBar message={showError.message} color={"bg-red-400"} />
+        <StatusBar message={showError.message} color="bg-red-400" />
       )}
       {removeJobHover && (
         <div
-          className={`absolute inset-0 z-10 bg-red-300 opacity-25 transition-all`}
+          className="absolute inset-0 z-10 bg-red-300 opacity-25 transition-all"
         ></div>
       )}
       <div
@@ -260,7 +260,7 @@ const JobCard: FC<{
         } absolute -right-3 -top-3 z-20 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onMouseEnter={() => setRemoveJobHover(true)}
         onMouseLeave={() => setRemoveJobHover(false)}
-        onClick={async () => await handleJobRemove()}
+        onClick={handleJobRemove}
       >
         -
       </button>
@@ -275,11 +275,11 @@ const JobCard: FC<{
                 setCompanyTitleEditValue(companyTitleValue);
                 setCompanyTitleEdit(false);
               }}
-              onKeyDown={async (e) => {
+              onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
                   if (companyTitleEditValue.length > 0) {
-                    await handleCompanyTitleSubmit();
+                    handleCompanyTitleSubmit();
                   }
                 }
               }}
@@ -316,11 +316,11 @@ const JobCard: FC<{
                   setRoleEditValue(roleValue);
                   setRoleEdit(false);
                 }}
-                onKeyDown={async (e) => {
+                onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
                     if (roleEditValue.length > 0) {
-                      await handleRoleSubmit();
+                      handleRoleSubmit();
                     }
                   }
                 }}
@@ -356,11 +356,11 @@ const JobCard: FC<{
                   setDescriptionEditValue(descriptionValue);
                   setDescriptionEdit(false);
                 }}
-                onKeyDown={async (e) => {
+                onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
                     if (descriptionEditValue.length > 0) {
-                      await handleDescriptionSubmit();
+                      handleDescriptionSubmit();
                     }
                   }
                 }}
@@ -419,7 +419,7 @@ const JobCard: FC<{
                     (workItem: any) => workItem.id === id
                   );
                   if (workToUpdate) {
-                    workToUpdate.image = (prev as any).image;
+                    workToUpdate.image = prev.image;
                   }
                   return prev;
                 },
@@ -428,9 +428,9 @@ const JobCard: FC<{
             }}
           />
           <img
-            className={"h-full w-full rounded-full object-cover"}
+            className="h-full w-full rounded-full object-cover"
             src={image + "?date=" + date + "&cache=" + cacheBuster}
-            alt={"job photo"}
+            alt="job photo"
           />
           <div
             className={`absolute right-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-full border-4 border-dashed border-black bg-white text-center text-base font-bold text-black transition-all ${
@@ -458,11 +458,11 @@ const JobCard: FC<{
               setStartDateEditValue(startDate);
               setStartDateEdit(false);
             }}
-            onKeyDown={async (e) => {
+            onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
                 if (startDateEditValue.length > 0) {
-                  await handleStartDateSubmit();
+                  handleStartDateSubmit();
                 }
               }
             }}
@@ -474,9 +474,7 @@ const JobCard: FC<{
           />
         ) : (
           <p
-            className={
-              "text-lg transition-all hover:cursor-pointer hover:opacity-50"
-            }
+            className="text-lg transition-all hover:cursor-pointer hover:opacity-50"
             onClick={() => setStartDateEdit(true)}
           >
             {startDateValue}
@@ -492,11 +490,11 @@ const JobCard: FC<{
               setEndDateEditValue(endDate);
               setEndDateEdit(false);
             }}
-            onKeyDown={async (e) => {
+            onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
                 if (endDateEditValue.length > 0) {
-                  await handleEndDateSubmit();
+                  handleEndDateSubmit();
                 }
               }
             }}

@@ -51,7 +51,7 @@ const DashboardSections: FC<{
                     setPageData={
                       setPageData as Dispatch<SetStateAction<AnyPageData>>
                     }
-                    page={"HOME"}
+                    page="HOME"
                     order={section.details.page_order}
                   />
                 ) : null;
@@ -64,7 +64,7 @@ const DashboardSections: FC<{
                 "bullet_three" in details &&
                 "image_one" in details ? (
                   <StorySection
-                    page={"HOME"}
+                    page="HOME"
                     key={index}
                     details={details}
                     setPageData={
@@ -79,7 +79,7 @@ const DashboardSections: FC<{
                 "header_one" in details ? (
                   <ResumeSection
                     key={index}
-                    page={"HOME"}
+                    page="HOME"
                     details={details}
                     setPageData={
                       setPageData as Dispatch<SetStateAction<AnyPageData>>
@@ -100,7 +100,7 @@ const DashboardSections: FC<{
                       setPageData as Dispatch<SetStateAction<AnyPageData>>
                     }
                     key={index}
-                    page={"HOME"}
+                    page="HOME"
                     details={details}
                     order={section.details.page_order}
                   />
@@ -116,7 +116,7 @@ const DashboardSections: FC<{
                       setPageData as Dispatch<SetStateAction<AnyPageData>>
                     }
                     key={index}
-                    page={"HOME"}
+                    page="HOME"
                     details={details}
                     order={section.details.page_order}
                   />
@@ -130,7 +130,7 @@ const DashboardSections: FC<{
             <AddSection
               key={`add-${index}`}
               sections={availableSectionTypes}
-              page={"HOME"}
+              page="HOME"
               setPageData={setPageData as Dispatch<SetStateAction<AnyPageData>>}
               order={section.details.page_order}
             />,
@@ -140,7 +140,7 @@ const DashboardSections: FC<{
       <AddSection
         setPageData={setPageData as Dispatch<SetStateAction<AnyPageData>>}
         sections={availableSectionTypes}
-        page={"HOME"}
+        page="HOME"
         order={pageData.sections.length + 1}
       />
     </>

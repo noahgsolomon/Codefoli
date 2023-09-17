@@ -302,7 +302,7 @@ const Project: FC<{
     <>
       <main>
         {showError.visible && (
-          <StatusBar message={showError.message} color={"bg-red-400"} />
+          <StatusBar message={showError.message} color="bg-red-400" />
         )}
         <div className="container mx-auto my-20 max-w-screen-lg px-5">
           <section className="hero mb-8">
@@ -316,10 +316,10 @@ const Project: FC<{
                     setHeaderEditValue(projectDetails.header);
                     setHeaderEdit(false);
                   }}
-                  onKeyDown={async (e) => {
+                  onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
-                      await handleHeaderSubmit();
+                      handleHeaderSubmit();
                     }
                   }}
                   className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-4xl font-bold leading-snug outline-none focus:outline-none focus:ring-0"
@@ -356,10 +356,10 @@ const Project: FC<{
                     setAboutEditValue(projectDetails.about);
                     setAboutEdit(false);
                   }}
-                  onKeyDown={async (e) => {
+                  onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
-                      await handleAboutSubmit();
+                      handleAboutSubmit();
                     }
                   }}
                   className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-lg font-semibold leading-loose outline-none focus:outline-none focus:ring-0"
@@ -407,8 +407,8 @@ const Project: FC<{
                   ref={imageFileInput}
                   className="hidden"
                   accept=".jpg,.png"
-                  onChange={async (e) => {
-                    await handleFileUpload(
+                  onChange={(e) => {
+                    handleFileUpload(
                       e,
                       setImageLoading,
                       setUserData,
@@ -467,10 +467,10 @@ const Project: FC<{
                     setOverviewEditValue(projectDetails.overview);
                     setOverviewEdit(false);
                   }}
-                  onKeyDown={async (e) => {
+                  onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
-                      await handleOverviewSubmit();
+                      handleOverviewSubmit();
                     }
                   }}
                   className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-3xl font-bold leading-loose outline-none focus:outline-none focus:ring-0"
@@ -505,10 +505,10 @@ const Project: FC<{
                     setDescriptionEditValue(projectDetails.description);
                     setDescriptionEdit(false);
                   }}
-                  onKeyDown={async (e) => {
+                  onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
-                      await handleDescriptionSubmit();
+                      handleDescriptionSubmit();
                     }
                   }}
                   className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-lg font-semibold leading-loose outline-none focus:outline-none focus:ring-0"
@@ -549,10 +549,10 @@ const Project: FC<{
                         setPlatformsEditValue(projectDetails.platforms);
                         setPlatformsEdit(false);
                       }}
-                      onKeyDown={async (e) => {
+                      onKeyDown={(e) => {
                         if (e.key === "Enter") {
                           e.preventDefault();
-                          await handlePlatformsSubmit();
+                          handlePlatformsSubmit();
                         }
                       }}
                       className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-lg font-normal leading-loose outline-none focus:outline-none focus:ring-0"
@@ -684,10 +684,10 @@ const Project: FC<{
         <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
       )}
       {imageLoading && (
-        <StatusBar message={"uploading image!"} color={"bg-green-500"} />
+        <StatusBar message={"uploading image!"} color="bg-green-500" />
       )}
       {downloaded.bool && (
-        <StatusBar message={downloaded.message} color={"bg-green-500"} />
+        <StatusBar message={downloaded.message} color="bg-green-500" />
       )}
       <Footer />
     </>

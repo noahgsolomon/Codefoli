@@ -278,7 +278,7 @@ const ModeButtonsP: FC<{
                       <a href="/dashboard">
                         <button className="mr-1 flex items-center justify-center rounded-3xl border-2 border-black bg-black px-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom sm:m-2 sm:px-4">
                           Edit{" "}
-                          <AiOutlineEdit fill={"white"} className="ml-2 text-2xl" />
+                          <AiOutlineEdit fill="white" className="ml-2 text-2xl" />
                         </button>
                       </a>
                       <button
@@ -291,7 +291,7 @@ const ModeButtonsP: FC<{
                           className="mr-1 flex items-center justify-center rounded-3xl border-2 border-black bg-blue-500 px-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom sm:m-2 sm:px-4"
                           onClick={() => setDeployModalOpen(true)}
                       >
-                        Deploy <FaPaperPlane fill={"white"} className="ml-2" />
+                        Deploy <FaPaperPlane fill="white" className="ml-2" />
                       </button>
                     </>
                 ) : (
@@ -328,9 +328,7 @@ const ModeButtonsP: FC<{
                 userData.cname_name &&
                 userData.cname_value ? (
                     <p
-                        className={
-                          "cursor-pointer text-blue-500 underline transition-all hover:opacity-50"
-                        }
+                        className="cursor-pointer text-blue-500 underline transition-all hover:opacity-50"
                         onClick={() => setCustomDomainCreatedModalOpen(true)}
                     >
                       DNS Records
@@ -339,7 +337,7 @@ const ModeButtonsP: FC<{
                     <a
                         href={userData.website}
                         className="break-all text-sm text-blue-500 underline transition-all hover:text-yellow-500"
-                        target={"_blank"}
+                        target="_blank"
                     >
                       {userData.website}
                     </a>
@@ -406,7 +404,7 @@ const ModeButtonsP: FC<{
                     className={
                       "cursor-pointer text-center text-blue-500 underline transition-all hover:opacity-80"
                     }
-                    onClick={async () => await handleResendVerificationEmail()}
+                    onClick={handleResendVerificationEmail}
                 >
                   resend verification email
                 </div>
@@ -428,10 +426,10 @@ const ModeButtonsP: FC<{
                 {!userData.website ? (
                     <div className="flex flex-col justify-center rounded-lg bg-white p-8 shadow-lg dark:bg-[#1a1a1a]">
                       <h2 className="mb-4 text-2xl font-bold">Deployment Config</h2>
-                      <p className={"text-center"}>{subdomain}.codefoli.com</p>
+                      <p className="text-center">{subdomain}.codefoli.com</p>
                       <div className="flex items-center">
                         <input
-                            placeholder={"// subdomain"}
+                            placeholder="// subdomain"
                             className="rounded-xl border-2 border-black px-2 focus:outline-none focus:ring-0 dark:bg-[#0d0d0d]"
                             onChange={(e) => {
                               setSubdomain(e.target.value);
@@ -441,18 +439,14 @@ const ModeButtonsP: FC<{
                         />
                         {!subdomainChecking ? (
                             <button
-                                className={
-                                  "m-2 rounded-xl bg-black px-2 py-1 text-white transition-all hover:opacity-80"
-                                }
-                                onClick={async () => handleCheckSubdomain()}
+                                className="m-2 rounded-xl bg-black px-2 py-1 text-white transition-all hover:opacity-80"
+                                onClick={handleCheckSubdomain}
                             >
                               Check
                             </button>
                         ) : (
                             <div
-                                className={
-                                  "m-2 flex items-center justify-center rounded-xl border-2 border-black bg-black px-4 py-2"
-                                }
+                                className="m-2 flex items-center justify-center rounded-xl border-2 border-black bg-black px-4 py-2"
                             >
                               <svg
                                   className="z-10 h-5 w-5 animate-spin"
@@ -493,7 +487,7 @@ const ModeButtonsP: FC<{
                                   ? "hover:-translate-y-0.5 hover:shadow-custom"
                                   : ""
                           }`}
-                          onClick={async () => await handleDeploy()}
+                          onClick={handleDeploy}
                           disabled={!subdomainAvailable}
                       >
                         <FaPaperPlane fill={"white"} className="mr-2" />
@@ -527,11 +521,9 @@ const ModeButtonsP: FC<{
                 userData.distribution ? (
                     <div className="flex flex-col justify-center rounded-lg bg-white p-8 shadow-lg dark:bg-[#1a1a1a]">
                       <h2 className="mb-4 text-2xl font-bold">Deployment Config</h2>
-                      <p className={""}>Current deployment:</p>
+                      <p>Current deployment:</p>
                       <p
-                          className={
-                            "cursor-pointer text-blue-500 underline transition-all hover:opacity-50"
-                          }
+                          className="cursor-pointer text-blue-500 underline transition-all hover:opacity-50"
                           onClick={() => {
                             setDeployModalOpen(false);
                             setCustomDomainCreatedModalOpen(true);
@@ -540,26 +532,24 @@ const ModeButtonsP: FC<{
                         DNS Records
                       </p>
                       <a
-                          className={
-                            "text-center text-blue-500 transition-all hover:opacity-80"
-                          }
-                          target={"_blank"}
+                          className="text-center text-blue-500 transition-all hover:opacity-80"
+                          target="_blank"
                           href={userData.website}
                       >
                         {userData.website}
                       </a>
                       <div>
-                        <p className={""}>
+                        <p>
                           status:{" "}
-                          <span className={"text-yellow-500"}>custom website</span>
+                          <span className="text-yellow-500">custom website</span>
                         </p>
                       </div>
 
                       <button
                           className={`mb-2 mt-1 flex w-full items-center justify-center rounded-3xl border-2 border-black bg-blue-500 px-4 py-3 font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-custom`}
-                          onClick={async () => await handleCustomRedeploy()}
+                          onClick={handleCustomRedeploy}
                       >
-                        <FaPaperPlane fill={"white"} className="mr-2" />
+                        <FaPaperPlane fill="white" className="mr-2" />
                         Redeploy
                       </button>
                       {/*<button*/}
@@ -587,27 +577,25 @@ const ModeButtonsP: FC<{
                 ) : (
                     <div className="flex flex-col justify-center rounded-lg bg-white p-8 shadow-lg dark:bg-[#1a1a1a]">
                       <h2 className="mb-4 text-2xl font-bold">Deployment Config</h2>
-                      <p className={""}>Current deployment:</p>
+                      <p>Current deployment:</p>
                       <a
-                          className={
-                            "text-center text-blue-500 underline transition-all hover:opacity-80"
-                          }
-                          target={"_blank"}
+                          className="text-center text-blue-500 underline transition-all hover:opacity-80"
+                          target="_blank"
                           href={userData.website}
                       >
                         {userData.website}
                       </a>
                       <div>
-                        <p className={""}>
+                        <p>
                           status: <span className={"text-green-500"}>online</span>
                         </p>
                       </div>
 
                       <button
-                          className={`mb-2 mt-1 flex w-full items-center justify-center rounded-3xl border-2 border-black bg-blue-500 px-4 py-3 font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-custom`}
-                          onClick={async () => await handleDeploy()}
+                          className="mb-2 mt-1 flex w-full items-center justify-center rounded-3xl border-2 border-black bg-blue-500 px-4 py-3 font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
+                          onClick={handleDeploy}
                       >
-                        <FaPaperPlane fill={"white"} className="mr-2" />
+                        <FaPaperPlane fill="white" className="mr-2" />
                         Redeploy
                       </button>
                       <button
@@ -617,7 +605,7 @@ const ModeButtonsP: FC<{
                             setDeleteModalOpen(true);
                           }}
                       >
-                        <FaTrash fill={"white"} className="mr-2" />
+                        <FaTrash fill="white" className="mr-2" />
                         Delete website
                       </button>
                       <button
@@ -648,7 +636,7 @@ const ModeButtonsP: FC<{
                 </h2>
                 <button
                     className="mt-4 flex w-full justify-center rounded-3xl border-2 border-black bg-green-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
-                    onClick={async () => handleDeleteWebsite()}
+                    onClick={handleDeleteWebsite}
                 >
                   Yes!
                 </button>
@@ -695,18 +683,16 @@ const ModeButtonsP: FC<{
                 {!importedDomainLoading ? (
                     <button
                         className="flex w-full items-center justify-center rounded-3xl border-2 border-black bg-blue-500 px-2 py-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom"
-                        onClick={async () => await handleDeployCustomDomain()}
+                        onClick={handleDeployCustomDomain}
                     >
                       <IoIosCloud fill={"white"} className="mr-2" />
                       Deploy
                     </button>
                 ) : (
                     <div
-                        className={
-                          "fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex flex-col items-center justify-center bg-gray-600 bg-opacity-50"
-                        }
+                        className="fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex flex-col items-center justify-center bg-gray-600 bg-opacity-50"
                     >
-                      <h2 className={"text-3xl font-bold"}>
+                      <h2 className="text-3xl font-bold">
                         Getting your website ready...
                       </h2>
                       <p className={"mb-4"}>Please stay here. est. time: 1 minute</p>
@@ -729,7 +715,7 @@ const ModeButtonsP: FC<{
                         ></circle>
                         <path
                             className="opacity-75"
-                            fill={"white"}
+                            fill="white"
                             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                         ></path>
                       </svg>
@@ -756,11 +742,11 @@ const ModeButtonsP: FC<{
                 } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}
             >
               <div className="rounded-lg bg-white p-6 dark:bg-[#1a1a1a] ">
-                <p className={"text-5xl font-bold"}>
+                <p className="text-5xl font-bold">
                   Add these records to your DNS
                 </p>
-                <p className={"mb-4 opacity-80"}>
-                  Please allow <span className={"underline"}>24 hours</span> for
+                <p className="mb-4 opacity-80">
+                  Please allow <span className="underline">24 hours</span> for
                   these changes to take affect depending on your provider
                 </p>
                 <table className="min-w-full divide-y divide-gray-200 border-2 border-white">

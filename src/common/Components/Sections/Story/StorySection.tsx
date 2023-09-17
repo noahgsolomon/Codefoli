@@ -1,4 +1,4 @@
-import React, { SetStateAction, useMemo, useRef, useState } from "react";
+import React, { FocusEvent, MouseEvent, RefObject, SetStateAction, useMemo, useRef, useState } from "react";
 import { StoryType } from "Type/Section.tsx";
 import PageType from "Type/Pages.tsx";
 import { addRemoveSection } from "Components/Sections/api/sectionapi.tsx";
@@ -24,23 +24,33 @@ const StorySection: React.FC<{
     details.header_one
   );
   const [cacheBuster, setCacheBuster] = useState<string>("");
-  const [bulletOneEdit, setBulletOneEdit] = useState(false);
-  const [bulletOneEditValue, setBulletOneEditValue] = useState(
-    details.bullet_one
-  );
-  const [bulletTwoEdit, setBulletTwoEdit] = useState(false);
-  const [bulletTwoEditValue, setBulletTwoEditValue] = useState(
-    details.bullet_two
-  );
-  const [bulletThreeEdit, setBulletThreeEdit] = useState(false);
-  const [bulletThreeEditValue, setBulletThreeEditValue] = useState(
-    details.bullet_three
-  );
+  const [bulletData, setBulletData] = useState({
+    one: {
+      edit: false,
+      value: details.bullet_one,
+    },
+    two: {
+      edit: false,
+      value: details.bullet_two,
+    },
+    three: {
+      edit: false,
+      value: details.bullet_three,
+    },
+  });
   const headerOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const descriptionOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const bulletOneTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const bulletTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const bulletThreeTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const bulletTextareaRefs: Record<
+    keyof typeof bulletData, 
+    RefObject<HTMLTextAreaElement>
+  > = {
+    one: bulletOneTextareaRef,
+    two: bulletTwoTextareaRef,
+    three: bulletThreeTextareaRef,
+  }
   const [imageLoading, setImageLoading] = useState(false);
 
   const [StoryHover, setStoryHover] = useState<boolean>(false);
@@ -111,42 +121,28 @@ const StorySection: React.FC<{
     setHeaderOneEdit(false);
   };
 
-  const handleBulletOneSubmit = async () => {
-    if (bulletOneEditValue.length > 250 || bulletOneEditValue.length < 1) {
-      setBulletOneEdit(false);
-      setBulletOneEditValue(details.bullet_one);
-      return;
-    }
-    const updateBullet = await updateText(
-      "bullet_one",
-      bulletOneEditValue,
-      "story_section"
-    );
-    if (updateBullet.status === "OK") {
-      setPageData((prev) => ({
-        ...prev,
-        sections: prev.sections.map((section) =>
-          section.type === "STORY"
-            ? {
-                ...section,
-                details: { ...section.details, bullet_one: bulletOneEditValue },
-              }
-            : section
-        ),
-      }));
-    }
-    setBulletOneEdit(false);
-  };
+  const updateBullets = (bulletKey: keyof typeof bulletData, value: Partial<typeof bulletData['one']>) => {
+    setBulletData((prevBulletData) => ({
+      ...prevBulletData,
+      [bulletKey]: {
+        ...prevBulletData[bulletKey],
+        ...value
+      },
+    }));
+  }
 
-  const handleBulletTwoSubmit = async () => {
-    if (bulletTwoEditValue.length > 250 || bulletTwoEditValue.length < 1) {
-      setBulletTwoEdit(false);
-      setBulletTwoEditValue(details.bullet_two);
+  const handleBulletSubmit = async (bulletKey: keyof typeof bulletData) => {
+    console.log('bulletData[bulletKey].value',bulletData[bulletKey].value)
+    if (bulletData[bulletKey].value.length > 250 || bulletData[bulletKey].value.length < 1) {
+      updateBullets(bulletKey, {
+        edit: false,
+        value: details[`bullet_${bulletKey}`],
+      });
       return;
     }
     const updateBullet = await updateText(
-      "bullet_two",
-      bulletTwoEditValue,
+      `bullet_${bulletKey}`,
+      bulletData[bulletKey].value,
       "story_section"
     );
     if (updateBullet.status === "OK") {
@@ -156,43 +152,16 @@ const StorySection: React.FC<{
           section.type === "STORY"
             ? {
                 ...section,
-                details: { ...section.details, bullet_two: bulletTwoEditValue },
+                details: { ...section.details, [`bullet_${bulletKey}`]: bulletData[bulletKey].value },
               }
             : section
         ),
       }));
     }
-    setBulletTwoEdit(false);
-  };
 
-  const handleBulletThreeSubmit = async () => {
-    if (bulletThreeEditValue.length > 250 || bulletThreeEditValue.length < 1) {
-      setBulletThreeEdit(false);
-      setBulletThreeEditValue(details.bullet_three);
-      return;
-    }
-    const updateBullet = await updateText(
-      "bullet_three",
-      bulletThreeEditValue,
-      "story_section"
-    );
-    if (updateBullet.status === "OK") {
-      setPageData((prev) => ({
-        ...prev,
-        sections: prev.sections.map((section) =>
-          section.type === "STORY"
-            ? {
-                ...section,
-                details: {
-                  ...section.details,
-                  bullet_three: bulletThreeEditValue,
-                },
-              }
-            : section
-        ),
-      }));
-    }
-    setBulletThreeEdit(false);
+    updateBullets(bulletKey, {
+      edit: false,
+    });
   };
 
   const handleRemoveStorySection = async () => {
@@ -230,6 +199,38 @@ const StorySection: React.FC<{
     }
   };
 
+  const resizeTextarea = (target: HTMLTextAreaElement) => {
+    target.style.height = "";
+    target.style.height = `${target.scrollHeight}px`;
+  };
+
+  const handleTextareaInput = (e: MouseEvent<HTMLTextAreaElement>) => {
+    resizeTextarea(e.target as HTMLTextAreaElement);
+  };
+
+  const handleTextareaFocus = (e: FocusEvent<HTMLTextAreaElement>) => {
+    resizeTextarea(e.target as HTMLTextAreaElement);
+    e.currentTarget.select();
+  };
+
+  const bullets: {
+    key: keyof typeof bulletData,
+    color: string,
+  }[] = [
+    {
+      key: 'one',
+      color: 'bg-indigo-600',
+    },
+    {
+      key: 'two',
+      color: 'bg-sky-600',
+    },
+    {
+      key: 'three',
+      color: 'bg-yellow-500',
+    },
+  ];
+
   return (
     <section
       className="story relative mb-20 mt-20 bg-black transition-all"
@@ -241,7 +242,7 @@ const StorySection: React.FC<{
       )}
       {removeStory && (
         <div
-          className={` absolute inset-0 z-10 bg-red-300 opacity-25 transition-all`}
+          className="absolute inset-0 z-10 bg-red-300 opacity-25 transition-all"
         ></div>
       )}
       <button
@@ -250,7 +251,7 @@ const StorySection: React.FC<{
         } absolute right-10 top-0 z-20 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
         onMouseEnter={() => setRemoveStory(true)}
         onMouseLeave={() => setRemoveStory(false)}
-        onClick={async () => await handleRemoveStorySection()}
+        onClick={handleRemoveStorySection}
       >
         -
       </button>
@@ -265,25 +266,16 @@ const StorySection: React.FC<{
                 setHeaderOneEditValue(details.header_one);
                 setHeaderOneEdit(false);
               }}
-              onKeyDown={async (e) => {
+              onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
-                  await handleHeaderOneSubmit();
+                  handleHeaderOneSubmit();
                 }
               }}
               className="mb-8 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-4xl font-bold text-white outline-none focus:outline-none focus:ring-0 md:text-5xl md:leading-tight"
               autoFocus
-              onInput={(e) => {
-                const target = e.target as HTMLTextAreaElement;
-                target.style.height = "";
-                target.style.height = `${target.scrollHeight}px`;
-              }}
-              onFocus={(e) => {
-                const target = e.target as HTMLTextAreaElement;
-                target.style.height = "";
-                target.style.height = `${target.scrollHeight}px`;
-                e.currentTarget.select();
-              }}
+              onInput={handleTextareaInput}
+              onFocus={handleTextareaFocus}
               maxLength={50}
             />
           ) : (
@@ -303,25 +295,16 @@ const StorySection: React.FC<{
                 setDescriptionOneEditValue(details.description_one);
                 setDescriptionOneEdit(false);
               }}
-              onKeyDown={async (e) => {
+              onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
-                  await handleDescriptionOneSubmit();
+                  handleDescriptionOneSubmit();
                 }
               }}
               className="mb-5 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
               autoFocus
-              onInput={(e) => {
-                const target = e.target as HTMLTextAreaElement;
-                target.style.height = "";
-                target.style.height = `${target.scrollHeight}px`;
-              }}
-              onFocus={(e) => {
-                const target = e.target as HTMLTextAreaElement;
-                target.style.height = "";
-                target.style.height = `${target.scrollHeight}px`;
-                e.currentTarget.select();
-              }}
+              onInput={handleTextareaInput}
+              onFocus={handleTextareaFocus}
               maxLength={500}
             />
           ) : (
@@ -332,131 +315,43 @@ const StorySection: React.FC<{
               {details.description_one}
             </p>
           )}
-
           <div className="events-wrapper my-5">
-            <div className="event flex items-start justify-between gap-4">
-              <div className="mt-1 h-4 w-4 rounded border-2 bg-indigo-600"></div>
-              {bulletOneEdit ? (
-                <textarea
-                  ref={bulletOneTextareaRef}
-                  value={bulletOneEditValue}
-                  onChange={(e) => setBulletOneEditValue(e.target.value)}
-                  onBlur={() => {
-                    setBulletOneEditValue(details.bullet_one);
-                    setBulletOneEdit(false);
-                  }}
-                  onKeyDown={async (e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      await handleBulletOneSubmit();
-                    }
-                  }}
-                  className="w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent p-0 pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
-                  autoFocus
-                  onInput={(e) => {
-                    const target = e.target as HTMLTextAreaElement;
-                    target.style.height = "";
-                    target.style.height = `${target.scrollHeight}px`;
-                  }}
-                  onFocus={(e) => {
-                    const target = e.target as HTMLTextAreaElement;
-                    target.style.height = "";
-                    target.style.height = `${target.scrollHeight}px`;
-                    e.currentTarget.select();
-                  }}
-                  maxLength={250}
-                />
-              ) : (
-                <p
-                  className="event-descripition flex-1 cursor-pointer select-none pt-0 text-lg font-semibold text-white transition-all hover:opacity-50"
-                  onClick={() => setBulletOneEdit(true)}
-                >
-                  {details.bullet_one}
-                </p>
-              )}
-            </div>
-            <div className="event flex items-start justify-between gap-4">
-              <div className="mt-1 h-4 w-4 rounded border-2 bg-sky-600"></div>
-              {bulletTwoEdit ? (
-                <textarea
-                  ref={bulletTwoTextareaRef}
-                  value={bulletTwoEditValue}
-                  onChange={(e) => setBulletTwoEditValue(e.target.value)}
-                  onBlur={() => {
-                    setBulletTwoEditValue(details.bullet_two);
-                    setBulletTwoEdit(false);
-                  }}
-                  onKeyDown={async (e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      await handleBulletTwoSubmit();
-                    }
-                  }}
-                  className="w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent p-0 pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
-                  autoFocus
-                  onInput={(e) => {
-                    const target = e.target as HTMLTextAreaElement;
-                    target.style.height = "";
-                    target.style.height = `${target.scrollHeight}px`;
-                  }}
-                  onFocus={(e) => {
-                    const target = e.target as HTMLTextAreaElement;
-                    target.style.height = "";
-                    target.style.height = `${target.scrollHeight}px`;
-                    e.currentTarget.select();
-                  }}
-                  maxLength={250}
-                />
-              ) : (
-                <p
-                  className="event-descripition flex-1 cursor-pointer select-none pt-0 text-lg font-semibold text-white transition-all hover:opacity-50"
-                  onClick={() => setBulletTwoEdit(true)}
-                >
-                  {details.bullet_two}
-                </p>
-              )}
-            </div>
-            <div className="event flex items-start justify-between gap-4">
-              <div className="mt-1 h-4 w-4 rounded border-2 bg-yellow-500"></div>
-              {bulletThreeEdit ? (
-                <textarea
-                  ref={bulletThreeTextareaRef}
-                  value={bulletThreeEditValue}
-                  onChange={(e) => setBulletThreeEditValue(e.target.value)}
-                  onBlur={() => {
-                    setBulletThreeEditValue(details.bullet_three);
-                    setBulletThreeEdit(false);
-                  }}
-                  onKeyDown={async (e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      await handleBulletThreeSubmit();
-                    }
-                  }}
-                  className="w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent p-0 pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
-                  autoFocus
-                  onInput={(e) => {
-                    const target = e.target as HTMLTextAreaElement;
-                    target.style.height = "";
-                    target.style.height = `${target.scrollHeight}px`;
-                  }}
-                  onFocus={(e) => {
-                    const target = e.target as HTMLTextAreaElement;
-                    target.style.height = "";
-                    target.style.height = `${target.scrollHeight}px`;
-                    e.currentTarget.select();
-                  }}
-                  maxLength={250}
-                />
-              ) : (
-                <p
-                  className="event-descripition flex-1 cursor-pointer select-none pt-0 text-lg font-semibold text-white transition-all hover:opacity-50"
-                  onClick={() => setBulletThreeEdit(true)}
-                >
-                  {details.bullet_three}
-                </p>
-              )}
-            </div>
+            {
+              bullets.map((bullet) => (
+                <div className="event flex items-start justify-between gap-4" key={bullet.key}>
+                  <div className={`mt-1 h-4 w-4 rounded border-2 ${bullet.color}`}></div>
+                  {bulletData[bullet.key].edit ? (
+                    <textarea
+                      ref={bulletTextareaRefs[bullet.key]}
+                      value={bulletData[bullet.key].value}
+                      onChange={(e) => updateBullets(bullet.key, { value: e.target.value })}
+                      onBlur={() => {
+                        console.log('blur', bulletTextareaRefs[bullet.key].current);
+                        updateBullets(bullet.key, { edit: false, value: details[`bullet_${bullet.key}`] });
+                      }}
+                      onKeyDown={ (e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          handleBulletSubmit(bullet.key);
+                        }
+                      }}
+                      className="w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent p-0 pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
+                      autoFocus
+                      onInput={handleTextareaInput}
+                      onFocus={handleTextareaFocus}
+                      maxLength={250}
+                    />
+                  ) : (
+                    <p
+                      className="event-descripition flex-1 cursor-pointer select-none pt-0 text-lg font-semibold text-white transition-all hover:opacity-50"
+                      onClick={() => updateBullets(bullet.key, { edit: true })}
+                    >
+                      {details[`bullet_${bullet.key}`]}
+                    </p>
+                  )}
+                </div>
+              ))
+            }
           </div>
         </div>
         <div className="content-right flex items-center justify-center">
@@ -475,8 +370,8 @@ const StorySection: React.FC<{
               ref={imageOneFileInput}
               className="hidden"
               accept=".jpg,.png"
-              onChange={async (e) => {
-                await handleFileUpload(
+              onChange={(e) => {
+                handleFileUpload(
                   e,
                   setImageLoading,
                   setPageData,

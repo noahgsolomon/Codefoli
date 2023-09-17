@@ -48,7 +48,7 @@ const HomeMainP: FC<{
       </animated.div>
       <animated.div style={imageAnimation}>
         <div
-          className={`relative mx-auto mt-10 h-[350px] w-[350px] transition-all lg:h-[500px] lg:w-[500px] xl:mt-24`}
+          className="relative mx-auto mt-10 h-[350px] w-[350px] transition-all lg:h-[500px] lg:w-[500px] xl:mt-24"
         >
           <div className="h-full w-full overflow-hidden rounded-3xl border-2 border-black shadow-customHover">
             <img

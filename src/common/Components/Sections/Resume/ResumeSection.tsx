@@ -121,10 +121,10 @@ const ResumeSection: React.FC<{
               setHeaderOneEditValue(details.header_one);
               setHeaderOneEdit(false);
             }}
-            onKeyDown={async (e) => {
+            onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                await handleHeaderOneSubmit();
+                handleHeaderOneSubmit();
               }
             }}
             className="m-0 w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-3xl font-bold leading-relaxed outline-none focus:outline-none focus:ring-0"

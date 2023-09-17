@@ -19,9 +19,18 @@ const Header: FC<{ authenticated: boolean }> = ({ authenticated }) => {
       | typeof DARK_THEME_KEY) || LIGHT_THEME_KEY
   );
 
+  const handleToggleTheme = () => {
+    toggleTheme();
+    setTheme(
+      (localStorage.getItem(LOCALSTORAGE_THEME_KEY) as
+        | typeof LIGHT_THEME_KEY
+        | typeof DARK_THEME_KEY) || typeof LIGHT_THEME_KEY
+    );
+  };
+
   return (
     <header
-      className={`relative z-40 mx-5 flex items-center py-5 font-bold transition-all`}
+      className="relative z-40 mx-5 flex items-center py-5 font-bold transition-all"
     >
       <div
         className="mx-auto flex w-full max-w-[50rem] flex-row flex-wrap items-center justify-center rounded-xl border-2 border-black
@@ -36,14 +45,7 @@ const Header: FC<{ authenticated: boolean }> = ({ authenticated }) => {
               Codefoli
             </Link>
             <div
-              onClick={() => {
-                toggleTheme();
-                setTheme(
-                  (localStorage.getItem(LOCALSTORAGE_THEME_KEY) as
-                    | typeof LIGHT_THEME_KEY
-                    | typeof DARK_THEME_KEY) || typeof LIGHT_THEME_KEY
-                );
-              }}
+              onClick={handleToggleTheme}
             >
               {theme === LIGHT_THEME_KEY ? (
                 <svg
@@ -95,14 +97,7 @@ const Header: FC<{ authenticated: boolean }> = ({ authenticated }) => {
               Contact
             </Link>
             <div
-              onClick={() => {
-                toggleTheme();
-                setTheme(
-                  (localStorage.getItem(LOCALSTORAGE_THEME_KEY) as
-                    | typeof LIGHT_THEME_KEY
-                    | typeof DARK_THEME_KEY) || typeof LIGHT_THEME_KEY
-                );
-              }}
+              onClick={handleToggleTheme}
             >
               {theme === LIGHT_THEME_KEY ? (
                 <svg
@@ -146,14 +141,7 @@ const Header: FC<{ authenticated: boolean }> = ({ authenticated }) => {
               </Link>
               <div
                 className={"ml-5"}
-                onClick={() => {
-                  toggleTheme();
-                  setTheme(
-                    (localStorage.getItem(LOCALSTORAGE_THEME_KEY) as
-                      | typeof LIGHT_THEME_KEY
-                      | typeof DARK_THEME_KEY) || typeof LIGHT_THEME_KEY
-                  );
-                }}
+                onClick={handleToggleTheme}
               >
                 {theme === LIGHT_THEME_KEY ? (
                   <svg

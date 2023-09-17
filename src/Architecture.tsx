@@ -20,11 +20,11 @@ const Architecture: FC = () => {
     return (
         <>
             <header
-                className={`relative z-40 mx-5 mb-20 flex items-center py-5 font-bold transition-all`}
+                className="relative z-40 mx-5 mb-20 flex items-center py-5 font-bold transition-all"
             >
                 <div className="mx-auto flex w-full max-w-[50rem] flex-row flex-wrap items-center justify-center rounded-xl border-2 border-black px-4 py-3 shadow-custom transition-all dark:bg-[#1a1a1a] sm:justify-between">
                     <Link
-                        to={"/"}
+                        to="/"
                         className="cursor-pointer select-none px-1 text-4xl text-gray-800 transition-all hover:-translate-y-0.5 dark:text-gray-50"
                     >
                         Codefoli
@@ -64,14 +64,12 @@ const Architecture: FC = () => {
                 </div>
             </header>
             <div>
-                <h1 className={"mb-20 text-center text-6xl font-bold"}>Architecture</h1>
+                <h1 className="mb-20 text-center text-6xl font-bold">Architecture</h1>
                 <div
-                    className={
-                        "mx-10 md:mx-20 mb-10 flex flex-col items-center justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
-                    }
+                    className="mx-10 md:mx-20 mb-10 flex flex-col items-center justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
                 >
-                    <div className={"lg:max-w-[40%] lg:mb-0 mb-10"}>
-                        <h2 className={"text-4xl"}>AWS</h2>
+                    <div className="lg:max-w-[40%] lg:mb-0 mb-10">
+                        <h2 className="text-4xl">AWS</h2>
                         <p>
                             From the website, to the domain, to the backend, to the database, everything here utilizes amazon web services.
                             The following is the AWS service stack: Route 53, Cloudfront, S3 Buckets, API Gateway, Lambda, RDS with RDS Proxy,
@@ -79,21 +77,19 @@ const Architecture: FC = () => {
                             the website is built with React and Typescript w/ tailwind.css, and the backend is built with Node.js.
                         </p>
                     </div>
-                    <div className={"w-[600px] h-[600px] lg:w-[400px] lg:h-[400px] xl:w-[500px] xl:h-[500px]"}>
+                    <div className="w-[600px] h-[600px] lg:w-[400px] lg:h-[400px] xl:w-[500px] xl:h-[500px]">
                         <img
-                            className={"w-full h-full rounded-xl border-2 border-black object-cover"}
-                            src={"https://images.codefoli.com/awsimg.jpeg"}
-                            alt={"idea genesis image"}
+                            className="w-full h-full rounded-xl border-2 border-black object-cover"
+                            src="https://images.codefoli.com/awsimg.jpeg"
+                            alt="idea genesis image"
                         />
                     </div>
                 </div>
                 <div
-                    className={
-                        "mx-10 mt-10 md:mx-20 flex flex-col items-center justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
-                    }
+                    className="mx-10 mt-10 md:mx-20 flex flex-col items-center justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
                 >
-                    <div className={"lg:max-w-[40%] lg:mb-0 mb-10"}>
-                        <h2 className={"text-4xl"}>Frontend</h2>
+                    <div className="lg:max-w-[40%] lg:mb-0 mb-10">
+                        <h2 className="text-4xl">Frontend</h2>
                         <p>
                             The frontend of Codefoli is engineered for both performance and flexibility, clocking in at around 15,000
                             lines of code. We utilize React as our primary library for building the user interface, offering a highly
@@ -105,22 +101,20 @@ const Architecture: FC = () => {
                             have a smooth, engaging experience while navigating through their portfolios.
                         </p>
                     </div>
-                    <div className={"w-[600px] h-[600px] lg:w-[400px] lg:h-[400px] xl:w-[500px] xl:h-[500px]"}>
+                    <div className="w-[600px] h-[600px] lg:w-[400px] lg:h-[400px] xl:w-[500px] xl:h-[500px]">
                         <img
-                            className={"w-full h-full rounded-xl border-2 border-black object-cover"}
-                            src={'https://images.codefoli.com/react.png'}
-                            alt={"idea genesis image"}
+                            className="w-full h-full rounded-xl border-2 border-black object-cover"
+                            src="https://images.codefoli.com/react.png"
+                            alt="idea genesis image"
                         />
                     </div>
                 </div>
 
                 <div
-                    className={
-                        "mx-10 mt-10 md:mx-20 flex flex-col items-center justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
-                    }
+                    className="mx-10 mt-10 md:mx-20 flex flex-col items-center justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
                 >
-                    <div className={"lg:max-w-[40%] lg:mb-0 mb-10"}>
-                        <h2 className={"text-4xl"}>Backend</h2>
+                    <div className="lg:max-w-[40%] lg:mb-0 mb-10">
+                        <h2 className="text-4xl">Backend</h2>
                         <p>
                             The frontend of Codefoli is engineered for both performance and flexibility, clocking in at around 15,000
                             lines of code. We utilize React as our primary library for building the user interface, offering a highly
@@ -132,21 +126,19 @@ const Architecture: FC = () => {
                             have a smooth, engaging experience while navigating through their portfolios.
                         </p>
                     </div>
-                    <div className={"w-[600px] h-[600px] lg:w-[400px] lg:h-[400px] xl:w-[500px] xl:h-[500px]"}>
+                    <div className="w-[600px] h-[600px] lg:w-[400px] lg:h-[400px] xl:w-[500px] xl:h-[500px]">
                         <img
-                            className={"w-full h-full rounded-xl border-2 border-black object-cover"}
-                            src={'https://images.codefoli.com/lambda.png'}
-                            alt={"idea genesis image"}
+                            className="w-full h-full rounded-xl border-2 border-black object-cover"
+                            src="https://images.codefoli.com/lambda.png"
+                            alt="idea genesis image"
                         />
                     </div>
                 </div>
                 <div
-                    className={
-                        "mx-10 mt-10 md:mx-20 flex flex-col items-center justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
-                    }
+                    className="mx-10 mt-10 md:mx-20 flex flex-col items-center justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
                 >
-                    <div className={"lg:max-w-[40%] lg:mb-0 mb-10"}>
-                        <h2 className={"text-4xl"}>Architecture</h2>
+                    <div className="lg:max-w-[40%] lg:mb-0 mb-10">
+                        <h2 className="text-4xl">Architecture</h2>
                         <p>
                             The frontend of Codefoli is engineered for both performance and flexibility, clocking in at around 15,000
                             lines of code. We utilize React as our primary library for building the user interface, offering a highly

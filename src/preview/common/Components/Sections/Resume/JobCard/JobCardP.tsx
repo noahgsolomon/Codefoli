@@ -31,7 +31,7 @@ const JobCardP: FC<{
           <h2 className="px-5 pt-5 text-3xl font-bold transition-all">
             {companyTitle}
           </h2>
-          <div className=" p-5">
+          <div className="p-5">
             <h2 className="font-bold transition-all">{role}</h2>
             <p className="transition-all">{description}</p>
           </div>
@@ -42,7 +42,7 @@ const JobCardP: FC<{
           }
         >
           <img
-            className={"h-full w-full rounded-full object-cover"}
+            className="h-full w-full rounded-full object-cover"
             src={image + "?date=" + date}
             alt={"job photo"}
           />
@@ -56,9 +56,9 @@ const JobCardP: FC<{
             : "duration rounded-b-lg border-t-2 border-black p-5 font-bold"
         }`}
       >
-        <p className={"transition-all"}>{startDate}</p>
+        <p className="transition-all">{startDate}</p>
         &nbsp;-&nbsp;
-        <p className={"transition-all"}>{endDate}</p>
+        <p className="transition-all">{endDate}</p>
       </div>
     </div>
   );

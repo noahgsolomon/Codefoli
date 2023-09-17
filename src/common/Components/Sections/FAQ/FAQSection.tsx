@@ -126,7 +126,7 @@ const FAQSection: FC<{
           } absolute right-10 top-0 mt-5 rounded-2xl bg-red-500 px-5 font-bold text-white transition-all hover:-translate-y-0.5 hover:scale-105`}
           onMouseEnter={() => setRemoveFAQ(true)}
           onMouseLeave={() => setRemoveFAQ(false)}
-          onClick={async () => handleRemoveSection()}
+          onClick={handleRemoveSection}
         >
           -
         </button>
@@ -143,7 +143,7 @@ const FAQSection: FC<{
               onKeyDown={async (e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
-                  await handleHeaderOneSubmit();
+                  handleHeaderOneSubmit();
                 }
               }}
               className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-2xl font-bold leading-relaxed outline-none focus:outline-none focus:ring-0 md:text-5xl"
@@ -178,10 +178,10 @@ const FAQSection: FC<{
                 setDescriptionOneEditValue(details.description_one);
                 setDescriptionEdit(false);
               }}
-              onKeyDown={async (e) => {
+              onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
-                  await handleDescriptionOneSubmit();
+                  handleDescriptionOneSubmit();
                 }
               }}
               className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-lg leading-relaxed outline-none focus:outline-none focus:ring-0"

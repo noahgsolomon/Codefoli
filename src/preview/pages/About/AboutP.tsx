@@ -52,7 +52,7 @@ const AboutP: FC<{
         <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
       )}
       {downloaded.bool && (
-        <StatusBar message={downloaded.message} color={"bg-green-500"} />
+        <StatusBar message={downloaded.message} color="bg-green-500" />
       )}
     </>
   );

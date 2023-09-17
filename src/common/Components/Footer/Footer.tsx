@@ -25,7 +25,7 @@ const Footer = () => {
   return (
     <footer className="relative mt-20 bg-[#0d0d0d] z-40 ">
       <div
-        className={`absolute -top-20 left-1/2 -translate-x-1/2 transform p-6`}
+        className="absolute -top-20 left-1/2 -translate-x-1/2 transform p-6"
       >
         <div className="mx-auto flex w-[300px] flex-col items-center justify-between rounded-lg border-2 border-black bg-white p-6 shadow-custom dark:bg-[#1a1a1a] md:w-[450px]">
           <div className="text-xl font-bold">Subscribe to our newsletter</div>
@@ -54,15 +54,15 @@ const Footer = () => {
                     placeholder="Enter your email"
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
-                    onKeyDown={async (e) => {
+                    onKeyDown={(e) => {
                       if (e.key === "Enter") {
-                        await handleSubscribe();
+                        handleSubscribe();
                       }
                     }}
                   />
                   <button
                     className="mr-2 h-12 rounded-lg bg-blue-500 px-4 text-base text-white transition-all hover:opacity-80 md:absolute md:right-0 md:top-8 md:-translate-y-1/2 md:transform"
-                    onClick={async () => await handleSubscribe()}
+                    onClick={handleSubscribe}
                     disabled={subscribeLoading}
                   >
                     {subscribeLoading ? <svg
@@ -86,11 +86,11 @@ const Footer = () => {
                   </button>
                 </div>
                 {emailAdded ? (
-                  <p className={"text-xs text-green-500 opacity-60"}>
+                  <p className="text-xs text-green-500 opacity-60">
                     Email added! Welcome to the family! 🎉
                   </p>
                 ) : (
-                  <p className={"text-xs text-red-500 opacity-60"}>
+                  <p className="text-xs text-red-500 opacity-60">
                     Your support helps us keep going!
                   </p>
                 )}
@@ -112,9 +112,7 @@ const Footer = () => {
               Here for you to showcase your projects and skills to the world.
             </p>
             <div
-              className={
-                " cursor-pointer text-center text-blue-500 transition-all hover:opacity-80 md:text-left"
-              }
+              className="cursor-pointer text-center text-blue-500 transition-all hover:opacity-80 md:text-left"
             >
               support@codefoli.com
             </div>
@@ -150,9 +148,7 @@ const Footer = () => {
                 >
                   <span className="sr-only">Discord</span>
                   <svg
-                    className={
-                      "bi bi-discord h-6 w-6 text-white transition-all hover:fill-blue-500"
-                    }
+                    className="bi bi-discord h-6 w-6 text-white transition-all hover:fill-blue-500"
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
                     height="16"
@@ -172,9 +168,7 @@ const Footer = () => {
                 >
                   <span className="sr-only">Twitter</span>
                   <svg
-                    className={
-                      "h-6 w-6 fill-white transition-all hover:fill-blue-500"
-                    }
+                    className="h-6 w-6 fill-white transition-all hover:fill-blue-500"
                     viewBox="328 355 335 276"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -201,28 +195,22 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className={'flex justify-center gap-5'}>
+          <div className="flex justify-center gap-5">
             <Link
-                to={"/newsletter"}
-                className={
-                  "cursor-pointer font-bold text-blue-500 underline transition-all p-2 rounded hover:opacity-80"
-                }
+                to="/newsletter"
+                className="cursor-pointer font-bold text-blue-500 underline transition-all p-2 rounded hover:opacity-80"
             >
               📰 Newsletter
             </Link>
             <Link
-                to={"/analytics"}
-                className={
-                  "cursor-pointer font-bold text-blue-500 underline transition-all p-2 rounded hover:opacity-80"
-                }
+                to="/analytics"
+                className="cursor-pointer font-bold text-blue-500 underline transition-all p-2 rounded hover:opacity-80"
             >
               📊 Analytics
             </Link>
             <Link
-                to={"/origin"}
-                className={
-                  "cursor-pointer font-bold text-blue-500 underline transition-all p-2 rounded hover:opacity-80"
-                }
+                to="/origin"
+                className="cursor-pointer font-bold text-blue-500 underline transition-all p-2 rounded hover:opacity-80"
             >
               🌍 Origin
             </Link>

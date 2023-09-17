@@ -110,10 +110,10 @@ const ContactMain: FC<{
                   setHeaderOneEditValue(pageData.header_one);
                   setHeaderOneEdit(false);
                 }}
-                onKeyDown={async (e) => {
+                onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
-                    await handleHeaderOneSubmit();
+                    handleHeaderOneSubmit();
                   }
                 }}
                 className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-5xl font-bold leading-snug outline-none focus:outline-none focus:ring-0 md:text-left md:text-6xl"
@@ -148,10 +148,10 @@ const ContactMain: FC<{
                   setDescriptionOneEditValue(pageData.description_one);
                   setDescriptionOneEdit(false);
                 }}
-                onKeyDown={async (e) => {
+                onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
-                    await handleDescriptionOneSubmit();
+                    handleDescriptionOneSubmit();
                   }
                 }}
                 className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-center text-xl leading-relaxed outline-none focus:outline-none focus:ring-0 md:text-left"
@@ -195,10 +195,10 @@ const ContactMain: FC<{
                           setEmailEditValue(userData.email);
                           setEmailEdit(false);
                         }}
-                        onKeyDown={async (e) => {
+                        onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             e.preventDefault();
-                            await handleEmailSubmit();
+                            handleEmailSubmit();
                           }
                         }}
                         className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-lg leading-snug outline-none focus:outline-none focus:ring-0"
@@ -235,10 +235,10 @@ const ContactMain: FC<{
                         setPhoneEditValue(userData.phone);
                         setPhoneEdit(false);
                       }}
-                      onKeyDown={async (e) => {
+                      onKeyDown={(e) => {
                         if (e.key === "Enter") {
                           e.preventDefault();
-                          await handlePhoneSubmit();
+                          handlePhoneSubmit();
                         }
                       }}
                       className="w-full resize-none appearance-none overflow-hidden border-none bg-transparent p-0 text-lg leading-snug outline-none focus:outline-none focus:ring-0"
@@ -266,7 +266,7 @@ const ContactMain: FC<{
         </div>
       </div>
       {emailError && (
-        <StatusBar message={"Email is already taken"} color={"bg-red-500"} />
+        <StatusBar message="Email is already taken" color="bg-red-500" />
       )}
     </main>
   );

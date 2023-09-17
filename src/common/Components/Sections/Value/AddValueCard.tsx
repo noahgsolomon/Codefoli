@@ -62,7 +62,7 @@ const AddJobCard: FC<{
       className={`${
         addValueInput ? "opacity-100" : "opacity-50"
       } group relative mb-5 flex h-[400px] w-[400px] cursor-pointer flex-col rounded-2xl border-8 border-dashed border-black transition-all hover:-translate-y-0.5 hover:shadow-customHover `}
-      onClick={async () => {
+      onClick={() => {
         setAddValueInput(true);
       }}
     >
@@ -76,7 +76,7 @@ const AddJobCard: FC<{
               className="rounded-xl border-2 border-black p-3 text-center text-black placeholder-black"
               placeholder="Enter value"
               autoFocus={true}
-              onChange={(e) => handleNewValueChange(e)}
+              onChange={handleNewValueChange}
             />
             {newValue && matchingValues.length > 0 && (
               <div className="absolute top-52 z-10 mt-2 flex max-h-60 w-full flex-col overflow-y-auto overflow-x-hidden pt-5">
@@ -84,7 +84,7 @@ const AddJobCard: FC<{
                   <div
                     key={value}
                     className="m-1 inline-block cursor-pointer rounded-full border-b border-gray-300 bg-black transition-all hover:-translate-y-0.5 hover:opacity-90"
-                    onClick={async () => await handleAddValue(value)}
+                    onClick={() => handleAddValue(value)}
                   >
                     <span className="px-2 text-white">{value}</span>
                   </div>

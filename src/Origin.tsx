@@ -40,7 +40,7 @@ const Origin: FC = () => {
   return (
     <>
       <header
-        className={`relative z-40 mx-5 mb-20 flex items-center py-5 font-bold transition-all`}
+        className="relative z-40 mx-5 mb-20 flex items-center py-5 font-bold transition-all"
       >
         <div className="mx-auto flex w-full max-w-[50rem] flex-row flex-wrap items-center justify-center rounded-xl border-2 border-black px-4 py-3 shadow-custom transition-all dark:bg-[#1a1a1a] sm:justify-between">
           <Link
@@ -84,14 +84,12 @@ const Origin: FC = () => {
         </div>
       </header>
       <div>
-        <h1 className={"mb-20 text-center text-6xl font-bold"}>Origin</h1>
+        <h1 className="mb-20 text-center text-6xl font-bold">Origin</h1>
         <div
-          className={
-            "mx-10 md:mx-20 mb-10 flex flex-col justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
-          }
+          className="mx-10 md:mx-20 mb-10 flex flex-col justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
         >
-          <div className={"lg:max-w-[40%]"}>
-            <h2 className={"text-4xl"}>Idea Genesis</h2>
+          <div className="lg:max-w-[40%]">
+            <h2 className="text-4xl">Idea Genesis</h2>
             <p>
               The inspiration for Codefoli stemmed from gaps in existing portfolio building options tailored to developers. While generalized site
               builders existed, they lacked features specifically designed for programmer needs. At best, they required manual integration of
@@ -101,21 +99,19 @@ const Origin: FC = () => {
               portfolio builder and host designed by developers, for developers.
             </p>
           </div>
-          <div className={"lg:w-[400px] xl:w-[500px]"}>
+          <div className="lg:w-[400px] xl:w-[500px]">
             <img
-              className={"w-full rounded-xl border-2 border-black"}
-              src={"https://images.codefoli.com/codefolilogo.png"}
-              alt={"idea genesis image"}
+              className="w-full rounded-xl border-2 border-black"
+              src="https://images.codefoli.com/codefolilogo.png"
+              alt="idea genesis image"
             />
           </div>
         </div>
         <div
-          className={
-            "mx-10 md:mx-20 mb-10 flex flex-col justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
-          }
+          className="mx-10 md:mx-20 mb-10 flex flex-col justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
         >
-          <div className={"lg:max-w-[40%]"}>
-            <h2 className={"text-4xl"}>Gaps Filled</h2>
+          <div className="lg:max-w-[40%]">
+            <h2 className="text-4xl">Gaps Filled</h2>
             <p>
               Codefoli fills three core gaps in portfolio solutions for coders. Firstly, seamless
               integration of code snippets, project highlights, and technical details—critical for developer portfolios—yet absent
@@ -124,23 +120,21 @@ const Origin: FC = () => {
               into a unified platform providing the ideal portfolio experience for programmers at any stage of their journey.
             </p>
           </div>
-          <div className={"lg:w-[400px] xl:w-[500px]"}>
+          <div className="lg:w-[400px] xl:w-[500px]">
             <img
-              className={"w-full rounded-xl border-2 border-black"}
+              className="w-full rounded-xl border-2 border-black"
               src={
                 currentTheme === DARK_THEME_KEY ? gapFilledDark : gapFilledLight
               }
-              alt={"idea genesis image"}
+              alt="idea genesis image"
             />
           </div>
         </div>
         <div
-          className={
-            "mx-10 md:mx-20 flex flex-col justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
-          }
+          className="mx-10 md:mx-20 flex flex-col justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
         >
-          <div className={"lg:max-w-[40%]"}>
-            <h2 className={"text-4xl"}>Journey</h2>
+          <div className="lg:max-w-[40%]">
+            <h2 className="text-4xl">Journey</h2>
             <p>
               Codefoli's journey began by identifying portfolio pain points faced by coders.
               With developers in mind, Codefoli set out to eliminate these frictions through tailored solutions
@@ -151,11 +145,11 @@ const Origin: FC = () => {
               There’s more ground to cover, but the journey thus far reaffirms that Codefoli is for developers, by developers.
             </p>
           </div>
-          <div className={"lg:w-[400px] xl:w-[500px]"}>
+          <div className="lg:w-[400px] xl:w-[500px]">
             <img
-              className={"w-full rounded-xl border-2 border-black"}
+              className="w-full rounded-xl border-2 border-black"
               src={currentTheme === DARK_THEME_KEY ? journeyDark : journeyLight}
-              alt={"idea genesis image"}
+              alt="idea genesis image"
             />
           </div>
         </div>

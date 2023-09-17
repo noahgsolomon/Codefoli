@@ -49,7 +49,7 @@ const ProjectsP: FC<{
               <h1 className="mb-5 text-center text-3xl font-bold leading-snug transition-all md:text-5xl lg:text-6xl">
                 {pageData.header_one}
               </h1>
-              <p className=" text-center font-semibold transition-all">
+              <p className="text-center font-semibold transition-all">
                 {pageData.description_one}
               </p>
             </animated.div>
@@ -97,7 +97,7 @@ const ProjectsP: FC<{
         <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
       )}
       {downloaded.bool && (
-        <StatusBar message={downloaded.message} color={"bg-green-500"} />
+        <StatusBar message={downloaded.message} color="bg-green-500" />
       )}
     </>
   );

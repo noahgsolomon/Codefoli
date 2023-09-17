@@ -69,7 +69,7 @@ const ProjectP: FC<{
         <div className="container mx-auto my-20 max-w-screen-lg px-5">
           <section className="hero mb-8">
             <animated.div style={headerAnimation}>
-              <h1 className="mb-5   text-center text-4xl font-bold leading-snug transition-all ">
+              <h1 className="mb-5 text-center text-4xl font-bold leading-snug transition-all">
                 {projectDetails.header}
               </h1>
               <p className="mb-5 text-center font-semibold transition-all ">
@@ -78,12 +78,12 @@ const ProjectP: FC<{
             </animated.div>
             <animated.div style={imageAnimation}>
               <div
-                className={`relative overflow-hidden rounded-lg border-2 border-black bg-white p-2 shadow-custom transition-all dark:bg-[#0d0d0d] lg:h-[600px]`}
+                className="relative overflow-hidden rounded-lg border-2 border-black bg-white p-2 shadow-custom transition-all dark:bg-[#0d0d0d] lg:h-[600px]"
               >
                 <img
                   src={projectDetails.image}
                   alt=""
-                  className={`block h-full w-full rounded-lg object-cover transition-all`}
+                  className="block h-full w-full rounded-lg object-cover transition-all"
                 />
               </div>
             </animated.div>
@@ -93,7 +93,7 @@ const ProjectP: FC<{
             className="mb-5 grid grid-cols-1 gap-5 lg:grid-cols-6"
           >
             <div className="content-wrapper lg:col-span-4">
-              <h2 className="  text-3xl font-bold transition-all ">
+              <h2 className="text-3xl font-bold transition-all ">
                 {projectDetails.overview}
               </h2>
               <p className="mb-2 font-semibold transition-all ">
@@ -156,7 +156,7 @@ const ProjectP: FC<{
         <DeploymentBar url={deployed.url} setDeployed={setDeployed} />
       )}
       {downloaded.bool && (
-        <StatusBar message={downloaded.message} color={"bg-green-500"} />
+        <StatusBar message={downloaded.message} color="bg-green-500" />
       )}
     </>
   );

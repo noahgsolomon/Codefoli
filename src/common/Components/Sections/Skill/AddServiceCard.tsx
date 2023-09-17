@@ -62,7 +62,7 @@ const AddServiceCard: React.FC<{
       className={`${
         addServiceInput ? "opacity-100" : "opacity-50"
       } group relative mb-5 flex h-[400px] max-w-[400px] cursor-pointer flex-col rounded-2xl border-8 border-dashed border-black transition-all hover:-translate-y-0.5 hover:shadow-customHover `}
-      onClick={async () => {
+      onClick={() => {
         setAddServiceInput(true);
       }}
     >
@@ -84,7 +84,7 @@ const AddServiceCard: React.FC<{
                   <div
                     key={service}
                     className="m-1 inline-block cursor-pointer rounded-full bg-black transition-all hover:-translate-y-0.5 hover:opacity-90 dark:bg-gray-50"
-                    onClick={async () => await handleAddService(service)}
+                    onClick={() => handleAddService(service)}
                   >
                     <span className="px-2 text-white dark:text-gray-800">
                       {service}

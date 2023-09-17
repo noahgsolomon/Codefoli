@@ -140,7 +140,7 @@ const Register: React.FC = () => {
               ? "opacity-100"
               : "opacity-10"
           }`}
-          onClick={async () => {
+          onClick={() => {
             if (
               fullName.length < 1 ||
               email.length < 5 ||
@@ -154,7 +154,7 @@ const Register: React.FC = () => {
             }
             if (registerClicked || emailError || passwordError) return;
 
-            await handleRegister();
+            handleRegister();
           }}
         >
           {registerClicked ? (
@@ -193,8 +193,8 @@ const Register: React.FC = () => {
             width={"48"}
             height={"48"}
             className="ml-2 h-auto w-8 rounded-2xl bg-white p-1"
-            src={"https://img.icons8.com/stickers/100/google-logo.png"}
-            alt={"google icon"}
+            src="https://img.icons8.com/stickers/100/google-logo.png"
+            alt="google icon"
           />
         </button>
         <Link to={"/login"}>
@@ -205,8 +205,8 @@ const Register: React.FC = () => {
       </div>
       {emailError && (
         <StatusBar
-          message={"Error. Credentials invalid or email taken."}
-          color={"bg-red-500"}
+          message="Error. Credentials invalid or email taken."
+          color="bg-red-500"
         />
       )}
     </animated.div>

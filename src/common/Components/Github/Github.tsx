@@ -18,7 +18,7 @@ const Github: FC = () => {
       <div></div>
       <a
         className="relative mb-1 mt-1 text-base text-white transition-all hover:text-opacity-80"
-        href={`https://github.com/noahgsolomon/codefoli`}
+        href="https://github.com/noahgsolomon/codefoli"
         target="_blank"
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
@@ -32,7 +32,7 @@ const Github: FC = () => {
           →
         </span>
       </a>
-      <button onClick={() => handleRemoveGithub()}>
+      <button onClick={handleRemoveGithub}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"

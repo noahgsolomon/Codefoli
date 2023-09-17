@@ -20,7 +20,7 @@ const addFaq: FC<{
             return {
               ...section,
               details: {
-                ...(section.details as FAQType),
+                ...section.details,
                 faq: [...(section.details as FAQType).faq, addFaqFetch.data],
               },
             };
@@ -37,10 +37,10 @@ const addFaq: FC<{
   return (
     <div
       className="relative mb-5 cursor-pointer rounded-lg border-4 border-dashed border-black opacity-60 transition-all hover:-translate-y-1"
-      onClick={async () => await handleAddFaq()}
+      onClick={handleAddFaq}
     >
-      <div className={"flex flex-col items-center justify-center"}>
-        <p className={"py-2 text-4xl"}>+</p>
+      <div className="flex flex-col items-center justify-center">
+        <p className="py-2 text-4xl">+</p>
       </div>
     </div>
   );
