@@ -10,7 +10,7 @@ const CurrentPages: FC<{
         <div className={'w-full'}>
         <h1 className={'text-center text-3xl font-bold'}>Current Pages</h1>
             <div className={'w-full flex justify-center flex-wrap gap-4'}>
-                <PageCard themeTitle={'Paper'} currentTheme={currentTheme} imgDark={gapFilledDark} imgLight={gapFilledLight}/>
+                <PageCard currentTheme={currentTheme} imgDark={gapFilledDark} imgLight={gapFilledLight}/>
             </div>
         </div>
     );

@@ -23,7 +23,7 @@ const Footer = () => {
     };
 
     return (
-        <footer className="relative mt-20 bg-[#0d0d0d] z-40 ">
+        <footer className="relative mt-40 bg-[#0d0d0d] z-40 ">
             <div
                 className="absolute -top-20 left-1/2 -translate-x-1/2 transform p-6"
             >
