@@ -11,7 +11,7 @@ const Header: FC<{
 
     return (
         <header
-            className={`relative z-40 mx-5 mb-10 flex items-center py-5 font-bold transition-all`}
+            className={`relative z-30 mx-5 mb-10 flex items-center py-5 font-bold transition-all`}
         >
             <div className="mx-auto flex w-full max-w-[50rem] flex-row flex-wrap items-center justify-center rounded-xl border-2 border-black px-4 py-3 shadow-custom transition-all dark:bg-[#1a1a1a] sm:justify-between">
                 <Link
