@@ -1,6 +1,6 @@
 import {FC} from "react";
-import gapFilledDark from "assets/gap-filled-dark.png";
-import gapFilledLight from "assets/gap-filled-light.png";
+import profileDisplayDark from "assets/profiledisplay-dark.png";
+import profileDisplayLight from "assets/profiledisplay.png";
 import ThemeCard from "./ThemeCard.tsx";
 const ThemePages: FC<{
     currentTheme: string | null;
@@ -10,8 +10,7 @@ const ThemePages: FC<{
         <div className={'w-full mt-10'}>
             <h1 className={'text-center text-3xl font-bold'}>Themes</h1>
             <div className={'w-full flex justify-center flex-wrap gap-4'}>
-                <ThemeCard themeTitle={'Paper'} currentTheme={currentTheme} imgDark={gapFilledDark} imgLight={gapFilledLight}/>
-                <ThemeCard themeTitle={'Paper'} currentTheme={currentTheme} imgDark={gapFilledDark} imgLight={gapFilledLight}/>
+                <ThemeCard themeTitle={'Paper'} currentTheme={currentTheme} imgDark={profileDisplayDark} imgLight={profileDisplayLight}/>
             </div>
         </div>
     );
