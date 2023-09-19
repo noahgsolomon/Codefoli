@@ -1,9 +1,9 @@
 import {FC, useEffect, useState} from "react";
-import Footer from "./Footer.tsx";
 import Header from "./Header.tsx";
 import CurrentPages from "./pages/CurrentPage/CurrentPages.tsx";
 import {DARK_THEME_KEY, LIGHT_THEME_KEY, LOCALSTORAGE_THEME_KEY} from "../util/constants.ts";
 import ThemePages from "./pages/Themes/ThemePages.tsx";
+import Sidebar from "./Sidebar.tsx";
 const Themes: FC = () => {
 
     const [theme, setTheme] = useState<
@@ -32,10 +32,14 @@ const Themes: FC = () => {
 
     return (
         <>
-            <Header setTheme={setTheme} theme={theme}/>
-            <CurrentPages currentTheme={currentTheme}/>
-            <ThemePages currentTheme={currentTheme} />
-            <Footer />
+            <div className="flex mb-20">
+                <Sidebar />
+                <div className="flex flex-col w-full">
+                    <Header setTheme={setTheme} theme={theme} />
+                    <CurrentPages currentTheme={currentTheme} />
+                    <ThemePages currentTheme={currentTheme} />
+                </div>
+            </div>
         </>
     );
 };
