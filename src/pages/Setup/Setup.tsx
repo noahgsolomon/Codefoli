@@ -618,9 +618,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
             </div>
           )}
           {work.length < 1 && (
-            <div
-              className="mb-4 rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all hover:-translate-y-0.5 dark:bg-[#1a1a1a]"
-            >
+            <div className="mb-4 rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all hover:-translate-y-0.5 dark:bg-[#1a1a1a]">
               <div className="flex flex-row justify-between">
                 <h3 className="mb-2 bg-blue-500 px-2 py-1 font-bold text-white">
                   No jobs listed
@@ -834,9 +832,7 @@ const Setup: React.FC<{ userData: UserData }> = ({ userData }) => {
               </div>
             )}
             {projects.length < 1 && (
-              <div
-                className="mb-4 rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all hover:-translate-y-0.5 dark:bg-[#1a1a1a]"
-              >
+              <div className="mb-4 rounded border-2 border-black bg-white px-8 pb-8 pt-6 shadow-custom transition-all hover:-translate-y-0.5 dark:bg-[#1a1a1a]">
                 <div className="flex flex-row justify-between">
                   <h3 className="mb-2 bg-red-500 px-2 py-1 font-bold text-white">
                     No projects listed

@@ -200,34 +200,70 @@ const Analytics: FC = () => {
                 {">"}
               </button>
             </div>
-            <div className="flex flex-wrap justify-center gap-10 mx-10 mb-48">
-              <div className="transition-all px-6 py-6 bg-blue-50 dark:bg-blue-900 border-2 border-blue-500 dark:border-blue-300 shadow-custom hover:shadow-customHover rounded-xl">
-                <h2 className="font-bold text-2xl dark:text-white">👥 <span className="underline text-blue-500 dark:text-blue-300">Total</span> # of users:</h2>
-                <p className="text-blue-500 dark:text-blue-300 text-center mt-4 text-3xl font-bold">{userCount}</p>
+            <div className="mx-10 mb-48 flex flex-wrap justify-center gap-10">
+              <div className="rounded-xl border-2 border-blue-500 bg-blue-50 px-6 py-6 shadow-custom transition-all hover:shadow-customHover dark:border-blue-300 dark:bg-blue-900">
+                <h2 className="text-2xl font-bold dark:text-white">
+                  👥{" "}
+                  <span className="text-blue-500 underline dark:text-blue-300">
+                    Total
+                  </span>{" "}
+                  # of users:
+                </h2>
+                <p className="mt-4 text-center text-3xl font-bold text-blue-500 dark:text-blue-300">
+                  {userCount}
+                </p>
               </div>
-              <div className="transition-all px-6 py-6 bg-yellow-50 dark:bg-yellow-900 border-2 border-yellow-500 dark:border-yellow-300 shadow-custom hover:shadow-customHover rounded-xl">
-                <h2 className="font-bold text-2xl dark:text-white">🗓 Users registered <span className="underline text-yellow-500 dark:text-yellow-300">today</span>:</h2>
-                <p className="text-yellow-500 dark:text-yellow-300 text-center mt-4 text-3xl font-bold">{registers}</p>
+              <div className="rounded-xl border-2 border-yellow-500 bg-yellow-50 px-6 py-6 shadow-custom transition-all hover:shadow-customHover dark:border-yellow-300 dark:bg-yellow-900">
+                <h2 className="text-2xl font-bold dark:text-white">
+                  🗓 Users registered{" "}
+                  <span className="text-yellow-500 underline dark:text-yellow-300">
+                    today
+                  </span>
+                  :
+                </h2>
+                <p className="mt-4 text-center text-3xl font-bold text-yellow-500 dark:text-yellow-300">
+                  {registers}
+                </p>
               </div>
-              <div className="transition-all px-6 py-6 bg-green-50 dark:bg-green-900 border-2 border-green-500 dark:border-green-300 shadow-custom hover:shadow-customHover rounded-xl">
-                <h2 className="font-bold text-2xl dark:text-white">🚀 Deployments today:</h2>
-                <p className="text-green-500 dark:text-green-300 text-center mt-4 text-3xl font-bold">{deployments}</p>
+              <div className="rounded-xl border-2 border-green-500 bg-green-50 px-6 py-6 shadow-custom transition-all hover:shadow-customHover dark:border-green-300 dark:bg-green-900">
+                <h2 className="text-2xl font-bold dark:text-white">
+                  🚀 Deployments today:
+                </h2>
+                <p className="mt-4 text-center text-3xl font-bold text-green-500 dark:text-green-300">
+                  {deployments}
+                </p>
               </div>
-              <div className="transition-all px-6 py-6 bg-purple-50 dark:bg-purple-900 border-2 border-purple-500 dark:border-purple-300 shadow-custom hover:shadow-customHover rounded-xl">
-                <h2 className="font-bold text-2xl dark:text-white">📥 Downloads today:</h2>
-                <p className="text-purple-500 dark:text-purple-300 text-center mt-4 text-3xl font-bold">{downloads}</p>
+              <div className="rounded-xl border-2 border-purple-500 bg-purple-50 px-6 py-6 shadow-custom transition-all hover:shadow-customHover dark:border-purple-300 dark:bg-purple-900">
+                <h2 className="text-2xl font-bold dark:text-white">
+                  📥 Downloads today:
+                </h2>
+                <p className="mt-4 text-center text-3xl font-bold text-purple-500 dark:text-purple-300">
+                  {downloads}
+                </p>
               </div>
-              <div className="transition-all px-6 py-6 bg-red-50 dark:bg-red-900 border-2 border-red-500 dark:border-red-300 shadow-custom hover:shadow-customHover rounded-xl">
-                <h2 className="font-bold text-2xl dark:text-white">📈 Daily active users:</h2>
-                <p className="text-red-500 dark:text-red-300 text-center mt-4 text-3xl font-bold">{dailyActiveUsers}</p>
+              <div className="rounded-xl border-2 border-red-500 bg-red-50 px-6 py-6 shadow-custom transition-all hover:shadow-customHover dark:border-red-300 dark:bg-red-900">
+                <h2 className="text-2xl font-bold dark:text-white">
+                  📈 Daily active users:
+                </h2>
+                <p className="mt-4 text-center text-3xl font-bold text-red-500 dark:text-red-300">
+                  {dailyActiveUsers}
+                </p>
               </div>
-              <div className="transition-all px-6 py-6 bg-orange-50 dark:bg-orange-900 border-2 border-orange-500 dark:border-orange-300 shadow-custom hover:shadow-customHover rounded-xl">
-                <h2 className="font-bold text-2xl dark:text-white">📰 Newsletter sub count:</h2>
-                <p className="text-orange-500 dark:text-orange-300 text-center mt-4 text-3xl font-bold">{newsLetterCount}</p>
+              <div className="rounded-xl border-2 border-orange-500 bg-orange-50 px-6 py-6 shadow-custom transition-all hover:shadow-customHover dark:border-orange-300 dark:bg-orange-900">
+                <h2 className="text-2xl font-bold dark:text-white">
+                  📰 Newsletter sub count:
+                </h2>
+                <p className="mt-4 text-center text-3xl font-bold text-orange-500 dark:text-orange-300">
+                  {newsLetterCount}
+                </p>
               </div>
-              <div className="transition-all px-6 py-6 bg-indigo-50 dark:bg-indigo-900 border-2 border-indigo-500 dark:border-indigo-300 shadow-custom hover:shadow-customHover rounded-xl">
-                <h2 className="font-bold text-2xl dark:text-white">📅 Newsletter count today:</h2>
-                <p className="text-indigo-500 dark:text-indigo-300 text-center mt-4 text-3xl font-bold">{newsLetterToday}</p>
+              <div className="rounded-xl border-2 border-indigo-500 bg-indigo-50 px-6 py-6 shadow-custom transition-all hover:shadow-customHover dark:border-indigo-300 dark:bg-indigo-900">
+                <h2 className="text-2xl font-bold dark:text-white">
+                  📅 Newsletter count today:
+                </h2>
+                <p className="mt-4 text-center text-3xl font-bold text-indigo-500 dark:text-indigo-300">
+                  {newsLetterToday}
+                </p>
               </div>
             </div>
             <Footer />

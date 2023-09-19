@@ -167,9 +167,7 @@ const SkillSection: FC<{
       onMouseLeave={() => setSkillHover(false)}
     >
       {removeSkill && (
-        <div
-          className="absolute inset-0 z-10 bg-red-300 opacity-25 transition-all"
-        ></div>
+        <div className="absolute inset-0 z-10 bg-red-300 opacity-25 transition-all"></div>
       )}
       <button
         className={`${
@@ -235,9 +233,7 @@ const SkillSection: FC<{
             setLanguageHover(false);
           }}
         >
-          <div
-            className="min-h-64 flex flex-wrap gap-2 rounded-tl-2xl rounded-tr-2xl px-2 py-2"
-          >
+          <div className="min-h-64 flex flex-wrap gap-2 rounded-tl-2xl rounded-tr-2xl px-2 py-2">
             {userData.skills.map((skill, index) => {
               return (
                 <span

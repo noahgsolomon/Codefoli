@@ -77,9 +77,7 @@ const ProjectP: FC<{
               </p>
             </animated.div>
             <animated.div style={imageAnimation}>
-              <div
-                className="relative overflow-hidden rounded-lg border-2 border-black bg-white p-2 shadow-custom transition-all dark:bg-[#0d0d0d] lg:h-[600px]"
-              >
+              <div className="relative overflow-hidden rounded-lg border-2 border-black bg-white p-2 shadow-custom transition-all dark:bg-[#0d0d0d] lg:h-[600px]">
                 <img
                   src={projectDetails.image}
                   alt=""

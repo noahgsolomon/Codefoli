@@ -41,9 +41,7 @@ const ContactMain: FC<{
                       href={`mailto:${userData.email}`}
                       className="w-full transition-all"
                     >
-                      <p
-                        className="transition-all hover:text-blue-500 hover:opacity-80"
-                      >
+                      <p className="transition-all hover:text-blue-500 hover:opacity-80">
                         {userData.email}
                       </p>
                     </a>
@@ -60,9 +58,7 @@ const ContactMain: FC<{
                     href={`tel:${userData.phone}`}
                     className="w-full transition-all"
                   >
-                    <p
-                      className="transition-all hover:text-blue-500 hover:opacity-80"
-                    >
+                    <p className="transition-all hover:text-blue-500 hover:opacity-80">
                       {userData.phone}
                     </p>
                   </a>

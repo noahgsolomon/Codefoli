@@ -124,9 +124,7 @@ const MainApp: React.FC = () => {
           window.location.href = "/login";
         }
         if (user.data.role === "NEWBIE") {
-          if (
-            window.location.pathname !== "/setup"
-          ) {
+          if (window.location.pathname !== "/setup") {
             navigate("/setup");
           }
           setAuthenticatedUser(true);
@@ -156,7 +154,12 @@ const MainApp: React.FC = () => {
           }
           setUserData(user.data);
           const path = window.location.pathname;
-          if (path === "/" || path === "/login" || path === "/register" || path === "/setup") {
+          if (
+            path === "/" ||
+            path === "/login" ||
+            path === "/register" ||
+            path === "/setup"
+          ) {
             navigate("/dashboard");
           }
         }

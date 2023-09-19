@@ -23,10 +23,8 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative mt-20 bg-[#0d0d0d] z-40 ">
-      <div
-        className="absolute -top-20 left-1/2 -translate-x-1/2 transform p-6"
-      >
+    <footer className="relative z-40 mt-20 bg-[#0d0d0d] ">
+      <div className="absolute -top-20 left-1/2 -translate-x-1/2 transform p-6">
         <div className="mx-auto flex w-[300px] flex-col items-center justify-between rounded-lg border-2 border-black bg-white p-6 shadow-custom dark:bg-[#1a1a1a] md:w-[450px]">
           <div className="text-xl font-bold">Subscribe to our newsletter</div>
           <p className="mb-4 text-base opacity-60">
@@ -50,7 +48,7 @@ const Footer = () => {
                 <div className="flex flex-col items-center justify-center md:relative">
                   <input
                     type="email"
-                    className="mb-4 h-12 text-sm w-full rounded-lg border-2 border-black py-8 shadow-custom transition-all hover:shadow-customHover dark:bg-[#1a1a1a]"
+                    className="mb-4 h-12 w-full rounded-lg border-2 border-black py-8 text-sm shadow-custom transition-all hover:shadow-customHover dark:bg-[#1a1a1a]"
                     placeholder="Enter your email"
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
@@ -65,24 +63,28 @@ const Footer = () => {
                     onClick={handleSubscribe}
                     disabled={subscribeLoading}
                   >
-                    {subscribeLoading ? <svg
+                    {subscribeLoading ? (
+                      <svg
                         className="mr-2 h-5 w-5 animate-spin"
                         viewBox="0 0 24 24"
-                    >
-                      <circle
+                      >
+                        <circle
                           className="opacity-25"
                           cx="12"
                           cy="12"
                           r="10"
                           stroke="currentColor"
                           strokeWidth="4"
-                      ></circle>
-                      <path
+                        ></circle>
+                        <path
                           className="opacity-75"
                           fill="currentColor"
                           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg> : 'Subscribe 🎉'}
+                        ></path>
+                      </svg>
+                    ) : (
+                      "Subscribe 🎉"
+                    )}
                   </button>
                 </div>
                 {emailAdded ? (
@@ -101,7 +103,7 @@ const Footer = () => {
       </div>
       <div className={"pt-72 md:pt-32"}></div>
       <div className="mx-auto max-w-screen-xl px-4  pb-2 pt-2 lg:px-8 lg:pt-6">
-        <div className="flex flex-col justify-between items-center md:flex-row">
+        <div className="flex flex-col items-center justify-between md:flex-row">
           <div className={"md:mr-10"}>
             <div className="flex justify-center md:justify-start">
               <h2 className="bg-red-500 px-2 text-4xl font-bold text-white">
@@ -111,13 +113,11 @@ const Footer = () => {
             <p className="mt-6 text-center leading-relaxed text-white md:text-left">
               Here for you to showcase your projects and skills to the world.
             </p>
-            <div
-              className="cursor-pointer text-center text-blue-500 transition-all hover:opacity-80 md:text-left"
-            >
+            <div className="cursor-pointer text-center text-blue-500 transition-all hover:opacity-80 md:text-left">
               support@codefoli.com
             </div>
             <ul className="mb-8 flex justify-center gap-6 md:mb-0 md:mt-8 md:justify-start md:gap-8">
-              <li >
+              <li>
                 <a
                   href="https://github.com/noahgsolomon/codefoli"
                   rel="noreferrer"
@@ -139,7 +139,7 @@ const Footer = () => {
                   </svg>
                 </a>
               </li>
-              <li >
+              <li>
                 <a
                   href="https://discord.gg/JXKx5HwAQK"
                   rel="noreferrer"
@@ -159,7 +159,7 @@ const Footer = () => {
                   </svg>
                 </a>
               </li>
-              <li >
+              <li>
                 <a
                   href="https://twitter.com/codefoli"
                   rel="noreferrer"
@@ -197,24 +197,23 @@ const Footer = () => {
           </div>
           <div className="flex justify-center gap-5">
             <Link
-                to="/newsletter"
-                className="cursor-pointer font-bold text-blue-500 underline transition-all p-2 rounded hover:opacity-80"
+              to="/newsletter"
+              className="cursor-pointer rounded p-2 font-bold text-blue-500 underline transition-all hover:opacity-80"
             >
               📰 Newsletter
             </Link>
             <Link
-                to="/analytics"
-                className="cursor-pointer font-bold text-blue-500 underline transition-all p-2 rounded hover:opacity-80"
+              to="/analytics"
+              className="cursor-pointer rounded p-2 font-bold text-blue-500 underline transition-all hover:opacity-80"
             >
               📊 Analytics
             </Link>
             <Link
-                to="/origin"
-                className="cursor-pointer font-bold text-blue-500 underline transition-all p-2 rounded hover:opacity-80"
+              to="/origin"
+              className="cursor-pointer rounded p-2 font-bold text-blue-500 underline transition-all hover:opacity-80"
             >
               🌍 Origin
             </Link>
-
           </div>
         </div>
       </div>

@@ -23,9 +23,7 @@ const Banner = ({
     <section
       className={`border-b-2 border-t-2 border-black bg-${backgroundColor}-500`}
     >
-      <div
-        className="mx-auto my-10 flex max-w-screen-lg flex-col-reverse items-center px-5  md:flex-row"
-      >
+      <div className="mx-auto my-10 flex max-w-screen-lg flex-col-reverse items-center px-5  md:flex-row">
         <div className={`content md:text-${align} text-center`}>
           <h3 className={`mb-5 text-${color} text-2xl font-bold md:text-3xl`}>
             {text}

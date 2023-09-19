@@ -230,9 +230,7 @@ const JobCard: FC<{
         <StatusBar message={showError.message} color="bg-red-400" />
       )}
       {removeJobHover && (
-        <div
-          className="absolute inset-0 z-10 bg-red-300 opacity-25 transition-all"
-        ></div>
+        <div className="absolute inset-0 z-10 bg-red-300 opacity-25 transition-all"></div>
       )}
       <div
         className={` ${

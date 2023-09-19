@@ -30,14 +30,14 @@ const App: React.FC = () => {
 
   const RedirectToGitHub: React.FC = () => {
     useEffect(() => {
-      window.location.href = 'https://github.com/noahgsolomon/Codefoli';
+      window.location.href = "https://github.com/noahgsolomon/Codefoli";
     }, []);
     return null;
   };
 
   const RedirectToDiscord: React.FC = () => {
     useEffect(() => {
-      window.location.href = 'https://discord.com/invite/JXKx5HwAQK';
+      window.location.href = "https://discord.com/invite/JXKx5HwAQK";
     }, []);
     return null;
   };
@@ -48,7 +48,7 @@ const App: React.FC = () => {
         <Route path="/processing" element={<Processing />} />
         <Route path="/verify" element={<Verify />} />
         <Route path="/unsubscribe" element={<Unsubscribing />} />
-        <Route path="/origin" element={<Origin />}/>
+        <Route path="/origin" element={<Origin />} />
         <Route path="/themes" element={<Themes />} />
         <Route path="analytics" element={<Analytics />} />
         {/*<Route path="/architecture" element={<Architecture />}/>*/}

@@ -13,10 +13,11 @@ import { download } from "api/downloadapi.tsx";
 import { deleteWebsite } from "api/deletewebsiteapi.tsx";
 import { IoIosCloud } from "react-icons/io";
 import {
-  LIGHT_THEME_KEY, LOCALSTORAGE_ID_KEY,
+  LIGHT_THEME_KEY,
+  LOCALSTORAGE_ID_KEY,
   LOCALSTORAGE_THEME_KEY,
 } from "../../../util/constants";
-import {STAGE} from "../../../config.ts";
+import { STAGE } from "../../../config.ts";
 
 const ModeButtons: FC<{
   deploying: boolean;
@@ -53,15 +54,15 @@ const ModeButtons: FC<{
   const thresholdHide = 0;
   const [activeDownload, setActiveDownload] = useState(false);
   const tmIds = useRef<{
-    tmDownloadId?: NodeJS.Timeout, // created by setTimeout
-    tmCheckDeployId?: NodeJS.Timeout, // created by setInterval
+    tmDownloadId?: NodeJS.Timeout; // created by setTimeout
+    tmCheckDeployId?: NodeJS.Timeout; // created by setInterval
   }>({});
 
   useEffect(() => {
     () => {
       clearTimeout(tmIds.current.tmDownloadId);
       clearInterval(tmIds.current.tmCheckDeployId);
-    }
+    };
   }, []);
 
   useEffect(() => {
@@ -266,7 +267,7 @@ const ModeButtons: FC<{
         headers: {
           Authorization: "Bearer " + localStorage.getItem(LOCALSTORAGE_ID_KEY),
           "Content-Type": "application/json",
-        }
+        },
       }
     );
     const responseJson = await response.json();
@@ -276,7 +277,7 @@ const ModeButtons: FC<{
       console.log(responseJson.message);
     }
     setDeployModalOpen(false);
-  }
+  };
 
   return (
     <>

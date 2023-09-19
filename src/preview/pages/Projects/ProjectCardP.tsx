@@ -18,9 +18,7 @@ const ProjectCardP: FC<{
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div
-        className="image-wrapper relative h-[400px] overflow-hidden rounded-t-lg transition-all"
-      >
+      <div className="image-wrapper relative h-[400px] overflow-hidden rounded-t-lg transition-all">
         <img
           src={image}
           alt=""

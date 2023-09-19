@@ -1,4 +1,12 @@
-import React, { FocusEvent, MouseEvent, RefObject, SetStateAction, useMemo, useRef, useState } from "react";
+import React, {
+  FocusEvent,
+  MouseEvent,
+  RefObject,
+  SetStateAction,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { StoryType } from "Type/Section.tsx";
 import PageType from "Type/Pages.tsx";
 import { addRemoveSection } from "Components/Sections/api/sectionapi.tsx";
@@ -44,13 +52,13 @@ const StorySection: React.FC<{
   const bulletTwoTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const bulletThreeTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const bulletTextareaRefs: Record<
-    keyof typeof bulletData, 
+    keyof typeof bulletData,
     RefObject<HTMLTextAreaElement>
   > = {
     one: bulletOneTextareaRef,
     two: bulletTwoTextareaRef,
     three: bulletThreeTextareaRef,
-  }
+  };
   const [imageLoading, setImageLoading] = useState(false);
 
   const [StoryHover, setStoryHover] = useState<boolean>(false);
@@ -121,19 +129,25 @@ const StorySection: React.FC<{
     setHeaderOneEdit(false);
   };
 
-  const updateBullets = (bulletKey: keyof typeof bulletData, value: Partial<typeof bulletData['one']>) => {
+  const updateBullets = (
+    bulletKey: keyof typeof bulletData,
+    value: Partial<(typeof bulletData)["one"]>
+  ) => {
     setBulletData((prevBulletData) => ({
       ...prevBulletData,
       [bulletKey]: {
         ...prevBulletData[bulletKey],
-        ...value
+        ...value,
       },
     }));
-  }
+  };
 
   const handleBulletSubmit = async (bulletKey: keyof typeof bulletData) => {
-    console.log('bulletData[bulletKey].value',bulletData[bulletKey].value)
-    if (bulletData[bulletKey].value.length > 250 || bulletData[bulletKey].value.length < 1) {
+    console.log("bulletData[bulletKey].value", bulletData[bulletKey].value);
+    if (
+      bulletData[bulletKey].value.length > 250 ||
+      bulletData[bulletKey].value.length < 1
+    ) {
       updateBullets(bulletKey, {
         edit: false,
         value: details[`bullet_${bulletKey}`],
@@ -152,7 +166,10 @@ const StorySection: React.FC<{
           section.type === "STORY"
             ? {
                 ...section,
-                details: { ...section.details, [`bullet_${bulletKey}`]: bulletData[bulletKey].value },
+                details: {
+                  ...section.details,
+                  [`bullet_${bulletKey}`]: bulletData[bulletKey].value,
+                },
               }
             : section
         ),
@@ -214,20 +231,20 @@ const StorySection: React.FC<{
   };
 
   const bullets: {
-    key: keyof typeof bulletData,
-    color: string,
+    key: keyof typeof bulletData;
+    color: string;
   }[] = [
     {
-      key: 'one',
-      color: 'bg-indigo-600',
+      key: "one",
+      color: "bg-indigo-600",
     },
     {
-      key: 'two',
-      color: 'bg-sky-600',
+      key: "two",
+      color: "bg-sky-600",
     },
     {
-      key: 'three',
-      color: 'bg-yellow-500',
+      key: "three",
+      color: "bg-yellow-500",
     },
   ];
 
@@ -241,9 +258,7 @@ const StorySection: React.FC<{
         <StatusBar message={showError.message} color={"bg-red-400"} />
       )}
       {removeStory && (
-        <div
-          className="absolute inset-0 z-10 bg-red-300 opacity-25 transition-all"
-        ></div>
+        <div className="absolute inset-0 z-10 bg-red-300 opacity-25 transition-all"></div>
       )}
       <button
         className={`${
@@ -316,42 +331,53 @@ const StorySection: React.FC<{
             </p>
           )}
           <div className="events-wrapper my-5">
-            {
-              bullets.map((bullet) => (
-                <div className="event flex items-start justify-between gap-4" key={bullet.key}>
-                  <div className={`mt-1 h-4 w-4 rounded border-2 ${bullet.color}`}></div>
-                  {bulletData[bullet.key].edit ? (
-                    <textarea
-                      ref={bulletTextareaRefs[bullet.key]}
-                      value={bulletData[bullet.key].value}
-                      onChange={(e) => updateBullets(bullet.key, { value: e.target.value })}
-                      onBlur={() => {
-                        console.log('blur', bulletTextareaRefs[bullet.key].current);
-                        updateBullets(bullet.key, { edit: false, value: details[`bullet_${bullet.key}`] });
-                      }}
-                      onKeyDown={ (e) => {
-                        if (e.key === "Enter") {
-                          e.preventDefault();
-                          handleBulletSubmit(bullet.key);
-                        }
-                      }}
-                      className="w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent p-0 pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
-                      autoFocus
-                      onInput={handleTextareaInput}
-                      onFocus={handleTextareaFocus}
-                      maxLength={250}
-                    />
-                  ) : (
-                    <p
-                      className="event-descripition flex-1 cursor-pointer select-none pt-0 text-lg font-semibold text-white transition-all hover:opacity-50"
-                      onClick={() => updateBullets(bullet.key, { edit: true })}
-                    >
-                      {details[`bullet_${bullet.key}`]}
-                    </p>
-                  )}
-                </div>
-              ))
-            }
+            {bullets.map((bullet) => (
+              <div
+                className="event flex items-start justify-between gap-4"
+                key={bullet.key}
+              >
+                <div
+                  className={`mt-1 h-4 w-4 rounded border-2 ${bullet.color}`}
+                ></div>
+                {bulletData[bullet.key].edit ? (
+                  <textarea
+                    ref={bulletTextareaRefs[bullet.key]}
+                    value={bulletData[bullet.key].value}
+                    onChange={(e) =>
+                      updateBullets(bullet.key, { value: e.target.value })
+                    }
+                    onBlur={() => {
+                      console.log(
+                        "blur",
+                        bulletTextareaRefs[bullet.key].current
+                      );
+                      updateBullets(bullet.key, {
+                        edit: false,
+                        value: details[`bullet_${bullet.key}`],
+                      });
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        handleBulletSubmit(bullet.key);
+                      }
+                    }}
+                    className="w-full flex-1 resize-none appearance-none overflow-hidden border-none bg-transparent p-0 pt-0 text-lg font-semibold text-white outline-none focus:outline-none focus:ring-0"
+                    autoFocus
+                    onInput={handleTextareaInput}
+                    onFocus={handleTextareaFocus}
+                    maxLength={250}
+                  />
+                ) : (
+                  <p
+                    className="event-descripition flex-1 cursor-pointer select-none pt-0 text-lg font-semibold text-white transition-all hover:opacity-50"
+                    onClick={() => updateBullets(bullet.key, { edit: true })}
+                  >
+                    {details[`bullet_${bullet.key}`]}
+                  </p>
+                )}
+              </div>
+            ))}
           </div>
         </div>
         <div className="content-right flex items-center justify-center">

@@ -17,9 +17,7 @@ const SkillSectionP: FC<{
       </h2>
       <div className="mx-10 grid justify-center gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:mx-80">
         <div className="card relative mb-5 flex max-w-[400px] flex-col rounded-2xl border-2 border-black bg-white shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover dark:bg-[#1a1a1a]">
-          <div
-            className="min-h-64 flex flex-wrap gap-2 rounded-tl-2xl rounded-tr-2xl px-2 py-2"
-          >
+          <div className="min-h-64 flex flex-wrap gap-2 rounded-tl-2xl rounded-tr-2xl px-2 py-2">
             {userData?.skills.map((skill, index) => {
               return (
                 <span

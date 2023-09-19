@@ -39,9 +39,7 @@ const Origin: FC = () => {
 
   return (
     <>
-      <header
-        className="relative z-40 mx-5 mb-20 flex items-center py-5 font-bold transition-all"
-      >
+      <header className="relative z-40 mx-5 mb-20 flex items-center py-5 font-bold transition-all">
         <div className="mx-auto flex w-full max-w-[50rem] flex-row flex-wrap items-center justify-center rounded-xl border-2 border-black px-4 py-3 shadow-custom transition-all dark:bg-[#1a1a1a] sm:justify-between">
           <Link
             to={"/"}
@@ -85,18 +83,22 @@ const Origin: FC = () => {
       </header>
       <div>
         <h1 className="mb-20 text-center text-6xl font-bold">Origin</h1>
-        <div
-          className="mx-10 md:mx-20 mb-10 flex flex-col justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
-        >
+        <div className="mx-10 mb-10 flex flex-col justify-center transition-all md:mx-20 lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]">
           <div className="lg:max-w-[40%]">
             <h2 className="text-4xl">Idea Genesis</h2>
             <p>
-              The inspiration for Codefoli stemmed from gaps in existing portfolio building options tailored to developers. While generalized site
-              builders existed, they lacked features specifically designed for programmer needs. At best, they required manual integration of
-              custom code samples and projects. And hosting options were either expensive or technically complex for most students and early career
-              coders. There was an unmet need for an easy yet robust platform combining portfolio creation with free hosting—providing end-to-end
-              solutions for programmers to showcase their work. With this problem and user segment in mind, Codefoli was envisioned as a frictionless
-              portfolio builder and host designed by developers, for developers.
+              The inspiration for Codefoli stemmed from gaps in existing
+              portfolio building options tailored to developers. While
+              generalized site builders existed, they lacked features
+              specifically designed for programmer needs. At best, they required
+              manual integration of custom code samples and projects. And
+              hosting options were either expensive or technically complex for
+              most students and early career coders. There was an unmet need for
+              an easy yet robust platform combining portfolio creation with free
+              hosting—providing end-to-end solutions for programmers to showcase
+              their work. With this problem and user segment in mind, Codefoli
+              was envisioned as a frictionless portfolio builder and host
+              designed by developers, for developers.
             </p>
           </div>
           <div className="lg:w-[400px] xl:w-[500px]">
@@ -107,17 +109,19 @@ const Origin: FC = () => {
             />
           </div>
         </div>
-        <div
-          className="mx-10 md:mx-20 mb-10 flex flex-col justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
-        >
+        <div className="mx-10 mb-10 flex flex-col justify-center transition-all md:mx-20 lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]">
           <div className="lg:max-w-[40%]">
             <h2 className="text-4xl">Gaps Filled</h2>
             <p>
-              Codefoli fills three core gaps in portfolio solutions for coders. Firstly, seamless
-              integration of code snippets, project highlights, and technical details—critical for developer portfolios—yet absent
-              on most platforms. Secondly, free and automated hosting removes financial and technical hurdles. Thirdly, downloadable source
-              code enables full customization aligned with developer needs. Codefoli combines these must-have features
-              into a unified platform providing the ideal portfolio experience for programmers at any stage of their journey.
+              Codefoli fills three core gaps in portfolio solutions for coders.
+              Firstly, seamless integration of code snippets, project
+              highlights, and technical details—critical for developer
+              portfolios—yet absent on most platforms. Secondly, free and
+              automated hosting removes financial and technical hurdles.
+              Thirdly, downloadable source code enables full customization
+              aligned with developer needs. Codefoli combines these must-have
+              features into a unified platform providing the ideal portfolio
+              experience for programmers at any stage of their journey.
             </p>
           </div>
           <div className="lg:w-[400px] xl:w-[500px]">
@@ -130,19 +134,22 @@ const Origin: FC = () => {
             />
           </div>
         </div>
-        <div
-          className="mx-10 md:mx-20 flex flex-col justify-center transition-all lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]"
-        >
+        <div className="mx-10 flex flex-col justify-center transition-all md:mx-20 lg:mx-32 lg:flex-row lg:gap-[100px] xl:gap-[200px]">
           <div className="lg:max-w-[40%]">
             <h2 className="text-4xl">Journey</h2>
             <p>
-              Codefoli's journey began by identifying portfolio pain points faced by coders.
-              With developers in mind, Codefoli set out to eliminate these frictions through tailored solutions
-              like easy code integration. Technically, Codefoli started as a simple React application but quickly
-              evolved into a robust cloud architecture for reliability and scalability. New features like customizable
-              layouts, dark mode, analytics, and a marketplace were prioritized based on direct coder feedback.
-              But our mission remains the same—to empower programmers at any career stage to create portfolios as unique as their skills.
-              There’s more ground to cover, but the journey thus far reaffirms that Codefoli is for developers, by developers.
+              Codefoli's journey began by identifying portfolio pain points
+              faced by coders. With developers in mind, Codefoli set out to
+              eliminate these frictions through tailored solutions like easy
+              code integration. Technically, Codefoli started as a simple React
+              application but quickly evolved into a robust cloud architecture
+              for reliability and scalability. New features like customizable
+              layouts, dark mode, analytics, and a marketplace were prioritized
+              based on direct coder feedback. But our mission remains the
+              same—to empower programmers at any career stage to create
+              portfolios as unique as their skills. There’s more ground to
+              cover, but the journey thus far reaffirms that Codefoli is for
+              developers, by developers.
             </p>
           </div>
           <div className="lg:w-[400px] xl:w-[500px]">

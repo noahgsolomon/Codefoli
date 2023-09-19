@@ -29,9 +29,7 @@ const Header: FC<{ authenticated: boolean }> = ({ authenticated }) => {
   };
 
   return (
-    <header
-      className="relative z-40 mx-5 flex items-center py-5 font-bold transition-all"
-    >
+    <header className="relative z-40 mx-5 flex items-center py-5 font-bold transition-all">
       <div
         className="mx-auto flex w-full max-w-[50rem] flex-row flex-wrap items-center justify-center rounded-xl border-2 border-black
  px-4 py-3 shadow-custom transition-all dark:bg-[#1a1a1a] sm:justify-between"
@@ -44,9 +42,7 @@ const Header: FC<{ authenticated: boolean }> = ({ authenticated }) => {
             >
               Codefoli
             </Link>
-            <div
-              onClick={handleToggleTheme}
-            >
+            <div onClick={handleToggleTheme}>
               {theme === LIGHT_THEME_KEY ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -96,9 +92,7 @@ const Header: FC<{ authenticated: boolean }> = ({ authenticated }) => {
             >
               Contact
             </Link>
-            <div
-              onClick={handleToggleTheme}
-            >
+            <div onClick={handleToggleTheme}>
               {theme === LIGHT_THEME_KEY ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -139,10 +133,7 @@ const Header: FC<{ authenticated: boolean }> = ({ authenticated }) => {
                   Hop In!
                 </button>
               </Link>
-              <div
-                className={"ml-5"}
-                onClick={handleToggleTheme}
-              >
+              <div className={"ml-5"} onClick={handleToggleTheme}>
                 {theme === LIGHT_THEME_KEY ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
