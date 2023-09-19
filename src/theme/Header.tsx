@@ -1,18 +1,13 @@
 import {Link} from "react-router-dom";
 import {DARK_THEME_KEY, LIGHT_THEME_KEY, LOCALSTORAGE_THEME_KEY} from "../util/constants.ts";
-import {FC, useState} from "react";
+import {Dispatch, FC, SetStateAction} from "react";
 import {toggleTheme} from "./toggleTheme.ts";
 
 
-const Header: FC = () => {
-
-    const [theme, setTheme] = useState<
-        typeof LIGHT_THEME_KEY | typeof DARK_THEME_KEY
-    >(
-        (localStorage.getItem(LOCALSTORAGE_THEME_KEY) as
-            | typeof LIGHT_THEME_KEY
-            | typeof DARK_THEME_KEY) || LIGHT_THEME_KEY
-    );
+const Header: FC<{
+    setTheme: Dispatch<SetStateAction<typeof DARK_THEME_KEY | typeof LIGHT_THEME_KEY>>;
+    theme: typeof LIGHT_THEME_KEY | typeof DARK_THEME_KEY;
+}> = ({setTheme, theme}) => {
 
     return (
         <header
