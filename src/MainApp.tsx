@@ -31,6 +31,8 @@ import {
   LOCALSTORAGE_REFRESH_KEY,
   LOCALSTORAGE_ROLE_KEY,
 } from "./util/constants";
+import Themes from "./theme/Themes.tsx";
+import {STAGE} from "./config.ts";
 
 const MainApp: React.FC = () => {
   const navigate = useNavigate();
@@ -99,6 +101,8 @@ const MainApp: React.FC = () => {
     header_one: "",
     description_one: "",
   });
+
+  const [themes, setThemes] = useState([]);
 
   const [deploying, setDeploying] = useState(false);
   const [deployed, setDeployed] = useState<{ url: string; bool: boolean }>({
@@ -170,9 +174,37 @@ const MainApp: React.FC = () => {
           navigate("/login");
         }
       }
+      const themesFetch = async () => {
+        try {
+          const response = await fetch(
+              `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/themes`,
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": "Bearer " + localStorage.getItem(LOCALSTORAGE_ID_KEY),
+                },
+              }
+          );
+
+          const responseJson = await response.json();
+
+          if (responseJson.status === "OK") {
+            setThemes(responseJson.data);
+            return responseJson;
+          } else {
+            return responseJson;
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      }
+
+      await themesFetch();
       setLoading(false);
     };
-    authenticatedCheck();
+
+    authenticatedCheck().then();
   }, []);
 
   const ProjectOr404 = () => {
@@ -205,6 +237,7 @@ const MainApp: React.FC = () => {
       <Github />
       <Header authenticated={authenticatedUser} />
       <Routes>
+        <Route path="/themes" element={<Themes themes={themes}/>} />
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
