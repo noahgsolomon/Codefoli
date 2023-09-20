@@ -8,7 +8,10 @@ import {
 } from "../util/constants.ts";
 import ThemePages from "./pages/Themes/ThemePages.tsx";
 import Sidebar from "./Sidebar.tsx";
-const Themes: FC = () => {
+const Themes: FC<{
+  themes: string[]
+}> = ({themes}) => {
+
   const [theme, setTheme] = useState<
     typeof LIGHT_THEME_KEY | typeof DARK_THEME_KEY
   >(
@@ -39,8 +42,8 @@ const Themes: FC = () => {
         <Sidebar />
         <div className="flex w-full flex-col">
           <Header setTheme={setTheme} theme={theme} />
-          <CurrentPages currentTheme={currentTheme} />
-          <ThemePages currentTheme={currentTheme} />
+          <CurrentPages currentTheme={currentTheme} themes={themes}/>
+          <ThemePages currentTheme={currentTheme} themes={themes} />
         </div>
       </div>
     </>
