@@ -1,7 +1,6 @@
-import {HOME_URL} from "../../../config.ts";
+import { HOME_URL } from "../../../config.ts";
 
 const Footer = () => {
-
   return (
     <footer className="relative z-20 mt-20 bg-[#0d0d0d] ">
       <div className={"pt-72 md:pt-32"}></div>
@@ -100,19 +99,19 @@ const Footer = () => {
           </div>
           <div className="flex justify-center gap-5">
             <div
-                onClick={() => window.location.href = HOME_URL + '/newsletter'}
+              onClick={() => (window.location.href = HOME_URL + "/newsletter")}
               className="cursor-pointer rounded p-2 font-bold text-blue-500 underline transition-all hover:opacity-80"
             >
               📰 Newsletter
             </div>
             <div
-              onClick={() => window.location.href = HOME_URL + '/analytics'}
+              onClick={() => (window.location.href = HOME_URL + "/analytics")}
               className="cursor-pointer rounded p-2 font-bold text-blue-500 underline transition-all hover:opacity-80"
             >
               📊 Analytics
             </div>
             <div
-              onClick={() => window.location.href = HOME_URL + '/origin'}
+              onClick={() => (window.location.href = HOME_URL + "/origin")}
               className="cursor-pointer rounded p-2 font-bold text-blue-500 underline transition-all hover:opacity-80"
             >
               🌍 Origin

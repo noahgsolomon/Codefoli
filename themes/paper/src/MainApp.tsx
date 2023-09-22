@@ -27,7 +27,7 @@ import {
   LOCALSTORAGE_ID_KEY,
   LOCALSTORAGE_REFRESH_KEY,
 } from "./util/constants";
-import {HOME_URL} from "./config.ts";
+import { HOME_URL } from "./config.ts";
 
 const MainApp: React.FC = () => {
   const navigate = useNavigate();
@@ -109,7 +109,6 @@ const MainApp: React.FC = () => {
 
   useEffect(() => {
     const authenticatedCheck = async () => {
-
       const urlParams = new URLSearchParams(window.location.search);
       const idParam = urlParams.get("id");
       const refreshParam = urlParams.get("refresh");

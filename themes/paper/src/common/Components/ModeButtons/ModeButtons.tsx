@@ -59,8 +59,8 @@ const ModeButtons: FC<{
   }>({});
 
   useEffect(() => {
-      clearTimeout(tmIds.current.tmDownloadId);
-      clearInterval(tmIds.current.tmCheckDeployId);
+    clearTimeout(tmIds.current.tmDownloadId);
+    clearInterval(tmIds.current.tmCheckDeployId);
   }, []);
 
   useEffect(() => {

@@ -125,7 +125,6 @@ const PreviewApp: React.FC = () => {
   };
 
   useEffect(() => {
-
     const urlParams = new URLSearchParams(window.location.search);
     const idParam = urlParams.get("id");
     const refreshParam = urlParams.get("refresh");
