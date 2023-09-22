@@ -279,7 +279,7 @@ const ModeButtonsP: FC<{
             <div className="flex flex-wrap justify-center">
               {!deploying && !activeDownload ? (
                 <>
-                  <a href="/dashboard">
+                  <a href="/">
                     <button className="mr-1 flex items-center justify-center rounded-3xl border-2 border-black bg-black px-1 text-white transition-all hover:-translate-y-0.5 hover:shadow-custom sm:m-2 sm:px-4">
                       Edit{" "}
                       <AiOutlineEdit fill="white" className="ml-2 text-2xl" />
