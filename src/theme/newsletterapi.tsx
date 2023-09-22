@@ -1,4 +1,4 @@
-import {STAGE} from "../config.ts";
+import { STAGE } from "../config.ts";
 
 const addEmail = async (email: string) => {
   try {

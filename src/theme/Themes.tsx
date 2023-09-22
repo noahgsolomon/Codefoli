@@ -11,13 +11,12 @@ import Sidebar from "./Sidebar.tsx";
 import Footer from "./Footer.tsx";
 const Themes: FC<{
   themes: {
-    theme: string,
-    header: string,
-    about: string,
-    image: string
-  }[]
-}> = ({themes}) => {
-
+    theme: string;
+    header: string;
+    about: string;
+    image: string;
+  }[];
+}> = ({ themes }) => {
   const [theme, setTheme] = useState<
     typeof LIGHT_THEME_KEY | typeof DARK_THEME_KEY
   >(
@@ -48,7 +47,7 @@ const Themes: FC<{
         <Sidebar />
         <div className="flex w-full flex-col">
           <Header setTheme={setTheme} theme={theme} />
-          <CurrentPages themes={themes}/>
+          <CurrentPages themes={themes} />
           <ThemePages currentTheme={currentTheme} themes={themes} />
         </div>
       </div>

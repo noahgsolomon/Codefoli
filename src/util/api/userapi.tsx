@@ -65,7 +65,4 @@ const jobOperations = async (operation: JobOperation) => {
   }
 };
 
-export {
-  userDetails,
-  jobOperations,
-};
+export { userDetails, jobOperations };

@@ -3,13 +3,13 @@ import { FiArrowUpRight } from "react-icons/fi";
 
 const PageCard: FC<{
   themes: {
-    theme: string,
-    header: string,
-    about: string,
-    image: string
-  },
-  link: string
-}> = ({link, themes }) => {
+    theme: string;
+    header: string;
+    about: string;
+    image: string;
+  };
+  link: string;
+}> = ({ link, themes }) => {
   const [hovered, setHovered] = useState(false);
   const [removeHover, setRemoveHover] = useState(false);
 
@@ -18,7 +18,7 @@ const PageCard: FC<{
       className="m-5 flex max-h-[400px] max-w-[400px] cursor-pointer flex-col rounded-xl border-2 border-black shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onClick={() => window.location.href = link}
+      onClick={() => (window.location.href = link)}
     >
       <button
         className={`${
@@ -50,26 +50,51 @@ const PageCard: FC<{
         <FiArrowUpRight className={"ml-4 text-3xl text-white"} />
       </div>
       <div className=" relative h-[400px] overflow-hidden rounded-t-lg transition-all">
-        <div className={'flex h-full flex-row gap-10 justify-between items-center'}>
-          <div className={'mt-10 ml-2 flex flex-col'}>
-            <h2 className={'max-w-[15ch] font-extra-bold text-lg'}> {themes.header.length > 50 ? themes.header.substr(0, 50) + '...' : themes.header}</h2>
-            <p className={'text-xs max-w-[30ch]'}>{themes.about.length > 100 ? themes.about.substr(0, 100) + '...' : themes.about}</p>
+        <div
+          className={"flex h-full flex-row items-center justify-between gap-10"}
+        >
+          <div className={"ml-2 mt-10 flex flex-col"}>
+            <h2 className={"font-extra-bold max-w-[15ch] text-lg"}>
+              {" "}
+              {themes.header.length > 50
+                ? themes.header.substr(0, 50) + "..."
+                : themes.header}
+            </h2>
+            <p className={"max-w-[30ch] text-xs"}>
+              {themes.about.length > 100
+                ? themes.about.substr(0, 100) + "..."
+                : themes.about}
+            </p>
 
-            <div className={'flex flex-row mt-1 gap-2'}>
-              <div className={'text-xs font-bold bg-black text-white rounded-md px-[4px] py-[5px]'}>
+            <div className={"mt-1 flex flex-row gap-2"}>
+              <div
+                className={
+                  "rounded-md bg-black px-[4px] py-[5px] text-xs font-bold text-white"
+                }
+              >
                 Get in touch
               </div>
-              <div className={'text-xs font-bold border-black border-2 rounded-md px-[4px] py-[5px]'}>
+              <div
+                className={
+                  "rounded-md border-2 border-black px-[4px] py-[5px] text-xs font-bold"
+                }
+              >
                 View Projects
               </div>
             </div>
-
           </div>
-          <div className={'mr-2 border-2 border-black shadow-custom rounded-lg w-[150px] h-[150px] overflow-hidden'}>
-            <img className={'object-cover w-full h-full'} src={themes.image} alt={'profile image'}/>
+          <div
+            className={
+              "mr-2 h-[150px] w-[150px] overflow-hidden rounded-lg border-2 border-black shadow-custom"
+            }
+          >
+            <img
+              className={"h-full w-full object-cover"}
+              src={themes.image}
+              alt={"profile image"}
+            />
           </div>
         </div>
-
       </div>
       <div className="rounded-b-lg bg-white p-5 dark:bg-[#0d0d0d]">
         <div className={"mt-2 flex flex-wrap gap-1"}>

@@ -1,8 +1,11 @@
 import { DARK_THEME_KEY } from "../../../util/constants.ts";
 import { FC, useState } from "react";
-import {FiArrowUpRight, FiLock} from "react-icons/fi";
-import {LOCALSTORAGE_ID_KEY, LOCALSTORAGE_REFRESH_KEY} from "../../constants.ts";
-import {PAPER_URL} from "../../../config.ts";
+import { FiArrowUpRight, FiLock } from "react-icons/fi";
+import {
+  LOCALSTORAGE_ID_KEY,
+  LOCALSTORAGE_REFRESH_KEY,
+} from "../../constants.ts";
+import { PAPER_URL } from "../../../config.ts";
 
 const ThemeCard: FC<{
   themeTitle: string;
@@ -15,23 +18,34 @@ const ThemeCard: FC<{
 
   return (
     <div
-      className={`${used ? 'opacity-70' : ''} relative m-5 flex max-h-[400px] max-w-[400px] cursor-pointer flex-col rounded-xl border-2 border-black shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover`}
+      className={`${
+        used ? "opacity-70" : ""
+      } relative m-5 flex max-h-[400px] max-w-[400px] cursor-pointer flex-col rounded-xl border-2 border-black shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onClick={() => !used ? (window.location.href = themeTitle === 'PAPER' ? `${PAPER_URL}?id=${localStorage.getItem(LOCALSTORAGE_ID_KEY)}&refresh=${localStorage.getItem(LOCALSTORAGE_REFRESH_KEY)}` : '#') : null}
+      onClick={() =>
+        !used
+          ? (window.location.href =
+              themeTitle === "PAPER"
+                ? `${PAPER_URL}?id=${localStorage.getItem(
+                    LOCALSTORAGE_ID_KEY
+                  )}&refresh=${localStorage.getItem(LOCALSTORAGE_REFRESH_KEY)}`
+                : "#")
+          : null
+      }
     >
       <div
-          className={`absolute inset-0 z-10 flex items-center justify-center rounded-lg border-8 border-dashed border-black border-opacity-30 bg-black ${
-              used ? "visible opacity-60" : "hidden"
-          }`}
+        className={`absolute inset-0 z-10 flex items-center justify-center rounded-lg border-8 border-dashed border-black border-opacity-30 bg-black ${
+          used ? "visible opacity-60" : "hidden"
+        }`}
       >
         <FiLock className="text-4xl text-white" />
         <h3 className={"text-4xl font-bold text-white"}>Theme used</h3>
       </div>
       <div
-          className={`transition-visible absolute inset-0 z-10 flex items-center justify-center rounded-lg border-8 border-dashed border-black border-opacity-30 bg-green-500 opacity-0 transition-opacity ${
-              !used && hovered ? "visible opacity-80" : "invisible"
-          }`}
+        className={`transition-visible absolute inset-0 z-10 flex items-center justify-center rounded-lg border-8 border-dashed border-black border-opacity-30 bg-green-500 opacity-0 transition-opacity ${
+          !used && hovered ? "visible opacity-80" : "invisible"
+        }`}
       >
         <h3 className={"text-4xl font-bold text-white"}>Click to Build Page</h3>
         <FiArrowUpRight className={"ml-4 text-4xl text-white"} />

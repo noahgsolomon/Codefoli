@@ -5,9 +5,7 @@ import Home from "./pages/Home/Home.tsx";
 import Login from "./pages/Login/Login.tsx";
 import Register from "./pages/Register/Register.tsx";
 import { authenticated } from "api/authenticateapi.tsx";
-import {
-  userDetails,
-} from "api/userapi.tsx";
+import { userDetails } from "api/userapi.tsx";
 import Loader from "Components/Loader/Loader.tsx";
 import Github from "Components/Github/Github.tsx";
 import NotFound from "./NotFound.tsx";
@@ -17,7 +15,7 @@ import {
   LOCALSTORAGE_ROLE_KEY,
 } from "./util/constants";
 import Themes from "./theme/Themes.tsx";
-import {STAGE} from "./config.ts";
+import { STAGE } from "./config.ts";
 
 const MainApp: React.FC = () => {
   const navigate = useNavigate();
@@ -25,12 +23,14 @@ const MainApp: React.FC = () => {
   const [authenticatedUser, setAuthenticatedUser] = useState<boolean>(false);
 
   const [loading, setLoading] = useState<boolean>(true);
-  const [themes, setThemes] = useState<{
-    theme: string,
-    header: string,
-    about: string,
-    image: string
-  }[]>([]);
+  const [themes, setThemes] = useState<
+    {
+      theme: string;
+      header: string;
+      about: string;
+      image: string;
+    }[]
+  >([]);
 
   useEffect(() => {
     const authenticatedCheck = async () => {
@@ -54,11 +54,7 @@ const MainApp: React.FC = () => {
           setAuthenticatedUser(true);
 
           const path = window.location.pathname;
-          if (
-            path === "/" ||
-            path === "/login" ||
-            path === "/register"
-          ) {
+          if (path === "/" || path === "/login" || path === "/register") {
             navigate("/home");
           }
         }
@@ -72,14 +68,15 @@ const MainApp: React.FC = () => {
       const themesFetch = async () => {
         try {
           const response = await fetch(
-              `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/themes`,
-              {
-                method: "GET",
-                headers: {
-                  "Content-Type": "application/json",
-                  "Authorization": "Bearer " + localStorage.getItem(LOCALSTORAGE_ID_KEY),
-                },
-              }
+            `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/themes`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization:
+                  "Bearer " + localStorage.getItem(LOCALSTORAGE_ID_KEY),
+              },
+            }
           );
 
           const responseJson = await response.json();
@@ -94,7 +91,7 @@ const MainApp: React.FC = () => {
         } catch (e) {
           console.log(e);
         }
-      }
+      };
 
       await themesFetch();
       setLoading(false);
@@ -104,7 +101,7 @@ const MainApp: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <Loader />
+    return <Loader />;
   }
 
   return (
@@ -112,7 +109,7 @@ const MainApp: React.FC = () => {
       <Github />
       <Header authenticated={authenticatedUser} />
       <Routes>
-        <Route path="/home" element={<Themes themes={themes}/>} />
+        <Route path="/home" element={<Themes themes={themes} />} />
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
