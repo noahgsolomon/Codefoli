@@ -40,7 +40,7 @@ const NotFound: FC = () => {
         <h1 className="mt-10 text-2xl font-bold md:text-4xl">Oops!</h1>
         <h1 className="mt-5 text-2xl font-bold md:text-4xl">Page Not Found</h1>
         <Link
-          to="/dashboard"
+          to="/home"
           className="mt-10 rounded-xl bg-black px-8 py-2 font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-blue-500"
         >
           Go to homepage

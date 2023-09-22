@@ -18,7 +18,7 @@ const Login: React.FC = () => {
     const loginRequest = await login(email, password);
     console.log(loginRequest);
     if (loginRequest.status === "OK") {
-      window.location.href = "/dashboard";
+      window.location.href = "/home";
     } else {
       setEmailError(true);
       setPasswordError(true);

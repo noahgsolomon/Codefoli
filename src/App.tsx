@@ -2,7 +2,6 @@ import {FC, useEffect} from "react";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import "./App.css";
 import MainApp from "./MainApp.tsx";
-import PreviewApp from "./PreviewApp.tsx";
 import Processing from "./Processing.tsx";
 import {
   LOCALSTORAGE_THEME_KEY,
@@ -25,7 +24,6 @@ const App: FC = () => {
         : LIGHT_THEME_KEY;
     document.body.classList.add(userTheme || systemTheme);
     localStorage.setItem(LOCALSTORAGE_THEME_KEY, userTheme || systemTheme);
-
   }, []);
 
   const RedirectToGitHub: FC = () => {
@@ -54,7 +52,6 @@ const App: FC = () => {
         <Route path="/github" element={<RedirectToGitHub />} />
         <Route path="/discord" element={<RedirectToDiscord />} />
         <Route path="/newsletter" element={<Newsletter />} />
-        <Route path="/preview/*" element={<PreviewApp />} />
         <Route path="/*" element={<MainApp />} />
       </Routes>
     </BrowserRouter>

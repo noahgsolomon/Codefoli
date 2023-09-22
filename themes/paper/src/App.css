@@ -1,0 +1,122 @@
+/* Use Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Onest-Regular";
+  src: url("./assets/fonts/Onest-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Onest-Bold";
+  src: url("./assets/fonts/Onest-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Onest-Black";
+  src: url("./assets/fonts/Onest-Black.ttf") format("truetype");
+}
+
+@keyframes rainbow {
+  0% {
+    stroke: red;
+  }
+  14% {
+    stroke: orange;
+  }
+  28% {
+    stroke: yellow;
+  }
+  42% {
+    stroke: green;
+  }
+  57% {
+    stroke: blue;
+  }
+  71% {
+    stroke: indigo;
+  }
+  85% {
+    stroke: violet;
+  }
+  100% {
+    stroke: red;
+  }
+}
+
+@keyframes green-stroke {
+  0% {
+    stroke: #2ecc71;
+  }
+  25% {
+    stroke: #27ae60;
+  }
+  50% {
+    stroke: #229954;
+  }
+  75% {
+    stroke: #1e824c;
+  }
+  100% {
+    stroke: #2ecc71;
+  }
+}
+
+@keyframes red {
+  0% {
+    stroke: #ff6347;
+  }
+  25% {
+    stroke: #ff4500;
+  }
+  50% {
+    stroke: #ff0000;
+  }
+  75% {
+    stroke: #b22222;
+  }
+  100% {
+    stroke: #ff6347;
+  }
+}
+
+.green-stroke {
+  animation: green-stroke 3s infinite linear;
+}
+
+.red-stroke {
+  animation: red 3s infinite linear;
+}
+
+.rainbow-stroke {
+  animation: rainbow 3s linear infinite;
+}
+
+@layer utilities {
+  .font-family-onest-regular {
+    font-family: "Onest-Regular", sans-serif;
+  }
+}
+
+body {
+  @apply font-family-onest-regular font-sans text-lg font-medium leading-loose;
+}
+
+body.dark {
+  @apply bg-[#1a1a1a]
+    text-gray-200;
+}
+
+body.light {
+  @apply bg-gray-50
+  text-gray-800;
+}
+
+.font-bold {
+  font-family: "Onest-Bold", sans-serif;
+}
+
+.font-extra-bold {
+  font-family: "Onest-Black", sans-serif;
+}
