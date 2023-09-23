@@ -9,6 +9,9 @@ const ThemePages: FC<{
     header: string;
     about: string;
     image: string;
+    domain: string;
+    last_accessed: string;
+    deployed: boolean;
   }[];
 }> = ({ currentTheme, themes }) => {
   const themeList = ["PAPER"];

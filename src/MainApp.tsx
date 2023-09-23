@@ -5,13 +5,11 @@ import Home from "./pages/Home/Home.tsx";
 import Login from "./pages/Login/Login.tsx";
 import Register from "./pages/Register/Register.tsx";
 import { authenticated } from "api/authenticateapi.tsx";
-import { userDetails } from "api/userapi.tsx";
 import Loader from "Components/Loader/Loader.tsx";
 import Github from "Components/Github/Github.tsx";
 import NotFound from "./NotFound.tsx";
 import {
   LOCALSTORAGE_ID_KEY,
-  LOCALSTORAGE_REFRESH_KEY,
   LOCALSTORAGE_ROLE_KEY,
 } from "./util/constants";
 import Themes from "./theme/Themes.tsx";
@@ -29,6 +27,9 @@ const MainApp: React.FC = () => {
       header: string;
       about: string;
       image: string;
+      domain: string;
+      last_accessed: string;
+      deployed: boolean;
     }[]
   >([]);
 
@@ -39,25 +40,8 @@ const MainApp: React.FC = () => {
         if (fetchState.data !== null) {
           localStorage.setItem(LOCALSTORAGE_ID_KEY, fetchState.data.idToken);
         }
-        const user = await userDetails();
-        if (user.status === "ERROR") {
-          localStorage.removeItem(LOCALSTORAGE_ID_KEY);
-          localStorage.removeItem(LOCALSTORAGE_REFRESH_KEY);
-          window.location.href = "/login";
-        }
-        if (user.data.role === "NEWBIE") {
-          if (window.location.pathname !== "/home") {
-            navigate("/home");
-          }
-          setAuthenticatedUser(true);
-        } else {
-          setAuthenticatedUser(true);
-
-          const path = window.location.pathname;
-          if (path === "/" || path === "/login" || path === "/register") {
-            navigate("/home");
-          }
-        }
+        setAuthenticatedUser(true);
+        navigate('/home')
       } else {
         const path = window.location.pathname;
         if (path !== "/login" && path !== "/register" && path !== "/") {
