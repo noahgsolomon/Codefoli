@@ -9,11 +9,11 @@ import {
 import UserData from "Type/UserData.tsx";
 import userData from "Type/UserData.tsx";
 import { AiOutlineEdit } from "react-icons/ai";
-import { FaDownload, FaGlobe, FaPaperPlane, FaTrash } from "react-icons/fa";
+import {FaArrowLeft, FaDownload, FaGlobe, FaPaperPlane, FaTrash} from "react-icons/fa";
 import { download } from "api/downloadapi.tsx";
 import { deleteWebsite } from "api/deletewebsiteapi.tsx";
 import { IoIosCloud } from "react-icons/io";
-import { STAGE } from "../../../../config.ts";
+import {HOME_URL, STAGE} from "../../../../config.ts";
 import {
   LIGHT_THEME_KEY,
   LOCALSTORAGE_ID_KEY,
@@ -327,25 +327,34 @@ const ModeButtonsP: FC<{
               )}
             </div>
             <div>
-              {userData.website &&
-              userData.cname_value &&
-              userData.cname_name &&
-              userData.cname_value ? (
-                <p
-                  className="cursor-pointer text-blue-500 underline transition-all hover:opacity-50"
-                  onClick={() => setCustomDomainCreatedModalOpen(true)}
-                >
-                  DNS Records
-                </p>
-              ) : (
-                <a
-                  href={userData.website}
-                  className="break-all text-sm text-blue-500 underline transition-all hover:text-yellow-500"
-                  target="_blank"
-                >
-                  {userData.website}
-                </a>
-              )}
+              <a className={'flex flex-row gap-5'}
+                 href={HOME_URL}
+              >
+                <div className={'font-bold flex flex-row cursor-pointer items-center gap-1 hover:gap-2 transition-all underline'}>
+                  <FaArrowLeft />Exit editor
+                </div>
+                {userData.website &&
+                userData.cname_value &&
+                userData.cname_name &&
+                userData.cname_value ? (
+                    <p
+                        className={
+                          "cursor-pointer text-blue-500 underline transition-all hover:opacity-50"
+                        }
+                        onClick={() => setCustomDomainCreatedModalOpen(true)}
+                    >
+                      DNS Records
+                    </p>
+                ) : (
+                    <a
+                        href={userData.website}
+                        className="break-all text-sm text-blue-500 underline transition-all hover:text-yellow-500"
+                        target="_blank"
+                    >
+                      {userData.website}
+                    </a>
+                )}
+              </a>
             </div>
           </div>
         </div>

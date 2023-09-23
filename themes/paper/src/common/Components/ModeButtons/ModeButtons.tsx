@@ -7,7 +7,7 @@ import {
   subdomainAvailability,
 } from "api/deployapi.tsx";
 import UserData from "Type/UserData.tsx";
-import { FaDownload, FaGlobe, FaPaperPlane, FaTrash } from "react-icons/fa";
+import {FaArrowLeft, FaDownload, FaGlobe, FaPaperPlane, FaTrash} from "react-icons/fa";
 import { AiOutlineEye } from "react-icons/ai";
 import { download } from "api/downloadapi.tsx";
 import { deleteWebsite } from "api/deletewebsiteapi.tsx";
@@ -17,7 +17,7 @@ import {
   LOCALSTORAGE_ID_KEY,
   LOCALSTORAGE_THEME_KEY,
 } from "../../../util/constants";
-import { STAGE } from "../../../config.ts";
+import {HOME_URL, STAGE} from "../../../config.ts";
 
 const ModeButtons: FC<{
   deploying: boolean;
@@ -336,27 +336,34 @@ const ModeButtons: FC<{
               )}
             </div>
             <div>
-              {userData.website &&
-              userData.cname_value &&
-              userData.cname_name &&
-              userData.cname_value ? (
-                <p
-                  className={
-                    "cursor-pointer text-blue-500 underline transition-all hover:opacity-50"
-                  }
-                  onClick={() => setCustomDomainCreatedModalOpen(true)}
-                >
-                  DNS Records
-                </p>
-              ) : (
-                <a
-                  href={userData.website}
-                  className="break-all text-sm text-blue-500 underline transition-all hover:text-yellow-500"
-                  target="_blank"
-                >
-                  {userData.website}
-                </a>
-              )}
+              <a className={'flex flex-row gap-5'}
+              href={HOME_URL}
+              >
+                <div className={'font-bold flex flex-row cursor-pointer items-center gap-1 hover:gap-2 transition-all underline'}>
+                  <FaArrowLeft />Exit editor
+                </div>
+                {userData.website &&
+                userData.cname_value &&
+                userData.cname_name &&
+                userData.cname_value ? (
+                    <p
+                        className={
+                          "cursor-pointer text-blue-500 underline transition-all hover:opacity-50"
+                        }
+                        onClick={() => setCustomDomainCreatedModalOpen(true)}
+                    >
+                      DNS Records
+                    </p>
+                ) : (
+                    <a
+                        href={userData.website}
+                        className="break-all text-sm text-blue-500 underline transition-all hover:text-yellow-500"
+                        target="_blank"
+                    >
+                      {userData.website}
+                    </a>
+                )}
+              </a>
             </div>
           </div>
         </div>
