@@ -15,9 +15,9 @@ const Footer = () => {
             <p className="mt-6 text-center leading-relaxed text-white md:text-left">
               Here for you to showcase your projects and skills to the world.
             </p>
-            <div className="z-50 cursor-pointer text-center text-blue-500 transition-all hover:opacity-80 md:text-left">
+            <a href="mailto:support@codefoli.com" className="z-50 cursor-pointer text-center text-blue-500 transition-all hover:opacity-80 md:text-left">
               support@codefoli.com
-            </div>
+            </a>
             <ul className="mb-8 flex justify-center gap-6 md:mb-0 md:mt-8 md:justify-start md:gap-8">
               <li>
                 <a
@@ -102,19 +102,19 @@ const Footer = () => {
               onClick={() => (window.location.href = HOME_URL + "/newsletter")}
               className="cursor-pointer rounded p-2 font-bold text-blue-500 underline transition-all hover:opacity-80"
             >
-              📰 Newsletter
+              Newsletter
             </div>
             <div
               onClick={() => (window.location.href = HOME_URL + "/analytics")}
               className="cursor-pointer rounded p-2 font-bold text-blue-500 underline transition-all hover:opacity-80"
             >
-              📊 Analytics
+              Analytics
             </div>
             <div
               onClick={() => (window.location.href = HOME_URL + "/origin")}
               className="cursor-pointer rounded p-2 font-bold text-blue-500 underline transition-all hover:opacity-80"
             >
-              🌍 Origin
+              Origin
             </div>
           </div>
         </div>
