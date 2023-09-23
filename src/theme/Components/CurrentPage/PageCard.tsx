@@ -7,6 +7,9 @@ const PageCard: FC<{
     header: string;
     about: string;
     image: string;
+    domain: string;
+    last_accessed: string;
+    deployed: boolean;
   };
   link: string;
 }> = ({ link, themes }) => {
@@ -103,21 +106,21 @@ const PageCard: FC<{
               "rounded-xl border-2 border-black border-opacity-30 bg-green-300 p-1 text-sm text-gray-50 dark:bg-green-900"
             }
           >
-            metrics{/* deployed */}
+            {themes.deployed ? "deployed" : "not deployed"}
           </div>
           <div
             className={
               "rounded-xl border-2 border-black border-opacity-30 bg-red-300 p-1 text-sm text-gray-50 dark:bg-red-900"
             }
           >
-            coming{/*last accessed: 03/04/2023*/}
+            last accessed: {themes.last_accessed || "before v1.6"}
           </div>
           <div
             className={
               "rounded-xl border-2 border-black border-opacity-30 bg-blue-300 p-1 text-sm text-gray-50 dark:bg-blue-900"
             }
           >
-            soon {/*www.noahgsolomon.com*/}
+            domain: {themes.domain || 'none since v1.6'}
           </div>
         </div>
       </div>
