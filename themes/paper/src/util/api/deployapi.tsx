@@ -12,7 +12,7 @@ const deploy = async ({
 }) => {
   try {
     const response = await fetch(
-      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/deploy`,
+      `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/deploy?theme=PAPER`,
       {
         method: "POST",
         headers: {
