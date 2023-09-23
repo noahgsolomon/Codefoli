@@ -29,7 +29,7 @@ const AddSection: React.FC<{
         <span className="text-lg font-bold text-white">+</span>
       </button>
       {isOpen && (
-        <div className="absolute top-full z-10 w-48 rounded border-2 border-black bg-white py-2 shadow-custom transition-all dark:bg-[#1a1a1a]">
+        <div className="absolute top-full z-30 w-48 rounded border-2 border-black bg-white py-2 shadow-custom transition-all dark:bg-[#1a1a1a]">
           {sections.map((section, index) => (
             <button
               key={index}
