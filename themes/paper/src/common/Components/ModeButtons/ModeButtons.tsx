@@ -350,8 +350,8 @@ const ModeButtons: FC<{
               )}
             </div>
             <div>
-              <div className={'flex flex-row gap-5'}>
-                <a href={HOME_URL} className={'font-bold flex flex-row cursor-pointer items-center gap-1 hover:gap-2 transition-all underline'}>
+              <div className={'flex flex-row items-center gap-5'}>
+                <a href={HOME_URL} className={'hover:opacity-80 font-bold flex flex-row cursor-pointer items-center gap-1 hover:gap-2 transition-all underline'}>
                   <FaArrowLeft />Exit editor
                 </a>
                 {userData.website &&
@@ -360,7 +360,7 @@ const ModeButtons: FC<{
                 userData.cname_value ? (
                     <p
                         className={
-                          "cursor-pointer text-blue-500 underline transition-all hover:opacity-50"
+                          "cursor-pointer font-bold text-blue-500 underline transition-all hover:opacity-50"
                         }
                         onClick={() => setCustomDomainCreatedModalOpen(true)}
                     >
@@ -369,7 +369,7 @@ const ModeButtons: FC<{
                 ) : (
                     <a
                         href={userData.website}
-                        className="break-all text-sm text-blue-500 underline transition-all hover:text-yellow-500"
+                        className="font-bold break-all text-blue-500 underline transition-all hover:text-yellow-500"
                         target="_blank"
                     >
                       {userData.website}
@@ -788,7 +788,7 @@ const ModeButtons: FC<{
               Add these records to your DNS
             </p>
             <p className={"mb-4 opacity-80"}>
-              Please allow <span className={"underline"}>24 hours</span> for
+              Please allow <span className={"underline"}>10 minutes to 24 hours</span> for
               these changes to take affect depending on your provider
             </p>
             <table className="min-w-full divide-y divide-gray-200 border-2 border-white">
