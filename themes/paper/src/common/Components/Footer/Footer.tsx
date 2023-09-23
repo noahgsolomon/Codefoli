@@ -3,7 +3,7 @@ import { HOME_URL } from "../../../config.ts";
 const Footer = () => {
   return (
     <footer className="relative z-20 mt-20 bg-[#0d0d0d] ">
-      <div className={"pt-72 md:pt-32"}></div>
+      <div className={"pt-10"}></div>
       <div className="mx-auto max-w-screen-xl px-4  pb-2 pt-2 lg:px-8 lg:pt-6">
         <div className="flex flex-col items-center justify-between md:flex-row">
           <div className={"md:mr-10"}>
