@@ -57,6 +57,7 @@ const ModeButtons: FC<{
     tmDownloadId?: NodeJS.Timeout; // created by setTimeout
     tmCheckDeployId?: NodeJS.Timeout; // created by setInterval
   }>({});
+  const [animateVisibility, setAnimateVisibility] = useState(false);
 
   useEffect(() => {
     clearTimeout(tmIds.current.tmDownloadId);
@@ -67,15 +68,24 @@ const ModeButtons: FC<{
     const handleScroll = () => {
       const currentScroll = window.scrollY;
       const scrollDifference = Math.abs(currentScroll - prevScroll);
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+      if (currentScroll >= totalHeight - 50) {
+        setAnimateVisibility(false);
+        setTimeout(() => {setScrollingDown(false)}, 100)
+        return;
+      }
 
       if (currentScroll > prevScroll && scrollDifference >= thresholdShow) {
-        setScrollingDown(true);
+        setAnimateVisibility(true);
+        setTimeout(() => {setScrollingDown(true)}, 100)
         setPrevScroll(currentScroll);
       } else if (
-        currentScroll < prevScroll &&
-        scrollDifference >= thresholdHide
+          currentScroll < prevScroll &&
+          scrollDifference >= thresholdHide
       ) {
-        setScrollingDown(false);
+        setAnimateVisibility(false);
+        setTimeout(() => {setScrollingDown(false)}, 100)
         setPrevScroll(currentScroll);
       }
     };
@@ -88,12 +98,16 @@ const ModeButtons: FC<{
   }, [prevScroll]);
 
   const animation = useSpring({
-    transform: scrollingDown
-      ? "translate3d(0, 0, 0)"
-      : "translate3d(0, 20px, 0)",
-    opacity: scrollingDown ? 1 : 0,
+    to: async (next) => {
+      if (animateVisibility) {
+        await next({ transform: "translate3d(0, 0, 0)", opacity: 1 });
+      } else {
+        await next({ transform: "translate3d(0, 20px, 0)", opacity: 0 });
+      }
+    },
     config: { duration: 100 },
   });
+
   const handleDeploy = async () => {
     setDeployModalOpen(false);
     setDeploying(true);
@@ -280,8 +294,8 @@ const ModeButtons: FC<{
   return (
     <>
       <animated.div
+        className={`${scrollingDown || animateVisibility ? '' : 'hidden'} fixed bottom-6 left-0 right-0 z-30 flex justify-center`}
         style={animation}
-        className="fixed bottom-6 left-0 right-0 z-30 flex justify-center"
       >
         <div className="mx-2 flex max-w-full flex-col rounded-3xl border-2 border-black bg-white px-4 py-3 shadow-custom dark:bg-[#0d0d0d] sm:max-w-screen-md sm:flex-row">
           <div className="flex flex-col items-center justify-center">
@@ -336,12 +350,10 @@ const ModeButtons: FC<{
               )}
             </div>
             <div>
-              <a className={'flex flex-row gap-5'}
-              href={HOME_URL}
-              >
-                <div className={'font-bold flex flex-row cursor-pointer items-center gap-1 hover:gap-2 transition-all underline'}>
+              <div className={'flex flex-row gap-5'}>
+                <a href={HOME_URL} className={'font-bold flex flex-row cursor-pointer items-center gap-1 hover:gap-2 transition-all underline'}>
                   <FaArrowLeft />Exit editor
-                </div>
+                </a>
                 {userData.website &&
                 userData.cname_value &&
                 userData.cname_name &&
@@ -363,7 +375,7 @@ const ModeButtons: FC<{
                       {userData.website}
                     </a>
                 )}
-              </a>
+              </div>
             </div>
           </div>
         </div>
@@ -771,7 +783,7 @@ const ModeButtons: FC<{
             customDomainCreatedModalOpen ? "" : "hidden"
           } fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-50`}
         >
-          <div className="rounded-lg bg-white p-6 dark:bg-[#1a1a1a] ">
+          <div className="overflow-x-auto rounded-lg bg-white p-6 dark:bg-[#1a1a1a] ">
             <p className={"text-5xl font-bold"}>
               Add these records to your DNS
             </p>
