@@ -10,7 +10,9 @@
       "api/*": ["util/api/*"],
       "assets/*": ["assets/*"],
       "Type/*": ["common/Type/*"],
+      "@/*": ["./src/*"]
     },
+
 
     /* Bundler mode */
     "moduleResolution": "bundler",
