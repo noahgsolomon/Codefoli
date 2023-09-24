@@ -89,17 +89,17 @@ const Home: FC = () => {
                           className="hero-join-button rounded-xl p-[2px] font-bold transition-all duration-300 hover:bg-transparent hover:shadow-[0_0_2rem_-0.5rem_#9b59b6] dark:hidden"
                       >
                         <Link to="/register">
-            <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] bg-white px-4 py-2 text-[#9b59b6] transition-all duration-300">
+            <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] bg-white px-12 md:px-4 py-2 text-[#9b59b6] transition-all duration-300">
               Get started →
             </span>
                         </Link>
                       </Button>
                       <Button
                           asChild
-                          className="hero-join-button-dark hidden rounded-xl p-[1px] font-bold transition-all duration-300 dark:block dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8]"
+                          className="  hero-join-button-dark hidden rounded-xl p-[2px] font-bold transition-all duration-300 dark:block dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8]"
                       >
                         <Link to="/register">
-            <span className="inline-flex h-full w-fit items-center gap-1 rounded-xl px-4 py-2 transition-all duration-300 dark:bg-neutral-900 dark:text-white group-hover:dark:bg-black">
+            <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] px-12 md:px-4 py-2 transition-all duration-300 dark:bg-neutral-900 dark:text-white">
               Get started →
             </span>
                         </Link>
