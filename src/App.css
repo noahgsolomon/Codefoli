@@ -1,21 +1,84 @@
-/* Use Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
 
-@font-face {
-  font-family: "Onest-Regular";
-  src: url("./assets/fonts/Onest-Regular.ttf") format("truetype");
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+ 
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+ 
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+ 
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+ 
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+ 
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+ 
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+ 
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+ 
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+ 
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+ 
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+ 
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+ 
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+  }
 }
 
 @font-face {
-  font-family: "Onest-Bold";
-  src: url("./assets/fonts/Onest-Bold.ttf") format("truetype");
+  font-family: "Inter-Regular";
+  src: url("./assets/fonts/Inter-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "Onest-Black";
-  src: url("./assets/fonts/Onest-Black.ttf") format("truetype");
+  font-family: "Inter-Bold";
+  src: url("./assets/fonts/Inter-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Inter-ExtraBold";
+  src: url("./assets/fonts/Inter-ExtraBold.ttf") format("truetype");
 }
 
 @keyframes rainbow {
@@ -94,18 +157,24 @@
 }
 
 @layer utilities {
-  .font-family-onest-regular {
-    font-family: "Onest-Regular", sans-serif;
+  .font-family-inter-regular {
+    font-family: "Inter-Regular", sans-serif;
+  }
+}
+
+@layer components {
+  .font-extrabold {
+    font-family: 'Inter-ExtraBold', sans-serif;
   }
 }
 
 body {
-  @apply font-family-onest-regular font-sans text-lg font-medium leading-loose;
+  @apply font-family-inter-regular font-sans text-lg font-medium leading-loose;
 }
 
 body.dark {
   @apply bg-[#1a1a1a]
-    text-gray-200;
+  text-gray-200;
 }
 
 body.light {
@@ -113,10 +182,58 @@ body.light {
   text-gray-800;
 }
 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
 .font-bold {
-  font-family: "Onest-Bold", sans-serif;
+  font-family: "Inter-Bold", sans-serif;
+}
+
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 360deg;
+  inherits: false;
+}
+
+.hero-join-button {
+  background: linear-gradient(
+          var(--gradient-angle),
+          hsla(265, 60%, 48%, 0.7),
+          hsla(265, 60%, 48%, 0.3),
+          #9b59b6,
+          hsla(265, 60%, 48%, 0.5)
+  );
+  animation: gradient-rotate 5s linear infinite reverse;
+}
+
+.hero-join-button-dark {
+  background: linear-gradient(
+          var(--gradient-angle),
+          hsla(0, 0%, 100%, 0.5),
+          hsla(0, 0%, 100%, 0.1),
+          #fff,
+          hsla(0, 0%, 100%, 0.3)
+  ) !important;
+
+  animation: gradient-rotate 5s linear infinite reverse;
+}
+
+@keyframes gradient-rotate {
+  0% {
+    --gradient-angle: 360deg;
+  }
+
+  100% {
+    --gradient-angle: 0deg;
+  }
 }
 
 .font-extra-bold {
-  font-family: "Onest-Black", sans-serif;
+  font-family: "Inter-ExtraBold", sans-serif;
 }
