@@ -9,6 +9,8 @@ import {toggleTheme} from "../../util/toggleTheme.ts";
 import {Button} from "./button.tsx";
 import {Link} from "react-router-dom";
 import {Github, Star, Twitter} from "../../util/ui/icons.ts";
+import whiteVideo from '../../assets/whiteedit.mp4';
+
 
 const Home: FC = () => {
 
@@ -50,7 +52,7 @@ const Home: FC = () => {
   return (
       <>
         <div className="h-screen">
-          <div className="md:h-48 h-20 bg-gradient-to-b from-purple-100 to-transparent dark:from-gray-900">
+          <div className="bg-gradient-to-b from-purple-100 to-transparent dark:from-gray-900">
             <header>
               <div className={'pt-10 mx-20 justify-between items-center flex flex-row'}>
                 <div onClick={handleToggleTheme} className={'cursor-pointer'}>
@@ -69,29 +71,28 @@ const Home: FC = () => {
               </div>
             </header>
           </div>
-          <div className={'md:mt-28'}>
+          <div className={'lg:ml-20 mt-28'}>
               {/*start*/}
-            <section className="-mt-[56px] min-h-[calc(100vh)] overflow-hidden lg:min-h-0 lg:pt-[56px]">
-              <div className="mb-10 container grid min-h-screen items-center justify-center lg:min-h-0 lg:grid-cols-2">
-                <div className="flex w-full flex-col items-center justify-center gap-10 lg:items-start">
+            <section className="lg:pt-[56px] mb-20">
+              <div className="mb-10 container items-center">
+                <div className="flex flex-col items-center justify-center gap-10 lg:items-start">
                   <div className="relative flex w-full items-center justify-center gap-4 lg:justify-start">
-                    <h1 className="bg-gradient-to-r from-[#9b59b6] to-black bg-clip-text text-6xl font-extrabold text-transparent dark:to-white sm:text-8xl sm:leading-[5.5rem]">
+                    <h1 className="bg-gradient-to-r from-[#9b59b6] to-black bg-clip-text text-6xl sm:text-8xl font-extrabold text-transparent dark:to-white leading-[5.5rem]">
                       Codefoli
                     </h1>
                     </div>
-
                     <p className="max-w-[55ch] bg-transparent px-8 text-center font-medium leading-8 text-black/60 dark:text-white/50 lg:px-0 lg:text-left">
                       <Balancer>Your go to tool to build and host <span className={'underline'}>your sites. For free. Forever.</span></Balancer>
                     </p>
-                    <div className="flex flex-col gap-3 md:flex-row">
+                    <div className="flex flex-col gap-3 sm:flex-row">
                       <Button
                           asChild
                           className="hero-join-button rounded-xl p-[2px] font-bold transition-all duration-300 hover:bg-transparent hover:shadow-[0_0_2rem_-0.5rem_#9b59b6] dark:hidden"
                       >
                         <Link to="/register">
-            <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] bg-white px-12 md:px-4 py-2 text-[#9b59b6] transition-all duration-300">
-              Get started →
-            </span>
+                      <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] bg-white px-12 md:px-4 py-2 text-[#9b59b6] transition-all duration-300">
+                        Get started →
+                      </span>
                         </Link>
                       </Button>
                       <Button
@@ -99,9 +100,9 @@ const Home: FC = () => {
                           className="  hero-join-button-dark hidden rounded-xl p-[2px] font-bold transition-all duration-300 dark:block dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8]"
                       >
                         <Link to="/register">
-            <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] px-12 md:px-4 py-2 transition-all duration-300 dark:bg-neutral-900 dark:text-white">
-              Get started →
-            </span>
+                        <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] px-12 md:px-4 py-2 transition-all duration-300 dark:bg-neutral-900 dark:text-white">
+                          Get started →
+                        </span>
                         </Link>
                       </Button>
                       <Button
@@ -138,11 +139,21 @@ const Home: FC = () => {
                     </div>
                   </div>
                 </div>
-              </section>
+            </section>
+            <div className="mx-auto lg:ml-5 max-w-[80%] lg:max-w-[60%] items-center">
+              <video
+                  className="shadow-lg rounded-xl"
+                  autoPlay={true}
+                  loop={true}
+                  muted={true}
+                  playsInline={true}
+                  data-video="0"
+              >
+                <source src={whiteVideo} type="video/mp4"></source>
+              </video>
+            </div>
               {/*end*/}
-              <div className={'flex flex-row gap-4 justify-center'}>
-
-
+              <div className={'pt-20'}>
               </div>
 
             </div>
