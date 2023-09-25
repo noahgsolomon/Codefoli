@@ -1,7 +1,7 @@
 import { FC, useMemo } from "react";
 import {
   LOCALSTORAGE_THEME_KEY,
-  LIGHT_THEME_KEY,
+  DARK_THEME_KEY,
 } from "../../../util/constants";
 
 const Loader: FC = () => {
@@ -80,35 +80,12 @@ const Loader: FC = () => {
   return (
     <div className="fixed left-0 top-0 z-30 h-screen w-screen">
       <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform flex-col items-center justify-center">
-        <div role="status">
-          <svg
-            className="mr-2 h-10 w-10 animate-spin rounded-full border-2 border-gray-200 dark:border-gray-300"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="rainbow-stroke"
-              cx="12"
-              cy="12"
-              r="10"
-              strokeWidth="4"
-              fill={
-                localStorage.getItem(LOCALSTORAGE_THEME_KEY) === LIGHT_THEME_KEY
-                  ? "white"
-                  : "#1a1a1a"
-              }
-            ></circle>
-            <path
-              className="opacity-75"
-              fill="white"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            ></path>
-          </svg>
+        <div role="status" className={`loader ${localStorage.getItem(LOCALSTORAGE_THEME_KEY) === DARK_THEME_KEY ? 'dark' : ''}`}>
         </div>
-        <span className="text-center font-bold">Loading</span>
       </div>
       <div className="text-bold absolute bottom-16 left-1/2 flex -translate-x-1/2 transform flex-col text-center">
         <h2 className="font-bold">Did you know...</h2>
-        <p>{randomFact}</p>
+        <p className={'text-base'}>{randomFact}</p>
       </div>
     </div>
   );
