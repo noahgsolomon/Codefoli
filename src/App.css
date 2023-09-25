@@ -234,6 +234,59 @@ body.light {
   }
 }
 
+.loader {
+  width: 48px;
+  height: 48px;
+  display: inline-block;
+  position: relative;
+}
+.loader::after,
+.loader::before {
+  content: '';
+  box-sizing: border-box;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0; /* Set initial opacity to 0 */
+  animation: animloader 1.5s linear infinite;
+}
+.loader::after {
+  animation-delay: 0.75s;
+}
+
+.loader::after,
+.loader::before {
+  border: 2px solid #000000;
+}
+
+.loader.dark::after,
+.loader.dark::before {
+  border: 2px solid #ffffff;
+}
+
+.moving-grid-background {
+  will-change: transform;
+  background-size: 3rem 3rem;
+  background-image: linear-gradient(to right, #8882 1px, transparent 1px),
+  linear-gradient(to bottom, #8882 1px, transparent 1px);
+  animation: movingbackground 90s linear infinite !important;
+}
+
+@keyframes animloader {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+
 .font-extra-bold {
   font-family: "Inter-ExtraBold", sans-serif;
 }
