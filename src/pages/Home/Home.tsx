@@ -10,7 +10,9 @@ import {Button} from "./button.tsx";
 import {Link} from "react-router-dom";
 import {Github, Star, Twitter} from "../../util/ui/icons.ts";
 import whiteVideo from '../../assets/whiteedit.mp4';
-
+import ratatoonie from '../../assets/ratatoonieprofile.png';
+import noah from '../../assets/noahprofile.png';
+import walterwhite from '../../assets/walterwhiteprofile.png';
 
 const Home: FC = () => {
 
@@ -25,6 +27,18 @@ const Home: FC = () => {
           | typeof LIGHT_THEME_KEY
           | typeof DARK_THEME_KEY) || LIGHT_THEME_KEY
   );
+
+  const [currentImage, setCurrentImage] = useState(walterwhite);
+  const images = [walterwhite, noah, ratatoonie];
+
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      index = (index + 1) % images.length;
+      setCurrentImage(images[index]);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleToggleTheme = () => {
     toggleTheme();
@@ -71,17 +85,17 @@ const Home: FC = () => {
               </div>
             </header>
           </div>
-          <div className={'lg:ml-20 mt-28'}>
+          <div className={': mt-28'}>
               {/*start*/}
-            <section className="lg:pt-[56px] mb-20">
-              <div className="mb-10 container items-center">
-                <div className="flex flex-col items-center justify-center gap-10 lg:items-start">
-                  <div className="relative flex w-full items-center justify-center gap-4 lg:justify-start">
+            <section className="xl:pt-[56px] mb-60">
+              <div className="mb-10 flex flex-col xl:flex-row justify-between container items-center">
+                <div className="flex flex-col mb-10 items-center justify-center gap-10 xl:items-start">
+                  <div className="relative flex w-full items-center justify-center gap-4 xl:justify-start">
                     <h1 className="bg-gradient-to-r from-[#9b59b6] to-black bg-clip-text text-6xl sm:text-8xl font-extrabold text-transparent dark:to-white leading-[5.5rem]">
                       Codefoli
                     </h1>
                     </div>
-                    <p className="max-w-[55ch] bg-transparent px-8 text-center font-medium leading-8 text-black/60 dark:text-white/50 lg:px-0 lg:text-left">
+                    <p className="max-w-[55ch] bg-transparent px-8 text-center font-medium leading-8 text-black/60 dark:text-white/50 xl:px-0 xl:text-left">
                       <Balancer>Your go to tool to build and host <span className={'underline'}>your sites. For free. Forever.</span></Balancer>
                     </p>
                     <div className="flex flex-col gap-3 sm:flex-row">
@@ -138,9 +152,22 @@ const Home: FC = () => {
                       </Button>
                     </div>
                   </div>
+                <div>
+                  <img src={currentImage} className={'xl:w-[700px]'} alt={'Transitioning Image'} />
+                  {/*<video*/}
+                  {/*    className="shadow-lg rounded-xl"*/}
+                  {/*    autoPlay={true}*/}
+                  {/*    loop={true}*/}
+                  {/*    muted={true}*/}
+                  {/*    playsInline={true}*/}
+                  {/*    data-video="0"*/}
+                  {/*>*/}
+                  {/*  <source src={whiteSlideshow} type="video/mp4"></source>*/}
+                  {/*</video>*/}
                 </div>
+              </div>
             </section>
-            <div className="mx-auto lg:ml-5 max-w-[80%] lg:max-w-[60%] items-center">
+            <div className="mx-auto max-w-[80%] lg:max-w-[60%] items-center">
               <video
                   className="shadow-lg rounded-xl"
                   autoPlay={true}
