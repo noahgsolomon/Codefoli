@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Header from "Components/Header/Header.tsx";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./pages/Home/Home.tsx";
 import Login from "./pages/Login/Login.tsx";
@@ -16,8 +15,6 @@ import { STAGE } from "./config.ts";
 
 const MainApp: React.FC = () => {
   const navigate = useNavigate();
-
-  const [authenticatedUser, setAuthenticatedUser] = useState<boolean>(false);
 
   const [loading, setLoading] = useState<boolean>(true);
   const [themes, setThemes] = useState<
@@ -50,7 +47,6 @@ const MainApp: React.FC = () => {
         const responseJson = await response.json();
 
         if (responseJson.status === "OK") {
-          console.log(responseJson);
           setThemes(responseJson.data);
           return responseJson;
         } else {
@@ -67,7 +63,6 @@ const MainApp: React.FC = () => {
         if (fetchState.data !== null) {
           localStorage.setItem(LOCALSTORAGE_ID_KEY, fetchState.data.idToken);
         }
-        setAuthenticatedUser(true);
         await themesFetch();
         navigate('/home')
       } else {
@@ -89,7 +84,6 @@ const MainApp: React.FC = () => {
 
   return (
     <>
-      <Header authenticated={authenticatedUser} />
       <Routes>
         <Route path="/home" element={<Themes themes={themes} />} />
         <Route path="/" element={<Home />} />
