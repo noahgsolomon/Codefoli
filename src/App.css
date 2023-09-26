@@ -310,8 +310,8 @@ body.light {
   @apply pointer-events-none absolute select-none rounded-3xl opacity-0 transition-opacity duration-300 hover:opacity-100;
   background: radial-gradient(
           1000px circle at var(--x) var(--y),
-          #3aecf8 0,
-          #5295dc 25%,
+          var(--color-1) 0,
+          var(--color-4) 25%,
           rgba(255, 255, 255, 0) 50%,
           transparent 80%
   );
