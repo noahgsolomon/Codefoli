@@ -19,6 +19,8 @@ import whiteamogus from 'assets/whiteamogus.png';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import Typed from "typed.js";
+import VideoCard from "./VideoCard.tsx";
+import Balancer from "react-wrap-balancer";
 
 const purpleTheme = {
   primary: '#9b59b6',
@@ -28,9 +30,9 @@ const purpleTheme = {
   ring: 'ring-purple-600',
   buttonFill: 'fill-purple-500',
   color1: '#d8b4fe',
-  color4: '#a855f7',
+  color2: '#a855f7',
   color3: '#7c3aed',
-  color2: '#4c1d95',
+  color4: '#4c1d95',
 }
 
 const yellowTheme = {
@@ -141,7 +143,9 @@ const Home: FC = () => {
   );
 
   const [currentImage, setCurrentImage] = useState(walterwhite);
-  const [currentEditVideo, setCurrentEditVideo] = useState(theme === LIGHT_THEME_KEY ? 'http://images.codefoli.com/edit.mp4' : 'http://images.codefoli.com/darkedit.mp4');
+  const [currentEditVideo, setCurrentEditVideo] = useState(theme === LIGHT_THEME_KEY ? 'https://images.codefoli.com/edit.mp4' : 'https://images.codefoli.com/darkedit.mp4');
+  const [currentDownloadableVideo, setCurrentDownloadableVideo] = useState(theme === LIGHT_THEME_KEY ? 'https://images.codefoli.com/downloadable.mp4' : 'https://images.codefoli.com/downloadabledark.mp4');
+  const [currentDeploymentVideo, setCurrentDeploymentVideo] = useState(theme === LIGHT_THEME_KEY ? 'https://images.codefoli.com/deployment.mp4' : 'https://images.codefoli.com/deploymentdark.mp4');
   const images = [walterwhite, noah, ratatoonie];
   const imagesDark = [walterwhitedark, noahdark, ratatooniedark];
 
@@ -203,9 +207,13 @@ const Home: FC = () => {
   };
   useEffect(() => {
     if (currentTheme === DARK_THEME_KEY) {
-      setCurrentEditVideo('http://images.codefoli.com/darkedit.mp4');
+      setCurrentEditVideo('https://images.codefoli.com/darkedit.mp4');
+      setCurrentDownloadableVideo('https://images.codefoli.com/downloadabledark.mp4');
+      setCurrentDeploymentVideo('https://images.codefoli.com/deploymentdark.mp4');
     } else {
-      setCurrentEditVideo('http://images.codefoli.com/edit.mp4');
+      setCurrentEditVideo('https://images.codefoli.com/edit.mp4');
+      setCurrentDownloadableVideo('https://images.codefoli.com/downloadable.mp4');
+        setCurrentDeploymentVideo('https://images.codefoli.com/deployment.mp4');
     }
   }, [currentTheme]);
 
@@ -332,16 +340,6 @@ const Home: FC = () => {
                     setImageIndex((prev) => (prev + 1) % images.length);
                   }}
                   />
-                  {/*<video*/}
-                  {/*    className="shadow-lg rounded-xl"*/}
-                  {/*    autoPlay={true}*/}
-                  {/*    loop={true}*/}
-                  {/*    muted={true}*/}
-                  {/*    playsInline={true}*/}
-                  {/*    data-video="0"*/}
-                  {/*>*/}
-                  {/*  <source src={whiteSlideshow} type="video/mp4"></source>*/}
-                  {/*</video>*/}
                 </div>
               </div>
             </section>
@@ -350,9 +348,14 @@ const Home: FC = () => {
                   <div className="flex flex-col items-center justify-center gap-16">
 
                     <div className="mt-1 flex flex-col gap-3 px-4 text-center sm:px-0">
-                      <a
+                      <h1 className="text-4xl font-bold">
+                        <Balancer>What&apos;s in Codefoli?</Balancer>
+                      </h1>
+                      <p className="text-black/50 dark:text-white/50">
+                        <Balancer>All u need to create, deploy, and manage your sites. At scale.</Balancer>
+                      </p>
+                      <div
                           className={`mx-auto ${activeTheme.buttonGradient} rounded-full bg-gradient-to-r  p-[1px] brightness-90 contrast-150 focus:outline-none focus:${activeTheme.ring} focus-visible:ring-2 dark:brightness-125 dark:contrast-100 sm:block`}
-                          href="#features"
                       >
                         <div className="group relative overflow-hidden rounded-full bg-white/80 px-3 py-1 duration-300 hover:pr-9 dark:bg-black/80">
                         <span className={`bg-gradient-to-r ${activeTheme.buttonGradient} bg-clip-text text-transparent`}>
@@ -373,26 +376,34 @@ const Home: FC = () => {
                           />
                         </span>
                         </div>
-                      </a>
-
+                      </div>
                     </div>
-
+                    <div className="relative z-10 grid w-full gap-8 lg:grid-cols-2">
+                      <VideoCard
+                          description="Customize your website, your way. Edit the sections, ordering, text, images, and more!"
+                          bgClass="lg:bg-gradient-to-br"
+                          title="Edit with ease"
+                          video={currentEditVideo}
+                          className={''}
+                      />
+                      <VideoCard
+                          description="Download your code and host it anywhere. No strings attached."
+                          bgClass="lg:bg-gradient-to-br"
+                          title="Download your code."
+                          video={currentDownloadableVideo}
+                          className={''}
+                      />
+                      <VideoCard
+                          description="Deploy and Re-Deploy your site with one click. No need to worry about hosting, domains, or SSL."
+                          bgClass="lg:bg-gradient-to-br"
+                          title="One click deployments"
+                          video={currentDeploymentVideo}
+                          className={''}
+                      />
+                    </div>
                   </div>
                 </div>
               </section>
-            <div className="mx-auto max-w-[80%] lg:max-w-[60%] items-center">
-              <video
-                  key={currentEditVideo}
-                  className="shadow-lg rounded-xl"
-                  autoPlay={true}
-                  loop={true}
-                  muted={true}
-                  playsInline={true}
-                  data-video="0"
-              >
-                <source key={currentEditVideo} src={currentEditVideo} type="video/mp4"></source>
-              </video>
-            </div>
               {/*end*/}
               <div className={'pt-20'}>
               </div>
