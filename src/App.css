@@ -4,6 +4,12 @@
  
 @layer base {
   :root {
+
+    --color-1: hsla(0, 0%, 100%, 0.5);
+    --color-2: hsla(0, 0%, 100%, 0.1);
+    --color-3:  #fff;
+    --color-4: hsla(0, 0%, 100%, 0.3);
+
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
 
@@ -204,10 +210,7 @@ body.light {
 .hero-join-button {
   background: linear-gradient(
           var(--gradient-angle),
-          hsla(265, 60%, 48%, 0.7),
-          hsla(265, 60%, 48%, 0.3),
-          #9b59b6,
-          hsla(265, 60%, 48%, 0.5)
+          var(--color-1), var(--color-2), var(--color-3), var(--color-4)
   );
   animation: gradient-rotate 5s linear infinite reverse;
 }
@@ -286,6 +289,15 @@ body.light {
   }
 }
 
+@keyframes rainbowAnimation {
+  0%{background-position:0 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0 50%}
+}
+
+.text-transparent {
+  opacity: 0.8;
+}
 
 .font-extra-bold {
   font-family: "Inter-ExtraBold", sans-serif;
