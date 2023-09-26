@@ -3,5 +3,6 @@ export {
     Mail,
     Twitter,
     Send,
-    Star
+    Star,
+    Shuffle,
 } from 'lucide-react';
