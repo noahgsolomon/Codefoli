@@ -5,6 +5,9 @@
 @layer base {
   :root {
 
+    --x: 0;
+    --y: 0;
+
     --color-1: hsla(0, 0%, 100%, 0.5);
     --color-2: hsla(0, 0%, 100%, 0.1);
     --color-3:  #fff;
@@ -301,4 +304,24 @@ body.light {
 
 .font-extra-bold {
   font-family: "Inter-ExtraBold", sans-serif;
+}
+
+.animated-feature-cards::before {
+  @apply pointer-events-none absolute select-none rounded-3xl opacity-0 transition-opacity duration-300 hover:opacity-100;
+  background: radial-gradient(
+          1000px circle at var(--x) var(--y),
+          #3aecf8 0,
+          #5295dc 25%,
+          rgba(255, 255, 255, 0) 50%,
+          transparent 80%
+  );
+  z-index: -1;
+  content: '';
+  inset: -1px;
+}
+
+@media (max-width: 768px) {
+  .animated-feature-cards::before {
+    background: none !important;
+  }
 }
