@@ -126,20 +126,27 @@ const Waitlist = () => {
             </div>
           </header>
       <main className="relative mt-20 md:mt-40 flex flex-col items-center justify-center sm:px-16 md:px-0">
-      <h1 className="text-3xl font-bold text-neutral-950 max-w-[20ch] dark:text-neutral-50 md:text-5xl">
-        <Balancer className="leading-snug text-center">
-          Join our waitlist to get early access to the{' '}
-          <span className="bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text font-black text-transparent dark:from-blue-400 dark:to-emerald-400">
-            Codefoli
-          </span>{' '}
-          community
-        </Balancer>
-      </h1>
-          <p className="leading-8 text-black/50 text-center dark:text-white/50 max-w-[60ch]">
-            <Balancer>
-              By signing up to the waitlist you will be among the first to know when we launch and getting early access
-            </Balancer>
-          </p>
+      <div>
+      {!emailAdded && (
+      <>
+        <h1 className="text-3xl font-bold text-neutral-950 max-w-[20ch] dark:text-neutral-50 md:text-5xl">
+          <Balancer className="leading-snug text-center">
+            Join our waitlist to get early access to the{' '}
+            <span className="bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text font-black text-transparent dark:from-blue-400 dark:to-emerald-400">
+              Codefoli
+            </span>{' '}
+            community
+          </Balancer>
+        </h1>
+        <p className="leading-8 text-black/50 text-center dark:text-white/50 max-w-[60ch]">
+          <Balancer>
+            By signing up to the waitlist you will be among the first to know when we launch and getting early access
+          </Balancer>
+        </p>
+      </>
+      
+        )}
+      </div>
         <div className={"flex h-full w-full items-center justify-center"}>
           <div
             className={`${styles.waitlistBackground} fixed left-0 top-0 -z-10 h-full w-full`}
