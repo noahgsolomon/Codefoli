@@ -1,4 +1,4 @@
-import {FC, useEffect, useRef, useState} from "react";
+import {ChangeEvent, FC, useEffect, useRef, useState} from "react";
 import {
   DARK_THEME_KEY,
   LIGHT_THEME_KEY,
@@ -21,6 +21,8 @@ import whiteamogus from 'assets/whiteamogus.png';
 import Typed from "typed.js";
 import VideoCard from "./VideoCard.tsx";
 import Balancer from "react-wrap-balancer";
+import FeatureCard from "./FeatureCard.tsx";
+import {Mailbox} from "lucide-react";
 
 const purpleTheme = {
   primary: '#9b59b6',
@@ -150,6 +152,26 @@ const Home: FC = () => {
   const imagesDark = [walterwhitedark, noahdark, ratatooniedark];
 
   const [imageIndex, setImageIndex] = useState(0);
+  const [email, setEmail] = useState('');
+  const [shake, setShake] = useState(false);
+
+  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const handleEmailSubmit = () => {
+    console.log(email);
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (!emailRegex.test(email)) {
+      console.log('not email')
+      setShake(true);
+      setTimeout(() => setShake(false), 300);
+      return;
+    }
+
+    // Submit the email
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -400,10 +422,42 @@ const Home: FC = () => {
                           video={currentDeploymentVideo}
                           className={''}
                       />
+                      <FeatureCard title={'AI Integration'} description={''} bgClass={'lg:bg-gradient-to-br'}>
+                      <div className={''}>Coming soon 👀</div>
+                      </FeatureCard>
                     </div>
                   </div>
                 </div>
               </section>
+            <section>
+              <div className="lg:ml-20 lg:my-10 p-4">
+                <input
+                    type="email"
+                    placeholder="Enter your email"
+                    onChange={handleEmailChange}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        handleEmailSubmit();
+                      }
+                    }}
+                    className={`w-full border-none bg-transparent p-3 hover:opacity-80 transition-all text-3xl lg:text-5xl py-10 outline-none focus:outline-none focus:ring-0 ${shake ? 'animate-shake' : ''}`}
+                />
+                <button
+                    className={`ml-5 hover:shadow-[0_0_2rem_-0.5rem_#333333] rounded-full bg-gradient-to-r hover:scale-[101%] transition-all from-red-300 via-yellow-300 to-blue-300 p-[1px] brightness-90 contrast-150 focus:outline-none focus-visible:ring-2 dark:brightness-125 dark:contrast-100 dark:text-gray-200 sm:block`}
+                    onClick={handleEmailSubmit}
+                >
+                  <div className="group relative overflow-hidden rounded-full bg-white/80 px-3 py-1 duration-300 dark:bg-black/80 dark:text-gray-300">
+                    <span className="block sm:inline opacity-60">
+                      <div className={'flex flex-row items-center gap-2'}>
+                        <Mailbox className={'opacity-80'}/>
+                        <p>Join our newsletter</p>
+                      </div>
+                    </span>
+                  </div>
+                </button>
+              </div>
+            </section>
               {/*end*/}
               <div className={'pt-20'}>
               </div>
