@@ -1,4 +1,4 @@
-import { HOME_URL } from "../../../config.ts";
+import {PAPER_URL} from "../../../../../../src/config.ts";
 
 const Footer = () => {
   return (
@@ -99,19 +99,19 @@ const Footer = () => {
           </div>
           <div className="flex justify-center gap-5">
             <div
-              onClick={() => (window.location.href = HOME_URL + "/newsletter")}
+              onClick={() => (window.location.href = PAPER_URL + "/newsletter")}
               className="cursor-pointer rounded p-2 font-bold text-blue-500 underline transition-all hover:opacity-80"
             >
               Newsletter
             </div>
             <div
-              onClick={() => (window.location.href = HOME_URL + "/analytics")}
+              onClick={() => (window.location.href = PAPER_URL + "/analytics")}
               className="cursor-pointer rounded p-2 font-bold text-blue-500 underline transition-all hover:opacity-80"
             >
               Analytics
             </div>
             <div
-              onClick={() => (window.location.href = HOME_URL + "/origin")}
+              onClick={() => (window.location.href = PAPER_URL + "/origin")}
               className="cursor-pointer rounded p-2 font-bold text-blue-500 underline transition-all hover:opacity-80"
             >
               Origin
