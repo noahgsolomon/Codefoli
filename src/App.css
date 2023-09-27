@@ -1,16 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
-
     --x: 0;
     --y: 0;
 
     --color-1: hsla(0, 0%, 100%, 0.5);
     --color-2: hsla(0, 0%, 100%, 0.1);
-    --color-3:  #fff;
+    --color-3: #fff;
     --color-4: hsla(0, 0%, 100%, 0.3);
 
     --background: 0 0% 100%;
@@ -18,57 +17,57 @@
 
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
- 
+
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
- 
+
     --primary: 0 0% 9%;
     --primary-foreground: 0 0% 98%;
- 
+
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 9%;
- 
+
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
- 
+
     --accent: 0 0% 96.1%;
     --accent-foreground: 0 0% 9%;
- 
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
     --ring: 0 0% 3.9%;
- 
+
     --radius: 0.5rem;
   }
- 
+
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
- 
+
     --card: 0 0% 3.9%;
     --card-foreground: 0 0% 98%;
- 
+
     --popover: 0 0% 3.9%;
     --popover-foreground: 0 0% 98%;
- 
+
     --primary: 0 0% 98%;
     --primary-foreground: 0 0% 9%;
- 
+
     --secondary: 0 0% 14.9%;
     --secondary-foreground: 0 0% 98%;
- 
+
     --muted: 0 0% 14.9%;
     --muted-foreground: 0 0% 63.9%;
- 
+
     --accent: 0 0% 14.9%;
     --accent-foreground: 0 0% 98%;
- 
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
- 
+
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;
@@ -173,7 +172,7 @@
 
 @layer components {
   .font-extrabold {
-    font-family: 'Inter-ExtraBold', sans-serif;
+    font-family: "Inter-ExtraBold", sans-serif;
   }
 }
 
@@ -205,26 +204,29 @@ body.light {
 }
 
 @property --gradient-angle {
-  syntax: '<angle>';
+  syntax: "<angle>";
   initial-value: 360deg;
   inherits: false;
 }
 
 .hero-join-button {
   background: linear-gradient(
-          var(--gradient-angle),
-          var(--color-1), var(--color-2), var(--color-3), var(--color-4)
+    var(--gradient-angle),
+    var(--color-1),
+    var(--color-2),
+    var(--color-3),
+    var(--color-4)
   );
   animation: gradient-rotate 5s linear infinite reverse;
 }
 
 .hero-join-button-dark {
   background: linear-gradient(
-          var(--gradient-angle),
-          hsla(0, 0%, 100%, 0.5),
-          hsla(0, 0%, 100%, 0.1),
-          #fff,
-          hsla(0, 0%, 100%, 0.3)
+    var(--gradient-angle),
+    hsla(0, 0%, 100%, 0.5),
+    hsla(0, 0%, 100%, 0.1),
+    #fff,
+    hsla(0, 0%, 100%, 0.3)
   ) !important;
 
   animation: gradient-rotate 5s linear infinite reverse;
@@ -248,7 +250,7 @@ body.light {
 }
 .loader::after,
 .loader::before {
-  content: '';
+  content: "";
   box-sizing: border-box;
   width: 48px;
   height: 48px;
@@ -277,7 +279,7 @@ body.light {
   will-change: transform;
   background-size: 3rem 3rem;
   background-image: linear-gradient(to right, #8882 1px, transparent 1px),
-  linear-gradient(to bottom, #8882 1px, transparent 1px);
+    linear-gradient(to bottom, #8882 1px, transparent 1px);
   animation: movingbackground 90s linear infinite !important;
 }
 
@@ -293,9 +295,15 @@ body.light {
 }
 
 @keyframes rainbowAnimation {
-  0%{background-position:0 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0 50%}
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
 }
 
 .text-transparent {
@@ -309,14 +317,14 @@ body.light {
 .animated-feature-cards::before {
   @apply pointer-events-none absolute select-none rounded-3xl opacity-0 transition-opacity duration-300 hover:opacity-100;
   background: radial-gradient(
-          1000px circle at var(--x) var(--y),
-          var(--color-1) 0,
-          var(--color-4) 25%,
-          rgba(255, 255, 255, 0) 50%,
-          transparent 80%
+    1000px circle at var(--x) var(--y),
+    var(--color-1) 0,
+    var(--color-4) 25%,
+    rgba(255, 255, 255, 0) 50%,
+    transparent 80%
   );
   z-index: -1;
-  content: '';
+  content: "";
   inset: -1px;
 }
 
@@ -327,13 +335,21 @@ body.light {
 }
 
 @keyframes shake {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
-  10%, 30%, 50%, 70%, 90% {
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
     transform: translateX(-10px);
   }
-  20%, 40%, 60%, 80% {
+  20%,
+  40%,
+  60%,
+  80% {
     transform: translateX(10px);
   }
 }
@@ -342,8 +358,13 @@ body.light {
   animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
-
 .wl-form-button {
-  background: linear-gradient(var(--gradient-angle), #34d399, #60a5fa, #ff88ff, #ff8844);
+  background: linear-gradient(
+    var(--gradient-angle),
+    #34d399,
+    #60a5fa,
+    #ff88ff,
+    #ff8844
+  );
   animation: gradient-rotate 5s linear infinite reverse;
 }

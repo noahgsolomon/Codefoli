@@ -18,7 +18,7 @@ const PageCard: FC<{
 
   return (
     <div
-      className="m-5 flex max-h-[400px] max-w-[400px] cursor-pointer flex-col rounded-xl border-2 border-black shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover"
+      className="shadow-custom hover:shadow-customHover m-5 flex max-h-[400px] max-w-[400px] cursor-pointer flex-col rounded-xl border-2 border-black transition-all hover:-translate-y-0.5"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={() => (window.location.href = link)}
@@ -88,7 +88,7 @@ const PageCard: FC<{
           </div>
           <div
             className={
-              "mr-2 h-[150px] w-[150px] overflow-hidden rounded-lg border-2 border-black shadow-custom"
+              "shadow-custom mr-2 h-[150px] w-[150px] overflow-hidden rounded-lg border-2 border-black"
             }
           >
             <img
@@ -120,7 +120,7 @@ const PageCard: FC<{
               "rounded-xl border-2 border-black border-opacity-30 bg-blue-300 p-1 text-sm text-gray-50 dark:bg-blue-900"
             }
           >
-            domain: {themes.domain || 'none since v1.6'}
+            domain: {themes.domain || "none since v1.6"}
           </div>
         </div>
       </div>

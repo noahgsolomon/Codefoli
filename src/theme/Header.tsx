@@ -17,7 +17,7 @@ const Header: FC<{
     <header
       className={`relative z-30 mx-5 mb-10 flex items-center py-5 font-bold transition-all`}
     >
-      <div className="mx-auto flex w-full max-w-[50rem] flex-row flex-wrap items-center justify-center rounded-xl border-2 border-black px-4 py-3 shadow-custom transition-all dark:bg-[#1a1a1a] sm:justify-between">
+      <div className="shadow-custom mx-auto flex w-full max-w-[50rem] flex-row flex-wrap items-center justify-center rounded-xl border-2 border-black px-4 py-3 transition-all dark:bg-[#1a1a1a] sm:justify-between">
         <Link
           to="/home"
           className="cursor-pointer select-none px-1 text-4xl text-gray-800 transition-all hover:-translate-y-0.5 dark:text-gray-50"

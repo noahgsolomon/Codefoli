@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home.tsx";
 import Waitlist from "./pages/Login/Waitlist.tsx";
-import {FC} from "react";
+import { FC } from "react";
 import NotFound from "./NotFound.tsx";
 
 const MainApp: FC = () => {

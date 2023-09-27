@@ -80,12 +80,18 @@ const Loader: FC = () => {
   return (
     <div className="fixed left-0 top-0 z-30 h-screen w-screen">
       <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform flex-col items-center justify-center">
-        <div role="status" className={`loader ${localStorage.getItem(LOCALSTORAGE_THEME_KEY) === DARK_THEME_KEY ? 'dark' : ''}`}>
-        </div>
+        <div
+          role="status"
+          className={`loader ${
+            localStorage.getItem(LOCALSTORAGE_THEME_KEY) === DARK_THEME_KEY
+              ? "dark"
+              : ""
+          }`}
+        ></div>
       </div>
       <div className="text-bold absolute bottom-16 left-1/2 flex -translate-x-1/2 transform flex-col text-center">
         <h2 className="font-bold">Did you know...</h2>
-        <p className={'text-base'}>{randomFact}</p>
+        <p className={"text-base"}>{randomFact}</p>
       </div>
     </div>
   );

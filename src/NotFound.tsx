@@ -1,10 +1,9 @@
 import { FC } from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 
 const NotFound: FC = () => {
-
-    window.location.href = '/';
+  window.location.href = "/";
 
   const warningAnimation = useSpring({
     from: { opacity: 0, transform: "translate3d(-20px, 0, 0)" },

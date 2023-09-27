@@ -25,7 +25,7 @@ const Footer = () => {
   return (
     <footer className="relative z-40 mt-20 bg-[#0d0d0d] ">
       <div className="absolute -top-20 left-1/2 -translate-x-1/2 transform p-6">
-        <div className="mx-auto flex w-[300px] flex-col items-center justify-between rounded-lg border-2 border-black bg-white p-6 shadow-custom dark:bg-[#1a1a1a] md:w-[450px]">
+        <div className="shadow-custom mx-auto flex w-[300px] flex-col items-center justify-between rounded-lg border-2 border-black bg-white p-6 dark:bg-[#1a1a1a] md:w-[450px]">
           <div className="text-xl font-bold">Subscribe to our newsletter</div>
           <p className="mb-4 text-base opacity-60">
             Win prizes, and get access to free hosting
@@ -48,7 +48,7 @@ const Footer = () => {
                 <div className="flex flex-col items-center justify-center md:relative">
                   <input
                     type="email"
-                    className="mb-4 h-12 w-full rounded-lg border-2 border-black py-8 text-sm shadow-custom transition-all hover:shadow-customHover dark:bg-[#1a1a1a]"
+                    className="shadow-custom hover:shadow-customHover mb-4 h-12 w-full rounded-lg border-2 border-black py-8 text-sm transition-all dark:bg-[#1a1a1a]"
                     placeholder="Enter your email"
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
@@ -113,7 +113,10 @@ const Footer = () => {
             <p className="mt-6 text-center leading-relaxed text-white md:text-left">
               Here for you to showcase your projects and skills to the world.
             </p>
-            <a href="mailto:support@codefoli.com" className="z-50 cursor-pointer text-center text-blue-500 transition-all hover:opacity-80 md:text-left">
+            <a
+              href="mailto:support@codefoli.com"
+              className="z-50 cursor-pointer text-center text-blue-500 transition-all hover:opacity-80 md:text-left"
+            >
               support@codefoli.com
             </a>
             <ul className="mb-8 flex justify-center gap-6 md:mb-0 md:mt-8 md:justify-start md:gap-8">

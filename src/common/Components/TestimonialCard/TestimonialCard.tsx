@@ -20,7 +20,7 @@ const TestimonialCard = ({
       }`}
     >
       <img
-        className="mx-auto h-28 w-28 flex-shrink-0 transform self-start rounded-full border-2 border-black bg-blue-500 object-contain transition-all hover:-translate-y-0.5 hover:shadow-custom md:mx-0"
+        className="hover:shadow-custom mx-auto h-28 w-28 flex-shrink-0 transform self-start rounded-full border-2 border-black bg-blue-500 object-contain transition-all hover:-translate-y-0.5 md:mx-0"
         src={imageUrl}
         alt="User testimonial"
       />

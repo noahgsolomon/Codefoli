@@ -38,7 +38,7 @@ const Login: React.FC = () => {
         style={loginAnimation}
         className="flex items-center justify-center p-4"
       >
-        <div className="mt-20 w-[700px] max-w-[100%] rounded-xl border-2 border-black  p-10 text-center shadow-custom  transition-all">
+        <div className="shadow-custom mt-20 w-[700px] max-w-[100%] rounded-xl border-2  border-black p-10 text-center  transition-all">
           <h2 className="mb-10 text-4xl">
             <span className="bg-blue-500 px-2 font-bold text-white">
               Codefolio
@@ -71,7 +71,7 @@ const Login: React.FC = () => {
                     id="email"
                     placeholder="// example@gmail.com"
                     value={email}
-                    className={`mb-4 mt-2 w-full rounded-xl  border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent placeholder:text-gray-800 hover:shadow-customHover  focus:border-black focus:ring-0  dark:bg-[#1a1a1a] placeholder:dark:text-gray-200
+                    className={`shadow-custom hover:shadow-customHover mb-4 mt-2  w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black ring-transparent placeholder:text-gray-800  focus:border-black focus:ring-0  dark:bg-[#1a1a1a] placeholder:dark:text-gray-200
                        ${emailError ? "border-red-500" : ""}`}
                     onChange={(e) => {
                       setEmailError(false);
@@ -99,7 +99,7 @@ const Login: React.FC = () => {
                     id="password"
                     placeholder="// jeffbezos123"
                     value={password}
-                    className={`mb-4 mt-2 w-full rounded-xl  border-2 border-black bg-white p-3 pl-10 placeholder-black shadow-custom ring-transparent placeholder:text-gray-800 hover:shadow-customHover  focus:border-black focus:ring-0  dark:bg-[#1a1a1a] placeholder:dark:text-gray-200 
+                    className={`shadow-custom hover:shadow-customHover mb-4 mt-2  w-full rounded-xl border-2 border-black bg-white p-3 pl-10 placeholder-black ring-transparent placeholder:text-gray-800  focus:border-black focus:ring-0  dark:bg-[#1a1a1a] placeholder:dark:text-gray-200 
                       ${passwordError ? "border-red-500" : ""}`}
                     onChange={(e) => {
                       setPasswordError(false);

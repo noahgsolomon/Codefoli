@@ -20,7 +20,7 @@ const ThemeCard: FC<{
     <div
       className={`${
         used ? "opacity-70" : ""
-      } relative m-5 flex max-h-[400px] max-w-[400px] cursor-pointer flex-col rounded-xl border-2 border-black shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover`}
+      } shadow-custom hover:shadow-customHover relative m-5 flex max-h-[400px] max-w-[400px] cursor-pointer flex-col rounded-xl border-2 border-black transition-all hover:-translate-y-0.5`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={() =>

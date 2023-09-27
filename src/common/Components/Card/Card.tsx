@@ -8,7 +8,7 @@ type Props = {
 
 const Card = ({ ImageUrl, title, description }: Props) => {
   return (
-    <div className="m-5 mb-5 flex w-96 flex-col items-center space-y-5 rounded-2xl border-2 border-black bg-white p-5 shadow-custom transition-all hover:-translate-y-0.5 hover:shadow-customHover dark:bg-[#1a1a1a]">
+    <div className="shadow-custom hover:shadow-customHover m-5 mb-5 flex w-96 flex-col items-center space-y-5 rounded-2xl border-2 border-black bg-white p-5 transition-all hover:-translate-y-0.5 dark:bg-[#1a1a1a]">
       {ImageUrl &&
         (typeof ImageUrl === "string" ? (
           <img

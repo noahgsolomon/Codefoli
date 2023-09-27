@@ -28,10 +28,10 @@ const Header: FC<{ authenticated: boolean }> = ({ authenticated }) => {
   return (
     <>
       {authenticated ? null : (
-        <header className="hidden relative z-40 mx-5 flex items-center py-5 font-bold transition-all">
+        <header className="relative z-40 mx-5 flex hidden items-center py-5 font-bold transition-all">
           <div
-            className="mx-auto flex w-full max-w-[50rem] flex-row flex-wrap items-center justify-center rounded-xl border-2 border-black
- px-4 py-3 shadow-custom transition-all dark:bg-[#1a1a1a] sm:justify-between"
+            className="shadow-custom mx-auto flex w-full max-w-[50rem] flex-row flex-wrap items-center justify-center rounded-xl border-2
+ border-black px-4 py-3 transition-all dark:bg-[#1a1a1a] sm:justify-between"
           >
             <Link
               to={"/"}
@@ -44,7 +44,7 @@ const Header: FC<{ authenticated: boolean }> = ({ authenticated }) => {
                 to="/login"
                 className="my-2 text-current no-underline transition-all"
               >
-                <button className="inline-block cursor-pointer rounded-full bg-black px-6 py-2 text-center font-custom text-lg text-white no-underline transition-all hover:bg-blue-500 dark:bg-gray-50 dark:text-gray-800 dark:hover:opacity-80">
+                <button className="font-custom inline-block cursor-pointer rounded-full bg-black px-6 py-2 text-center text-lg text-white no-underline transition-all hover:bg-blue-500 dark:bg-gray-50 dark:text-gray-800 dark:hover:opacity-80">
                   Hop In!
                 </button>
               </Link>
