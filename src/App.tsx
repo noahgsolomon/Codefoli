@@ -9,10 +9,7 @@ import {
   LIGHT_THEME_KEY,
 } from "./util/constants";
 import Verify from "./Verify.tsx";
-import Analytics from "./Analytics.tsx";
 import Unsubscribing from "./Unsubscribing.tsx";
-import Origin from "./Origin.tsx";
-import Newsletter from "./pages/Newsletter/Newsletter.tsx";
 
 const App: FC = () => {
   useEffect(() => {
@@ -46,12 +43,8 @@ const App: FC = () => {
         <Route path="/processing" element={<Processing />} />
         <Route path="/verify" element={<Verify />} />
         <Route path="/unsubscribe" element={<Unsubscribing />} />
-        <Route path="/origin" element={<Origin />} />
-        <Route path="analytics" element={<Analytics />} />
-        {/*<Route path="/architecture" element={<Architecture />}/>*/}
         <Route path="/github" element={<RedirectToGitHub />} />
         <Route path="/discord" element={<RedirectToDiscord />} />
-        <Route path="/newsletter" element={<Newsletter />} />
         <Route path="/*" element={<MainApp />} />
       </Routes>
     </BrowserRouter>
