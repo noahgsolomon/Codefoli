@@ -49,7 +49,7 @@ const  FeatureCard:FC<{
         >
             <div
                 className={clsx(
-                    'group relative w-full overflow-hidden rounded-3xl border bg-gradient-to-b from-neutral-50/90 to-neutral-100/90 transition duration-300 dark:from-neutral-950/90 dark:to-neutral-800/90',
+                    'group relative h-full w-full overflow-hidden rounded-3xl border bg-gradient-to-b from-neutral-50/90 to-neutral-100/90 transition duration-300 dark:from-neutral-950/90 dark:to-neutral-800/90',
                     'md:hover:border-transparent',
                     bgClass,
                 )}
