@@ -14,8 +14,9 @@ import walterwhite from 'assets/walterwhiteprofile.png';
 import ratatooniedark from 'assets/ratatoonieprofiledark.png';
 import noahdark from 'assets/noahprofiledark.png';
 import walterwhitedark from 'assets/walterwhiteprofiledark.png';
-import amogus from 'assets/amogus.png';
+// import amogus from 'assets/amogus.png';
 import whiteamogus from 'assets/whiteamogus.png';
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import Typed from "typed.js";
@@ -271,37 +272,34 @@ const Home: FC = () => {
                     <Shuffle />
                   </div>
                 </div>
-                  <div className="flex flex-col items-center justify-center ">
-
-                    <div className="mt-1 flex flex-col gap-3 px-4 text-center sm:px-0">
-                      <Link
-                          className="mx-auto rounded-full bg-gradient-to-r from-gray-400 to-gray-600 p-[1px] brightness-90 contrast-150 focus:outline-none focus-visible:ring-2 dark:brightness-125 dark:contrast-100 dark:text-gray-200 sm:block"
-                          to={'/login'}
-                      >
-                        <div className="group relative overflow-hidden rounded-full bg-white/80 px-3 py-1 duration-300 hover:pr-9 dark:bg-black/80 dark:text-gray-300">
-                          <span className="bg-gradient-to-r from-gray-400 to-gray-800 bg-clip-text text-transparent block sm:inline dark:text-gray-300">
-                            <svg
-                                className="mr-1 inline-block h-4 w-4 fill-gray-600 dark:fill-gray-300"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M12 2C8.13 2 5 5.13 5 9v2H3v10h18V11h-2V9c0-3.87-3.13-7-7-7zm1 14h-2v-2h2v2zm3-4H8V9c0-2.21 1.79-4 4-4s4 1.79 4 4v3z"/>
-                            </svg>
-                            Log in
-                           <img
-                               className="absolute -bottom-1 right-1 duration-300 sm:translate-y-7 group-hover:translate-y-0"
-                               alt="Among Us character"
-                               height="30"
-                               width="30"
-                               src={whiteamogus}
-                           />
-                          </span>
-                        </div>
-                      </Link>
-                    </div>
-
-
-                  </div>
+                  {/*<div className="flex flex-col items-center justify-center ">*/}
+                  {/*  <div className="mt-1 flex flex-col gap-3 px-4 text-center sm:px-0">*/}
+                  {/*    <Link*/}
+                  {/*        className="mx-auto rounded-full bg-gradient-to-r from-gray-400 to-gray-600 p-[1px] brightness-90 contrast-150 focus:outline-none focus-visible:ring-2 dark:brightness-125 dark:contrast-100 dark:text-gray-200 sm:block"*/}
+                  {/*        to={'/login'}*/}
+                  {/*    >*/}
+                  {/*      <div className="group relative overflow-hidden rounded-full bg-white/80 px-3 py-1 duration-300 hover:pr-9 dark:bg-black/80 dark:text-gray-300">*/}
+                  {/*        <span className="bg-gradient-to-r from-gray-400 to-gray-800 bg-clip-text text-transparent block sm:inline dark:text-gray-300">*/}
+                  {/*          <svg*/}
+                  {/*              className="mr-1 inline-block h-4 w-4 fill-gray-600 dark:fill-gray-300"*/}
+                  {/*              viewBox="0 0 24 24"*/}
+                  {/*              xmlns="http://www.w3.org/2000/svg"*/}
+                  {/*          >*/}
+                  {/*            <path d="M12 2C8.13 2 5 5.13 5 9v2H3v10h18V11h-2V9c0-3.87-3.13-7-7-7zm1 14h-2v-2h2v2zm3-4H8V9c0-2.21 1.79-4 4-4s4 1.79 4 4v3z"/>*/}
+                  {/*          </svg>*/}
+                  {/*          Log in*/}
+                  {/*         <img*/}
+                  {/*             className="absolute -bottom-1 right-1 duration-300 sm:translate-y-7 group-hover:translate-y-0"*/}
+                  {/*             alt="Among Us character"*/}
+                  {/*             height="30"*/}
+                  {/*             width="30"*/}
+                  {/*             src={whiteamogus}*/}
+                  {/*         />*/}
+                  {/*        </span>*/}
+                  {/*      </div>*/}
+                  {/*    </Link>*/}
+                  {/*  </div>*/}
+                  {/*</div>*/}
               </div>
             </header>
           </div>
@@ -323,9 +321,9 @@ const Home: FC = () => {
                           asChild
                           className={`hero-join-button rounded-xl p-[2px] transition-all duration-300 hover:bg-transparent hover:shadow-[0_0_2rem_-0.5rem_#333333] dark:hidden`}
                       >
-                        <Link to="/register">
+                        <Link to="/waitlist">
                       <span className="opacity-90 inline-flex h-full w-fit items-center gap-1 rounded-[10px] bg-white px-12 md:px-4 py-2 text-gray-800 transition-all duration-300">
-                        Get started →
+                        Join Waitlist →
                       </span>
                         </Link>
                       </Button>
@@ -333,9 +331,9 @@ const Home: FC = () => {
                           asChild
                           className="  hero-join-button hidden rounded-xl p-[2px] transition-all duration-300 dark:block dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8]"
                       >
-                        <Link to="/register">
+                        <Link to="/waitlist">
                         <span className="opacity-90 inline-flex h-full w-fit items-center gap-1 rounded-[10px] px-12 md:px-4 py-2 transition-all duration-300 dark:bg-neutral-900 dark:text-white">
-                          Get started →
+                          Join Waitlist →
                         </span>
                         </Link>
                       </Button>
@@ -390,7 +388,7 @@ const Home: FC = () => {
                         <Balancer>What&apos;s in Codefoli?</Balancer>
                       </h1>
                       <p className="text-black/50 dark:text-white/50">
-                        <Balancer>All u need to create, deploy, and manage your sites. At scale.</Balancer>
+                        <Balancer>All you need to create, deploy, and manage your sites. At scale.</Balancer>
                       </p>
                       <div
                           className={`mx-auto ${activeTheme.buttonGradient} rounded-full bg-gradient-to-r  p-[1px] brightness-90 contrast-150 focus:outline-none focus:${activeTheme.ring} focus-visible:ring-2 dark:brightness-125 dark:contrast-100 sm:block`}
@@ -410,7 +408,7 @@ const Home: FC = () => {
                               alt="doge smile"
                               height="30"
                               width="30"
-                              src={amogus}
+                              src={whiteamogus}
                           />
                         </span>
                         </div>
@@ -446,9 +444,6 @@ const Home: FC = () => {
                 </div>
               </section>
             <section className={'relative overflow-hidden'}>
-              <div
-                  className="absolute top-10 left-10 w-[300px] h-[300px] rounded-full bg-gradient-radial from-indigo-500 via-purple-500 to-pink-500 opacity-20 blur-xl ring-1 ring-gray-900/10"
-              />
               {emailAdded ? (
                   <animated.div style={newsletterSuccessAnimation} className="lg:ml-20 lg:my-10 p-4">
                     <h2 className={'font-bold text-3xl lg:text-5xl text-center lg:text-left'}>
@@ -503,8 +498,8 @@ const Home: FC = () => {
                           {subscribeLoading ? (<svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 1.37.259 2.678.741 3.825l1.516-1.534z"></path>
-                          </svg>) : (<Mailbox className={'opacity-80'}/>)}
-                          <p>Join our newsletter</p>
+                          </svg>) : (<Mailbox className={'text-black opacity-50 dark:text-white'}/>)}
+                          <p>Join our Waitlist</p>
                         </div>
                       </span>
                     </div>
