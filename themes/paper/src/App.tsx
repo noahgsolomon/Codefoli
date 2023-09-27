@@ -8,6 +8,9 @@ import {
   DARK_THEME_KEY,
   LIGHT_THEME_KEY,
 } from "./util/constants";
+import Newsletter from "./pages/Newsletter/Newsletter.tsx";
+import Origin from "./Origin.tsx";
+import Analytics from "./Analytics.tsx";
 
 const App: FC = () => {
   useEffect(() => {
@@ -26,6 +29,9 @@ const App: FC = () => {
       <Routes>
         <Route path="/preview/*" element={<PreviewApp />} />
         <Route path="/*" element={<MainApp />} />
+        <Route path={"/newsletter"} element={<Newsletter />} />
+        <Route path={"/origin"} element={<Origin />} />
+        <Route path={"/analytics"} element={<Analytics />} />
       </Routes>
     </BrowserRouter>
   );
