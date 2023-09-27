@@ -7,7 +7,6 @@ import {Twitter} from "../../util/ui/icons.ts";
 import {BsDiscord} from "react-icons/bs";
 import addEmail from "api/newsletterapi.tsx";
 import {Button} from "../../@/components/ui/button.tsx";
-
 const Waitlist = () => {
 
     const [theme, setTheme] = useState<
@@ -87,26 +86,39 @@ const Waitlist = () => {
                                         <h2 className={'font-bold text-3xl lg:text-5xl text-center '}>
                                             Thank you!
                                             <span className="bg-gradient-to-r from-[#3178c6] to-black bg-clip-text font-black text-transparent dark:from-blue-400 dark:to-emerald-400">{" "}You're in!</span>                                        </h2>
-                                        <p className={'opacity-60 text-center '}>You can be involved by following us on Twitter and joining our Discord server.</p>
+                                        <p className={'opacity-60 text-center mt-4'}>You can be involved by following us on Twitter and joining our Discord server.</p>
                                         <div className="flex justify-center gap-2 mt-4">
 
-                                            <a
-                                                href={'https://twitter.com/noahgsolomon'}
-                                                target={'_blank'}
-                                                className="shadow-md text-base text-white lg:px-6 lg:py-4 px-2 py-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex flex-row items-center gap-2 hover:opacity-80 transition-all"
+                                            <Button
+                                                asChild
+                                                className="flex items-center transition-all hover:opacity-80 hover:text-white bg-gradient-to-r from-black to-gray-900 gap-2 rounded-xl border-2 px-12 py-5 text-white"
+                                                variant="outline"
                                             >
-                                                <Twitter />
-                                                Follow us on Twitter
-                                            </a>
-
-                                            <a
-                                                href={'https://codefoli.com/discord'}
-                                                target={'_blank'}
-                                                className="shadow-md text-base text-white lg:px-6 lg:py-6 px-2 py-2 bg-gradient-to-r from-[#5865F2] to-[#747bff] rounded-full flex flex-row items-center gap-2 hover:opacity-80 transition-all"
+                                                <a
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    className="gap-1 md:inline-flex"
+                                                    href="https://twitter.com/noahgsolomon"
+                                                >
+                                                    <i className="w-4 h-4 fa-brands fa-x-twitter"></i>
+                                                    Twitter
+                                                </a>
+                                            </Button>
+                                            <Button
+                                                asChild
+                                                className="text-white flex items-center transition-all hover:opacity-80 hover:text-white gap-2 rounded-xl border-2 px-12 py-5 bg-gradient-to-r from-[#5865F2] to-[#747bff]"
+                                                variant="outline"
                                             >
-                                                <BsDiscord />
-                                                Join Discord
-                                            </a>
+                                                <a
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    className="gap-1 md:inline-flex text-white"
+                                                    href="https://codefoli.com/discord"
+                                                >
+                                                    <BsDiscord className="h-4 w-4" />
+                                                    Discord
+                                                </a>
+                                            </Button>
 
                                         </div>
                                     </animated.div>
@@ -130,7 +142,7 @@ const Waitlist = () => {
                                             type="submit"
                                             onClick={handleEmailSubmit}
                                         >
-                                            <span className="h-full w-full rounded-[10px] bg-white px-4 py-2 text-center font-bold text-black transition-colors duration-300 group-hover:bg-blue-100 dark:bg-black dark:text-white group-hover:dark:bg-cyan-950">
+                                            <span className="h-full opacity-80 w-full rounded-[10px] bg-white px-4 py-2 text-center font-bold text-black transition-colors duration-300 group-hover:bg-blue-100 dark:bg-black dark:text-white group-hover:dark:bg-cyan-950">
                                                 {subscribeLoading ? 'Submitting...' : 'Join the waitlist'}
                                             </span>
                                         </Button>
