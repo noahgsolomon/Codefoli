@@ -23,6 +23,9 @@ import VideoCard from "./VideoCard.tsx";
 import Balancer from "react-wrap-balancer";
 import FeatureCard from "./FeatureCard.tsx";
 import {Mailbox} from "lucide-react";
+import addEmail from "api/newsletterapi.tsx";
+import {BsDiscord} from "react-icons/bs";
+import {useSpring, animated} from "react-spring";
 
 const purpleTheme = {
   primary: '#9b59b6',
@@ -154,23 +157,30 @@ const Home: FC = () => {
   const [imageIndex, setImageIndex] = useState(0);
   const [email, setEmail] = useState('');
   const [shake, setShake] = useState(false);
+  const [emailAdded, setEmailAdded] = useState(false);
+  const [subscribeLoading, setSubscribeLoading] = useState(false);
 
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  const handleEmailSubmit = () => {
-    console.log(email);
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    if (!emailRegex.test(email)) {
+  const handleEmailSubmit = async () => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (email.match(emailRegex)) {
+      setSubscribeLoading(true);
+      const addEmailFetch = await addEmail(email);
+      console.log(addEmailFetch);
+      if (addEmailFetch.status === "OK") {
+        setEmail("");
+        setEmailAdded(true);
+      }
+    } else {
       console.log('not email')
       setShake(true);
       setTimeout(() => setShake(false), 300);
       return;
     }
-
-    // Submit the email
+    setSubscribeLoading(false);
   };
 
   useEffect(() => {
@@ -188,6 +198,12 @@ const Home: FC = () => {
       setCurrentImage(images[imageIndex]);
     }
   }, [currentTheme, imageIndex]);
+
+  const newsletterSuccessAnimation = useSpring({
+    opacity: emailAdded ? 1 : 0,
+    transform: emailAdded ? 'translateY(0px)' : 'translateY(-50px)',
+    delay: 100
+  });
 
   useEffect(() => {
     document.body.style.setProperty('--primary', activeTheme.primary);
@@ -429,34 +445,73 @@ const Home: FC = () => {
                   </div>
                 </div>
               </section>
-            <section>
-              <div className="lg:ml-20 lg:my-10 p-4">
-                <input
-                    type="email"
-                    placeholder="Enter your email"
-                    onChange={handleEmailChange}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        handleEmailSubmit();
-                      }
-                    }}
-                    className={`w-full border-none bg-transparent p-3 hover:opacity-80 transition-all text-3xl lg:text-5xl py-10 outline-none focus:outline-none focus:ring-0 ${shake ? 'animate-shake' : ''}`}
-                />
-                <button
-                    className={`ml-5 hover:shadow-[0_0_2rem_-0.5rem_#333333] rounded-full bg-gradient-to-r hover:scale-[101%] transition-all from-red-300 via-yellow-300 to-blue-300 p-[1px] brightness-90 contrast-150 focus:outline-none focus-visible:ring-2 dark:brightness-125 dark:contrast-100 dark:text-gray-200 sm:block`}
-                    onClick={handleEmailSubmit}
-                >
-                  <div className="group relative overflow-hidden rounded-full bg-white/80 px-3 py-1 duration-300 dark:bg-black/80 dark:text-gray-300">
-                    <span className="block sm:inline opacity-60">
-                      <div className={'flex flex-row items-center gap-2'}>
-                        <Mailbox className={'opacity-80'}/>
-                        <p>Join our newsletter</p>
-                      </div>
-                    </span>
+            <section className={'relative overflow-hidden'}>
+              <div
+                  className="absolute top-10 left-10 w-[300px] h-[300px] rounded-full bg-gradient-radial from-indigo-500 via-purple-500 to-pink-500 opacity-20 blur-xl ring-1 ring-gray-900/10"
+              />
+              {emailAdded ? (
+                  <animated.div style={newsletterSuccessAnimation} className="lg:ml-20 lg:my-10 p-4">
+                    <h2 className={'font-bold text-3xl lg:text-5xl text-center lg:text-left'}>
+                      Thank you!
+                      <span className={`bg-gradient-to-r ${activeTheme.buttonGradient} bg-clip-text text-transparent dark:to-white to-black`}>{" "}You're in.</span>
+                    </h2>
+                    <p className={'opacity-60 text-center lg:text-left'}>You can be involved by following us on Twitter and joining our Discord server.</p>
+                    <div className="flex justify-center lg:justify-start gap-2 mt-4">
+
+                      <a
+                          href={'https://twitter.com/noahgsolomon'}
+                          target={'_blank'}
+                          className="shadow-md text-base text-white lg:px-6 lg:py-4 px-2 py-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex flex-row items-center gap-2 hover:opacity-80 transition-all"
+                      >
+                        <Twitter />
+                        Follow us on Twitter
+                      </a>
+
+                      <a
+                          href={'https://codefoli.com/discord'}
+                          target={'_blank'}
+                          className="shadow-md text-base text-white lg:px-6 lg:py-6 px-2 py-2 bg-gradient-to-r from-[#5865F2] to-[#747bff] rounded-full flex flex-row items-center gap-2 hover:opacity-80 transition-all"
+                      >
+                        <BsDiscord />
+                        Join Discord
+                      </a>
+
+                    </div>
+                  </animated.div>
+                      ) :(
+                  <div className="text-center lg:ml-20 lg:my-10 p-4">
+                    <input
+                        type="email"
+                        placeholder="Enter your email"
+                        onChange={handleEmailChange}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            handleEmailSubmit();
+                          }
+                        }}
+                        className={`w-full text-center lg:text-left border-none bg-transparent p-3 hover:opacity-80 transition-all text-3xl lg:text-5xl py-10 outline-none focus:outline-none focus:ring-0 ${shake ? 'animate-shake' : ''}`}
+                    />
+                    <button
+                        className={`${subscribeLoading ? 'opacity-50' :''} lg:block ml-5 rounded-full bg-gradient-to-r hover:scale-[101%] transition-all from-red-300 via-yellow-300 to-blue-300 p-[1px] brightness-90 contrast-150 focus:outline-none focus-visible:ring-2 dark:brightness-125 dark:contrast-100 dark:text-gray-200`}
+                        onClick={handleEmailSubmit}
+                        disabled={subscribeLoading}
+                    >
+                    <div className="group relative overflow-hidden rounded-full bg-white/80 px-3 py-1 duration-300 dark:bg-black/80 dark:text-gray-300">
+                      <span className="block sm:inline opacity-60">
+                        <div className={'flex flex-row items-center gap-2'}>
+                          {subscribeLoading ? (<svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 1.37.259 2.678.741 3.825l1.516-1.534z"></path>
+                          </svg>) : (<Mailbox className={'opacity-80'}/>)}
+                          <p>Join our newsletter</p>
+                        </div>
+                      </span>
+                    </div>
+                    </button>
                   </div>
-                </button>
-              </div>
+          )
+              }
             </section>
               {/*end*/}
               <div className={'pt-20'}>
