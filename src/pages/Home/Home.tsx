@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FC, useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   DARK_THEME_KEY,
   LIGHT_THEME_KEY,
@@ -16,7 +16,7 @@ import noahdark from "assets/noahprofiledark.png";
 import walterwhitedark from "assets/walterwhiteprofiledark.png";
 // import amogus from 'assets/amogus.png';
 import whiteamogus from "assets/whiteamogus.png";
-
+import { useInView } from 'react-intersection-observer';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import Typed from "typed.js";
@@ -25,8 +25,9 @@ import Balancer from "react-wrap-balancer";
 import FeatureCard from "./FeatureCard.tsx";
 import addEmail from "api/newsletterapi.tsx";
 import { BsDiscord } from "react-icons/bs";
-import { useSpring, animated } from "react-spring";
 import { Frame, Sparkles } from "lucide-react";
+import { useSpring, animated } from 'react-spring';
+
 
 const purpleTheme = {
   primary: "#9b59b6",
@@ -284,6 +285,41 @@ const Home: FC = () => {
     }
   }, [currentTheme]);
 
+  const fall = useSpring({
+    from: { opacity: 0, transform: 'translateY(-20px)' },
+    to: { opacity: 1, transform: 'translateY(0)' },
+    config: { duration: 500 },
+    delay: 100
+  });
+
+  const [threshold, setThreshold] = useState(0.2);
+
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      const isLgScreen = window.matchMedia('(min-width: 1024px)').matches;
+      setThreshold(isLgScreen ? 0.4 : 0.2);
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const [ref, inView] = useInView({
+    threshold,
+    triggerOnce: true,
+  });
+
+  const fade = useSpring({
+    from: { opacity: 0, },
+    to: { opacity: inView ? 1 : 0 },
+    config: { duration: 500 },
+  });
+
   return (
     <>
       <div className="h-screen">
@@ -312,7 +348,7 @@ const Home: FC = () => {
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="h-5 w-5 lg:h-7 lg:w-7 hover:opacity-80 transition-all cursor-pointer"
+                        className="h-5 w-5 hover:opacity-80 transition-all cursor-pointer"
                         aria-hidden="true"
                       >
                         <circle cx="12" cy="12" r="4"></circle>
@@ -337,45 +373,22 @@ const Home: FC = () => {
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="h-5 w-5 lg:h-7 lg:w-7 hover:opacity-80 transition-all cursor-pointer"
+                        className="h-5 w-5 hover:opacity-80 transition-all cursor-pointer"
                         aria-hidden="true"
                       >
                         <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
                       </svg>
                     )}
                     <div onClick={togglePageTheme} className={"cursor-pointer"}>
-                      <Shuffle className="h-5 w-5 lg:h-7 lg:w-7 hover:opacity-80 transition-all"/>
+                      <Shuffle className="h-5 w-5 hover:opacity-80 transition-all"/>
                     </div>
-              </div>
-              <div className="justify-center items-center flex flex-row gap-2 lg:gap-4">
-                  <div className="flex flex-col items-center justify-center ">
-                    <div className="mt-1 flex flex-col gap-3 px-4 text-center sm:px-0">
-                      <Link
-                        className="mx-auto opacity-60 rounded-full bg-gradient-to-r from-gray-400 to-gray-600 p-[1px] brightness-90 contrast-150 focus:outline-none focus-visible:ring-2 dark:brightness-125 dark:contrast-100 dark:text-gray-200 sm:block"
-                        to={'/waitlist'}
-                      >
-                        <div className="group bg-gradient-to-r from-red-400 to-red-800 relative overflow-hidden rounded-full bg-white/80 px-3 py-1 duration-300 hover:pr-9 dark:bg-black/80">
-                          <span className="bg-gradient-to-r from-white to-gray-100 bg-clip-text text-transparent block sm:inline">
-                            Don't Click me!
-                            <img
-                              className="absolute -bottom-1 right-1 duration-300 sm:translate-y-7 group-hover:translate-y-0"
-                              alt="Among Us character"
-                              height="30"
-                              width="30"
-                              src={whiteamogus}
-                            />
-                          </span>
-                        </div>
-                      </Link>
-                    </div>
-                  </div>
               </div>
             </div>
           </header>
         </div>
         <div className={": mt-28"}>
           {/*start*/}
-          <section className="mb-20 md:mb-40 xl:pt-[56px]">
+          <animated.section style={fall} className="mb-20 md:mb-40 xl:pt-[56px]">
             <div className="container mb-10 flex flex-col items-center justify-between xl:flex-row">
               <div className="mb-10 flex flex-col items-center justify-center gap-10 xl:items-start">
                 <div className="relative flex w-full items-center justify-center gap-4 xl:justify-start">
@@ -439,9 +452,9 @@ const Home: FC = () => {
                 />
               </div>
             </div>
-          </section>
-          <section className="relative overflow-hidden" id="features">
-            <div className="container mb-[64px] grid items-center justify-center">
+          </animated.section>
+          <section ref={ref} className="relative overflow-hidden" id="features">
+            <animated.div style={fade} className="container mb-[64px] grid items-center justify-center">
               <div className="flex flex-col items-center justify-center gap-16">
                 <div className="mt-1 flex flex-col gap-3 px-4 text-center sm:px-0">
                   <h1 className="text-4xl font-bold">
@@ -510,7 +523,7 @@ const Home: FC = () => {
                   </FeatureCard>
                 </div>
               </div>
-            </div>
+            </animated.div>
           </section>
           <section className={"relative overflow-hidden"}>
             {emailAdded ? (
