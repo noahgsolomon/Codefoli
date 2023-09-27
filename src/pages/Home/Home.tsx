@@ -7,7 +7,7 @@ import {
 import {toggleTheme} from "../../util/toggleTheme.ts";
 import {Button} from "./button.tsx";
 import {Link} from "react-router-dom";
-import {Github, Shuffle, Star, Twitter} from "../../util/ui/icons.ts";
+import {Github, Shuffle, Star} from "../../util/ui/icons.ts";
 import ratatoonie from 'assets/ratatoonieprofile.png';
 import noah from 'assets/noahprofile.png';
 import walterwhite from 'assets/walterwhiteprofile.png';
@@ -23,7 +23,6 @@ import Typed from "typed.js";
 import VideoCard from "./VideoCard.tsx";
 import Balancer from "react-wrap-balancer";
 import FeatureCard from "./FeatureCard.tsx";
-import {Mailbox} from "lucide-react";
 import addEmail from "api/newsletterapi.tsx";
 import {BsDiscord} from "react-icons/bs";
 import {useSpring, animated} from "react-spring";
@@ -364,7 +363,7 @@ const Home: FC = () => {
                             className="gap-1 md:inline-flex"
                             href="https://twitter.com/noahgsolomon"
                         >
-                          <Twitter className="h-4 w-4" />
+                          <i className="w-4 h-4 fa-brands fa-x-twitter"></i>
                           Twitter
                         </a>
                       </Button>
@@ -453,23 +452,36 @@ const Home: FC = () => {
                     <p className={'opacity-60 text-center lg:text-left'}>You can be involved by following us on Twitter and joining our Discord server.</p>
                     <div className="flex justify-center lg:justify-start gap-2 mt-4">
 
-                      <a
-                          href={'https://twitter.com/noahgsolomon'}
-                          target={'_blank'}
-                          className="shadow-md text-base text-white lg:px-6 lg:py-4 px-2 py-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex flex-row items-center gap-2 hover:opacity-80 transition-all"
+                      <Button
+                          asChild
+                          className="flex items-center transition-all hover:opacity-80 hover:text-white bg-gradient-to-r from-black to-gray-900 gap-2 rounded-xl border-2 px-12 py-5 text-white"
+                          variant="outline"
                       >
-                        <Twitter />
-                        Follow us on Twitter
-                      </a>
-
-                      <a
-                          href={'https://codefoli.com/discord'}
-                          target={'_blank'}
-                          className="shadow-md text-base text-white lg:px-6 lg:py-6 px-2 py-2 bg-gradient-to-r from-[#5865F2] to-[#747bff] rounded-full flex flex-row items-center gap-2 hover:opacity-80 transition-all"
+                        <a
+                            target="_blank"
+                            rel="noreferrer"
+                            className="gap-1 md:inline-flex"
+                            href="https://twitter.com/noahgsolomon"
+                        >
+                          <i className="w-4 h-4 fa-brands fa-x-twitter"></i>
+                          Twitter
+                        </a>
+                      </Button>
+                      <Button
+                          asChild
+                          className="text-white flex items-center transition-all hover:opacity-80 hover:text-white gap-2 rounded-xl border-2 px-12 py-5 bg-gradient-to-r from-[#5865F2] to-[#747bff]"
+                          variant="outline"
                       >
-                        <BsDiscord />
-                        Join Discord
-                      </a>
+                        <a
+                            target="_blank"
+                            rel="noreferrer"
+                            className="gap-1 md:inline-flex text-white"
+                            href="https://codefoli.com/discord"
+                        >
+                          <BsDiscord className="h-4 w-4" />
+                          Discord
+                        </a>
+                      </Button>
 
                     </div>
                   </animated.div>
@@ -487,23 +499,19 @@ const Home: FC = () => {
                         }}
                         className={`w-full text-center lg:text-left border-none bg-transparent p-3 hover:opacity-80 transition-all text-3xl lg:text-5xl py-10 outline-none focus:outline-none focus:ring-0 ${shake ? 'animate-shake' : ''}`}
                     />
-                    <button
-                        className={`${subscribeLoading ? 'opacity-50' :''} lg:block ml-5 rounded-full bg-gradient-to-r hover:scale-[101%] transition-all from-red-300 via-yellow-300 to-blue-300 p-[1px] brightness-90 contrast-150 focus:outline-none focus-visible:ring-2 dark:brightness-125 dark:contrast-100 dark:text-gray-200`}
-                        onClick={handleEmailSubmit}
-                        disabled={subscribeLoading}
-                    >
-                    <div className="group relative overflow-hidden rounded-full bg-white/80 px-3 py-1 duration-300 dark:bg-black/80 dark:text-gray-300">
-                      <span className="block sm:inline opacity-60">
-                        <div className={'flex flex-row items-center gap-2'}>
-                          {subscribeLoading ? (<svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 1.37.259 2.678.741 3.825l1.516-1.534z"></path>
-                          </svg>) : (<Mailbox className={'text-black opacity-50 dark:text-white'}/>)}
-                          <p>Join our Waitlist</p>
-                        </div>
+                    <div className={'w-full flex justify-center lg:justify-start'}>
+                      <Button
+                          className="lg:ml-5 wl-form-button rounded-xl p-[2px] font-bold transition-shadow duration-300 hover:shadow-[0_0.5rem_2rem_-0.75rem_#3178c6] dark:hover:shadow-[0_0.5rem_2rem_-0.75rem_#5198f6]"
+                          disabled={subscribeLoading}
+                          type="submit"
+                          onClick={handleEmailSubmit}
+                      >
+                      <span className="h-full opacity-80 w-full rounded-[10px] bg-white px-4 py-2 text-center font-bold text-black transition-colors duration-300 group-hover:bg-blue-100 dark:bg-black dark:text-white group-hover:dark:bg-cyan-950">
+                        {subscribeLoading ? 'Submitting...' : 'Join the waitlist'}
                       </span>
+                      </Button>
                     </div>
-                    </button>
+
                   </div>
           )
               }
