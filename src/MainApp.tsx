@@ -3,6 +3,7 @@ import Home from "./pages/Home/Home.tsx";
 import Waitlist from "./pages/Login/Waitlist.tsx";
 import { FC } from "react";
 import NotFound from "./NotFound.tsx";
+import Register2 from "./pages/Register/Register2.tsx";
 
 const MainApp: FC = () => {
   // const navigate = useNavigate();
@@ -75,6 +76,7 @@ const MainApp: FC = () => {
         {/*<Route path="/home" element={<Themes themes={themes} />} />*/}
         <Route path="/waitlist" element={<Waitlist />} />
         <Route path="/" element={<Home />} />
+        <Route path="/register" element={<Register2 />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
