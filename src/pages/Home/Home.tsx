@@ -216,7 +216,7 @@ const Home: FC = () => {
     }
   }, [currentTheme, imageIndex]);
 
-  const newsletterSuccessAnimation = useSpring({
+  const emailSuccessAnimation = useSpring({
     opacity: emailAdded ? 1 : 0,
     transform: emailAdded ? "translateY(0px)" : "translateY(-50px)",
     delay: 100,
@@ -528,7 +528,7 @@ const Home: FC = () => {
           <section className={"relative overflow-hidden"}>
             {emailAdded ? (
               <animated.div
-                style={newsletterSuccessAnimation}
+                style={emailSuccessAnimation}
                 className="p-4 lg:my-10 lg:ml-20"
               >
                 <h2
