@@ -16,10 +16,13 @@ const CurrentPages: FC<{
     deployed: boolean;
   }[];
 }> = ({ themes }) => {
+
+  if (themes.length === 0) {
+    return null;
+  }
+
   return (
-    <div className={"w-full"}>
-      <h1 className={"text-center text-3xl font-bold"}>Current Pages</h1>
-      <div className={"flex w-full flex-wrap justify-center gap-4"}>
+      <div className={"flex items-center mt-40 flex-wrap justify-center gap-4"}>
         {themes.map((theme, index) =>
           theme.theme === "PAPER" ? (
             <PageCard
@@ -31,16 +34,7 @@ const CurrentPages: FC<{
             />
           ) : null
         )}
-        {themes.length === 0 && (
-          <div className={"mt-5 w-full text-center"}>
-            <h1 className={"text-2xl font-bold"}>No themes found!</h1>
-            <p className={"text-lg"}>
-              Create page with a theme below to get started!
-            </p>
-          </div>
-        )}
       </div>
-    </div>
   );
 };
 
