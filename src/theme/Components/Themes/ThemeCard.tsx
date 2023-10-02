@@ -18,9 +18,7 @@ const ThemeCard: FC<{
 
   return (
     <div
-      className={`${
-        used ? "opacity-70" : ""
-      } shadow-custom hover:shadow-customHover relative m-5 flex max-h-[400px] max-w-[400px] cursor-pointer flex-col rounded-xl border-2 border-black transition-all hover:-translate-y-0.5`}
+      className={`cursor-pointer shadow-blue-100 shadow-2xl hover:shadow-3xl dark:shadow-gray-900 dark:border-gray-800 m-5 flex max-h-[400px] border-2 border-blue-100 border-opacity-50 max-w-[400px] flex-col rounded-xl transition-all hover:-translate-y-0.5`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={() =>
@@ -34,14 +32,14 @@ const ThemeCard: FC<{
           : null
       }
     >
-      <div
+      {/* <div
         className={`absolute inset-0 z-10 flex items-center justify-center rounded-lg border-8 border-dashed border-black border-opacity-30 bg-black ${
           used ? "visible opacity-60" : "hidden"
         }`}
       >
         <FiLock className="text-4xl text-white" />
         <h3 className={"text-4xl font-bold text-white"}>Theme used</h3>
-      </div>
+      </div> */}
       <div
         className={`transition-visible absolute inset-0 z-10 flex items-center justify-center rounded-lg border-8 border-dashed border-black border-opacity-30 bg-green-500 opacity-0 transition-opacity ${
           !used && hovered ? "visible opacity-80" : "invisible"
