@@ -1,107 +1,10 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { addEmail } from "./newsletterapi.tsx";
 
 const Footer = () => {
-  const [email, setEmail] = useState("");
-  const [emailAdded, setEmailAdded] = useState(false);
-  const [emailChange, setEmailChange] = useState(false);
-  const [subscribeLoading, setSubscribeLoading] = useState(false);
-  const handleSubscribe = async () => {
-    setSubscribeLoading(true);
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (email.match(emailRegex)) {
-      const addEmailFetch = await addEmail(email);
-      console.log(addEmailFetch);
-      if (addEmailFetch.status === "OK") {
-        setEmail("");
-        setEmailAdded(true);
-        localStorage.setItem("newsletter", "true");
-      }
-    }
-    setSubscribeLoading(false);
-  };
 
   return (
-    <footer className="relative z-40 mt-40 bg-[#0d0d0d] ">
-      <div className="absolute -top-20 left-1/2 -translate-x-1/2 transform p-6">
-        <div className="shadow-custom mx-auto flex w-[300px] flex-col items-center justify-between rounded-lg border-2 border-black bg-white p-6 dark:bg-[#1a1a1a] md:w-[450px]">
-          <div className="text-xl font-bold">Subscribe to our newsletter</div>
-          <p className="mb-4 text-base opacity-60">
-            Win prizes, and get access to free hosting
-          </p>
-          <div className="flex w-full flex-col">
-            {localStorage.getItem("newsletter") === "true" && !emailChange ? (
-              <>
-                <p className={"text-center text-green-500"}>subscribed!</p>
-                <div
-                  className={
-                    "cursor-pointer text-center text-base text-blue-500 underline transition-all hover:opacity-80"
-                  }
-                  onClick={() => setEmailChange(true)}
-                >
-                  add new email
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="flex flex-col items-center justify-center md:relative">
-                  <input
-                    type="email"
-                    className="shadow-custom hover:shadow-customHover mb-4 h-12 w-full rounded-lg border-2 border-black py-8 text-sm transition-all dark:bg-[#1a1a1a]"
-                    placeholder="Enter your email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        handleSubscribe();
-                      }
-                    }}
-                  />
-                  <button
-                    className="mr-2 h-12 rounded-lg bg-blue-500 px-4 text-base text-white transition-all hover:opacity-80 md:absolute md:right-0 md:top-8 md:-translate-y-1/2 md:transform"
-                    onClick={handleSubscribe}
-                    disabled={subscribeLoading}
-                  >
-                    {subscribeLoading ? (
-                      <svg
-                        className="mr-2 h-5 w-5 animate-spin"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                    ) : (
-                      "Subscribe 🎉"
-                    )}
-                  </button>
-                </div>
-                {emailAdded ? (
-                  <p className="text-xs text-green-500 opacity-60">
-                    Email added! Welcome to the family! 🎉
-                  </p>
-                ) : (
-                  <p className="text-xs text-red-500 opacity-60">
-                    Your support helps us keep going!
-                  </p>
-                )}
-              </>
-            )}
-          </div>
-        </div>
-      </div>
-      <div className={"pt-72 md:pt-32"}></div>
+    <footer className="relative z-40 bg-[#0d0d0d] ">
+      <div className={""}></div>
       <div className="mx-auto max-w-screen-xl px-4  pb-2 pt-2 lg:px-8 lg:pt-6">
         <div className="flex flex-col items-center justify-between md:flex-row">
           <div className={"md:mr-10"}>
