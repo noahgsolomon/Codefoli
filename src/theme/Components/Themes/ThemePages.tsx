@@ -17,19 +17,20 @@ const ThemePages: FC<{
   const themeList = ["PAPER"];
 
   return (
-    <div className={"mt-10 w-full"}>
-      <h1 className={"text-center text-3xl font-bold"}>Themes</h1>
-      <div className={"flex w-full flex-wrap justify-center gap-4"}>
-        {themeList.map((theme) => (
-          <ThemeCard
-            key={theme}
-            themeTitle={theme}
-            currentTheme={currentTheme}
-            imgDark={profileDisplayDark}
-            imgLight={profileDisplayLight}
-            used={themes.some((item) => item.theme === theme)}
-          />
-        ))}
+    <div>
+      <div className="flex items-center mt-40 flex-wrap justify-center gap-4">
+        {themeList.map((theme) =>
+          themes.some((item) => item.theme === theme) ? null : (
+            <ThemeCard
+              key={theme}
+              themeTitle={theme}
+              currentTheme={currentTheme}
+              imgDark={profileDisplayDark}
+              imgLight={profileDisplayLight}
+              used={themes.some((item) => item.theme === theme)}
+            />
+          )
+        )}
       </div>
     </div>
   );
