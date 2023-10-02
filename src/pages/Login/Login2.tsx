@@ -45,7 +45,7 @@ const Login2:FC = () => {
 
     return (
         <div className="flex flex-row justify-center items-center h-screen w-screen">
-            <div className="hidden lg:flex bg-blue-100 bg-opacity-30 dark:bg-purple-900 dark:bg-opacity-10 hover:-translate-y-0.5 transition-all w-[50%] h-screen items-center">
+            <div className="hidden lg:flex bg-blue-100 bg-opacity-30 dark:bg-[#0d0d0d] hover:-translate-y-0.5 transition-all w-[50%] h-screen items-center">
                 <animated.img style={imageAnimate} className="" src={`https://images.codefoli.com/${theme === 'dark' ? 'walterwhiteprofiledark.png' : 'walterwhiteprofile.png'}`} alt="profile photo"/>
             </div>
             <animated.div style={formAnimate} className="flex flex-col w-[75%] md:w-full lg:w-[50%] lg:mx-auto max-w-[500px]"> {/* This line has been modified */}
