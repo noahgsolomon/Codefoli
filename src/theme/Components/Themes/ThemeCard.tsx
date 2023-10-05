@@ -18,7 +18,7 @@ const ThemeCard: FC<{
 
   return (
     <div
-      className={`cursor-pointer shadow-blue-100 shadow-2xl hover:shadow-3xl dark:shadow-gray-900 dark:border-gray-800 m-5 flex max-h-[600px] border-2 border-blue-100 border-opacity-50 max-w-[600px] flex-col rounded-xl transition-all hover:-translate-y-0.5`}
+      className={`hover:shadow-3xl m-5 flex max-h-[600px] max-w-[600px] cursor-pointer flex-col rounded-xl border-2 border-blue-100 border-opacity-50 shadow-2xl shadow-blue-100 transition-all hover:-translate-y-0.5 dark:border-gray-800 dark:shadow-gray-900`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={() =>
@@ -41,7 +41,7 @@ const ThemeCard: FC<{
         <h3 className={"text-4xl font-bold text-white"}>Theme used</h3>
       </div> */}
       <div
-        className={`bg-gradient-to-r transition-visible absolute inset-0 z-10 flex items-center justify-center rounded-lg from-green-500 to-green-400 dark:from-green-700 dark:to-green-500 opacity-0 transition-opacity ${
+        className={`transition-visible absolute inset-0 z-10 flex items-center justify-center rounded-lg bg-gradient-to-r from-green-500 to-green-400 opacity-0 transition-opacity dark:from-green-700 dark:to-green-500 ${
           !used && hovered ? "visible opacity-80" : "invisible"
         }`}
       >

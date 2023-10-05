@@ -18,7 +18,7 @@ const ThemePages: FC<{
 
   return (
     <div>
-      <div className="flex items-center mt-40 flex-wrap justify-center gap-4">
+      <div className="mt-40 flex flex-wrap items-center justify-center gap-4">
         {themeList.map((theme) =>
           themes.some((item) => item.theme === theme) ? null : (
             <ThemeCard

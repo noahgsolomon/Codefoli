@@ -1,5 +1,9 @@
 import { FC, useEffect } from "react";
-import { DARK_THEME_KEY, LIGHT_THEME_KEY, LOCALSTORAGE_THEME_KEY } from "./util/constants.ts";
+import {
+  DARK_THEME_KEY,
+  LIGHT_THEME_KEY,
+  LOCALSTORAGE_THEME_KEY,
+} from "./util/constants.ts";
 import { STAGE } from "./config.ts";
 
 const Unsubscribing: FC = () => {
@@ -53,13 +57,16 @@ const Unsubscribing: FC = () => {
               <div
                 role="status"
                 className={`loader ${
-                  localStorage.getItem(LOCALSTORAGE_THEME_KEY) === DARK_THEME_KEY
+                  localStorage.getItem(LOCALSTORAGE_THEME_KEY) ===
+                  DARK_THEME_KEY
                     ? "dark"
                     : ""
                 }`}
               ></div>
             </div>
-            <span className="mt-20 text-center font-bold">Unsubscribing...</span>
+            <span className="mt-20 text-center font-bold">
+              Unsubscribing...
+            </span>
           </div>
         </div>
       </div>

@@ -1,4 +1,11 @@
-import { ChangeEvent, FC, useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  FC,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   DARK_THEME_KEY,
   LIGHT_THEME_KEY,
@@ -16,7 +23,7 @@ import noahdark from "assets/noahprofiledark.png";
 import walterwhitedark from "assets/walterwhiteprofiledark.png";
 // import amogus from 'assets/amogus.png';
 import whiteamogus from "assets/whiteamogus.png";
-import { useInView } from 'react-intersection-observer';
+import { useInView } from "react-intersection-observer";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import Typed from "typed.js";
@@ -26,21 +33,20 @@ import FeatureCard from "./FeatureCard.tsx";
 import addEmail from "api/newsletterapi.tsx";
 import { BsDiscord } from "react-icons/bs";
 import { Frame, Sparkles } from "lucide-react";
-import { useSpring, animated } from 'react-spring';
-
+import { useSpring, animated } from "react-spring";
 
 const purpleTheme = {
   primary: "#9b59b6",
   secondary: "#643a79",
   headerGradient: "from-purple-100 to-transparent",
-  buttonGradient: 'from-purple-500 to-purple-800 dark:to-purple-300',
+  buttonGradient: "from-purple-500 to-purple-800 dark:to-purple-300",
   ring: "ring-purple-600",
   buttonFill: "fill-purple-500",
   color1: "#d8b4fe",
   color2: "#a855f7",
   color3: "#7c3aed",
   color4: "#4c1d95",
-  text: 'text-purple-500'
+  text: "text-purple-500",
 };
 
 const yellowTheme = {
@@ -54,7 +60,7 @@ const yellowTheme = {
   color2: "#ffcc00", // Light Yellow
   color3: "#ff9900", // Medium Yellow-Orange
   color4: "#cc6600", // Dark Orange-Brown
-  text: 'text-yellow-500'
+  text: "text-yellow-500",
 };
 
 const orangeTheme = {
@@ -68,7 +74,7 @@ const orangeTheme = {
   color2: "#ff8000", // Light Orange
   color3: "#ff5500", // Medium Orange-Red
   color4: "#cc4400", // Darkest Reddish-Brown
-  text: 'text-orange-500'
+  text: "text-orange-500",
 };
 
 const greenTheme = {
@@ -82,7 +88,7 @@ const greenTheme = {
   color2: "#26de81",
   color3: "#10ac84",
   color4: "#0a3d62",
-  text: 'text-green-500'
+  text: "text-green-500",
 };
 
 const blueTheme = {
@@ -96,7 +102,7 @@ const blueTheme = {
   color2: "#0099cc", // Light Blue
   color3: "#006699", // Medium Blue
   color4: "#003366", // Darkest Blue
-  text: 'text-blue-500'
+  text: "text-blue-500",
 };
 
 const redTheme = {
@@ -110,7 +116,7 @@ const redTheme = {
   color2: "#ff3333", // Light Red
   color3: "#cc0000", // Medium Red
   color4: "#990000", // Darkest Red
-  text: 'text-red-500'
+  text: "text-red-500",
 };
 
 const Home: FC = () => {
@@ -286,26 +292,26 @@ const Home: FC = () => {
   }, [currentTheme]);
 
   const fall = useSpring({
-    from: { opacity: 0, transform: 'translateY(-20px)' },
-    to: { opacity: 1, transform: 'translateY(0)' },
+    from: { opacity: 0, transform: "translateY(-20px)" },
+    to: { opacity: 1, transform: "translateY(0)" },
     config: { duration: 500 },
-    delay: 100
+    delay: 100,
   });
 
   const [threshold, setThreshold] = useState(0.2);
 
   useLayoutEffect(() => {
     const handleResize = () => {
-      const isLgScreen = window.matchMedia('(min-width: 1024px)').matches;
+      const isLgScreen = window.matchMedia("(min-width: 1024px)").matches;
       setThreshold(isLgScreen ? 0.4 : 0.2);
     };
 
     handleResize();
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -315,7 +321,7 @@ const Home: FC = () => {
   });
 
   const fade = useSpring({
-    from: { opacity: 0, },
+    from: { opacity: 0 },
     to: { opacity: inView ? 1 : 0 },
     config: { duration: 500 },
   });
@@ -332,69 +338,76 @@ const Home: FC = () => {
                 "mx-5 flex flex-row items-center justify-between pt-10 md:mx-20"
               }
             >
-              <div className={"flex cursor-pointer items-center flex-row gap-4"}>
-                <Frame className="h-5 w-5 lg:h-10 lg:w-10 opacity-80 hover:opacity-60 transition-all" />
+              <div
+                className={"flex cursor-pointer flex-row items-center gap-4"}
+              >
+                <Frame className="h-5 w-5 opacity-80 transition-all hover:opacity-60 lg:h-10 lg:w-10" />
               </div>
               <div className="flex flex-row gap-4">
                 {theme === LIGHT_THEME_KEY ? (
-                      <svg
-                        onClick={handleToggleTheme}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="h-5 w-5 hover:opacity-80 transition-all cursor-pointer"
-                        aria-hidden="true"
-                      >
-                        <circle cx="12" cy="12" r="4"></circle>
-                        <path d="M12 2v2"></path>
-                        <path d="M12 20v2"></path>
-                        <path d="m4.93 4.93 1.41 1.41"></path>
-                        <path d="m17.66 17.66 1.41 1.41"></path>
-                        <path d="M2 12h2"></path>
-                        <path d="M20 12h2"></path>
-                        <path d="m6.34 17.66-1.41 1.41"></path>
-                        <path d="m19.07 4.93-1.41 1.41"></path>
-                      </svg>
-                    ) : (
-                      <svg
-                        onClick={handleToggleTheme}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="h-5 w-5 hover:opacity-80 transition-all cursor-pointer"
-                        aria-hidden="true"
-                      >
-                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-                      </svg>
-                    )}
-                    <div onClick={togglePageTheme} className={"cursor-pointer"}>
-                      <Shuffle className="h-5 w-5 hover:opacity-80 transition-all"/>
-                    </div>
+                  <svg
+                    onClick={handleToggleTheme}
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-5 w-5 cursor-pointer transition-all hover:opacity-80"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <path d="M12 2v2"></path>
+                    <path d="M12 20v2"></path>
+                    <path d="m4.93 4.93 1.41 1.41"></path>
+                    <path d="m17.66 17.66 1.41 1.41"></path>
+                    <path d="M2 12h2"></path>
+                    <path d="M20 12h2"></path>
+                    <path d="m6.34 17.66-1.41 1.41"></path>
+                    <path d="m19.07 4.93-1.41 1.41"></path>
+                  </svg>
+                ) : (
+                  <svg
+                    onClick={handleToggleTheme}
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-5 w-5 cursor-pointer transition-all hover:opacity-80"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                  </svg>
+                )}
+                <div onClick={togglePageTheme} className={"cursor-pointer"}>
+                  <Shuffle className="h-5 w-5 transition-all hover:opacity-80" />
+                </div>
               </div>
             </div>
           </header>
         </div>
         <div className={": mt-28"}>
           {/*start*/}
-          <animated.section style={fall} className="mb-20 md:mb-40 xl:pt-[56px]">
+          <animated.section
+            style={fall}
+            className="mb-20 md:mb-40 xl:pt-[56px]"
+          >
             <div className="container mb-10 flex flex-col items-center justify-between xl:flex-row">
               <div className="mb-10 flex flex-col items-center justify-center gap-10 xl:items-start">
                 <div className="relative flex w-full items-center justify-center gap-4 xl:justify-start">
-                <h1 className={`bg-gradient-to-r bg-clip-text text-6xl ${activeTheme.buttonGradient} font-extrabold leading-[5.5rem] text-transparent sm:text-8xl`}>
-                  Codefoli
-                </h1>
+                  <h1
+                    className={`bg-gradient-to-r bg-clip-text text-6xl ${activeTheme.buttonGradient} font-extrabold leading-[5.5rem] text-transparent sm:text-8xl`}
+                  >
+                    Codefoli
+                  </h1>
                 </div>
                 <p className="max-w-[55ch] bg-transparent px-8 text-center font-medium leading-8 text-black/60 dark:text-white/50 xl:px-0 xl:text-left">
                   <span ref={el}></span>
@@ -405,8 +418,10 @@ const Home: FC = () => {
                     className={`hero-join-button rounded-xl p-[2px] transition-all duration-300 hover:bg-transparent hover:shadow-[0_0_2rem_-0.5rem_#333333] dark:hidden`}
                   >
                     <Link to="/waitlist">
-                      <span className={`inline-flex h-full ${activeTheme.text} w-fit font-bold items-center gap-1 rounded-[10px] bg-white px-12 py-2 text-gray-800 opacity-90 transition-all duration-300 md:px-4`}>
-                        <Sparkles className="h-4 w-4"/>
+                      <span
+                        className={`inline-flex h-full ${activeTheme.text} w-fit items-center gap-1 rounded-[10px] bg-white px-12 py-2 font-bold text-gray-800 opacity-90 transition-all duration-300 md:px-4`}
+                      >
+                        <Sparkles className="h-4 w-4" />
                         Join Waitlist
                       </span>
                     </Link>
@@ -416,8 +431,8 @@ const Home: FC = () => {
                     className="  hero-join-button hidden rounded-xl p-[2px] transition-all duration-300 dark:block dark:hover:shadow-[0_0_2rem_-0.5rem_#fff8]"
                   >
                     <Link to="/waitlist">
-                      <span className="inline-flex h-full w-fit font-bold items-center gap-1 rounded-[10px] px-12 py-2 opacity-90 transition-all duration-300 dark:bg-neutral-900 dark:text-white md:px-4">
-                      <Sparkles className="h-4 w-4"/>
+                      <span className="inline-flex h-full w-fit items-center gap-1 rounded-[10px] px-12 py-2 font-bold opacity-90 transition-all duration-300 dark:bg-neutral-900 dark:text-white md:px-4">
+                        <Sparkles className="h-4 w-4" />
                         Join Waitlist
                       </span>
                     </Link>
@@ -430,7 +445,7 @@ const Home: FC = () => {
                     <a
                       target="_blank"
                       rel="noreferrer"
-                      className="gap-1 md:inline-flex font-bold opacity-80"
+                      className="gap-1 font-bold opacity-80 md:inline-flex"
                       href="https://github.com/noahgsolomon/codefoli"
                     >
                       <i className="fa-solid fa-star h-4 w-4"></i>
@@ -454,7 +469,10 @@ const Home: FC = () => {
             </div>
           </animated.section>
           <section ref={ref} className="relative overflow-hidden" id="features">
-            <animated.div style={fade} className="container mb-[64px] grid items-center justify-center">
+            <animated.div
+              style={fade}
+              className="container mb-[64px] grid items-center justify-center"
+            >
               <div className="flex flex-col items-center justify-center gap-16">
                 <div className="mt-1 flex flex-col gap-3 px-4 text-center sm:px-0">
                   <h1 className="text-4xl font-bold">

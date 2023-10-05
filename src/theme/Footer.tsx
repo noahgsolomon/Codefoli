@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 const Footer = () => {
-
   return (
     <footer className="relative z-40 bg-[#0d0d0d] ">
       <div className={""}></div>

@@ -16,25 +16,24 @@ const CurrentPages: FC<{
     deployed: boolean;
   }[];
 }> = ({ themes }) => {
-
   if (themes.length === 0) {
     return null;
   }
 
   return (
-      <div className={"flex items-center mt-40 flex-wrap justify-center gap-4"}>
-        {themes.map((theme, index) =>
-          theme.theme === "PAPER" ? (
-            <PageCard
-              key={index}
-              themes={theme}
-              link={`${PAPER_URL}?id=${localStorage.getItem(
-                LOCALSTORAGE_ID_KEY
-              )}&refresh=${localStorage.getItem(LOCALSTORAGE_REFRESH_KEY)}`}
-            />
-          ) : null
-        )}
-      </div>
+    <div className={"mt-40 flex flex-wrap items-center justify-center gap-4"}>
+      {themes.map((theme, index) =>
+        theme.theme === "PAPER" ? (
+          <PageCard
+            key={index}
+            themes={theme}
+            link={`${PAPER_URL}?id=${localStorage.getItem(
+              LOCALSTORAGE_ID_KEY
+            )}&refresh=${localStorage.getItem(LOCALSTORAGE_REFRESH_KEY)}`}
+          />
+        ) : null
+      )}
+    </div>
   );
 };
 

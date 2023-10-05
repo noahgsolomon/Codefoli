@@ -6,7 +6,10 @@ import NotFound from "./NotFound.tsx";
 import Register2 from "./pages/Register/Register2.tsx";
 import Login2 from "./pages/Login/Login2.tsx";
 import { STAGE } from "./config";
-import { LOCALSTORAGE_ID_KEY, LOCALSTORAGE_ROLE_KEY } from "./util/constants.ts";
+import {
+  LOCALSTORAGE_ID_KEY,
+  LOCALSTORAGE_ROLE_KEY,
+} from "./util/constants.ts";
 import { authenticated } from "./util/api/authenticateapi.tsx";
 import Themes from "./theme/Themes.tsx";
 import Loader from "Components/Loader/Loader.tsx";
@@ -31,19 +34,19 @@ const MainApp: FC = () => {
     const themesFetch = async () => {
       try {
         const response = await fetch(
-            `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/themes`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization:
-                    "Bearer " + localStorage.getItem(LOCALSTORAGE_ID_KEY),
-              },
-            }
+          `https://f60z27ge89.execute-api.us-east-1.amazonaws.com/${STAGE}/themes`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization:
+                "Bearer " + localStorage.getItem(LOCALSTORAGE_ID_KEY),
+            },
+          }
         );
-  
+
         const responseJson = await response.json();
-  
+
         if (responseJson.status === "OK") {
           setThemes(responseJson.data);
           return responseJson;
@@ -54,7 +57,7 @@ const MainApp: FC = () => {
         console.log(e);
       }
     };
-  
+
     const authenticatedCheck = async () => {
       const fetchState = await authenticated();
       if (fetchState.status === "OK") {
@@ -62,7 +65,7 @@ const MainApp: FC = () => {
           localStorage.setItem(LOCALSTORAGE_ID_KEY, fetchState.data.idToken);
         }
         await themesFetch();
-        navigate('/home')
+        navigate("/home");
       } else {
         const path = window.location.pathname;
         if (path !== "/login" && path !== "/register" && path !== "/") {
@@ -72,7 +75,7 @@ const MainApp: FC = () => {
       }
       setLoading(false);
     };
-  
+
     authenticatedCheck().then();
   }, []);
 

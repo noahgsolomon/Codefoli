@@ -68,85 +68,85 @@ const Waitlist = () => {
   return (
     <div className={"h-screen"}>
       <header>
-            <div
-              className={
-                "mx-5 flex flex-row items-center justify-between pt-10 md:mx-20"
-              }
-            >
-              <div className={"flex cursor-pointer items-center flex-row gap-4"}>
-                <Link to="/">
-                  <Frame className="h-7 w-7 lg:h-10 lg:w-10 opacity-80 hover:opacity-60 transition-all"></Frame>
-                </Link>
-              </div>
-              <div className="flex flex-row gap-4">
-                {theme === LIGHT_THEME_KEY ? (
-                      <svg
-                        onClick={handleToggleTheme}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="h-7 w-7 hover:opacity-80 transition-all cursor-pointer"
-                        aria-hidden="true"
-                      >
-                        <circle cx="12" cy="12" r="4"></circle>
-                        <path d="M12 2v2"></path>
-                        <path d="M12 20v2"></path>
-                        <path d="m4.93 4.93 1.41 1.41"></path>
-                        <path d="m17.66 17.66 1.41 1.41"></path>
-                        <path d="M2 12h2"></path>
-                        <path d="M20 12h2"></path>
-                        <path d="m6.34 17.66-1.41 1.41"></path>
-                        <path d="m19.07 4.93-1.41 1.41"></path>
-                      </svg>
-                    ) : (
-                      <svg
-                        onClick={handleToggleTheme}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="h-7 w-7 hover:opacity-80 transition-all cursor-pointer"
-                        aria-hidden="true"
-                      >
-                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-                      </svg>
-                    )}
-              </div>
-            </div>
-          </header>
-      <main className="relative mt-20 md:mt-40 flex flex-col items-center justify-center sm:px-16 md:px-0">
-      <div>
-      {!emailAdded && (
-      <>
-        <h1 className="text-3xl font-bold text-neutral-950 max-w-[20ch] dark:text-neutral-50 md:text-5xl">
-          <Balancer className="leading-snug text-center">
-            Join our waitlist to get early access to the{' '}
-            <span className="bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text font-black text-transparent dark:from-blue-400 dark:to-emerald-400">
-              Codefoli
-            </span>{' '}
-            community
-          </Balancer>
-        </h1>
-        <p className="leading-8 text-black/50 text-center dark:text-white/50 max-w-[60ch]">
-          <Balancer>
-            By signing up to the waitlist you will be among the first to know when we launch and getting early access
-          </Balancer>
-        </p>
-      </>
-      
-        )}
-      </div>
+        <div
+          className={
+            "mx-5 flex flex-row items-center justify-between pt-10 md:mx-20"
+          }
+        >
+          <div className={"flex cursor-pointer flex-row items-center gap-4"}>
+            <Link to="/">
+              <Frame className="h-7 w-7 opacity-80 transition-all hover:opacity-60 lg:h-10 lg:w-10"></Frame>
+            </Link>
+          </div>
+          <div className="flex flex-row gap-4">
+            {theme === LIGHT_THEME_KEY ? (
+              <svg
+                onClick={handleToggleTheme}
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-7 w-7 cursor-pointer transition-all hover:opacity-80"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M12 2v2"></path>
+                <path d="M12 20v2"></path>
+                <path d="m4.93 4.93 1.41 1.41"></path>
+                <path d="m17.66 17.66 1.41 1.41"></path>
+                <path d="M2 12h2"></path>
+                <path d="M20 12h2"></path>
+                <path d="m6.34 17.66-1.41 1.41"></path>
+                <path d="m19.07 4.93-1.41 1.41"></path>
+              </svg>
+            ) : (
+              <svg
+                onClick={handleToggleTheme}
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-7 w-7 cursor-pointer transition-all hover:opacity-80"
+                aria-hidden="true"
+              >
+                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+              </svg>
+            )}
+          </div>
+        </div>
+      </header>
+      <main className="relative mt-20 flex flex-col items-center justify-center sm:px-16 md:mt-40 md:px-0">
+        <div>
+          {!emailAdded && (
+            <>
+              <h1 className="max-w-[20ch] text-3xl font-bold text-neutral-950 dark:text-neutral-50 md:text-5xl">
+                <Balancer className="text-center leading-snug">
+                  Join our waitlist to get early access to the{" "}
+                  <span className="bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text font-black text-transparent dark:from-blue-400 dark:to-emerald-400">
+                    Codefoli
+                  </span>{" "}
+                  community
+                </Balancer>
+              </h1>
+              <p className="max-w-[60ch] text-center leading-8 text-black/50 dark:text-white/50">
+                <Balancer>
+                  By signing up to the waitlist you will be among the first to
+                  know when we launch and getting early access
+                </Balancer>
+              </p>
+            </>
+          )}
+        </div>
         <div className={"flex h-full w-full items-center justify-center"}>
           <div
             className={`${styles.waitlistBackground} fixed left-0 top-0 -z-10 h-full w-full`}
@@ -222,7 +222,7 @@ const Waitlist = () => {
                       }`}
                     />
                     <Button
-                      className="wl-form-button group relative mt-6 w-[250px] w-full overflow-hidden rounded-xl max-w-[80%] px-[2px] py-[2px] font-bold transition-shadow duration-300 hover:shadow-[0_0.5rem_2rem_-0.75rem_#3178c6] dark:hover:shadow-[0_0.5rem_2rem_-0.75rem_#5198f6]"
+                      className="wl-form-button group relative mt-6 w-[250px] w-full max-w-[80%] overflow-hidden rounded-xl px-[2px] py-[2px] font-bold transition-shadow duration-300 hover:shadow-[0_0.5rem_2rem_-0.75rem_#3178c6] dark:hover:shadow-[0_0.5rem_2rem_-0.75rem_#5198f6]"
                       disabled={subscribeLoading}
                       type="submit"
                       onClick={handleEmailSubmit}

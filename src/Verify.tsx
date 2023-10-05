@@ -73,12 +73,22 @@ const Verify: FC = () => {
             ></div>
           </div>
           <span className="mt-20 text-center font-bold">Verifying...</span>
-       </div>
+        </div>
       </div>
       {verified === true ? (
-        <StatusBar message={"Email verified!"} color={"bg-gradient-to-r dark:text-green-600 from-green-400 to-green-300 text-green-900 dark:from-green-900 dark:to-green-800"} />
+        <StatusBar
+          message={"Email verified!"}
+          color={
+            "bg-gradient-to-r dark:text-green-600 from-green-400 to-green-300 text-green-900 dark:from-green-900 dark:to-green-800"
+          }
+        />
       ) : verified === false ? (
-        <StatusBar message={"Error verifying email..."} color={"bg-gradient-to-r text-red-100 dark:text-red-600 from-red-400 to-red-300  text-red-900 dark:from-red-900 dark:to-red-800"} />
+        <StatusBar
+          message={"Error verifying email..."}
+          color={
+            "bg-gradient-to-r text-red-100 dark:text-red-600 from-red-400 to-red-300  text-red-900 dark:from-red-900 dark:to-red-800"
+          }
+        />
       ) : null}
     </>
   );
