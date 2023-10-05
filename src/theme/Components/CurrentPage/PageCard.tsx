@@ -18,7 +18,7 @@ const PageCard: FC<{
 
   return (
     <div
-      className="cursor-pointer shadow-blue-100 shadow-2xl hover:shadow-3xl dark:shadow-gray-900 dark:border-gray-800 m-5 flex max-h-[400px] border-2 border-blue-100 border-opacity-50 max-w-[400px] flex-col rounded-xl transition-all hover:-translate-y-0.5"
+      className="cursor-pointer shadow-blue-100 shadow-2xl hover:shadow-3xl dark:shadow-gray-900 dark:border-gray-800 m-5 flex max-h-[600px] border-2 border-blue-100 border-opacity-50 max-w-[600px] flex-col rounded-xl transition-all hover:-translate-y-0.5"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={() => (window.location.href = link)}
@@ -34,7 +34,7 @@ const PageCard: FC<{
       </button> */}
 
       <div
-        className={`transition-visible absolute inset-0 z-10 flex items-center justify-center rounded-lg border-8 border-dashed border-black border-opacity-30 bg-blue-500 opacity-0 transition-opacity ${
+        className={`bg-gradient-to-r transition-visible absolute inset-0 z-10 flex items-center justify-center rounded-lg from-blue-500 to-blue-400 dark:from-blue-700 dark:to-blue-500 opacity-0 transition-opacity ${
           hovered ? "visible opacity-80" : "invisible"
         }`}
       >
@@ -45,16 +45,16 @@ const PageCard: FC<{
       </div>
       <div className=" relative h-[400px] overflow-hidden rounded-t-lg transition-all">
         <div
-          className={"flex h-full flex-row items-center justify-between gap-10"}
+          className={"flex h-full mx-4 sm:mx-10 flex-row items-center justify-between sm:gap-10"}
         >
           <div className={"ml-2 mt-10 flex flex-col"}>
-            <h2 className={"font-extra-bold max-w-[15ch] text-lg"}>
+            <h2 className={"font-extra-bold max-w-[15ch] text-lg sm:text-2xl"}>
               {" "}
               {themes.header.length > 50
                 ? themes.header.substr(0, 50) + "..."
                 : themes.header}
             </h2>
-            <p className={"max-w-[30ch] text-xs"}>
+            <p className={"max-w-[30ch] text-xs md:text-base"}>
               {themes.about.length > 100
                 ? themes.about.substr(0, 100) + "..."
                 : themes.about}
@@ -63,14 +63,14 @@ const PageCard: FC<{
             <div className={"mt-1 flex flex-row gap-2"}>
               <div
                 className={
-                  "rounded-md bg-black px-[4px] py-[5px] text-xs font-bold text-white"
+                  "rounded-md bg-black px-[4px] py-[5px] text-xs sm:text-base font-bold text-white"
                 }
               >
                 Get in touch
               </div>
               <div
                 className={
-                  "rounded-md border-2 border-black px-[4px] py-[5px] text-xs font-bold"
+                  "rounded-md border-2 border-black px-[4px] py-[5px] text-xs sm:text-base font-bold"
                 }
               >
                 View Projects
@@ -79,7 +79,7 @@ const PageCard: FC<{
           </div>
           <div
             className={
-              "shadow-custom mr-2 h-[150px] w-[150px] overflow-hidden rounded-lg border-2 border-black"
+              "shadow-custom mr-2 w-[150px] h-[150px] sm:h-[200px] sm:w-[200px] overflow-hidden rounded-lg border-2 border-black"
             }
           >
             <img

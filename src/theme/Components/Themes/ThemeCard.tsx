@@ -18,7 +18,7 @@ const ThemeCard: FC<{
 
   return (
     <div
-      className={`cursor-pointer shadow-blue-100 shadow-2xl hover:shadow-3xl dark:shadow-gray-900 dark:border-gray-800 m-5 flex max-h-[400px] border-2 border-blue-100 border-opacity-50 max-w-[400px] flex-col rounded-xl transition-all hover:-translate-y-0.5`}
+      className={`cursor-pointer shadow-blue-100 shadow-2xl hover:shadow-3xl dark:shadow-gray-900 dark:border-gray-800 m-5 flex max-h-[600px] border-2 border-blue-100 border-opacity-50 max-w-[600px] flex-col rounded-xl transition-all hover:-translate-y-0.5`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={() =>
@@ -41,7 +41,7 @@ const ThemeCard: FC<{
         <h3 className={"text-4xl font-bold text-white"}>Theme used</h3>
       </div> */}
       <div
-        className={`transition-visible absolute inset-0 z-10 flex items-center justify-center rounded-lg border-8 border-dashed border-black border-opacity-30 bg-green-500 opacity-0 transition-opacity ${
+        className={`bg-gradient-to-r transition-visible absolute inset-0 z-10 flex items-center justify-center rounded-lg from-green-500 to-green-400 dark:from-green-700 dark:to-green-500 opacity-0 transition-opacity ${
           !used && hovered ? "visible opacity-80" : "invisible"
         }`}
       >
@@ -62,7 +62,7 @@ const ThemeCard: FC<{
         <h2 className="text-lg font-bold text-green-500 transition-all">
           FREE
         </h2>
-        <p className={"text-sm"}>
+        <p className={"text-md leading-snug"}>
           Our first ever theme, this one is held dear to us, and because of
           this, we would like to offer it for free for everyone!
         </p>
