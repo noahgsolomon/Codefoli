@@ -3,6 +3,7 @@ import { LIGHT_THEME_KEY, DARK_THEME_KEY, LOCALSTORAGE_THEME_KEY } from "../../u
 import { useSpring, animated } from "react-spring";
 import { STAGE } from "../../config";
 import { register } from "api/authenticateapi";
+import StatusBar from "Components/StatusBar/StatusBar";
 
 
 const Register2:FC = () => {
@@ -51,6 +52,7 @@ const Register2:FC = () => {
 
 
     return (
+      <>
         <div className="flex flex-row justify-center items-center h-screen w-screen">
             <div className="hidden lg:flex bg-blue-100 bg-opacity-30 dark:bg-[#0d0d0d] hover:-translate-y-0.5 transition-all w-[50%] h-screen items-center">
                 <animated.img style={imageAnimate} className="" src={`https://images.codefoli.com/${theme === 'dark' ? 'walterwhiteprofiledark.png' : 'walterwhiteprofile.png'}`} alt="profile photo"/>
@@ -83,6 +85,26 @@ const Register2:FC = () => {
                             <input 
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
+                            onKeyDown={(e) => {
+                              if(e.key === 'Enter') {
+                                if (
+                                  firstName.length < 1 ||
+                                  lastName.length < 1 ||
+                                  email.length < 5 ||
+                                  password.length < 6
+                                ) {
+                                  return;
+                                }
+                                if (!isValidEmail(email)) {
+                                  setEmailError(true);
+                                  return;
+                                }
+                                if (registerClicked || emailError || passwordError) return;
+                    
+                                setRegisterClicked(true);
+                                handleRegister();
+                              }
+                          }}
                             placeholder="Johny" className={`dark:border-gray-500 border-gray-300 shadow-sm pl-5 dark:bg-[#1a1a1a] dark:border-gray-500 focus:ring-0 outline-none hover:focus:border-opacity-50 focus:border-opacity-50 transition-all font-bold py-1 rounded-lg border-[3px]`} type="text" required={false} />
                         </div>
                         <div className="flex flex-col">
@@ -90,6 +112,26 @@ const Register2:FC = () => {
                             <input 
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
+                            onKeyDown={(e) => {
+                              if(e.key === 'Enter') {
+                                if (
+                                  firstName.length < 1 ||
+                                  lastName.length < 1 ||
+                                  email.length < 5 ||
+                                  password.length < 6
+                                ) {
+                                  return;
+                                }
+                                if (!isValidEmail(email)) {
+                                  setEmailError(true);
+                                  return;
+                                }
+                                if (registerClicked || emailError || passwordError) return;
+                    
+                                setRegisterClicked(true);
+                                handleRegister();
+                              }
+                          }}
                             placeholder="Appleseed" className={`dark:border-gray-500 border-gray-300 shadow-sm pl-5 focus:ring-0 dark:bg-[#1a1a1a] outline-none dark:focus:border-opacity-50 focus:border-opacity-50 transition-all font-bold py-1 rounded-lg border-[3px]`} type="text" required={false} />
                         </div>
                     </div>
@@ -97,6 +139,26 @@ const Register2:FC = () => {
                         <label className="text-left">Email</label>
                         <input 
                         value={email}
+                        onKeyDown={(e) => {
+                          if(e.key === 'Enter') {
+                            if (
+                              firstName.length < 1 ||
+                              lastName.length < 1 ||
+                              email.length < 5 ||
+                              password.length < 6
+                            ) {
+                              return;
+                            }
+                            if (!isValidEmail(email)) {
+                              setEmailError(true);
+                              return;
+                            }
+                            if (registerClicked || emailError || passwordError) return;
+                
+                            setRegisterClicked(true);
+                            handleRegister();
+                          }
+                      }}
                         onChange={(e) => {
                             setEmailError(false);
                             setPasswordError(false);
@@ -108,6 +170,26 @@ const Register2:FC = () => {
                         <label className="text-left">Password</label>
                         <input placeholder="••••••••" 
                         value={password}
+                        onKeyDown={(e) => {
+                          if(e.key === 'Enter') {
+                            if (
+                              firstName.length < 1 ||
+                              lastName.length < 1 ||
+                              email.length < 5 ||
+                              password.length < 6
+                            ) {
+                              return;
+                            }
+                            if (!isValidEmail(email)) {
+                              setEmailError(true);
+                              return;
+                            }
+                            if (registerClicked || emailError || passwordError) return;
+                
+                            setRegisterClicked(true);
+                            handleRegister();
+                          }
+                      }}
                         onChange={(e) => {
                             setEmailError(false);
                             setPasswordError(false);
@@ -177,6 +259,10 @@ const Register2:FC = () => {
              <div className="text-center mt-4 opacity-80">Already have an account? <a className="hover:opacity-80 text-purple-500 transition-all font-bold" href="/login">Log in</a></div>
             </animated.div>
         </div>
+        {emailError && (
+            <StatusBar message={"Invalid credentials"} color={"bg-gradient-to-r text-red-100 dark:text-red-600 from-red-400 to-red-300 text-red-900 dark:from-red-900 dark:to-red-800"} />
+        )}
+    </>
 
         
     );

@@ -3,6 +3,7 @@ import { LIGHT_THEME_KEY, DARK_THEME_KEY, LOCALSTORAGE_THEME_KEY } from "../../u
 import { useSpring, animated } from "react-spring";
 import { login } from "api/authenticateapi";
 import { STAGE } from "../../config";
+import StatusBar from "Components/StatusBar/StatusBar";
 
 const Login2:FC = () => {
 
@@ -44,6 +45,7 @@ const Login2:FC = () => {
 
 
     return (
+      <>
         <div className="flex flex-row justify-center items-center h-screen w-screen">
             <div className="hidden lg:flex bg-blue-100 bg-opacity-30 dark:bg-[#0d0d0d] hover:-translate-y-0.5 transition-all w-[50%] h-screen items-center">
                 <animated.img style={imageAnimate} className="" src={`https://images.codefoli.com/${theme === 'dark' ? 'walterwhiteprofiledark.png' : 'walterwhiteprofile.png'}`} alt="profile photo"/>
@@ -76,7 +78,17 @@ const Login2:FC = () => {
                             setEmail(e.target.value);
                             setEmailError(false);
                             setPasswordError(false);
-                            }} className={`${passwordError ? 'border-red-500 dark:border-red-500 border-opacity-50 dark:border-opacity-50' : 'border-gray-300 dark:border-gray-500'} shadow-sm pl-5 focus:ring-0 dark:bg-[#1a1a1a] outline-none dark:focus:border-opacity-50 focus:border-opacity-50 transition-all font-bold py-1 rounded-lg border-[3px]`} type="email" required={false} />
+                            }} 
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    if (email.length < 5 || password.length < 6) {
+                                        return;
+                                    }
+                                    if (loginClicked || emailError || passwordError) return;
+                                    handleLogin();
+                                }
+                            }}
+                            className={`${passwordError ? 'border-red-500 dark:border-red-500 border-opacity-50 dark:border-opacity-50' : 'border-gray-300 dark:border-gray-500'} shadow-sm pl-5 focus:ring-0 dark:bg-[#1a1a1a] outline-none dark:focus:border-opacity-50 focus:border-opacity-50 transition-all font-bold py-1 rounded-lg border-[3px]`} type="email" required={false} />
                     </div>
                     <div className="flex flex-col">
                         <label className="text-left">Password</label>
@@ -84,7 +96,17 @@ const Login2:FC = () => {
                             setPassword(e.target.value);
                             setPasswordError(false);
                             setEmailError(false);
-                            }}className={`${passwordError ? 'border-red-500 dark:border-red-500 border-opacity-50 dark:border-opacity-50' : 'border-gray-300 dark:border-gray-500'} shadow-sm pl-5 focus:ring-0 outline-none dark:bg-[#1a1a1a] dark:focus:border-opacity-50 focus:border-opacity-50 transition-all font-bold py-1 rounded-lg border-[3px] `} type="password" required={false} />
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') {
+                                  if (email.length < 5 || password.length < 6) {
+                                      return;
+                                  }
+                                  if (loginClicked || emailError || passwordError) return;
+                                  handleLogin();
+                              }
+                          }}
+                            className={`${passwordError ? 'border-red-500 dark:border-red-500 border-opacity-50 dark:border-opacity-50' : 'border-gray-300 dark:border-gray-500'} shadow-sm pl-5 focus:ring-0 outline-none dark:bg-[#1a1a1a] dark:focus:border-opacity-50 focus:border-opacity-50 transition-all font-bold py-1 rounded-lg border-[3px] `} type="password" required={false} />
                     </div>
                 </div>
                 <div className="flex justify-center mt-5 ">
@@ -133,8 +155,12 @@ const Login2:FC = () => {
                 <div className="text-center mt-4 opacity-80">Don't have an account? <a className="hover:opacity-80 text-purple-500 transition-all font-bold" href="/register">Sign up</a></div>
             </animated.div>
             </div>
-
-        
+            {emailError || passwordError ? (
+              <StatusBar message={"Invalid credentials"} color={"bg-gradient-to-r text-red-100 dark:text-red-600 from-red-400 to-red-300 text-red-900 dark:from-red-900 dark:to-red-800"} />
+            ) : (
+              <></>
+            )}
+        </>        
     );
 
 }
