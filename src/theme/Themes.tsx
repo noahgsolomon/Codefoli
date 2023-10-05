@@ -65,7 +65,8 @@ const Themes: FC<{
               <div className={"cursor-pointer flex items-center flex-row gap-4"}>
                 <Frame className="h-5 w-5 lg:h-10 lg:w-10 opacity-80 hover:opacity-60 transition-all" />
               </div>
-              <h2 className="font-bold text-4xl lg:text-6xl bg-gradient-to-r from-gray-400 to-gray-200 dark:from-gray-500 dark:to-gray-700 text-transparent bg-clip-text">Codefoli</h2>              <div className="flex flex-row gap-4">
+              <h2 className="font-bold text-4xl lg:text-6xl bg-gradient-to-r dark:text-gray-300 from-gray-400 to-gray-200 text-gray-900 dark:from-gray-100 dark:to-gray-600 text-transparent bg-clip-text">Codefoli</h2>
+                <div className="flex flex-row gap-4">
                 {theme === LIGHT_THEME_KEY ? (
                       <svg
                         onClick={handleToggleTheme}
