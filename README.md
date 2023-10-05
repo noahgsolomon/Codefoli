@@ -10,15 +10,8 @@ Codefoli is a portfolio website building platform and **free hosting solution** 
 
 
 <!-- Row 1 -->
-<p float="left">
-  <img src="https://github.com/noahgsolomon/Codefoli/assets/111200060/abda3113-f687-4027-aab9-f012aa8111a1" width="300" />
-  <img src="https://github.com/noahgsolomon/Codefoli/assets/111200060/dd286e26-d115-4791-8e2f-10a733a443b1" width="420" />
-</p>
-
-<!-- Row 2 -->
-<p float="left">
-  <img src="https://github.com/noahgsolomon/Codefoli/assets/111200060/0ebe956f-6282-4956-b30f-a97c9b6f8dda" width="400" />
-  <img src="https://github.com/noahgsolomon/Codefoli/assets/111200060/80c37c9e-da7c-4bed-8a7f-bd47d323cc4d" width="300" />
+<p>
+  <img width="600" alt="Screenshot 2023-10-05 at 7 08 23 PM" src="https://github.com/noahgsolomon/Codefoli/assets/111200060/208fe244-273f-4553-8173-b007b6ce81f6">
 </p>
 
 ## Features
@@ -41,6 +34,6 @@ Codefolio leverages robust, flexible architecture for a seamless experience. Ove
 - ⚙️ **Serverless Functions**: AWS Lambda for backend ops.
 - 🧑‍💻 **User Profile Deployment**: SQS queue and EC2 manage user profile deployment to individual buckets.
 
-**Join our discord**: https://discord.gg/JXKx5HwAQK
+**Join our discord**: https://codefoli.com/discord
 
 Any inquiries, comments, or concerns? Reach out to **support@codefoli.com**
